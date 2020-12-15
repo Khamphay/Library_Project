@@ -1,0 +1,26 @@
+
+
+
+.label-size-12{
+    -fx-font-family: 'Phetsarath OT';
+    -fx-font-weight: bold;
+    -fx-font-size: 12;
+}
+.label-size-14{
+    -fx-font-family: 'Phetsarath OT';
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+}
+
+.label-size-16{
+    -fx-font-family: 'Phetsarath OT';
+    -fx-font-weight: bold;
+    -fx-font-size: 16;
+}
+
+.label-size-20{
+    -fx-font-family: 'Phetsarath OT';
+    -fx-font-weight: bold;
+    -fx-font-size: 20;
+}
+

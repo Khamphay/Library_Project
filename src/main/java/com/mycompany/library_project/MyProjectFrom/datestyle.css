@@ -1,0 +1,21 @@
+
+.date-picker-popup>*>.date-picker-view>.virtual-flow>.clipped-container>.sheet>.data-picker-list-cell>.jfx-rippler{
+    -jfx-rippler-fill:#fff;
+    -fx-text-fill:#fff;
+    /* background-color: transparent; */
+}
+
+.date-picker{
+    -fx-font-family: 'Phetsarath OT';
+    -fx-font-size: 12;
+    -fx-text-fill:#fff;
+}
+
+#btClick{
+    -fx-background-color: #101D3D;
+    -fx-background-radius:15px 15px 15px 15px;
+}
+.combobox{
+    -fx-font-family: 'Phetsarath OT';
+    -fx-font-size: 12;
+}

@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="651.0" prefWidth="1143.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.HomeController">
+   <children>
+      <BorderPane fx:id="bpDisplay" layoutX="260.0" layoutY="45.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f3f3f3; -fx-background-radius: 9px 9px 9px 9px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <AnchorPane accessibleRole="DATE_PICKER" prefHeight="571.0" prefWidth="205.0" style="-fx-background-color: #101D3D;" BorderPane.alignment="CENTER">
+               <children>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="14.0" layoutY="65.0" maxHeight="208.0" prefHeight="571.0" prefWidth="208.0" stylesheets="@scrollpane.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <content>
+                        <AnchorPane prefHeight="569.0" style="-fx-background-color: #101D3D;">
+                           <children>
+                              <VBox layoutX="9.0" layoutY="151.0" prefHeight="569.0" prefWidth="190.0" style="-fx-background-color: #101D3D; -fx-border-color: #101D3D; -fx-border-width: 0px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Pane prefHeight="15.0" prefWidth="188.0" />
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonHome_Action" prefHeight="32.0" prefWidth="180.0" text="Home" textFill="WHITE">
+                                       <font>
+                                          <Font name="Phetsarath OT Bold" size="12.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="24.0" fitWidth="24.0">
+                                             <image>
+                                                <Image url="@../Image/home_client_50px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </JFXButton>
+                                    <Line endX="84.29289245605469" endY="-0.7071067690849304" startX="-100.0" stroke="#f8f1ff">
+                                       <VBox.margin>
+                                          <Insets bottom="2.0" top="4.0" />
+                                       </VBox.margin>
+                                    </Line>
+                                    <Label prefHeight="22.0" prefWidth="180.0" text="Management Books" textFill="WHITE">
+                                       <VBox.margin>
+                                          <Insets bottom="3.0" left="2.0" top="6.0" />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="Phetsarath OT Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonTableLog_Action" prefHeight="32.0" prefWidth="180.0" text="Table Logs" textFill="WHITE">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="24.0" fitWidth="24.0">
+                                             <image>
+                                                <Image url="@../Image/table_50px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <font>
+                                          <Font name="Phetsarath OT" size="12.0" />
+                                       </font>
+                                    </JFXButton>
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonBookType_Action" prefHeight="32.0" prefWidth="180.0" text="Book Type" textFill="WHITE">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="21.0" fitWidth="22.0">
+                                             <image>
+                                                <Image url="@../Image/books_50px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <font>
+                                          <Font name="Phetsarath OT" size="12.0" />
+                                       </font>
+                                    </JFXButton>
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonBookCategory_Action" prefHeight="32.0" prefWidth="180.0" text="Book Category" textFill="WHITE">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="21.0" fitWidth="22.0">
+                                             <image>
+                                                <Image url="@../Image/opened_folder_50px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <font>
+                                          <Font name="Phetsarath OT" size="12.0" />
+                                       </font>
+                                    </JFXButton>
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonBooks_Action" prefHeight="32.0" prefWidth="180.0" text="Books" textFill="WHITE">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="24.0" fitWidth="24.0">
+                                             <image>
+                                                <Image url="@../Image/book_50px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <font>
+                                          <Font name="Phetsarath OT" size="12.0" />
+                                       </font>
+                                    </JFXButton>
+                                    <Line endX="84.29289245605469" endY="-0.7071067690849304" startX="-100.0" stroke="#f8f1ff">
+                                       <VBox.margin>
+                                          <Insets top="4.0" />
+                                       </VBox.margin>
+                                    </Line>
+                                    <Label prefHeight="17.0" prefWidth="187.0" text="Management Person" textFill="WHITE">
+                                       <font>
+                                          <Font name="Phetsarath OT Bold" size="14.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="3.0" left="2.0" top="6.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonEmployee_Action" prefHeight="32.0" prefWidth="180.0" text="Employees" textFill="WHITE">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="24.0" fitWidth="24.0">
+                                             <image>
+                                                <Image url="@../Image/management_50px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <font>
+                                          <Font name="Phetsarath OT" size="12.0" />
+                                       </font>
+                                    </JFXButton>
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonMembers_Action" prefHeight="32.0" prefWidth="180.0" text="Members" textFill="WHITE">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="24.0" fitWidth="24.0">
+                                             <image>
+                                                <Image url="@../Image/member_50px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <font>
+                                          <Font name="Phetsarath OT" size="12.0" />
+                                       </font>
+                                    </JFXButton>
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonAuthor_Action" prefHeight="32.0" prefWidth="180.0" text="Author" textFill="WHITE">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="22.0" fitWidth="22.0">
+                                             <image>
+                                                <Image url="@../Image/user_typing_using_typewriter_50px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <font>
+                                          <Font name="Phetsarath OT" size="12.0" />
+                                       </font>
+                                    </JFXButton>
+                                    <Line endX="84.29289245605469" endY="-0.7071067690849304" startX="-100.0" stroke="#f8f1ff">
+                                       <VBox.margin>
+                                          <Insets top="4.0" />
+                                       </VBox.margin>
+                                    </Line>
+                                    <Label prefHeight="17.0" prefWidth="187.0" text="Report" textFill="WHITE">
+                                       <font>
+                                          <Font name="Phetsarath OT Bold" size="14.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="3.0" left="2.0" top="6.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonReportMembers_Action" prefHeight="32.0" prefWidth="180.0" text="Report Members" textFill="WHITE">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="22.0" fitWidth="22.0">
+                                             <image>
+                                                <Image url="@../Image/add_pie_chart_report_50px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <font>
+                                          <Font name="Phetsarath OT" size="12.0" />
+                                       </font>
+                                    </JFXButton>
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonReportBooks_Action" prefHeight="32.0" prefWidth="180.0" text="Report Books" textFill="WHITE">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="22.0" fitWidth="22.0">
+                                             <image>
+                                                <Image url="@../Image/pie_chart_report_script_50px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <font>
+                                          <Font name="Phetsarath OT" size="12.0" />
+                                       </font>
+                                    </JFXButton>
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonReportBookSend_Action" prefHeight="32.0" prefWidth="180.0" text="Report Send Books" textFill="WHITE">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="22.0" fitWidth="22.0">
+                                             <image>
+                                                <Image url="@../Image/business_report_50px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <font>
+                                          <Font name="Phetsarath OT" size="12.0" />
+                                       </font>
+                                    </JFXButton>
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonReportReserveBook_Action" prefHeight="32.0" prefWidth="180.0" text="Report Reserve Books" textFill="WHITE">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="22.0" fitWidth="22.0">
+                                             <image>
+                                                <Image url="@../Image/edit_pie_chart_report_50px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <font>
+                                          <Font name="Phetsarath OT" size="12.0" />
+                                       </font>
+                                    </JFXButton>
+                                    <Line endX="84.29289245605469" endY="-0.7071067690849304" startX="-100.0" stroke="#f8f1ff">
+                                       <VBox.margin>
+                                          <Insets top="4.0" />
+                                       </VBox.margin>
+                                    </Line>
+                                    <JFXButton alignment="BASELINE_LEFT" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonSetting_Action" prefHeight="32.0" prefWidth="180.0" text="Setting" textFill="WHITE">
+                                       <font>
+                                          <Font name="Phetsarath OT Bold" size="12.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="22.0" fitWidth="22.0">
+                                             <image>
+                                                <Image url="@../Image/settings_50px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <VBox.margin>
+                                          <Insets top="6.0" />
+                                       </VBox.margin>
+                                    </JFXButton>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+         </left>
+         <top>
+            <AnchorPane fx:id="acHomePaneToolbar" prefHeight="60.0" prefWidth="1158.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 0px 0px;" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton fx:id="btCloseForm" alignment="CENTER" cache="true" cacheHint="QUALITY" contentDisplay="CENTER" layoutX="1127.0" layoutY="4.0" onAction="#closePrograme" prefHeight="23.0" prefWidth="24.0" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.bottomAnchor="44.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="4.0">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Image/no_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="1.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="btMinimize" alignment="CENTER" cache="true" cacheHint="QUALITY" contentDisplay="CENTER" layoutX="1057.0" layoutY="5.0" onAction="#minimixeFrom" prefHeight="23.0" prefWidth="24.0" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.bottomAnchor="44.0" AnchorPane.rightAnchor="77.0" AnchorPane.topAnchor="4.0">
+                     <font>
+                        <Font size="1.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Image/macos_minimize_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btMaximum" alignment="CENTER" cache="true" cacheHint="QUALITY" contentDisplay="CENTER" layoutX="1094.0" layoutY="4.0" onAction="#maximunForm" prefHeight="23.0" prefWidth="24.0" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.bottomAnchor="44.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="4.0">
+                     <font>
+                        <Font size="1.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Image/maximum_windows_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <Label contentDisplay="CENTER" layoutX="86.0" layoutY="37.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" stylesheets="@lableStyle.css" text="ລະບົບຈັດການ ຫໍສະໝຸດ ຄະນະວິທະຍາສາດທຳມະຊາດ" textAlignment="CENTER" textFill="WHITE" />
+                  <ImageView fitHeight="68.0" fitWidth="76.0" layoutY="-3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <image>
+                        <Image url="@../Image/Logo_FNS.png" />
+                     </image>
+                  </ImageView>
+                  <Label contentDisplay="CENTER" layoutX="86.0" layoutY="14.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" stylesheets="@lableStyle.css" text="Faculty Of Natural Scince Library Management System" textAlignment="CENTER" textFill="WHITE" />
+               </children>
+            </AnchorPane>
+         </top>
+         <center>
+            <ScrollPane fx:id="sclSubHome" fitToHeight="true" fitToWidth="true" prefHeight="502.0" prefWidth="938.0" style="-fx-background-radius: 0px 0px 8px 0px;" stylesheets="@scrollpane.css" BorderPane.alignment="CENTER">
+               <content>
+                  <AnchorPane prefHeight="363.0" prefWidth="880.0">
+                     <children>
+                        <Line endX="614.0" layoutX="213.0" layoutY="152.0" startX="-100.0" stroke="#46008d" />
+                        <Accordion layoutX="125.0" layoutY="310.0" />
+                        <TableView layoutX="6.0" layoutY="300.0" prefHeight="274.0" prefWidth="883.0" stylesheets="@tablestyle.css" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="300.0">
+                          <columns>
+                            <TableColumn prefWidth="93.0" text="ລະຫັດປຶ້ມ" />
+                            <TableColumn prefWidth="154.0" text="ຊື່ປຶ້ມ" />
+                              <TableColumn prefWidth="127.0" text="ໝວດ" />
+                              <TableColumn prefWidth="130.0" text="ປະເພດ" />
+                              <TableColumn prefWidth="99.0" text="ວັນທີຢືມ" />
+                              <TableColumn prefWidth="153.0" text="ຊື່ ແລະ ນາມສະກຸນສະມາຊີກ" />
+                              <TableColumn prefWidth="138.0" text="ເບີໂທ" />
+                          </columns>
+                        </TableView>
+                        <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" layoutX="268.0" layoutY="175.0" lineSpacing="2.0" onAction="#buttonSendBook_Action" prefHeight="70.0" prefWidth="100.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" text="Send Book" textFill="WHITE" viewOrder="2.0" AnchorPane.topAnchor="175.0">
+                           <font>
+                              <Font name="Phetsarath OT Bold" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="47.0" fitWidth="47.0">
+                                 <image>
+                                    <Image url="@../Image/return_book_50px2.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" layoutX="426.0" layoutY="175.0" lineSpacing="2.0" onAction="#buttonReserveBook_Action" prefHeight="70.0" prefWidth="100.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" text="Reserve Book" textFill="WHITE" viewOrder="2.0" AnchorPane.topAnchor="175.0">
+                           <font>
+                              <Font name="Phetsarath OT Bold" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="47.0" fitWidth="47.0">
+                                 <image>
+                                    <Image url="@../Image/send_letter_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" layoutX="565.0" layoutY="175.0" lineSpacing="2.0" onAction="#buttonRegister_Action" prefHeight="70.0" prefWidth="100.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" text="Register" textFill="WHITE" viewOrder="2.0" AnchorPane.topAnchor="175.0">
+                           <font>
+                              <Font name="Phetsarath OT Bold" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="47.0" fitWidth="47.0">
+                                 <image>
+                                    <Image url="@../Image/add_user_male_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" layoutX="715.0" layoutY="175.0" lineSpacing="2.0" onAction="#buttonNotify_Action" prefHeight="70.0" prefWidth="100.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" text="Navigation" textFill="WHITE" viewOrder="2.0">
+                           <font>
+                              <Font name="Phetsarath OT Bold" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="47.0" fitWidth="47.0">
+                                 <image>
+                                    <Image url="@../Image/alarm_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <Label layoutX="785.0" layoutY="175.0" text="+10" textFill="#ffe74a">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="837.0" layoutY="11.0" prefHeight="61.0" prefWidth="43.0" />
+                        <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" layoutX="113.0" layoutY="175.0" lineSpacing="2.0" onAction="#buttonRentBook_Action" prefHeight="70.0" prefWidth="100.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" text="Rent Book" textFill="WHITE" viewOrder="2.0">
+                           <font>
+                              <Font name="Phetsarath OT Bold" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="47.0" fitWidth="47.0">
+                                 <image>
+                                    <Image url="@../Image/send_job_list_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <AnchorPane layoutX="112.0" layoutY="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="144.0" prefWidth="717.0" style="-fx-background-color: #400080; -fx-background-radius: 50px 0px 50px  0px;" AnchorPane.leftAnchor="112.0" AnchorPane.rightAnchor="107.0" AnchorPane.topAnchor="5.0">
+                           <children>
+                              <Label contentDisplay="CENTER" layoutX="149.0" layoutY="98.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" stylesheets="@lableStyle.css" text="ລະບົບຈັດການ ຫໍສະໝຸດ ຄະນະວິທະຍາສາດທຳມະຊາດ" textAlignment="CENTER" textFill="WHITE" />
+                              <ImageView fitHeight="147.0" fitWidth="149.0">
+                                 <image>
+                                    <Image url="@../Image/Logo_FNS.png" />
+                                 </image>
+                              </ImageView>
+                              <Label contentDisplay="CENTER" layoutX="149.0" layoutY="74.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" stylesheets="@lableStyle.css" text="Faculty Of Natural Scince Library Management System" textAlignment="CENTER" textFill="WHITE" />
+                              <JFXButton alignment="CENTER" buttonType="RAISED" cache="true" cacheHint="QUALITY" graphicTextGap="10.0" layoutX="613.0" layoutY="14.0" onAction="#LogOut" prefHeight="29.0" prefWidth="90.0" style="-fx-background-radius: 15px 15px 15px 15px; -fx-background-color: #fff;" text="Log out" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+                                 <graphic>
+                                    <ImageView fitHeight="21.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Image/shutdown_100pxColor.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <font>
+                                    <Font name="Phetsarath OT Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+         </center>
+         <bottom>
+            <AnchorPane prefHeight="12.0" prefWidth="1143.0" style="-fx-background-radius: 0px 0px 8px 8px;" BorderPane.alignment="CENTER">
+               <children>
+                  <Pane layoutY="-2.0" prefHeight="99.0" prefWidth="205.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0px 0px 0px 8px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>

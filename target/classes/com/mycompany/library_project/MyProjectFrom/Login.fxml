@@ -77,7 +77,6 @@
                   <Image url="@../Image/secure_50px.png" />
                </image>
             </ImageView>
-            <Label layoutX="124.0" layoutY="411.0" styleClass="label-size-12" stylesheets="@lableStyle.css" text="Copyring @ 2021" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="37.0" layoutY="41.0" prefHeight="462.0" prefWidth="323.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 0px 0px 8px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">

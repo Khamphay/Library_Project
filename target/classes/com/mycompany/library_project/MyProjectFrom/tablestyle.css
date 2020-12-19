@@ -33,6 +33,7 @@
     -fx-background-color: rgb(127, 172, 243);
 }
 
+
 .table-row-cell:selected .text {
     -fx-fill: white;
 

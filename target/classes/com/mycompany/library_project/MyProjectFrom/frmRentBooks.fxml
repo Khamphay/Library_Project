@@ -34,14 +34,17 @@
                         </JFXButton>
                         <TableView layoutX="5.0" layoutY="245.0" prefHeight="302.0" prefWidth="1076.0" style="-fx-background-color: #f3f3f3;" styleClass="table" stylesheets="@tablestyle.css" AnchorPane.bottomAnchor="4.0" AnchorPane.topAnchor="245.0">
                            <columns>
-                              <TableColumn prefWidth="109.0" styleClass="tablecolumn" text="ລະຫັດປຶ້ມ" />
-                              <TableColumn prefWidth="130.0" styleClass="tablecolumn" text="ຊື່ປຶ້ມ" />
+                              <TableColumn prefWidth="97.0" styleClass="tablecolumn" text="ລະຫັດປຶ້ມ" />
+                              <TableColumn prefWidth="209.0" styleClass="tablecolumn" text="ຊື່ປຶ້ມ" />
                               <TableColumn prefWidth="130.0" styleClass="tablecolumn" text="ໝວດ" />
                               <TableColumn prefWidth="130.0" styleClass="tablecolumn" text="ປະເພດ" />
                               <TableColumn prefWidth="130.0" styleClass="tablecolumn" text="ວັນທີຢືມ" />
                               <TableColumn prefWidth="130.0" styleClass="tablecolumn" text="ວັນທີສົ່ງ" />
                               <TableColumn prefWidth="185.0" styleClass="tablecolumn" text="ຊື່ ແລະ ນາມສະກຸນ ສະມາຊີກ" />
                            </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                       <AnchorPane layoutX="20.0" layoutY="21.0" minHeight="0.0" minWidth="0.0" prefHeight="124.0" prefWidth="1048.0">
                            <children>

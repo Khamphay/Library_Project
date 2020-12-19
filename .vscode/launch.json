@@ -11,15 +11,6 @@
             "mainClass": ""
         },
         {
-            "type": "java",
-            "name": "Debug (Launch) - External Terminal",
-            "request": "launch",
-            "console": "externalTerminal",
-            "mainClass": ""
-        },
-
-      
-        {
             "name": "Java",
             "type": "java",
             "request": "launch",

@@ -58,7 +58,7 @@
                                           <Font name="Phetsarath OT Bold" size="14.0" />
                                        </font>
                                     </Label>
-                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonTableLog_Action" prefHeight="32.0" prefWidth="180.0" text="Table Logs" textFill="WHITE">
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonTableLog_Action" prefHeight="32.0" prefWidth="180.0" text="ຈັດການຂໍ້ມູນລ໋ອກຕູ້" textFill="WHITE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
@@ -70,10 +70,10 @@
                                           </ImageView>
                                        </graphic>
                                        <font>
-                                          <Font name="Phetsarath OT" size="12.0" />
+                                          <Font name="Phetsarath OT Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonBookType_Action" prefHeight="32.0" prefWidth="180.0" text="Book Type" textFill="WHITE">
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonBookType_Action" prefHeight="32.0" prefWidth="180.0" text="ຈັດການຂໍ້ມູນປະເພດປຶ້ມ" textFill="WHITE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
@@ -85,10 +85,10 @@
                                           </ImageView>
                                        </graphic>
                                        <font>
-                                          <Font name="Phetsarath OT" size="12.0" />
+                                          <Font name="Phetsarath OT Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonBookCategory_Action" prefHeight="32.0" prefWidth="180.0" text="Book Category" textFill="WHITE">
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonBookCategory_Action" prefHeight="32.0" prefWidth="180.0" text="ຈັດການຂໍ້ມູນໝວດປຶ້ມ" textFill="WHITE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
@@ -100,10 +100,10 @@
                                           </ImageView>
                                        </graphic>
                                        <font>
-                                          <Font name="Phetsarath OT" size="12.0" />
+                                          <Font name="Phetsarath OT Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonBooks_Action" prefHeight="32.0" prefWidth="180.0" text="Books" textFill="WHITE">
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonBooks_Action" prefHeight="32.0" prefWidth="180.0" text="ຈັດການຂໍ້ມູນປຶ້ມ" textFill="WHITE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
@@ -115,7 +115,7 @@
                                           </ImageView>
                                        </graphic>
                                        <font>
-                                          <Font name="Phetsarath OT" size="12.0" />
+                                          <Font name="Phetsarath OT Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
                                     <Line endX="84.29289245605469" endY="-0.7071067690849304" startX="-100.0" stroke="#f8f1ff">
@@ -131,7 +131,7 @@
                                           <Insets bottom="3.0" left="2.0" top="6.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonEmployee_Action" prefHeight="32.0" prefWidth="180.0" text="Employees" textFill="WHITE">
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonEmployee_Action" prefHeight="32.0" prefWidth="180.0" text="ຈັດການຂໍ້ມູນພະນັກງານ" textFill="WHITE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
@@ -143,10 +143,10 @@
                                           </ImageView>
                                        </graphic>
                                        <font>
-                                          <Font name="Phetsarath OT" size="12.0" />
+                                          <Font name="Phetsarath OT Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonMembers_Action" prefHeight="32.0" prefWidth="180.0" text="Members" textFill="WHITE">
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonMembers_Action" prefHeight="32.0" prefWidth="180.0" text="ຈັດການຂໍ້ມູນສະມາຊີກ" textFill="WHITE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
@@ -158,10 +158,10 @@
                                           </ImageView>
                                        </graphic>
                                        <font>
-                                          <Font name="Phetsarath OT" size="12.0" />
+                                          <Font name="Phetsarath OT Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonAuthor_Action" prefHeight="32.0" prefWidth="180.0" text="Author" textFill="WHITE">
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonAuthor_Action" prefHeight="32.0" prefWidth="180.0" text="ຈັດການຂໍ້ມູນຜູ້ແຕ່ງ" textFill="WHITE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
@@ -173,7 +173,7 @@
                                           </ImageView>
                                        </graphic>
                                        <font>
-                                          <Font name="Phetsarath OT" size="12.0" />
+                                          <Font name="Phetsarath OT Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
                                     <Line endX="84.29289245605469" endY="-0.7071067690849304" startX="-100.0" stroke="#f8f1ff">
@@ -189,7 +189,7 @@
                                           <Insets bottom="3.0" left="2.0" top="6.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonReportMembers_Action" prefHeight="32.0" prefWidth="180.0" text="Report Members" textFill="WHITE">
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonReportMembers_Action" prefHeight="32.0" prefWidth="180.0" text="ລາຍງານຂໍ້ມູນສະມາຊີກ" textFill="WHITE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
@@ -201,10 +201,10 @@
                                           </ImageView>
                                        </graphic>
                                        <font>
-                                          <Font name="Phetsarath OT" size="12.0" />
+                                          <Font name="Phetsarath OT Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonReportBooks_Action" prefHeight="32.0" prefWidth="180.0" text="Report Books" textFill="WHITE">
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonReportBooks_Action" prefHeight="32.0" prefWidth="180.0" text="ລາຍງານຂໍ້ມູນປຶ້ມ" textFill="WHITE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
@@ -216,10 +216,10 @@
                                           </ImageView>
                                        </graphic>
                                        <font>
-                                          <Font name="Phetsarath OT" size="12.0" />
+                                          <Font name="Phetsarath OT Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonReportBookSend_Action" prefHeight="32.0" prefWidth="180.0" text="Report Send Books" textFill="WHITE">
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonReportBookSend_Action" prefHeight="32.0" prefWidth="180.0" text="ລາຍງານຂໍ້ມູນຢືມປຶ້ມ" textFill="WHITE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
@@ -231,10 +231,10 @@
                                           </ImageView>
                                        </graphic>
                                        <font>
-                                          <Font name="Phetsarath OT" size="12.0" />
+                                          <Font name="Phetsarath OT Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
-                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonReportReserveBook_Action" prefHeight="32.0" prefWidth="180.0" text="Report Reserve Books" textFill="WHITE">
+                                    <JFXButton alignment="BASELINE_LEFT" buttonType="RAISED" graphicTextGap="10.0" lineSpacing="2.0" onAction="#buttonReportReserveBook_Action" prefHeight="32.0" prefWidth="180.0" text="ລາຍງານຂໍ້ມູນສົ່ງປຶ້ມ" textFill="WHITE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
@@ -246,7 +246,7 @@
                                           </ImageView>
                                        </graphic>
                                        <font>
-                                          <Font name="Phetsarath OT" size="12.0" />
+                                          <Font name="Phetsarath OT Bold" size="12.0" />
                                        </font>
                                     </JFXButton>
                                     <Line endX="84.29289245605469" endY="-0.7071067690849304" startX="-100.0" stroke="#f8f1ff">
@@ -339,14 +339,17 @@
                         <Accordion layoutX="125.0" layoutY="310.0" />
                         <TableView layoutX="6.0" layoutY="300.0" prefHeight="274.0" prefWidth="883.0" stylesheets="@tablestyle.css" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="300.0">
                           <columns>
-                            <TableColumn prefWidth="93.0" text="ລະຫັດປຶ້ມ" />
-                            <TableColumn prefWidth="154.0" text="ຊື່ປຶ້ມ" />
+                            <TableColumn prefWidth="199.0" text="ລະຫັດປຶ້ມ" />
+                            <TableColumn prefWidth="56.0" text="ຊື່ປຶ້ມ" />
                               <TableColumn prefWidth="127.0" text="ໝວດ" />
                               <TableColumn prefWidth="130.0" text="ປະເພດ" />
-                              <TableColumn prefWidth="99.0" text="ວັນທີຢືມ" />
-                              <TableColumn prefWidth="153.0" text="ຊື່ ແລະ ນາມສະກຸນສະມາຊີກ" />
+                              <TableColumn prefWidth="92.0" text="ວັນທີຢືມ" />
+                              <TableColumn prefWidth="163.0" text="ຊື່ ແລະ ນາມສະກຸນສະມາຊີກ" />
                               <TableColumn prefWidth="138.0" text="ເບີໂທ" />
                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                         </TableView>
                         <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" layoutX="268.0" layoutY="175.0" lineSpacing="2.0" onAction="#buttonSendBook_Action" prefHeight="70.0" prefWidth="100.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" text="Send Book" textFill="WHITE" viewOrder="2.0" AnchorPane.topAnchor="175.0">
                            <font>

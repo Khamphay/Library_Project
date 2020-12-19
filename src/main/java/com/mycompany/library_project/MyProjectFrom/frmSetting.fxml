@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXColorPicker?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -16,14 +17,38 @@
          <center>
             <AnchorPane prefHeight="415.0" prefWidth="749.0" style="-fx-background-color: #f3f3f3; -fx-background-radius: 0px 0px 8px 8px; -fx-border-color: #101D3D; -fx-border-radius: 0px 0px 8px 8px;">
                <children>
-                  <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="259.0" layoutY="112.0" prefHeight="25.0" prefWidth="252.0" promptText="Cost of fine per page" style="-fx-text-fill: #0a1eff;" unFocusColor="BLACK" viewOrder="1.0" />
-                  <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="258.0" layoutY="175.0" prefHeight="25.0" prefWidth="252.0" promptText="Cost of register" style="-fx-text-fill: #0a1eff;" unFocusColor="BLACK" viewOrder="1.0" />
-                  <JFXButton id="btClick" buttonType="RAISED" layoutX="332.0" layoutY="292.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@datestyle.css" text="Save" textFill="WHITE">
+                  <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="443.0" layoutY="70.0" prefHeight="25.0" prefWidth="252.0" promptText="ຄ່າລົງທະບຽນ" style="-fx-text-fill: #0a1eff;" unFocusColor="BLACK" viewOrder="1.0">
+                     <font>
+                        <Font name="Phetsarath OT" size="12.0" />
+                     </font></JFXTextField>
+                  <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="442.0" layoutY="146.0" prefHeight="25.0" prefWidth="252.0" promptText="ຄ່າປັບໃຫມ" style="-fx-text-fill: #0a1eff;" unFocusColor="BLACK" viewOrder="1.0">
+                     <font>
+                        <Font name="Phetsarath OT" size="12.0" />
+                     </font></JFXTextField>
+                  <JFXButton id="btClick" buttonType="RAISED" layoutX="326.0" layoutY="334.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@datestyle.css" text="ບັນທຶກ" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </JFXButton>
-                  <JFXColorPicker editable="true" layoutX="335.0" layoutY="44.0" promptText="Color" />
+                  <JFXColorPicker editable="true" layoutX="158.0" layoutY="75.0" promptText="Color" />
+                  <Label layoutX="39.0" layoutY="179.0" text="Background color:">
+                     <font>
+                        <Font name="Phetsarath OT" size="14.0" />
+                     </font>
+                  </Label>
+                  <JFXColorPicker editable="true" layoutX="161.0" layoutY="125.0" promptText="Color" />
+                  <Label layoutX="39.0" layoutY="126.0" text="Button color:">
+                     <font>
+                        <Font name="Phetsarath OT" size="14.0" />
+                     </font>
+                  </Label>
+                  <JFXColorPicker editable="true" layoutX="161.0" layoutY="177.0" promptText="Color" />
+                  <Label layoutX="39.0" layoutY="77.0" text="Text color:">
+                     <font>
+                        <Font name="Phetsarath OT" size="14.0" />
+                     </font>
+                  </Label>
+                  <JFXToggleButton alignment="CENTER_LEFT" contentDisplay="RIGHT" graphicTextGap="35.0" layoutX="34.0" layoutY="213.0" prefHeight="58.0" prefWidth="211.0" text="Show on top display" toggleColor="#0d44e8" toggleLineColor="#5678ff" />
                </children>
             </AnchorPane>
          </center>

@@ -97,10 +97,10 @@ public class TableLogModel implements DataAccessObject {
     }
 
     @Override
-    public int deleteData() throws SQLException {
+    public int deleteData(String id) throws SQLException {
         query = "Delete From tbtable  Where tbid=?;";
         ps = con.prepareStatement(query);
-        ps.setString(1, getTableId());
+        ps.setString(1, id);
         return ps.executeUpdate();
     }
 }

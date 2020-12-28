@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 import com.mycompany.library_project.ControllResize.Resizehelper;
 
 
+//Todo:
 
 /**
  * JavaFX App
@@ -34,6 +35,7 @@ public class App extends Application implements Initializable {
         DesktopController.desktopStage = primaryStage;//Todo: set object
         Resizehelper.addResizeListener(DesktopController.desktopStage);//Todo: Set to windows form able Resize 
         primaryStage.show();
+        
     }
 
     public static void main(String[] args) {

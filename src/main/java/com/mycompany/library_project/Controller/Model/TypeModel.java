@@ -14,12 +14,17 @@ import java.sql.SQLException;
 public class TypeModel implements DataAccessObject {
 
     private PreparedStatement ps = null;
+    private ResultSet rs = null;
     private Connection con = MyConnection.getConnect();
 
-    private String query = "";
+    private String sql = "";
 
     private StringProperty typeId;
     private StringProperty typeName;
+
+    public TypeModel() {
+        
+    }
 
     public TypeModel(String typeId) {
         this.typeId = new SimpleStringProperty(typeId);
@@ -56,32 +61,42 @@ public class TypeModel implements DataAccessObject {
 
     @Override
     public ResultSet findAll() throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+        sql = "call type_ShowAll();";
+        rs = con.createStatement().executeQuery(sql);
+        return rs;
     }
 
     @Override
     public ResultSet findById(String id) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+        sql = "call type_ShowById(?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, id);
+        rs = ps.executeQuery();
+        return rs;
     }
 
     @Override
     public ResultSet findByName(String name) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+        sql = "call type_ShowByName(?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, name);
+        rs = ps.executeQuery();
+        return rs;
     }
 
     @Override
     public ResultSet searchData(String values) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+        sql = "call type_Search(?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, values);
+        rs = ps.executeQuery();
+        return rs;
     }
 
     @Override
     public int saveData() throws SQLException {
-        query = "Insert Into tbtype Values(?,?)";
-        ps = con.prepareStatement(query);
+        sql = "call type_Insert(?, ?); ";
+        ps = con.prepareStatement(sql);
         ps.setString(1, getTypeId());
         ps.setString(2, getTypeName());
         return ps.executeUpdate();
@@ -89,18 +104,18 @@ public class TypeModel implements DataAccessObject {
 
     @Override
     public int updateData() throws SQLException {
-        query = "Update tbtype Set typename=? Where typeid=?";
-        ps = con.prepareStatement(query);
-        ps.setString(2, getTypeId());
-        ps.setString(1, getTypeName());
+        sql = "call type_Update(?, ?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, getTypeId());
+        ps.setString(2, getTypeName());
         return ps.executeUpdate();
     }
 
     @Override
-    public int deleteData() throws SQLException {
-        query = "Delete From tbtype  Where typeid=?;";
-        ps = con.prepareStatement(query);
-        ps.setString(1, getTypeId());
+    public int deleteData(String id) throws SQLException {
+        sql = "call type_Delete(?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, id);
         return ps.executeUpdate();
     }
 }

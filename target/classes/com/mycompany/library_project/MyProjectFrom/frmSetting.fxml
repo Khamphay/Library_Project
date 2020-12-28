@@ -25,7 +25,7 @@
                      <font>
                         <Font name="Phetsarath OT" size="12.0" />
                      </font></JFXTextField>
-                  <JFXButton id="btClick" buttonType="RAISED" layoutX="326.0" layoutY="334.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@datestyle.css" text="ບັນທຶກ" textFill="WHITE">
+                  <JFXButton id="btClick" buttonType="RAISED" layoutX="326.0" layoutY="334.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@../Style/buttonStyle.css" text="ບັນທຶກ" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -79,7 +79,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <Label graphicTextGap="10.0" layoutX="12.0" layoutY="29.0" prefHeight="26.0" prefWidth="161.0" styleClass="label-size-16" stylesheets="@lableStyle.css" text="ການຕັ້ງຄ່າ" textAlignment="CENTER" textFill="WHITE">
+                  <Label graphicTextGap="10.0" layoutX="12.0" layoutY="29.0" prefHeight="26.0" prefWidth="161.0" styleClass="label-size-16" stylesheets="@../Style/lableStyle.css" text="ການຕັ້ງຄ່າ" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="26.0" fitWidth="26.0">
                            <image>

@@ -4,6 +4,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -58,24 +59,28 @@
                         <Image url="@Image/Logo_FNS.png" />
                      </image>
                   </ImageView>
-                  <Label contentDisplay="CENTER" layoutX="77.0" layoutY="37.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" stylesheets="@MyProjectFrom/lableStyle.css" text="ລະບົບຈັດການ ຫໍສະໝຸດ ຄະນະວິທະຍາສາດທຳມະຊາດ" textAlignment="CENTER" textFill="WHITE" />
-                  <Label contentDisplay="CENTER" layoutX="77.0" layoutY="14.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" stylesheets="@MyProjectFrom/lableStyle.css" text="FNS Library Management System" textAlignment="CENTER" textFill="WHITE" />
-               </children></AnchorPane>
+                  <Label contentDisplay="CENTER" layoutX="77.0" layoutY="37.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" stylesheets="@Style/lableStyle.css" text="ລະບົບຈັດການ ຫໍສະໝຸດ ຄະນະວິທະຍາສາດທຳມະຊາດ" textAlignment="CENTER" textFill="WHITE" />
+                  <Label contentDisplay="CENTER" layoutX="77.0" layoutY="14.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" stylesheets="@Style/lableStyle.css" text="FNS Library Management System" textAlignment="CENTER" textFill="WHITE" />
+               </children>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </AnchorPane>
          </top>
          <center>
-            <ScrollPane fx:id="scrollDisplay" fitToHeight="true" fitToWidth="true" stylesheets="@MyProjectFrom/scrollpane.css" BorderPane.alignment="CENTER">
+            <ScrollPane fx:id="scrollDisplay" fitToHeight="true" fitToWidth="true" stylesheets="@Style/scrollpane.css" BorderPane.alignment="CENTER">
                <content>
                   <AnchorPane prefHeight="547.0" prefWidth="1087.0" style="-fx-background-color: #f3f3f3; -fx-background-radius: 0px 0px 8px 8px;">
                      <children>
-                        <Pane layoutX="36.0" layoutY="22.0" minWidth="-Infinity" prefHeight="153.0" prefWidth="945.0" style="-fx-background-color: #400080; -fx-background-radius: 50px 0px 50px  0px;" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="36.0" AnchorPane.topAnchor="22.0">
+                        <Pane layoutX="219.0" layoutY="31.0" minWidth="-Infinity" prefHeight="153.0" prefWidth="568.0" style="-fx-background-color: #1F2754; -fx-background-radius: 10px 10px 10px  10px;" AnchorPane.leftAnchor="219.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="31.0">
                            <children>
-                              <Label contentDisplay="CENTER" layoutX="172.0" layoutY="94.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" stylesheets="@MyProjectFrom/lableStyle.css" text="ລະບົບຈັດການ ຫໍສະໝຸດ ຄະນະວິທະຍາສາດທຳມະຊາດ" textAlignment="CENTER" textFill="WHITE" />
-                              <ImageView fitHeight="147.0" fitWidth="149.0" layoutX="23.0" layoutY="2.0">
+                              <Label contentDisplay="CENTER" layoutX="161.0" layoutY="76.0" prefHeight="26.0" prefWidth="399.0" styleClass="label-size-16" stylesheets="@Style/lableStyle.css" text="ລະບົບຈັດການ ຫໍສະໝຸດ ຄະນະວິທະຍາສາດທຳມະຊາດ" textAlignment="CENTER" textFill="WHITE" />
+                              <ImageView fitHeight="147.0" fitWidth="149.0" layoutY="3.0">
                                  <image>
                                     <Image url="@Image/Logo_FNS.png" />
                                  </image>
                               </ImageView>
-                              <Label contentDisplay="CENTER" layoutX="172.0" layoutY="70.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" stylesheets="@MyProjectFrom/lableStyle.css" text="Faculty Of Natural Scince Library Management System" textAlignment="CENTER" textFill="WHITE" />
+                              <Label contentDisplay="CENTER" layoutX="161.0" layoutY="52.0" prefHeight="26.0" prefWidth="397.0" styleClass="label-size-16" stylesheets="@Style/lableStyle.css" text="Faculty Of Natural Scince Library Management System" textAlignment="CENTER" textFill="WHITE" />
                            </children>
                         </Pane>
                         <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" layoutX="254.0" layoutY="254.0" lineSpacing="2.0" prefHeight="83.0" prefWidth="100.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" text="Search" textFill="WHITE" viewOrder="2.0">

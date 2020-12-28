@@ -18,11 +18,11 @@
    <children>
       <BorderPane layoutX="7.0" layoutY="64.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <ScrollPane fitToHeight="true" fitToWidth="true" stylesheets="@scrollpane.css">
+            <ScrollPane fitToHeight="true" fitToWidth="true" stylesheets="@../Style/scrollpane.css">
                <content>
                   <AnchorPane>
                      <children>
-                        <TableView layoutX="9.0" layoutY="223.0" prefHeight="283.0" prefWidth="986.0" style="-fx-background-color: #f3f3f3;" styleClass="table" stylesheets="@tablestyle.css" AnchorPane.bottomAnchor="5.0" AnchorPane.topAnchor="223.0">
+                        <TableView layoutX="9.0" layoutY="223.0" prefHeight="283.0" prefWidth="986.0" style="-fx-background-color: #f3f3f3;" styleClass="table" stylesheets="@../Style/tablestyle.css" AnchorPane.bottomAnchor="5.0" AnchorPane.topAnchor="223.0">
                           <columns>
                             <TableColumn prefWidth="109.0" styleClass="tablecolumn" text="ລະຫັດປຶ້ມ" />
                             <TableColumn prefWidth="189.0" styleClass="tablecolumn" text="ຊື່ປຶ້ມ" />
@@ -36,24 +36,24 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <JFXButton id="btClick" buttonType="RAISED" layoutX="279.0" layoutY="157.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@datestyle.css" text="Save" textFill="WHITE">
+                        <JFXButton id="btClick" buttonType="RAISED" layoutX="279.0" layoutY="157.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@../Style/buttonStyle.css" text="Save" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton id="btClick" buttonType="RAISED" layoutX="419.0" layoutY="157.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@datestyle.css" text="Book Lost" textFill="WHITE">
+                        <JFXButton id="btClick" buttonType="RAISED" layoutX="419.0" layoutY="157.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@../Style/buttonStyle.css" text="Book Lost" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton id="btClick" buttonType="RAISED" layoutX="555.0" layoutY="157.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@datestyle.css" text="Cancel" textFill="WHITE">
+                        <JFXButton id="btClick" buttonType="RAISED" layoutX="555.0" layoutY="157.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@../Style/buttonStyle.css" text="Cancel" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </JFXButton>
                         <AnchorPane layoutX="17.0" layoutY="14.0" minHeight="0.0" minWidth="0.0" prefHeight="124.0" prefWidth="968.0">
                            <children>
-                              <JFXDatePicker defaultColor="#0a1eff" layoutX="780.0" layoutY="72.0" prefHeight="28.0" prefWidth="173.0" promptText="ວັນທີສົ່ງ" style="-fx-text-fill: #fff;" styleClass="date-picker" stylesheets="@datestyle.css">
+                              <JFXDatePicker defaultColor="#0a1eff" layoutX="780.0" layoutY="72.0" prefHeight="28.0" prefWidth="173.0" promptText="ວັນທີສົ່ງ" style="-fx-text-fill: #fff;" styleClass="date-picker" stylesheets="@../Style/datestyle.css">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -78,7 +78,7 @@
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>
                               </JFXTextField>
-                              <JFXDatePicker defaultColor="#0a1eff" layoutX="780.0" layoutY="17.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີຢືມ" style="-fx-text-fill: #fff;" styleClass="date-picker" stylesheets="@datestyle.css">
+                              <JFXDatePicker defaultColor="#0a1eff" layoutX="780.0" layoutY="17.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີຢືມ" style="-fx-text-fill: #fff;" styleClass="date-picker" stylesheets="@../Style/datestyle.css">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -120,7 +120,7 @@
                         <Font size="1.0" />
                      </font>
                   </JFXButton>
-                  <Label graphicTextGap="10.0" layoutX="14.0" layoutY="10.0" prefHeight="26.0" prefWidth="161.0" styleClass="label-size-16" stylesheets="@lableStyle.css" text="ສົ່ງປື້ມ" textAlignment="CENTER" textFill="WHITE">
+                  <Label graphicTextGap="10.0" layoutX="14.0" layoutY="10.0" prefHeight="26.0" prefWidth="161.0" styleClass="label-size-16" stylesheets="@../Style/lableStyle.css" text="ສົ່ງປື້ມ" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0">
                            <image>

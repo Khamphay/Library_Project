@@ -16,7 +16,7 @@
    <children>
       <BorderPane layoutX="152.0" layoutY="86.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <ScrollPane fitToHeight="true" fitToWidth="true" stylesheets="@scrollpane.css">
+            <ScrollPane fitToHeight="true" fitToWidth="true" stylesheets="@../Style/scrollpane.css">
                <content>
                   <AnchorPane prefHeight="501.0" prefWidth="809.0">
                      <children>
@@ -30,27 +30,27 @@
                               <Font name="Phetsarath OT" size="12.0" />
                            </font>
                         </JFXTextField>
-                        <JFXButton id="btClick" buttonType="RAISED" contentDisplay="CENTER" layoutX="201.0" layoutY="105.0" onAction="#Save" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@datestyle.css" text="Save" textFill="WHITE">
+                        <JFXButton id="btClick" buttonType="RAISED" contentDisplay="CENTER" layoutX="201.0" layoutY="105.0" onAction="#Save" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@../Style/buttonStyle.css" text="Save" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton id="btClick" buttonType="RAISED" contentDisplay="CENTER" layoutX="565.0" layoutY="105.0" onAction="#ClearText" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@datestyle.css" text="Cancel" textFill="WHITE">
+                        <JFXButton id="btClick" buttonType="RAISED" contentDisplay="CENTER" layoutX="565.0" layoutY="105.0" onAction="#ClearText" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@../Style/buttonStyle.css" text="Cancel" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton id="btClick" buttonType="RAISED" contentDisplay="CENTER" layoutX="325.0" layoutY="105.0" onAction="#Update" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@datestyle.css" text="Edite" textFill="WHITE">
+                        <JFXButton id="btClick" buttonType="RAISED" contentDisplay="CENTER" layoutX="325.0" layoutY="105.0" onAction="#Update" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@../Style/buttonStyle.css" text="Edite" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton id="btClick" buttonType="RAISED" contentDisplay="CENTER" layoutX="451.0" layoutY="105.0" onAction="#Delete" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@datestyle.css" text="Delete" textFill="WHITE">
+                        <JFXButton id="btClick" buttonType="RAISED" contentDisplay="CENTER" layoutX="451.0" layoutY="105.0" onAction="#Delete" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@../Style/buttonStyle.css" text="Delete" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </JFXButton>
-                        <TableView fx:id="tableType" layoutX="181.0" layoutY="209.0" onMouseClicked="#selectTableType" prefHeight="270.0" prefWidth="508.0" stylesheets="@tablestyle.css" AnchorPane.bottomAnchor="22.0" AnchorPane.topAnchor="209.0">
+                        <TableView fx:id="tableType" layoutX="181.0" layoutY="209.0" onMouseClicked="#selectTableType" prefHeight="270.0" prefWidth="508.0" stylesheets="@../Style/tablestyle.css" AnchorPane.bottomAnchor="22.0" AnchorPane.topAnchor="209.0">
                            <columns>
                               <TableColumn fx:id="colId" prefWidth="116.0" text="ລະຫັດປະເພດ" />
                               <TableColumn fx:id="colName" prefWidth="388.0" text="ປະເພດປຶ້ມ" />
@@ -84,7 +84,7 @@
                         <Font size="1.0" />
                      </font>
                   </JFXButton>
-                  <Label graphicTextGap="10.0" layoutX="14.0" layoutY="13.0" prefHeight="26.0" prefWidth="161.0" styleClass="label-size-16" stylesheets="@lableStyle.css" text="Book Type" textAlignment="CENTER" textFill="WHITE">
+                  <Label graphicTextGap="10.0" layoutX="14.0" layoutY="13.0" prefHeight="26.0" prefWidth="161.0" styleClass="label-size-16" stylesheets="@../Style/lableStyle.css" text="Book Type" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="26.0" fitWidth="26.0">
                            <image>

@@ -14,14 +14,15 @@ import java.sql.SQLException;
 public class CategoryModel implements DataAccessObject {
 
     private PreparedStatement ps = null;
-    private String query = "";
+    private String sql = "";
     private Connection con = MyConnection.getConnect();
     private ResultSet rs = null;
+
     private StringProperty catgId;
     private StringProperty catgName;
 
-    public CategoryModel(String catgId) {
-        this.catgId = new SimpleStringProperty(catgId);
+    public CategoryModel() {
+        
     }
 
     public CategoryModel(String catgId, String catgName) {
@@ -56,32 +57,42 @@ public class CategoryModel implements DataAccessObject {
     // Todo: Method management data
     @Override
     public ResultSet findAll() throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+        sql = "call category_ShowAll();";
+        rs = con.createStatement().executeQuery(sql);
+        return rs;
     }
 
     @Override
     public ResultSet findById(String id) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+        sql = "call category_ShowById(?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, id);
+        rs = ps.executeQuery();
+        return rs;
     }
 
     @Override
     public ResultSet findByName(String name) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+        sql = "call category_ShowByName(?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, name);
+        rs = ps.executeQuery();
+        return rs;
     }
 
     @Override
     public ResultSet searchData(String values) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+        sql = "call category_Search(?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, values);
+        rs = ps.executeQuery();
+        return rs;
     }
 
     @Override
     public int saveData() throws SQLException {
-        query = "Insert Into tbcategory Values(?,?)";
-        ps = con.prepareStatement(query);
+        sql = "call category_Insert(?, ?);";
+        ps = con.prepareStatement(sql);
         ps.setString(1, getCatgId());
         ps.setString(2, getCatgName());
         return ps.executeUpdate();
@@ -89,18 +100,18 @@ public class CategoryModel implements DataAccessObject {
 
     @Override
     public int updateData() throws SQLException {
-        query = "Update tbcategory Set name=? Where catgid=?";
-        ps = con.prepareStatement(query);
-        ps.setString(2, getCatgId());
-        ps.setString(1, getCatgName());
+        sql = "call category_Update(?, ?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, getCatgId());
+        ps.setString(2, getCatgName());
         return ps.executeUpdate();
     }
 
     @Override
-    public int deleteData() throws SQLException {
-        query = "Delete From tbcategory  Where catgid=?";
-        ps = con.prepareStatement(query);
-        ps.setString(1, getCatgId());
+    public int deleteData(String id) throws SQLException {
+        sql = "call category_Delete(?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, id);
         return ps.executeUpdate();
     }
 }

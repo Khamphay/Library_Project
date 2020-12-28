@@ -1,0 +1,11 @@
+.vbox:hover{
+    -fx-background-color:#D6DFF5;
+}
+
+.vbox:pressed{
+    -fx-background-color:#9395EB;
+}
+
+/* .vbox:presse{
+    -fx-background-color:#F4F4F4;
+} */

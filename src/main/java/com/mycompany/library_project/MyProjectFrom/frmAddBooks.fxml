@@ -16,7 +16,7 @@
    <children>
       <BorderPane layoutY="48.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="497.0" prefWidth="779.0" stylesheets="@scrollpane.css">
+            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="497.0" prefWidth="779.0" stylesheets="@../Style/scrollpane.css">
                <content>
                   <AnchorPane prefHeight="490.0" prefWidth="768.0">
                      <children>
@@ -40,22 +40,22 @@
                               <Font name="Phetsarath OT" size="12.0" />
                            </font>
                         </JFXTextField>
-                        <JFXComboBox focusColor="#0a1eff" labelFloat="true" layoutX="569.0" layoutY="154.0" prefHeight="27.0" prefWidth="202.0" promptText="ໝວດ" styleClass="combobox" stylesheets="@datestyle.css" />
-                        <JFXComboBox focusColor="#0a1eff" labelFloat="true" layoutX="293.0" layoutY="154.0" prefHeight="27.0" prefWidth="238.0" promptText="ປະເພດ" styleClass="combobox" stylesheets="@datestyle.css" />
-                        <JFXComboBox focusColor="#0a1eff" labelFloat="true" layoutX="293.0" layoutY="219.0" prefHeight="27.0" prefWidth="238.0" promptText="ສະຖານະ" styleClass="combobox" stylesheets="@datestyle.css" />
-                        <JFXComboBox focusColor="#0a1eff" labelFloat="true" layoutX="569.0" layoutY="219.0" prefHeight="27.0" prefWidth="91.0" promptText="ເລກຕູ້" styleClass="combobox" stylesheets="@datestyle.css" />
-                        <JFXComboBox focusColor="#0a1eff" labelFloat="true" layoutX="680.0" layoutY="219.0" prefHeight="27.0" prefWidth="91.0" promptText="ລ໋ອກຕູ້" styleClass="combobox" stylesheets="@datestyle.css" />
+                        <JFXComboBox focusColor="#0a1eff" labelFloat="true" layoutX="569.0" layoutY="154.0" prefHeight="27.0" prefWidth="202.0" promptText="ໝວດ" styleClass="combobox" stylesheets="@../Style/datestyle.css" />
+                        <JFXComboBox focusColor="#0a1eff" labelFloat="true" layoutX="293.0" layoutY="154.0" prefHeight="27.0" prefWidth="238.0" promptText="ປະເພດ" styleClass="combobox" stylesheets="@../Style/datestyle.css" />
+                        <JFXComboBox focusColor="#0a1eff" labelFloat="true" layoutX="293.0" layoutY="219.0" prefHeight="27.0" prefWidth="238.0" promptText="ສະຖານະ" styleClass="combobox" stylesheets="@../Style/datestyle.css" />
+                        <JFXComboBox focusColor="#0a1eff" labelFloat="true" layoutX="569.0" layoutY="219.0" prefHeight="27.0" prefWidth="91.0" promptText="ເລກຕູ້" styleClass="combobox" stylesheets="@../Style/datestyle.css" />
+                        <JFXComboBox focusColor="#0a1eff" labelFloat="true" layoutX="680.0" layoutY="219.0" prefHeight="27.0" prefWidth="91.0" promptText="ລ໋ອກຕູ້" styleClass="combobox" stylesheets="@../Style/datestyle.css" />
                         <JFXTextArea focusColor="#0a1eff" labelFloat="true" layoutX="103.0" layoutY="159.0" prefHeight="148.0" prefWidth="161.0" promptText="Barcode" style="-fx-border-color: #999999;">
                            <font>
                               <Font name="Phetsarath OT" size="12.0" />
                            </font>
                         </JFXTextArea>
-                        <JFXButton id="btClick" buttonType="RAISED" layoutX="309.0" layoutY="383.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@datestyle.css" text="Save" textFill="WHITE">
+                        <JFXButton id="btClick" buttonType="RAISED" layoutX="309.0" layoutY="383.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@../Style/buttonStyle.css" text="Save" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton id="btClick" buttonType="RAISED" layoutX="501.0" layoutY="383.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@datestyle.css" text="Cancel" textFill="WHITE">
+                        <JFXButton id="btClick" buttonType="RAISED" layoutX="501.0" layoutY="383.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@../Style/buttonStyle.css" text="Cancel" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -80,7 +80,7 @@
                         <Font size="1.0" />
                      </font>
                   </JFXButton>
-                  <Label graphicTextGap="10.0" layoutX="14.0" layoutY="15.0" prefHeight="26.0" prefWidth="161.0" styleClass="label-size-16" stylesheets="@lableStyle.css" text="Add New Book" textAlignment="CENTER" textFill="WHITE">
+                  <Label graphicTextGap="10.0" layoutX="14.0" layoutY="15.0" prefHeight="26.0" prefWidth="161.0" styleClass="label-size-16" stylesheets="@../Style/lableStyle.css" text="Add New Book" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="26.0" fitWidth="26.0">
                            <image>

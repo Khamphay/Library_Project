@@ -25,7 +25,7 @@ public class BookTypeController implements Initializable {
     private Connection con = MyConnection.getConnect();
     private ResultSet rs;
     private TypeModel type = null;
-    private ObservableList<TypeModel> data;
+    private ObservableList<TypeModel> data=null;
     private String query = "";
 
     @FXML
@@ -44,18 +44,15 @@ public class BookTypeController implements Initializable {
     private void ShowData() {
         try {
             data = FXCollections.observableArrayList();
-            query = "Select * From tbtype;";
-            rs = con.createStatement().executeQuery(query);
+            type = new TypeModel();
+            rs = type.findAll();
             while (rs.next()) {
                 data.add(new TypeModel(rs.getString(1), rs.getString(2)));
             }
+            tableType.setItems(data);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getSQLState());
         }
-        colId.setCellValueFactory(new PropertyValueFactory<>("typeId"));
-        colName.setCellValueFactory(new PropertyValueFactory<>("typeName"));
-
-        tableType.setItems(data);
     }
 
     private void ClearData() {
@@ -65,7 +62,7 @@ public class BookTypeController implements Initializable {
 
     @FXML
     private void selectTableType(MouseEvent clickEvent) {
-        if (clickEvent.getClickCount() > 1 && tableType.getSelectionModel().getSelectedItem() != null) {
+        if (clickEvent.getClickCount() > 0 && tableType.getSelectionModel().getSelectedItem() != null) {
             TypeModel selectedType = tableType.getSelectionModel().getSelectedItem();
             txtTypeId.setText(selectedType.getTypeId());
             txtTypeName.setText(selectedType.getTypeName());
@@ -94,8 +91,8 @@ public class BookTypeController implements Initializable {
 
     @FXML
     private void Delete(ActionEvent event) throws SQLException {
-        type = new TypeModel(txtTypeId.getText());
-        if (type.deleteData() == 1) {
+        type = new TypeModel();
+        if (type.deleteData(txtTypeId.getText()) == 1) {
             JOptionPane.showMessageDialog(null, "Delete Type Completed!!!.", "Save", JOptionPane.INFORMATION_MESSAGE);
             ShowData();
             ClearData();
@@ -109,6 +106,8 @@ public class BookTypeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        colId.setCellValueFactory(new PropertyValueFactory<>("typeId"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("typeName"));
         ShowData();
     }
 }

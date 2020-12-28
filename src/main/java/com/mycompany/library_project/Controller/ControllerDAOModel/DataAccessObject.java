@@ -17,5 +17,5 @@ public interface DataAccessObject {
 
     public int updateData() throws SQLException, ParseException;
 
-    public int deleteData() throws SQLException;
+    public int deleteData(String id) throws SQLException;
 }

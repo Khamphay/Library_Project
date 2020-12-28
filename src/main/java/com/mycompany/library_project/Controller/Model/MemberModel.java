@@ -254,7 +254,6 @@ public class MemberModel implements DataAccessObject {
 
     @Override
     public int saveData() throws SQLException, ParseException {
-
         query = "call saveMember(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         ps = con.prepareStatement(query);
         ps.setString(1, getMemberId());
@@ -297,10 +296,10 @@ public class MemberModel implements DataAccessObject {
     }
 
     @Override
-    public int deleteData() throws SQLException {
-        query = "call deleteMember(:id);";
+    public int deleteData(String id) throws SQLException {
+        query = "call deleteMember(?);";
         ps = con.prepareStatement(query);
-        ps.setString(1, getMemberId());
+        ps.setString(1, id);
         return ps.executeUpdate();
     }
 }

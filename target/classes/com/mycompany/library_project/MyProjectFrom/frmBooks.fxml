@@ -16,7 +16,7 @@
    <children>
       <BorderPane layoutX="10.0" layoutY="102.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <ScrollPane fitToHeight="true" fitToWidth="true" stylesheets="@scrollpane.css">
+            <ScrollPane fitToHeight="true" fitToWidth="true" stylesheets="@../Style/scrollpane.css">
                <content>
                   <AnchorPane prefHeight="562.0" prefWidth="1068.0">
                      <children>
@@ -30,7 +30,7 @@
                               <Image url="@../Image/search_100px.png" />
                            </image>
                         </ImageView>
-                        <TableView layoutX="9.0" layoutY="106.0" minWidth="-Infinity" prefHeight="443.0" prefWidth="1050.0" style="-fx-background-color: transparent;" stylesheets="@tablestyle.css" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="106.0">
+                        <TableView layoutX="9.0" layoutY="106.0" minWidth="-Infinity" prefHeight="443.0" prefWidth="1050.0" style="-fx-background-color: transparent;" stylesheets="@../Style/tablestyle.css" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="106.0">
                            <columns>
                               <TableColumn prefWidth="164.0" text="C1" />
                               <TableColumn prefWidth="882.0" text="C2" />
@@ -39,17 +39,17 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <JFXButton id="btClick" buttonType="RAISED" layoutX="104.0" layoutY="57.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@datestyle.css" text="Add" textFill="WHITE">
+                        <JFXButton id="btClick" buttonType="RAISED" layoutX="104.0" layoutY="57.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@../Style/buttonStyle.css" text="Add" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton id="btClick" buttonType="RAISED" layoutX="243.0" layoutY="57.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@datestyle.css" text="Edite" textFill="WHITE">
+                        <JFXButton id="btClick" buttonType="RAISED" layoutX="243.0" layoutY="57.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@../Style/buttonStyle.css" text="Edite" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton id="btClick" buttonType="RAISED" layoutX="380.0" layoutY="57.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@datestyle.css" text="Delete" textFill="WHITE">
+                        <JFXButton id="btClick" buttonType="RAISED" layoutX="380.0" layoutY="57.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" stylesheets="@../Style/buttonStyle.css" text="Delete" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -74,7 +74,7 @@
                         <Font size="1.0" />
                      </font>
                   </JFXButton>
-                  <Label graphicTextGap="10.0" layoutX="14.0" layoutY="15.0" prefHeight="26.0" prefWidth="161.0" styleClass="label-size-16" stylesheets="@lableStyle.css" text="ຂໍ້ມູນປື້ມ" textAlignment="CENTER" textFill="WHITE">
+                  <Label graphicTextGap="10.0" layoutX="14.0" layoutY="15.0" prefHeight="26.0" prefWidth="161.0" styleClass="label-size-16" stylesheets="@../Style/lableStyle.css" text="ຂໍ້ມູນປື້ມ" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="24.0">
                            <image>

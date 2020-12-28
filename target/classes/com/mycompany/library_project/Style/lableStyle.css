@@ -1,5 +1,8 @@
 
-
+.label-size-12-Regular{
+    -fx-font-family: 'Phetsarath OT';
+    -fx-font-size: 12;
+}
 
 .label-size-12{
     -fx-font-family: 'Phetsarath OT';

@@ -4,12 +4,21 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import com.mycompany.library_project.Controller.ControllerDAOModel.DataAccessObject;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 
-public class BookDetailModel {
+import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.Controller.ControllerDAOModel.DataAccessObject;
+
+public class BookDetailModel implements DataAccessObject {
+
+    private Connection con = MyConnection.getConnect();
+    private ResultSet rs = null;
+    String sql = null;
+
     private StringProperty bookId;
     private StringProperty bookName;
     private IntegerProperty page;
@@ -27,7 +36,8 @@ public class BookDetailModel {
         this.barcode = new SimpleStringProperty(barcode);
     }
 
-    public BookDetailModel(String bookId, String bookName, Integer page, String ISBN, Integer qty, Integer rentQty, Integer reserQty, String barcode, String catgId, String typeId, String tableLogId) {
+    public BookDetailModel(String bookId, String bookName, Integer page, String ISBN, Integer qty, Integer rentQty,
+            Integer reserQty, String barcode, String catgId, String typeId, String tableLogId) {
         this.bookId = new SimpleStringProperty(bookId);
         this.bookName = new SimpleStringProperty(bookName);
         this.page = new SimpleIntegerProperty(page);
@@ -171,6 +181,61 @@ public class BookDetailModel {
 
     public void setTableLogId(String tableLogId) {
         this.tableLogId.set(tableLogId);
+    }
+
+
+    public String[] showBookType() throws SQLException {
+        sql = "Select typename From tbtype";
+        String[] type = null;
+        rs = con.createStatement().executeQuery(sql);
+        if (rs.getRow() > 0) {
+            while (rs.next()) {
+                type=new String[]{rs.getString(1)};
+            }
+        }
+        return type;
+    }
+
+    @Override
+    public ResultSet findAll() throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ResultSet findById(String id) throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ResultSet findByName(String name) throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public ResultSet searchData(String values) throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public int saveData() throws SQLException, ParseException {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int updateData() throws SQLException, ParseException {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int deleteData(String id) throws SQLException {
+        // TODO Auto-generated method stub
+        return 0;
     }
 
 }

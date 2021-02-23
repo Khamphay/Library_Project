@@ -1,12 +1,9 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="Library_Project:jar">
+  <artifact type="jar" name="Library_Project:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/Library_Project_jar</output-path>
     <root id="archive" name="Library_Project.jar">
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/src/main/java/com/META-INF/MANIFEST.MF" />
-      </element>
       <element id="module-output" name="Library_Project" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/jfoenix/jfoenix/9.0.10/jfoenix-9.0.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/15/javafx-fxml-15-win.jar" path-in-jar="/" />
       <element id="extracted-dir" path="C:/Program Files/Java/javafx-sdk-15.0.1/lib/src.zip" path-in-jar="/" />
       <element id="extracted-dir" path="C:/Program Files/Java/javafx-sdk-15.0.1/lib/javafx-swt.jar" path-in-jar="/" />
       <element id="extracted-dir" path="C:/Program Files/Java/javafx-sdk-15.0.1/lib/javafx.web.jar" path-in-jar="/" />
@@ -16,7 +13,15 @@
       <element id="extracted-dir" path="C:/Program Files/Java/javafx-sdk-15.0.1/lib/javafx.swing.jar" path-in-jar="/" />
       <element id="extracted-dir" path="C:/Program Files/Java/javafx-sdk-15.0.1/lib/javafx.controls.jar" path-in-jar="/" />
       <element id="extracted-dir" path="C:/Program Files/Java/javafx-sdk-15.0.1/lib/javafx.graphics.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/15/javafx-controls-15-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/15/javafx-base-15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/15/javafx-graphics-15-win.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/mariadb/jdbc/mariadb-java-client/2.7.0/mariadb-java-client-2.7.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/15/javafx-fxml-15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/15/javafx-base-15-win.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/jfoenix/jfoenix/9.0.10/jfoenix-9.0.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/15/javafx-graphics-15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/15/javafx-controls-15.jar" path-in-jar="/" />
       <element id="file-copy" path="C:/Program Files/Java/javafx-sdk-15.0.1/bin/api-ms-win-core-console-l1-1-0.dll" />
       <element id="file-copy" path="C:/Program Files/Java/javafx-sdk-15.0.1/bin/api-ms-win-core-console-l1-2-0.dll" />
       <element id="file-copy" path="C:/Program Files/Java/javafx-sdk-15.0.1/bin/api-ms-win-core-datetime-l1-1-0.dll" />
@@ -73,9 +78,6 @@
       <element id="file-copy" path="C:/Program Files/Java/javafx-sdk-15.0.1/bin/prism_sw.dll" />
       <element id="file-copy" path="C:/Program Files/Java/javafx-sdk-15.0.1/bin/ucrtbase.dll" />
       <element id="file-copy" path="C:/Program Files/Java/javafx-sdk-15.0.1/bin/vcruntime140.dll" />
-      <element id="library" level="project" name="javafx" />
-      <element id="module-source" name="Library_Project" />
-      <element id="dir-copy" path="C:/Program Files/Java/jdk-15/bin" />
     </root>
   </artifact>
 </component>

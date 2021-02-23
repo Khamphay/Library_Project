@@ -3,13 +3,14 @@ package com.mycompany.library_project.Controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
-import com.jfoenix.transitions.hamburger.HamburgerNextArrowBasicTransition;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
-import com.jfoenix.transitions.hamburger.HamburgerTransition;
+import com.mycompany.library_project.App;
 import com.mycompany.library_project.DesktopController;
+import com.mycompany.library_project.ModelShow.MyArrayList;
 
-import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,7 +27,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -38,8 +38,10 @@ public class HomeController implements Initializable {
     private double x, y;
     private Parent subroot = null;
     private Rectangle2D bounds = null;
-    private HamburgerNextArrowBasicTransition hamburgerTransition = null;
-    private TranslateTransition slideTranstion = null;
+    private HamburgerSlideCloseTransition hamburgerTransition = null;
+    private boolean fragMenu = false;
+    private Node node;
+    private Parent rootMenu = null;
 
     @FXML
     private AnchorPane acHomePaneToolbar;
@@ -48,9 +50,6 @@ public class HomeController implements Initializable {
 
     @FXML
     public ScrollPane sclPaneMenu;
-
-    @FXML
-    private AnchorPane acPaneMenu;
 
     @FXML
     private AnchorPane acPaneMenuList;
@@ -94,36 +93,98 @@ public class HomeController implements Initializable {
     }
 
     private void sliderMenuHamburger() {
-         hamburgerTransition = new HamburgerNextArrowBasicTransition(humberger);
-         hamburgerTransition.setRate(-1);
+        hamburgerTransition = new HamburgerSlideCloseTransition(humberger);
+        hamburgerTransition.setRate(-1);
         humberger.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
             hamburgerTransition.setRate(hamburgerTransition.getRate()*-1);
             hamburgerTransition.play();
-            
-            //Todo: Slide Pane
-            // slideTranstion = new TranslateTransition();
-            // slideTranstion.setDuration(Duration.seconds(0.4));
-            // slideTranstion.setNode(acPaneMenu);
-            // slideTranstion.setToX(0);
-
-            // acPaneMenu.setPrefWidth(49);
-            // acPaneMenu.resize(49, 569);
-            // acPaneMenuList.setTranslateX(-569);
-            // sclPaneMenu.setTranslateX(-569);
-            // acPaneMenu.setTranslateX(-569);
-            // slideTranstion.setOnFinished((ActionEvent evt)->{
-                
-            // });
+            show_menu();
         });
 
     }
 
-    private void showSubFrom(String subForm) throws Exception {
-        subroot = null;
-        subroot = FXMLLoader.load(getClass().getResource(subForm));
-        bpDisplay.setCenter(subroot);
+    private void showSubFrom(String subForm) {
+        try {
+            subroot = null;
+            subroot = FXMLLoader.load(App.class.getResource(subForm));
+            bpDisplay.setCenter(subroot);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+    private void show_menu() {
+        try {
+            if (fragMenu == true) {
+                rootMenu = FXMLLoader.load(App.class.getResource("menu_1.fxml"));
+                node = rootMenu;
+                bpDisplay.setLeft(node);
+                fragMenu = false;
+            } else {
+                rootMenu = FXMLLoader.load(App.class.getResource("menu_2.fxml"));
+                node = rootMenu;
+                bpDisplay.setLeft(node);
+                fragMenu = true;
+            }
+           
+            // Todo!: Set event to menu
+            node.lookup("#btHome").setOnMouseClicked(new EventHandler<Event>() {
+
+                @Override
+                public void handle(Event event) {
+                    bpDisplay.setCenter(sclSubHome);
+                }
+            });
+
+            node.lookup("#btManageBook").setOnMouseClicked(new EventHandler<Event>() {
+
+                @Override
+                public void handle(Event event) {
+                    showSubFrom("frmManageBook.fxml");
+                }
+            });
+
+            node.lookup("#btManagePerson").setOnMouseClicked(new EventHandler<Event>() {
+
+                @Override
+                public void handle(Event event) {
+                    showSubFrom("frmManagePersonal.fxml");
+                }
+            });
+
+            node.lookup("#btReport").setOnMouseClicked(new EventHandler<Event>() {
+
+                @Override
+                public void handle(Event event) {
+                    // TODO: Report
+                }
+            });
+
+            node.lookup("#btSetting").setOnMouseClicked(new EventHandler<Event>() {
+
+                @Override
+                public void handle(Event event) {
+                    try {
+                        if (SettingController.settingStage == null) {
+                            Parent settingParent = FXMLLoader.load(App.class.getResource("frmSetting.fxml"));
+                            Scene settingScene = new Scene(settingParent);
+                            settingScene.setFill(Color.TRANSPARENT);
+                            SettingController.settingStage = new Stage(StageStyle.TRANSPARENT);
+                            SettingController.settingStage.setScene(settingScene);
+                            SettingController.settingStage.show();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error: " + e.getMessage());
+            System.out.println("=============> Error:" + e.getMessage());
+        }
+    }
 
     @FXML
     private void sliderMenu(ActionEvent event) {
@@ -132,10 +193,10 @@ public class HomeController implements Initializable {
 
     @FXML
     private void LogOut(ActionEvent event) throws Exception {
-        Parent desktopRoot = FXMLLoader.load(getClass().getResource("/com/mycompany/library_project/frmDeskTop.fxml"));
+        Parent desktopRoot = FXMLLoader.load(App.class.getResource("Login.fxml"));
         Scene sceneDesktop = new Scene(desktopRoot);
         sceneDesktop.setFill(Color.TRANSPARENT);
-        DesktopController.desktopStage = new Stage(StageStyle.TRANSPARENT);
+        // DesktopController.desktopStage = new Stage(StageStyle.TRANSPARENT);
         DesktopController.desktopStage.setTitle("FNS Library MS");
         DesktopController.desktopStage.setScene(sceneDesktop);
         DesktopController.desktopStage.show();
@@ -150,65 +211,10 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    private void buttonTableLog_Action(ActionEvent event) throws Exception {
-        showSubFrom("/com/mycompany/library_project/MyProjectFrom/frmTableLogs.fxml");
-    }
-
-    @FXML
-    private void buttonBookType_Action(ActionEvent event) throws Exception {
-        showSubFrom("/com/mycompany/library_project/MyProjectFrom/frmbookType.fxml");
-    }
-
-    @FXML
-    private void buttonBookCategory_Action(ActionEvent event) throws Exception {
-        showSubFrom("/com/mycompany/library_project/MyProjectFrom/frmBookCategory.fxml");
-    }
-
-    @FXML
-    private void buttonBooks_Action(ActionEvent event) throws Exception {
-        showSubFrom("/com/mycompany/library_project/MyProjectFrom/frmBooks.fxml");
-    }
-
-    @FXML
-    private void buttonEmployee_Action(ActionEvent event) throws Exception {
-        // showSubFrom("");
-    }
-
-    @FXML
-    private void buttonMembers_Action(ActionEvent event) throws Exception {
-        // showSubFrom("");
-    }
-
-    @FXML
-    private void buttonAuthor_Action(ActionEvent event) throws Exception {
-        // showSubFrom("");
-    }
-
-    @FXML
-    private void buttonReportMembers_Action(ActionEvent event) throws Exception {
-        // showSubFrom("");
-    }
-
-    @FXML
-    private void buttonReportBooks_Action(ActionEvent event) throws Exception {
-        // showSubFrom("");
-    }
-
-    @FXML
-    private void buttonReportBookSend_Action(ActionEvent event) throws Exception {
-        // showSubFrom("");
-    }
-
-    @FXML
-    private void buttonReportReserveBook_Action(ActionEvent event) throws Exception {
-        // showSubFrom("");
-    }
-
-    @FXML
     private void buttonSetting_Action(ActionEvent event) throws Exception {
         if (SettingController.settingStage == null) {
             Parent settingParent = FXMLLoader
-                    .load(getClass().getResource("/com/mycompany/library_project/MyProjectFrom/frmSetting.fxml"));
+                    .load(App.class.getResource("frmSetting.fxml"));
             Scene settingScene = new Scene(settingParent);
             settingScene.setFill(Color.TRANSPARENT);
             SettingController.settingStage = new Stage(StageStyle.TRANSPARENT);
@@ -219,12 +225,12 @@ public class HomeController implements Initializable {
 
     @FXML
     private void buttonRentBook_Action(ActionEvent event) throws Exception {
-        showSubFrom("/com/mycompany/library_project/MyProjectFrom/frmRentBooks.fxml");
+        showSubFrom("frmRentBooks.fxml");
     }
 
     @FXML
     private void buttonSendBook_Action(ActionEvent event) throws Exception {
-        showSubFrom("/com/mycompany/library_project/MyProjectFrom/frmSendBook.fxml");
+        showSubFrom("frmSendBook.fxml");
     }
 
     @FXML
@@ -234,7 +240,7 @@ public class HomeController implements Initializable {
 
     @FXML
     private void buttonRegister_Action(ActionEvent event) throws Exception {
-        showSubFrom("/com/mycompany/library_project/MyProjectFrom/frmRegister.fxml");
+        showSubFrom("frmRegister.fxml");
     }
 
     @FXML
@@ -274,18 +280,20 @@ public class HomeController implements Initializable {
 
     private void showListItems() {
         Node[] node = new Node[100];
-        String[][] data = { { "Computer", "sifur", "wo9eur", "setue9t8ye5", "09", "87", "efuw" } };
+        String[] data = { "Computer", "sifur", "wo9eur", "setue9t8ye5", "09", "87", "efuw" };
 
         pnItems.getChildren().clear();
         for (int i = 0; i < node.length; i++) {
             try {
-                int index = i;
+
+                // !Set data to "rowBooks" Layout
+                MyArrayList list = new MyArrayList();
+                ListitemController.book_list = list.bookDetail(data);
+
                 Parent listParent = FXMLLoader
-                        .load(getClass().getResource("/com/mycompany/library_project/MyProjectFrom/rowBooks.fxml"));
+                        .load(App.class.getResource("rowBooks.fxml"));
                 node[i] = listParent;
-                
                 pnItems.getChildren().addAll(node[i]);
-                pnItems.accessibleHelpProperty().setValue("000"+i);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -295,6 +303,7 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         moveWinForm();
+        show_menu();
         sliderMenuHamburger();
     }
 }

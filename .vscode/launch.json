@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch FakeApp",
+            "request": "launch",
+            "mainClass": "com.mycompany.library_project.FakeApp",
+            "projectName": "Library_Project"
+        },
+        {
+            "type": "java",
+            "name": "Launch App",
+            "request": "launch",
+            "mainClass": "com.mycompany.library_project.App",
+            "projectName": "Library_Project"
+        },
+        {
+            "type": "java",
             "name": "Debug (Launch)",
             "request": "launch",
             "mainClass": ""
@@ -36,7 +50,6 @@
                 "${fileDirname}"
             ],
             "externalConsole": true
-        },
-      
+        }
     ]
 }

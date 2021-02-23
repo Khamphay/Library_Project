@@ -10,7 +10,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import com.mycompany.library_project.Controller.Model.TypeModel;
+import com.mycompany.library_project.Model.TypeModel;
 import com.mycompany.library_project.MyConnection;
 
 import javax.swing.*;

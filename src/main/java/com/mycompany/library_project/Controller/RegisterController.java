@@ -7,7 +7,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import com.mycompany.library_project.Controller.Model.MemberModel;
+import com.mycompany.library_project.Model.MemberModel;
 import com.mycompany.library_project.MyConnection;
 
 import javax.swing.*;

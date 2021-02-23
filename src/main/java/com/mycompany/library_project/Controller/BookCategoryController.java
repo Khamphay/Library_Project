@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import com.mycompany.library_project.Controller.Model.CategoryModel;
+import com.mycompany.library_project.Model.CategoryModel;
 
 public class BookCategoryController implements Initializable {
     

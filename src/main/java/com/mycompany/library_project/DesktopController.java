@@ -98,7 +98,7 @@ public class DesktopController implements Initializable {
 
     @FXML
     private void LoginMS(ActionEvent event)throws Exception {
-        Parent rootLogin = FXMLLoader.load(getClass().getResource("/com/mycompany/library_project/MyProjectFrom/Login.fxml"));
+        Parent rootLogin = FXMLLoader.load(App.class.getResource("Login.fxml"));
         Scene scene = new Scene(rootLogin);
         LoginController.loginSatge = new Stage(StageStyle.TRANSPARENT);
         scene.setFill(Color.TRANSPARENT);// Todo: set 'transparent' color to form, you must set 'transparent' to style in fxml

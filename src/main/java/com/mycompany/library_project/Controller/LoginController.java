@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.JFXTextField;
+import com.mycompany.library_project.App;
 import com.mycompany.library_project.DesktopController;
 import com.mycompany.library_project.ControllResize.Resizehelper;
 
@@ -16,7 +17,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -87,17 +87,18 @@ public class LoginController implements Initializable {
     @FXML
     private void Login(ActionEvent event) throws Exception{
         spinner.setVisible(true);
-        Parent root= FXMLLoader.load(getClass().getResource("/com/mycompany/library_project/MyProjectFrom/frmHome.fxml"));
+        Parent root = FXMLLoader.load(App.class.getResource("frmHome.fxml"));
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
-        HomeController.homeStage = new Stage(StageStyle.TRANSPARENT);
+        HomeController.homeStage = new Stage();
         HomeController.homeStage.setTitle("FNS Library MS");
         HomeController.homeStage.setScene(scene);
-        Resizehelper.addResizeListener(HomeController.homeStage);// Todo: Set to windows form able Resize
+        // Resizehelper.addResizeListener(HomeController.homeStage);//! Todo: Set to
+        // windows form able Resize
         HomeController.homeStage.show();
 
         closeThisForm();
-        closeDesktopForm();
+       // closeDesktopForm();
     }
 
     @FXML

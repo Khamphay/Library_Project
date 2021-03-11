@@ -36,68 +36,40 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <JFXButton id="btClick" buttonType="RAISED" layoutX="279.0" layoutY="157.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" text="Save" textFill="WHITE">
+                        <JFXButton id="btClick" buttonType="RAISED" layoutX="279.0" layoutY="157.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="#0a1eff" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton id="btClick" buttonType="RAISED" layoutX="419.0" layoutY="157.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" text="Book Lost" textFill="WHITE">
+                        <JFXButton id="btClick" buttonType="RAISED" layoutX="419.0" layoutY="157.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="#0a1eff" stylesheets="@Style/buttonFont.css" text="ປຶ້ມເສຍ" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton id="btClick" buttonType="RAISED" layoutX="555.0" layoutY="157.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" text="Cancel" textFill="WHITE">
+                        <JFXButton id="btClick" buttonType="RAISED" layoutX="555.0" layoutY="157.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="#0a1eff" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </JFXButton>
                         <AnchorPane layoutX="17.0" layoutY="14.0" minHeight="0.0" minWidth="0.0" prefHeight="124.0" prefWidth="968.0">
                            <children>
-                              <JFXDatePicker defaultColor="#0a1eff" layoutX="780.0" layoutY="72.0" prefHeight="28.0" prefWidth="173.0" promptText="ວັນທີສົ່ງ" style="-fx-text-fill: #fff;" styleClass="date-picker">
+                              <JFXDatePicker defaultColor="#696b78" layoutX="780.0" layoutY="72.0" prefHeight="28.0" prefWidth="173.0" promptText="ວັນທີສົ່ງ">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </JFXDatePicker>
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="178.0" layoutY="17.0" prefHeight="27.0" prefWidth="220.0" promptText="ຊື່ປຶ້ມ" style="-fx-text-fill: #0a1eff;" unFocusColor="BLACK" viewOrder="1.0">
-                                 <font>
-                                    <Font name="Phetsarath OT" size="12.0" />
-                                 </font>
-                              </JFXTextField>
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="36.0" layoutY="17.0" prefHeight="27.0" prefWidth="110.0" promptText="ລະຫັດປຶ້ມ" style="-fx-text-fill: #0a1eff;" unFocusColor="BLACK" viewOrder="1.0">
-                                 <font>
-                                    <Font name="Phetsarath OT" size="12.0" />
-                                 </font>
-                              </JFXTextField>
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="600.0" layoutY="17.0" prefHeight="27.0" prefWidth="161.0" promptText="ປະເພດ" style="-fx-text-fill: #0a1eff;" unFocusColor="BLACK" viewOrder="1.0">
-                                 <font>
-                                    <Font name="Phetsarath OT" size="12.0" />
-                                 </font>
-                              </JFXTextField>
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="422.0" layoutY="17.0" prefHeight="27.0" prefWidth="161.0" promptText="ໝວດ" style="-fx-text-fill: #0a1eff;" unFocusColor="BLACK" viewOrder="1.0">
-                                 <font>
-                                    <Font name="Phetsarath OT" size="12.0" />
-                                 </font>
-                              </JFXTextField>
-                              <JFXDatePicker defaultColor="#0a1eff" layoutX="780.0" layoutY="17.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີຢືມ" style="-fx-text-fill: #fff;" styleClass="date-picker">
+                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="178.0" layoutY="17.0" prefHeight="27.0" prefWidth="220.0" promptText="ຊື່ປຶ້ມ" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
+                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="36.0" layoutY="17.0" prefHeight="27.0" prefWidth="110.0" promptText="ລະຫັດປຶ້ມ" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
+                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="600.0" layoutY="17.0" prefHeight="27.0" prefWidth="161.0" promptText="ປະເພດ" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
+                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="422.0" layoutY="17.0" prefHeight="27.0" prefWidth="161.0" promptText="ໝວດ" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
+                              <JFXDatePicker defaultColor="#696b78" layoutX="780.0" layoutY="17.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີຢືມ">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </JFXDatePicker>
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="177.0" layoutY="73.0" prefHeight="27.0" prefWidth="220.0" promptText="ຄ່າປັບໃໝ/ມື້" style="-fx-text-fill: #0a1eff;" unFocusColor="BLACK" viewOrder="1.0">
-                                 <font>
-                                    <Font name="Phetsarath OT" size="12.0" />
-                                 </font>
-                              </JFXTextField>
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="422.0" layoutY="73.0" prefHeight="27.0" prefWidth="161.0" promptText="ຄ່າປັບໃໝທັງໝົດ" style="-fx-text-fill: #0a1eff;" unFocusColor="BLACK" viewOrder="1.0">
-                                 <font>
-                                    <Font name="Phetsarath OT" size="12.0" />
-                                 </font>
-                              </JFXTextField>
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="36.0" layoutY="73.0" prefHeight="27.0" prefWidth="110.0" promptText="ຈຳນວນມື້ທີ່ຢືມກາຍ" style="-fx-text-fill: #0a1eff;" unFocusColor="BLACK" viewOrder="1.0">
-                                 <font>
-                                    <Font name="Phetsarath OT" size="12.0" />
-                                 </font>
-                              </JFXTextField>
+                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="177.0" layoutY="73.0" prefHeight="27.0" prefWidth="220.0" promptText="ຄ່າປັບໃໝ/ມື້" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
+                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="422.0" layoutY="73.0" prefHeight="27.0" prefWidth="161.0" promptText="ຄ່າປັບໃໝທັງໝົດ" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
+                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="36.0" layoutY="73.0" prefHeight="27.0" prefWidth="110.0" promptText="ຈຳນວນມື້ທີ່ຢືມກາຍ" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
                            </children>
                         </AnchorPane>
                      </children>

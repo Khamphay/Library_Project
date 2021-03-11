@@ -2,10 +2,12 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -20,37 +22,20 @@
                <content>
                   <AnchorPane>
                      <children>
-                        <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="346.0" layoutY="56.0" prefHeight="27.0" prefWidth="161.0" promptText="ລ໋ອກຕູ້" style="-fx-text-fill: #0a1eff;" unFocusColor="BLACK" viewOrder="1.0">
-                           <font>
-                              <Font name="Phetsarath OT" size="12.0" />
-                           </font>
-                        </JFXTextField>
-                        <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="156.0" layoutY="56.0" prefHeight="27.0" prefWidth="161.0" promptText="ລະຫັດຕູ້ (ເລກຕູ້)" style="-fx-text-fill: #0a1eff;" unFocusColor="BLACK" viewOrder="1.0">
-                           <font>
-                              <Font name="Phetsarath OT" size="12.0" />
-                           </font>
-                        </JFXTextField>
-                        <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="543.0" layoutY="56.0" prefHeight="27.0" prefWidth="161.0" promptText="ຈຳນວນລ໋ອກຕູ້" style="-fx-text-fill: #0a1eff;" unFocusColor="BLACK" viewOrder="1.0">
-                           <font>
-                              <Font name="Phetsarath OT" size="12.0" />
-                           </font>
-                        </JFXTextField>
-                        <JFXButton id="btClick" buttonType="RAISED" layoutX="192.0" layoutY="109.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" text="Save" textFill="WHITE">
+                        <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="346.0" layoutY="56.0" prefHeight="27.0" prefWidth="161.0" promptText="ລ໋ອກຕູ້" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
+                        <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="156.0" layoutY="56.0" prefHeight="27.0" prefWidth="161.0" promptText="ລະຫັດຕູ້ (ເລກຕູ້)" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
+                        <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="543.0" layoutY="56.0" prefHeight="27.0" prefWidth="161.0" promptText="ຈຳນວນລ໋ອກຕູ້" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
+                        <JFXButton id="btClick" buttonType="RAISED" layoutX="237.0" layoutY="111.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="#0a1eff" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton id="btClick" buttonType="RAISED" layoutX="556.0" layoutY="109.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" text="Cancel" textFill="WHITE">
+                        <JFXButton id="btClick" buttonType="RAISED" layoutX="477.0" layoutY="111.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="#0a1eff" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton id="btClick" buttonType="RAISED" layoutX="316.0" layoutY="109.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" text="Edite" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </JFXButton>
-                        <JFXButton id="btClick" buttonType="RAISED" layoutX="442.0" layoutY="109.0" prefHeight="35.0" prefWidth="104.0" ripplerFill="#0a1eff" text="Delete" textFill="WHITE">
+                        <JFXButton id="btClick" buttonType="RAISED" layoutX="363.0" layoutY="111.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="#0a1eff" stylesheets="@Style/buttonFont.css" text="ລົບ" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -65,11 +50,16 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="156.0" layoutY="187.0" prefHeight="27.0" prefWidth="249.0" promptText="Search" unFocusColor="BLACK">
-                           <font>
-                              <Font name="Phetsarath OT" size="12.0" />
-                           </font>
-                        </JFXTextField>
+                        <TextField layoutX="156.0" layoutY="174.0" prefHeight="30.0" prefWidth="291.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular">
+                           <padding>
+                              <Insets left="40.0" />
+                           </padding>
+                        </TextField>
+                        <ImageView fitHeight="21.0" fitWidth="32.0" layoutX="167.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icon/search_50px.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
                </content>

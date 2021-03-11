@@ -6,7 +6,9 @@ import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.JFXTextField;
 import com.mycompany.library_project.App;
 import com.mycompany.library_project.DesktopController;
-import com.mycompany.library_project.ControllResize.Resizehelper;
+
+import org.controlsfx.control.decoration.*;
+import org.controlsfx.validation.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,6 +27,8 @@ public class LoginController implements Initializable {
 
     private double x, y;
     public static Stage loginSatge = null;//Seted object when open form 'Login' in class 'DesktopController.java'
+    private ValidationSupport validRules;
+    private Decoration decoration;
 
     @FXML
     private AnchorPane acPaneLogin;
@@ -75,13 +79,20 @@ public class LoginController implements Initializable {
     private void closeThisForm() {
         //Close Login Form
         spinner.setVisible(false);
-        
-        
+
         loginSatge.close();
 
         //Todo:  Or use 
-        Stage loginStg=(Stage) acPaneLogin.getScene().getWindow();
-        loginStg.close();        
+        Stage loginStg = (Stage) acPaneLogin.getScene().getWindow();
+        loginStg.close();
+    }
+    
+    private void textRules() {
+        validRules = new ValidationSupport();
+        validRules.registerValidator(txtUsername, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່ຜູ້ໃຊ້"));
+
+        validRules = new ValidationSupport();
+        validRules.registerValidator(txtPassword, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນລະຫັດຜ່ານ"));
     }
 
     @FXML
@@ -91,7 +102,7 @@ public class LoginController implements Initializable {
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
         HomeController.homeStage = new Stage();
-        HomeController.homeStage.setTitle("FNS Library MS");
+        HomeController.homeStage.setTitle("FNS Library Management System");
         HomeController.homeStage.setScene(scene);
         // Resizehelper.addResizeListener(HomeController.homeStage);//! Todo: Set to
         // windows form able Resize
@@ -127,6 +138,8 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         opacityFromMove();
         MyProgress();
+        textRules();
+
     }
 
 }

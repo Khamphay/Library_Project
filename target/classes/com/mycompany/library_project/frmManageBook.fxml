@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="806.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.ManagePersonal">
+
+<BorderPane fx:id="bpManageBook" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.ManageBookController">
    <center>
-      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="357.0" prefWidth="806.0" BorderPane.alignment="CENTER">
-         <content>
-            <AnchorPane prefHeight="406.0" prefWidth="804.0">
-               <children>
-                  <JFXButton buttonType="RAISED" layoutX="217.0" layoutY="120.0" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປະເພດປຶ້ມ" textFill="#ffeded" />
-                  <JFXButton buttonType="RAISED" layoutX="371.0" layoutY="120.0" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນໝວດປຶ້ມ" textFill="#ffeded" />
-                  <JFXButton buttonType="RAISED" layoutX="521.0" layoutY="120.0" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນລ໋ອກຕູ້" textFill="#ffeded" />
-                  <JFXButton buttonType="RAISED" layoutX="371.0" layoutY="274.0" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປຶ້ມ" textFill="#ffeded" />
-                  <JFXButton buttonType="RAISED" layoutX="217.0" layoutY="274.0" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປຶ້ມເສຍ" textFill="#ffeded" />
-               </children>
-            </AnchorPane>
-         </content>
-      </ScrollPane>
+      <AnchorPane fx:id="anchorMenu" prefHeight="519.0" prefWidth="804.0">
+         <children>
+            <JFXButton buttonType="RAISED" layoutX="229.0" layoutY="143.0" onAction="#btBookType_Click" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປະເພດປຶ້ມ" textFill="#ffeded" />
+            <JFXButton buttonType="RAISED" layoutX="383.0" layoutY="143.0" onAction="#btBookCategory_Click" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນໝວດປຶ້ມ" textFill="#ffeded" />
+            <JFXButton buttonType="RAISED" layoutX="533.0" layoutY="143.0" onAction="#btBookTableLog_Click" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນລ໋ອກຕູ້" textFill="#ffeded" />
+            <JFXButton buttonType="RAISED" layoutX="229.0" layoutY="288.0" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປຶ້ມ" textFill="#ffeded" />
+            <JFXButton buttonType="RAISED" layoutX="383.0" layoutY="288.0" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປຶ້ມເສຍ" textFill="#ffeded" />
+         </children>
+      </AnchorPane>
    </center>
 </BorderPane>

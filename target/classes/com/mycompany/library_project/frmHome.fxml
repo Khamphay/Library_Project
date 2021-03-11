@@ -10,8 +10,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
@@ -38,7 +38,7 @@
                   <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="363.0" prefWidth="880.0">
                      <children>
                         <Line endX="614.0" layoutX="213.0" layoutY="166.0" startX="-100.0" stroke="#46008d" AnchorPane.leftAnchor="112.5" AnchorPane.rightAnchor="108.5" />
-                        <Accordion layoutX="125.0" layoutY="310.0" />
+                        <Accordion layoutX="208.0" layoutY="313.0" />
                         <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" layoutX="350.0" layoutY="175.0" onAction="#buttonSendBook_Action" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="ສົ່ງປຶ້ມ" textFill="WHITE" viewOrder="2.0" AnchorPane.topAnchor="175.0">
                            <cursor>
                               <Cursor fx:constant="HAND" />
@@ -102,7 +102,7 @@
                                  </image>
                               </ImageView>
                               <Label contentDisplay="CENTER" layoutX="149.0" layoutY="74.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" text="Faculty Of Natural Scince Library Management System" textAlignment="CENTER" textFill="WHITE" />
-                              <JFXButton alignment="CENTER" buttonType="RAISED" cache="true" cacheHint="QUALITY" graphicTextGap="10.0" layoutX="613.0" layoutY="14.0" onAction="#LogOut" prefHeight="31.0" prefWidth="131.0" style="-fx-background-radius: 15px 15px 15px 15px; -fx-background-color: #fff;" stylesheets="@Style/buttonFont.css" text="ອອກຈາກລະບົບ" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+                              <JFXButton id="#btLogOut" alignment="CENTER" buttonType="RAISED" cache="true" cacheHint="QUALITY" graphicTextGap="10.0" layoutX="613.0" layoutY="14.0" onAction="#LogOut" prefHeight="31.0" prefWidth="131.0" style="-fx-background-radius: 15px 15px 15px 15px; -fx-background-color: #fff;" styleClass="button-color" stylesheets="@Style/buttonFont.css" text="ອອກຈາກລະບົບ" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
                                  <graphic>
                                     <ImageView fitHeight="21.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -110,13 +110,10 @@
                                        </image>
                                     </ImageView>
                                  </graphic>
-                                 <font>
-                                    <Font name="Phetsarath OT Bold" size="12.0" />
-                                 </font>
                               </JFXButton>
                            </children>
                         </AnchorPane>
-                        <HBox alignment="CENTER_LEFT" layoutX="28.0" layoutY="294.0" prefHeight="32.0" prefWidth="880.0" style="-fx-background-color: #E0E0EB;">
+                        <HBox alignment="CENTER_LEFT" layoutX="111.0" layoutY="297.0" prefHeight="32.0" prefWidth="897.0" style="-fx-background-color: #E0E0EB;">
                            <children>
                               <Label prefHeight="32.0" prefWidth="77.0" styleClass="label-size-12" text="ລະຫັດປຶ້ມ" />
                               <Label prefHeight="32.0" prefWidth="220.0" styleClass="label-size-12" text="ຊື່ປຶ້ມ" />
@@ -130,9 +127,9 @@
                               <Cursor fx:constant="DEFAULT" />
                            </cursor>
                         </HBox>
-                        <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="27.0" layoutY="326.0" prefHeight="239.0" prefWidth="882.0" AnchorPane.bottomAnchor="17.0" AnchorPane.topAnchor="326.0">
+                        <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="110.0" layoutY="329.0" prefHeight="216.0" prefWidth="900.0" AnchorPane.bottomAnchor="14.0" AnchorPane.topAnchor="329.0">
                            <content>
-                              <VBox fx:id="pnItems" prefHeight="200.0" prefWidth="100.0" />
+                              <FlowPane fx:id="pnItems" prefHeight="200.0" prefWidth="200.0" />
                            </content>
                         </ScrollPane>
                      </children>

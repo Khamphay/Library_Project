@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.mycompany.library_project.ControllResize.Resizehelper;
 import com.mycompany.library_project.Controller.LoginController;
 
 
@@ -30,7 +29,7 @@ public class App extends Application implements Initializable {
         Parent root= FXMLLoader.load(App.class.getResource("Login.fxml"));
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
-        primaryStage.setTitle("FNS Library MS");
+        primaryStage.setTitle("FNS Library Management System - Login");
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(scene);
         //DesktopController.desktopStage = primaryStage;//Todo: set object

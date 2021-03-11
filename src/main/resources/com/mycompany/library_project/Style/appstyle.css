@@ -28,6 +28,38 @@
     -fx-font-size: 20;
 }
 
+/*-------------------FontStyle -----------------*/
+.BoonBaan-size-12-Regular{
+    -fx-font-family: 'BoonBaan';
+    -fx-font-size: 12;
+}
+
+.BoonBaan-size-12{
+    -fx-font-family: 'BoonBaan';
+    -fx-font-weight: bold;
+    -fx-font-size: 12;
+}
+.BoonBaan-size-14{
+    -fx-font-family: 'BoonBaan';
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+}
+.BoonBaan-size-14-Regular{
+    -fx-font-family: 'BoonBaan';
+    -fx-font-size: 14;
+}
+.BoonBaan-size-16{
+    -fx-font-family: 'BoonBaan';
+    -fx-font-weight: bold;
+    -fx-font-size: 16;
+}
+
+.BoonBaan-size-20{
+    -fx-font-family: 'BoonBaan';
+    -fx-font-weight: bold;
+    -fx-font-size: 20;
+}
+
 /*-------------------VBox-----------------*/
 .vbox:hover{
     -fx-background-color:#D6DFF5;
@@ -37,22 +69,6 @@
 }
 
 /*-------------------Button -----------------*/
-.button{
-    -fx-font-family: 'BoonBaan';
-    /* -fx-font-family: 'Noto Sans Lao'; */
-    -fx-font-size: 14;
-}
-.button-size-16{
-    -fx-font-family: 'BoonBaan';
-    /* -fx-font-family: 'Noto Sans Lao'; */
-    -fx-font-size: 16;
-}
-.button-size-16-bold{
-    -fx-font-family: 'BoonBaan';
-    /* -fx-font-family: 'Noto Sans Lao'; */
-    -fx-font-size: 16;
-    -fx-font-weight: bold;
-}
 #btClick{
     -fx-background-color: #101D3D;
     -fx-background-radius:15px 15px 15px 15px;
@@ -87,20 +103,24 @@
     /* -fx-display: flex; */
 }
 .date-picker{
-    -fx-font-family: 'Phetsarath OT';
-    -fx-font-size: 12;
+    -fx-font-family: 'BoonBaan';
+    -fx-font-size: 14;
     -fx-text-fill:#fff;
+    /* -fx-font-weight: bold; */
 }
 
 /*-------------------Combobox -----------------*/
 .combobox{
-    -fx-font-family: 'Phetsarath OT';
-    -fx-font-size: 12;
+    -fx-font-family: 'BoonBaan';
+    /* -fx-font-size: 14; */
+    -fx-font-weight: bold;
 }
 
 /*-------------------Label -----------------*/
 .label{
-    -fx-font-family: 'Phetsarath OT';
+    /* -fx-font-family: 'Phetsarath OT';
+     */
+     -fx-font-family: 'BoonBaan';
 }
 .label-size-12-Regular{
     -fx-font-size: 12;

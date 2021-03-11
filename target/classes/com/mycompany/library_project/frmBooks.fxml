@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -20,16 +21,6 @@
                <content>
                   <AnchorPane prefHeight="562.0" prefWidth="1068.0">
                      <children>
-                        <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="847.0" layoutY="74.0" prefHeight="23.0" prefWidth="208.0" promptText="Search" unFocusColor="BLACK">
-                           <font>
-                              <Font name="Phetsarath OT" size="12.0" />
-                           </font>
-                        </JFXTextField>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="817.0" layoutY="76.0">
-                           <image>
-                              <Image url="@Icon/search_100px.png" />
-                           </image>
-                        </ImageView>
                         <TableView layoutX="9.0" layoutY="106.0" minWidth="-Infinity" prefHeight="443.0" prefWidth="1050.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="106.0">
                            <columns>
                               <TableColumn prefWidth="164.0" text="C1" />
@@ -54,6 +45,16 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </JFXButton>
+                        <TextField layoutX="763.0" layoutY="57.0" prefHeight="36.0" prefWidth="291.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular" AnchorPane.rightAnchor="14.0">
+                           <padding>
+                              <Insets left="40.0" />
+                           </padding>
+                        </TextField>
+                        <ImageView fitHeight="28.0" fitWidth="31.0" layoutX="771.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="269.0">
+                           <image>
+                              <Image url="@Icon/search_50px.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
                </content>

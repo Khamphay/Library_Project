@@ -2,31 +2,21 @@ package com.mycompany.library_project.Controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXHamburger;
-import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import com.mycompany.library_project.App;
 import com.mycompany.library_project.DesktopController;
 import com.mycompany.library_project.ModelShow.MyArrayList;
 
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.event.*;
+import javafx.fxml.*;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.stage.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -55,7 +45,9 @@ public class HomeController implements Initializable {
     private AnchorPane acPaneMenuList;
 
     @FXML
-    private VBox pnItems;
+    // private VBox pnItems;
+    private FlowPane pnItems;
+
     @FXML
     public BorderPane bpDisplay;
     @FXML
@@ -90,6 +82,25 @@ public class HomeController implements Initializable {
         acHomePaneToolbar.setOnMouseReleased(mouseEvent -> {
             homeStage.setOpacity(1.0f);
         });
+    }
+
+    private void showListItems() {
+        Node[] node = new Node[100];
+        String[] data = { "Computer", "sifur", "wo9eur", "setue9t8ye5", "09", "87", "efuw" };
+
+        pnItems.getChildren().clear();
+        for (int i = 0; i < node.length; i++) {
+            try {
+                // !Set data to "rowBooks" Layout
+                MyArrayList list = new MyArrayList();
+                ListitemController.book_list = list.bookDetail(data);
+                Parent listParent = FXMLLoader.load(App.class.getResource("rowBooks.fxml"));
+                node[i] = listParent;
+                pnItems.getChildren().addAll(node[i]);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void sliderMenuHamburger() {
@@ -156,7 +167,7 @@ public class HomeController implements Initializable {
 
                 @Override
                 public void handle(Event event) {
-                    // TODO: Report
+                    showSubFrom("frmReport.fxml");
                 }
             });
 
@@ -171,6 +182,7 @@ public class HomeController implements Initializable {
                             settingScene.setFill(Color.TRANSPARENT);
                             SettingController.settingStage = new Stage(StageStyle.TRANSPARENT);
                             SettingController.settingStage.setScene(settingScene);
+                            SettingController.settingStage.setTitle("FNS Library Management System - Setting");
                             SettingController.settingStage.show();
                         }
                     } catch (Exception e) {
@@ -197,9 +209,9 @@ public class HomeController implements Initializable {
         Scene sceneDesktop = new Scene(desktopRoot);
         sceneDesktop.setFill(Color.TRANSPARENT);
         // DesktopController.desktopStage = new Stage(StageStyle.TRANSPARENT);
-        DesktopController.desktopStage.setTitle("FNS Library MS");
-        DesktopController.desktopStage.setScene(sceneDesktop);
-        DesktopController.desktopStage.show();
+        LoginController.loginSatge.setTitle("FNS Library Management System - Login");
+        LoginController.loginSatge.setScene(sceneDesktop);
+        LoginController.loginSatge.show();
 
         // Close this form
         homeStage.close();
@@ -278,31 +290,10 @@ public class HomeController implements Initializable {
         System.exit(0);
     }
 
-    private void showListItems() {
-        Node[] node = new Node[100];
-        String[] data = { "Computer", "sifur", "wo9eur", "setue9t8ye5", "09", "87", "efuw" };
-
-        pnItems.getChildren().clear();
-        for (int i = 0; i < node.length; i++) {
-            try {
-
-                // !Set data to "rowBooks" Layout
-                MyArrayList list = new MyArrayList();
-                ListitemController.book_list = list.bookDetail(data);
-
-                Parent listParent = FXMLLoader
-                        .load(App.class.getResource("rowBooks.fxml"));
-                node[i] = listParent;
-                pnItems.getChildren().addAll(node[i]);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        moveWinForm();
+        // moveWinForm();
         show_menu();
         sliderMenuHamburger();
     }

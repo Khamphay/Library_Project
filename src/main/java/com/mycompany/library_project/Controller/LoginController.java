@@ -44,8 +44,8 @@ public class LoginController implements Initializable {
     private JFXTextField txtUsername;
     @FXML
     private JFXPasswordField txtPassword;
-    @FXML
-    private JFXSpinner spinner;
+//    @FXML
+//    private JFXSpinner spinner;
 
     // TODO: Custom move form
     private void opacityFromMove() {
@@ -78,7 +78,7 @@ public class LoginController implements Initializable {
     //Close this form
     private void closeThisForm() {
         //Close Login Form
-        spinner.setVisible(false);
+       // spinner.setVisible(false);
 
         loginSatge.close();
 
@@ -97,7 +97,7 @@ public class LoginController implements Initializable {
 
     @FXML
     private void Login(ActionEvent event) throws Exception{
-        spinner.setVisible(true);
+      //  spinner.setVisible(true);
         Parent root = FXMLLoader.load(App.class.getResource("frmHome.fxml"));
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
@@ -115,7 +115,7 @@ public class LoginController implements Initializable {
     @FXML
     private void Cancel(ActionEvent event){
         txtUsername.setText("");
-        spinner.setVisible(true);
+       // spinner.setVisible(true);
     }
 
     @FXML
@@ -130,14 +130,14 @@ public class LoginController implements Initializable {
         closeThisForm();
     }
 
-    private void MyProgress(){
-        spinner.setVisible(false);
-    }
+//    private void MyProgress(){
+//        spinner.setVisible(false);
+//    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         opacityFromMove();
-        MyProgress();
+        //MyProgress();
         textRules();
 
     }

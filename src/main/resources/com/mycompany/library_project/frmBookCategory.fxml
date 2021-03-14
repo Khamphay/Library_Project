@@ -53,12 +53,12 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <TextField layoutX="396.0" layoutY="177.0" prefHeight="30.0" prefWidth="324.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular">
+                        <TextField layoutX="418.0" layoutY="177.0" prefHeight="30.0" prefWidth="300.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular">
                            <padding>
                               <Insets left="40.0" />
                            </padding>
                         </TextField>
-                        <ImageView fitHeight="22.0" fitWidth="25.0" layoutX="406.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="22.0" fitWidth="25.0" layoutX="428.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Icon/search_50px.png" />
                            </image>

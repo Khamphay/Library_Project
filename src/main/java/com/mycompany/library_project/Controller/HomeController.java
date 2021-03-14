@@ -4,9 +4,9 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import com.mycompany.library_project.App;
-import com.mycompany.library_project.DesktopController;
 import com.mycompany.library_project.ModelShow.MyArrayList;
 
+import javafx.application.Platform;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.fxml.Initializable;
@@ -16,6 +16,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.*;
 
 import java.net.URL;
@@ -32,6 +33,8 @@ public class HomeController implements Initializable {
     private boolean fragMenu = false;
     private Node node;
     private Parent rootMenu = null;
+    Node[] nodeItem = new Node[1000];
+    String[] data = { "Computer", "sifur", "wo9eur", "setue9t8ye5", "09", "87", "efuw" };
 
     @FXML
     private AnchorPane acHomePaneToolbar;
@@ -62,7 +65,6 @@ public class HomeController implements Initializable {
     @FXML
     private JFXHamburger humberger;
 
-
     // TODO: Custom move form
     private void moveWinForm() {
         acHomePaneToolbar.setOnMousePressed(mouseEvent -> {
@@ -84,30 +86,15 @@ public class HomeController implements Initializable {
         });
     }
 
-    private void showListItems() {
-        Node[] node = new Node[100];
-        String[] data = { "Computer", "sifur", "wo9eur", "setue9t8ye5", "09", "87", "efuw" };
+    // private void showListItems() {
 
-        pnItems.getChildren().clear();
-        for (int i = 0; i < node.length; i++) {
-            try {
-                // !Set data to "rowBooks" Layout
-                MyArrayList list = new MyArrayList();
-                ListitemController.book_list = list.bookDetail(data);
-                Parent listParent = FXMLLoader.load(App.class.getResource("rowBooks.fxml"));
-                node[i] = listParent;
-                pnItems.getChildren().addAll(node[i]);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
+    // }
 
     private void sliderMenuHamburger() {
         hamburgerTransition = new HamburgerSlideCloseTransition(humberger);
         hamburgerTransition.setRate(-1);
         humberger.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-            hamburgerTransition.setRate(hamburgerTransition.getRate()*-1);
+            hamburgerTransition.setRate(hamburgerTransition.getRate() * -1);
             hamburgerTransition.play();
             show_menu();
         });
@@ -137,7 +124,7 @@ public class HomeController implements Initializable {
                 bpDisplay.setLeft(node);
                 fragMenu = true;
             }
-           
+
             // Todo!: Set event to menu
             node.lookup("#btHome").setOnMouseClicked(new EventHandler<Event>() {
 
@@ -225,8 +212,7 @@ public class HomeController implements Initializable {
     @FXML
     private void buttonSetting_Action(ActionEvent event) throws Exception {
         if (SettingController.settingStage == null) {
-            Parent settingParent = FXMLLoader
-                    .load(App.class.getResource("frmSetting.fxml"));
+            Parent settingParent = FXMLLoader.load(App.class.getResource("frmSetting.fxml"));
             Scene settingScene = new Scene(settingParent);
             settingScene.setFill(Color.TRANSPARENT);
             SettingController.settingStage = new Stage(StageStyle.TRANSPARENT);
@@ -258,7 +244,31 @@ public class HomeController implements Initializable {
     @FXML
     private void buttonNotify_Action(ActionEvent event) throws Exception {
         // showSubFrom("");
-        showListItems();
+        // showListItems();
+
+        // thItem.start();
+
+        pnItems.getChildren().clear();
+        Platform.runLater(new Runnable() {
+            int j = 0;
+
+            @Override
+            public void run() {
+                while (j < nodeItem.length) {
+                    try {
+                        // !Set data to "rowBooks" Layout
+                        MyArrayList list = new MyArrayList();
+                        ListitemController.book_list = list.bookDetail(data);
+                        Parent listParent = FXMLLoader.load(App.class.getResource("rowBooks.fxml"));
+                        nodeItem[j] = listParent;
+                        pnItems.getChildren().addAll(nodeItem[j]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    j++;
+                }
+            };
+        });
     }
 
     @FXML
@@ -290,11 +300,12 @@ public class HomeController implements Initializable {
         System.exit(0);
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // moveWinForm();
         show_menu();
         sliderMenuHamburger();
+        // thItem.start();
     }
+
 }

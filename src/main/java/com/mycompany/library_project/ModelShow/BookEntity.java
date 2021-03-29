@@ -1,16 +1,28 @@
 package com.mycompany.library_project.ModelShow;
 
 public class BookEntity {
-    private String id, name, type, category, page, qty, lang;
+    private String id, name, isbn, type, category, page, qty, detail;
 
-    public BookEntity(String id, String name, String type, String category, String page, String qty, String lang) {
+    public BookEntity(String id, String name, String type, String category, String page, String qty, String detail) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.category = category;
         this.page = page;
         this.qty = qty;
-        this.lang = lang;
+        this.detail = detail;
+    }
+
+    public BookEntity(String id, String name, String isbn, String page, String qty, String type, String category, 
+            String detail) {
+        this.id = id;
+        this.name = name;
+        this.isbn = isbn;
+        this.type = type;
+        this.category = category;
+        this.page = page;
+        this.qty = qty;
+        this.detail = detail;
     }
 
     public String getId() {
@@ -27,6 +39,14 @@ public class BookEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setISBN(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getISBN() {
+        return isbn;
     }
 
     public String getType() {
@@ -61,12 +81,12 @@ public class BookEntity {
         this.qty = qty;
     }
 
-    public String getLang() {
-        return lang;
+    public String getDetail() {
+        return detail;
     }
 
-    public void setLang(String lang) {
-        this.lang = lang;
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
-    
+
 }

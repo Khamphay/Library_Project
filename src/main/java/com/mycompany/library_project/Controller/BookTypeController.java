@@ -15,9 +15,7 @@ import com.mycompany.library_project.MyConnection;
 
 import javax.swing.*;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 public class BookTypeController implements Initializable {

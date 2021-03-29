@@ -1,79 +1,193 @@
 package com.mycompany.library_project.Model;
 
-import javafx.beans.property.*;
+import java.sql.*;
+import java.text.ParseException;
+
+import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 
 public class BookLostModel {
-    private StringProperty lostId;
-    private StringProperty barcode;
-    private IntegerProperty qty;
-    private DoubleProperty fineCost;
-    private StringProperty date;
+    protected String lostId;
+    protected String barcode;
+    protected String memberId;
+    protected Integer qty;
+    protected Double fineCost;
+    protected Date date;
 
-    public BookLostModel(String lostId, String barcode, Integer qty, Double fineCost, String date) {
-        this.lostId = new SimpleStringProperty(lostId);
-        this.barcode = new SimpleStringProperty(barcode);
-        this.qty = new SimpleIntegerProperty(qty);
-        this.fineCost = new SimpleDoubleProperty(fineCost);
-        this.date = new SimpleStringProperty(date);
+    public BookLostModel(String lostId, String barcode, String memberId, Integer qty, Double fineCost, Date date) {
+        this.lostId = lostId;
+        this.barcode = barcode;
+        this.memberId = memberId;
+        this.qty = qty;
+        this.fineCost = fineCost;
+        this.date = date;
     }
 
     public String getLostId() {
-        return lostId.get();
-    }
-
-    public StringProperty lostIdProperty() {
         return lostId;
     }
 
     public void setLostId(String lostId) {
-        this.lostId.set(lostId);
+        this.lostId = lostId;
     }
 
     public String getBarcode() {
-        return barcode.get();
-    }
-
-    public StringProperty barcodeProperty() {
         return barcode;
     }
 
     public void setBarcode(String barcode) {
-        this.barcode.set(barcode);
+        this.barcode = barcode;
     }
 
-    public int getQty() {
-        return qty.get();
+    public String getMemberId() {
+        return memberId;
     }
 
-    public IntegerProperty qtyProperty() {
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
+    }
+
+    public Integer getQty() {
         return qty;
     }
 
-    public void setQty(int qty) {
-        this.qty.set(qty);
+    public void setQty(Integer qty) {
+        this.qty = qty;
     }
 
-    public double getFineCost() {
-        return fineCost.get();
-    }
-
-    public DoubleProperty fineCostProperty() {
+    public Double getFineCost() {
         return fineCost;
     }
 
-    public void setFineCost(double fineCost) {
-        this.fineCost.set(fineCost);
+    public void setFineCost(Double fineCost) {
+        this.fineCost = fineCost;
     }
 
-    public String getDate() {
-        return date.get();
-    }
-
-    public StringProperty dateProperty() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date.set(date);
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    class lostDetail extends BookLostModel implements DataAccessObject {
+
+        String sql = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection conn = MyConnection.getConnect();
+
+        private Double price;
+
+        public lostDetail(String lostId, String barcode, String memberId, Integer qty, Double fineCost, Date date,
+                double price) {
+            super(lostId, barcode, memberId, qty, fineCost, date);
+            this.price = price;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public void setPrice(double price) {
+            this.price = price;
+        }
+
+        @Override
+        public ResultSet findAll() throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public ResultSet findById(String id) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public ResultSet findByName(String name) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public ResultSet searchData(String values) throws SQLException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public int saveData() throws SQLException, ParseException {
+            try {
+                sql = "call book_lost_Insert(?, ?, ?, ?)";
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, getMemberId());
+                ps.setInt(2, getQty());
+                ps.setDouble(3, getFineCost());
+                ps.setDate(4, getDate());
+                return ps.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return -1;
+            }
+        }
+
+        public int saveLostDetail() {
+            try {
+                sql = "call book_lostdetail_Insert(?, ?, ?)";
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, getLostId());
+                ps.setString(2, getBarcode());
+                ps.setDouble(3, getPrice());
+                return ps.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return -1;
+            }
+        }
+
+        @Override
+        public int updateData() throws SQLException, ParseException {
+            try {
+                sql = "call book_lost_Update(?, ?, ?, ?, ?)";
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, getLostId());
+                ps.setString(2, getMemberId());
+                ps.setInt(3, getQty());
+                ps.setDouble(4, getFineCost());
+                ps.setDate(5, getDate());
+                return ps.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return -1;
+            }
+        }
+
+        @Override
+        public int deleteData(String id) throws SQLException {
+            try {
+                sql = "call book_lost_Delete(?";
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, getLostId());
+                return ps.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return -1;
+            }
+        }
+
+        public int deleeLostDetail() {
+            try {
+                sql = "call book_lostdetail_Delete(?)";
+                ps = conn.prepareStatement(sql);
+                ps.setString(1, getLostId());
+                return ps.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return -1;
+            }
+        }
     }
 }

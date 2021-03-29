@@ -19,44 +19,36 @@ public class TypeModel implements DataAccessObject {
 
     private String sql = "";
 
-    private StringProperty typeId;
-    private StringProperty typeName;
+    private String typeId;
+    private String typeName;
 
     public TypeModel() {
         
     }
 
     public TypeModel(String typeId) {
-        this.typeId = new SimpleStringProperty(typeId);
+        this.typeId = typeId;
     }
 
     public TypeModel(String typeId, String typeName) {
-        this.typeId = new SimpleStringProperty(typeId);
-        this.typeName = new SimpleStringProperty(typeName);
+        this.typeId = typeId;
+        this.typeName = typeName;
     }
 
     public String getTypeId() {
-        return typeId.get();
-    }
-
-    public String getTypeName() {
-        return typeName.get();
-    }
-
-    public void setTypeId(String values) {
-        this.typeId.set(values);
-    }
-
-    public void setTypeName(String values) {
-        this.typeName.set(values);
-    }
-
-    public StringProperty typeIdProperty() {
         return typeId;
     }
 
-    public StringProperty typeNameProperty() {
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getTypeName() {
         return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     @Override
@@ -118,4 +110,5 @@ public class TypeModel implements DataAccessObject {
         ps.setString(1, id);
         return ps.executeUpdate();
     }
+
 }

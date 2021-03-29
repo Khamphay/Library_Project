@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import com.mycompany.library_project.App;
+import com.mycompany.library_project.Controller.List.ListitemController;
 import com.mycompany.library_project.ModelShow.MyArrayList;
 
 import javafx.application.Platform;
@@ -16,7 +17,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.*;
 
 import java.net.URL;
@@ -33,7 +33,7 @@ public class HomeController implements Initializable {
     private boolean fragMenu = false;
     private Node node;
     private Parent rootMenu = null;
-    Node[] nodeItem = new Node[1000];
+    Node[] nodeItem = new Node[100];
     String[] data = { "Computer", "sifur", "wo9eur", "setue9t8ye5", "09", "87", "efuw" };
 
     @FXML
@@ -150,6 +150,14 @@ public class HomeController implements Initializable {
                 }
             });
 
+            node.lookup("#btImport").setOnMouseClicked(new EventHandler<Event>() {
+
+                @Override
+                public void handle(Event event) {
+                    showSubFrom("frmAddBooks.fxml");
+                }
+            });
+
             node.lookup("#btReport").setOnMouseClicked(new EventHandler<Event>() {
 
                 @Override
@@ -181,7 +189,6 @@ public class HomeController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error: " + e.getMessage());
-            System.out.println("=============> Error:" + e.getMessage());
         }
     }
 
@@ -250,22 +257,25 @@ public class HomeController implements Initializable {
 
         pnItems.getChildren().clear();
         Platform.runLater(new Runnable() {
-            int j = 0;
+            int i = 0;
 
             @Override
             public void run() {
-                while (j < nodeItem.length) {
-                    try {
+                try {
+                    while (i < nodeItem.length) {
+
                         // !Set data to "rowBooks" Layout
                         MyArrayList list = new MyArrayList();
                         ListitemController.book_list = list.bookDetail(data);
                         Parent listParent = FXMLLoader.load(App.class.getResource("rowBooks.fxml"));
-                        nodeItem[j] = listParent;
-                        pnItems.getChildren().addAll(nodeItem[j]);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        nodeItem[i] = listParent;
+
+                        pnItems.getChildren().addAll(nodeItem[i]);
+
+                        i++;
                     }
-                    j++;
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             };
         });

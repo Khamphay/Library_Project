@@ -19,6 +19,9 @@ public class DepartmentModel implements DataAccessObject {
     private StringProperty depId;
     private StringProperty depName;
 
+    public DepartmentModel() {
+    }
+
     public DepartmentModel(String depId, String depName) {
         this.depId = new SimpleStringProperty(depId);
         this.depName = new SimpleStringProperty(depName);

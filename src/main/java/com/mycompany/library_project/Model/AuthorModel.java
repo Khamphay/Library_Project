@@ -6,9 +6,6 @@ import java.text.ParseException;
 import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
 public class AuthorModel implements DataAccessObject {
 
     private ResultSet rs = null;
@@ -16,48 +13,48 @@ public class AuthorModel implements DataAccessObject {
     private Connection con = MyConnection.getConnect();
     private String sql = null;
 
-    private StringProperty author_id;
-    private StringProperty full_name;
-    private StringProperty sur_name;
-    private StringProperty tel;
+    private String author_id;
+    private String full_name;
+    private String sur_name;
+    private String tel;
 
     public AuthorModel(String author_id, String full_name, String sur_name, String tel) {
-        this.author_id = new SimpleStringProperty(author_id);
-        this.full_name = new SimpleStringProperty(full_name);
-        this.sur_name = new SimpleStringProperty(sur_name);
-        this.tel = new SimpleStringProperty(tel);
-    }
-    
-    public void setAuthor_id(String author_id) {
-        this.author_id.set(author_id);
-    }
-    
-    public void setFull_name(String full_name) {
-        this.full_name.set(full_name);
-    }
-
-    public void setSur_name(String sur_name) {
-        this.sur_name.set(sur_name);
-    }
-
-    public void setTel(String tel) {
-        this.tel.set(tel);
+        this.author_id = author_id;
+        this.full_name = full_name;
+        this.sur_name = sur_name;
+        this.tel = tel;
     }
 
     public String getAuthor_id() {
-        return author_id.get();
+        return author_id;
+    }
+
+    public void setAuthor_id(String author_id) {
+        this.author_id = author_id;
     }
 
     public String getFull_name() {
-        return full_name.get();
+        return full_name;
+    }
+
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
     }
 
     public String getSur_name() {
-        return sur_name.get();
+        return sur_name;
+    }
+
+    public void setSur_name(String sur_name) {
+        this.sur_name = sur_name;
     }
 
     public String getTel() {
-        return tel.get();
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 
     @Override

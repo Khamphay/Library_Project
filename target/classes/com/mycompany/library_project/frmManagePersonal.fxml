@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="bpManagePerson" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.ManagePersonalCotroller">
+   <center>
+      <AnchorPane fx:id="anchorMenu" minHeight="0.0" minWidth="0.0" prefHeight="495.0" prefWidth="787.0">
+         <children>
+            <JFXButton buttonType="RAISED" layoutX="192.0" layoutY="158.0" onAction="#btEmployee_Click" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນພະນັກງານ" textFill="#ffeded" />
+            <JFXButton buttonType="RAISED" layoutX="346.0" layoutY="158.0" onAction="#btMember_Click" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນສະມາຊິກ" textFill="#ffeded" />
+            <JFXButton buttonType="RAISED" layoutX="499.0" layoutY="158.0" onAction="#btAncthor_Click" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນຜູ້ແຕ່ງປຶ້ມ" textFill="#ffeded" />
+            <JFXButton buttonType="RAISED" layoutX="192.0" layoutY="272.0" onAction="#btDepartment_Click" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນພາກວິຊາ" textFill="#ffeded" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

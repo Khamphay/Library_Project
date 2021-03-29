@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
+
+<HBox fx:id="book" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="1186.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.List.book_item">
+   <children>
+      <Text fx:id="id" strokeType="OUTSIDE" strokeWidth="0.0" text="ລະຫັດປຶ້ມ" wrappingWidth="77.2166690826416">
+         <HBox.margin>
+            <Insets left="4.0" />
+         </HBox.margin>
+      </Text>
+      <Text fx:id="name" strokeType="OUTSIDE" strokeWidth="0.0" text="ຊື່ປຶ້ມ" wrappingWidth="204.2166690826416">
+         <HBox.margin>
+            <Insets left="4.0" />
+         </HBox.margin>
+      </Text>
+      <Text fx:id="isbn" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN" wrappingWidth="147.2166690826416">
+         <HBox.margin>
+            <Insets left="4.0" />
+         </HBox.margin>
+      </Text>
+      <Text fx:id="page" strokeType="OUTSIDE" strokeWidth="0.0" text="ຈຳນວນໜ້າ" textAlignment="CENTER" wrappingWidth="74.2166690826416">
+         <HBox.margin>
+            <Insets left="4.0" />
+         </HBox.margin>
+      </Text>
+      <Text fx:id="qty" strokeType="OUTSIDE" strokeWidth="0.0" text="ຈຳນວນປຶ້ມ" textAlignment="CENTER" wrappingWidth="74.2166690826416">
+         <HBox.margin>
+            <Insets left="4.0" />
+         </HBox.margin>
+      </Text>
+      <Text fx:id="category" strokeType="OUTSIDE" strokeWidth="0.0" text="ໝວດປຶ້ມ" wrappingWidth="182.2166690826416">
+         <HBox.margin>
+            <Insets left="4.0" />
+         </HBox.margin>
+      </Text>
+      <Text fx:id="type" strokeType="OUTSIDE" strokeWidth="0.0" text="ປະເພດປຶ້ມ" wrappingWidth="160.2166690826416">
+         <HBox.margin>
+            <Insets left="4.0" />
+         </HBox.margin>
+      </Text>
+      <Text fx:id="detail" strokeType="OUTSIDE" strokeWidth="0.0" text="ລາຍລະອຽດ" wrappingWidth="176.2166690826416">
+         <HBox.margin>
+            <Insets left="4.0" />
+         </HBox.margin>
+      </Text>
+      <JFXButton alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="32.0" style="-fx-background-radius: 5em;">
+         <contextMenu>
+            <ContextMenu>
+               <items>
+                  <MenuItem text="ລາຍລະອຽດ">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icon/checklist_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem text="ແກ້ໄຂ">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icon/edit_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem text="ລືບ">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icon/delete_bin_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+               </items>
+            </ContextMenu>
+         </contextMenu>
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Icon/menu_vertical_50px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <HBox.margin>
+            <Insets left="15.0" />
+         </HBox.margin>
+      </JFXButton>
+   </children>
+   <styleClass>
+      <String fx:value="BoonBaan-size-14-Regular" />
+      <String fx:value="hbox" />
+   </styleClass>
+</HBox>

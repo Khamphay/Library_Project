@@ -21,6 +21,8 @@ public class TableLogModel implements DataAccessObject {
     private StringProperty tableId;
     private StringProperty tableLogNum;
 
+    public TableLogModel() {
+    }
     public TableLogModel(String tableId) {
         this.tableId = new SimpleStringProperty(tableId);
     }

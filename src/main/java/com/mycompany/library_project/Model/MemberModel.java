@@ -1,18 +1,10 @@
 package com.mycompany.library_project.Model;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
 import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.sql.*;
+import java.text.*;
 
 public class MemberModel implements DataAccessObject {
 
@@ -21,211 +13,150 @@ public class MemberModel implements DataAccessObject {
     private ResultSet rs = null;
     private String query = "";
 
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private String memberId;
+    private String firstName;
+    private String sureName;
+    private String gender;
+    private String tel;
+    private String village;
+    private String district;
+    private String province;
+    private Date birdate;
+    private String detp;
+    private Date dateRegister;
+    private Date dateRegisterEnd;
+    private Date dateExit;
+    private String status;
 
-    private StringProperty memberId;
-    private StringProperty fistName;
-    private StringProperty sureName;
-    private StringProperty gender;
-    private StringProperty tel;
-    private StringProperty village;
-    private StringProperty district;
-    private StringProperty province;
-    private StringProperty birdate;
-    private StringProperty detp;
-    private StringProperty dateRegister;
-    private StringProperty dateRegisterEnd;
-    private StringProperty dateExit;
-    private StringProperty status;
-
-    public MemberModel(String memberId, String fistName, String sureName, String gender, String tel, String village,
-            String district, String province, String birdate, String detp, String dateRegister, String dateRegisterEnd,
-            String dateExit, String status) {
-        this.memberId = new SimpleStringProperty(memberId);
-        this.fistName = new SimpleStringProperty(fistName);
-        this.sureName = new SimpleStringProperty(sureName);
-        this.gender = new SimpleStringProperty(gender);
-        this.tel = new SimpleStringProperty(tel);
-        this.village = new SimpleStringProperty(village);
-        this.district = new SimpleStringProperty(district);
-        this.province = new SimpleStringProperty(province);
-        this.birdate = new SimpleStringProperty(birdate);
-        this.detp = new SimpleStringProperty(detp);
-        this.dateRegister = new SimpleStringProperty(dateRegister);
-        this.dateRegisterEnd = new SimpleStringProperty(dateRegisterEnd);
-        this.dateExit = new SimpleStringProperty(dateExit);
-        this.status = new SimpleStringProperty(status);
+    public MemberModel(String memberId, String firstName, String sureName, String gender, String tel, String village,
+            String district, String province, Date birdate, String detp, Date dateRegister, Date dateRegisterEnd,
+            Date dateExit, String status) {
+        this.memberId = memberId;
+        this.firstName = firstName;
+        this.sureName = sureName;
+        this.gender = gender;
+        this.tel = tel;
+        this.village = village;
+        this.district = district;
+        this.province = province;
+        this.birdate = birdate;
+        this.detp = detp;
+        this.dateRegister = dateRegister;
+        this.dateRegisterEnd = dateRegisterEnd;
+        this.dateExit = dateExit;
+        this.status = status;
     }
 
-    // Todo: set values
-    public void setMemberId(String memberId) {
-        this.memberId.set(memberId);
-    }
-
-    private void setFistName(String fistName) {
-        this.fistName.set(fistName);
-    }
-
-    private void setSureName(String sureName) {
-        this.sureName.set(sureName);
-    }
-
-    public void setGender(String gender) {
-        this.gender.set(gender);
-    }
-
-    public void setTel(String tel) {
-        this.tel.set(tel);
-    }
-
-    public void setVillage(String village) {
-        this.village.set(village);
-    }
-
-    public void setDistrict(String district) {
-        this.district.set(district);
-    }
-
-    public void setProvince(String province) {
-        this.province.set(province);
-    }
-
-    public void setBirdate(String birdate) {
-        this.birdate.set(birdate);
-    }
-
-    public void setDetp(String detp) {
-        this.detp.set(detp);
-    }
-
-    public void setDateRegister(String dateRegister) {
-        this.dateRegister.set(dateRegister);
-    }
-
-    public void setDateRegisterEnd(String dateRegisterEnd) {
-        this.dateRegisterEnd.set(dateRegisterEnd);
-    }
-
-    public void setDateExit(String dateExit) {
-        this.dateExit.set(dateExit);
-    }
-
-    public void setStatus(String status) {
-        this.status.set(status);
-    }
-
-    // Todo: return values
-    private String getMemberId() {
-        return memberId.get();
-    }
-
-    private String getFirstName() {
-        return fistName.get();
-    }
-
-    private String getSureName() {
-        return sureName.get();
-    }
-
-    public String getGender() {
-        return gender.get();
-    }
-
-    public String getTel() {
-        return tel.get();
-    }
-
-    public String getVillage() {
-        return village.get();
-    }
-
-    public String getDistrict() {
-        return district.get();
-    }
-
-    public String getProvince() {
-        return province.get();
-    }
-
-    public String getBirdate() {
-        return birdate.get();
-    }
-
-    public String getDetp() {
-        return detp.get();
-    }
-
-    public String getDateRegister() {
-        return dateRegister.get();
-    }
-
-    public String getDateRegisterEnd() {
-        return dateRegisterEnd.get();
-    }
-
-    public String getDateExit() {
-        return dateExit.get();
-    }
-
-    public String getStatus() {
-        return status.get();
-    }
-
-    // TODO: Set to StringProperty
-    public StringProperty memberIdProperty() {
+    public String getMemberId() {
         return memberId;
     }
 
-    public StringProperty fistNameProperty() {
-        return fistName;
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
     }
 
-    public StringProperty sureNameProperty() {
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String fistName) {
+        this.firstName = fistName;
+    }
+
+    public String getSureName() {
         return sureName;
     }
 
-    public StringProperty genderProperty() {
+    public void setSureName(String sureName) {
+        this.sureName = sureName;
+    }
+
+    public String getGender() {
         return gender;
     }
 
-    public StringProperty telProperty() {
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getTel() {
         return tel;
     }
 
-    public StringProperty villageProperty() {
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getVillage() {
         return village;
     }
 
-    public StringProperty districtProperty() {
+    public void setVillage(String village) {
+        this.village = village;
+    }
+
+    public String getDistrict() {
         return district;
     }
 
-    public StringProperty provinceProperty() {
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getProvince() {
         return province;
     }
 
-    public StringProperty birdateProperty() {
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public Date getBirdate() {
         return birdate;
     }
 
-    public StringProperty detpProperty() {
+    public void setBirdate(Date birdate) {
+        this.birdate = birdate;
+    }
+
+    public String getDetp() {
         return detp;
     }
 
-    public StringProperty dateRegisterProperty() {
+    public void setDetp(String detp) {
+        this.detp = detp;
+    }
+
+    public Date getDateRegister() {
         return dateRegister;
     }
 
-    public StringProperty dateRegisterEndProperty() {
+    public void setDateRegister(Date dateRegister) {
+        this.dateRegister = dateRegister;
+    }
+
+    public Date getDateRegisterEnd() {
         return dateRegisterEnd;
     }
 
-    public StringProperty dateExitProperty() {
+    public void setDateRegisterEnd(Date dateRegisterEnd) {
+        this.dateRegisterEnd = dateRegisterEnd;
+    }
+
+    public Date getDateExit() {
         return dateExit;
     }
 
-    public StringProperty statusProperty() {
+    public void setDateExit(Date dateExit) {
+        this.dateExit = dateExit;
+    }
+
+    public String getStatus() {
         return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
@@ -264,11 +195,11 @@ public class MemberModel implements DataAccessObject {
         ps.setString(6, getVillage());
         ps.setString(7, getDistrict());
         ps.setString(8, getProvince());
-        ps.setDate(9, (Date) dateFormat.parse(getBirdate()));
+        ps.setDate(9, getBirdate());
         ps.setString(10, getDetp());
-        ps.setDate(11, (Date) dateFormat.parse(getDateRegister()));
-        ps.setDate(12, (Date) dateFormat.parse(getDateRegisterEnd()));
-        ps.setDate(13, (Date) dateFormat.parse(getDateExit()));
+        ps.setDate(11, getDateRegister());
+        ps.setDate(12, getDateRegisterEnd());
+        ps.setDate(13, getDateExit());
         ps.setString(14, getStatus());
 
         return ps.executeUpdate();
@@ -286,11 +217,11 @@ public class MemberModel implements DataAccessObject {
         ps.setString(6, getVillage());
         ps.setString(7, getDistrict());
         ps.setString(8, getProvince());
-        ps.setDate(9, (Date) dateFormat.parse(getBirdate()));
+        ps.setDate(9, getBirdate());
         ps.setString(10, getDetp());
-        ps.setDate(11, (Date) dateFormat.parse(getDateRegister()));
-        ps.setDate(12, (Date) dateFormat.parse(getDateRegisterEnd()));
-        ps.setDate(13, (Date) dateFormat.parse(getDateExit()));
+        ps.setDate(11, getDateRegister());
+        ps.setDate(12, getDateRegisterEnd());
+        ps.setDate(13, getDateExit());
         ps.setString(14, getStatus());
         return ps.executeUpdate();
     }
@@ -302,4 +233,5 @@ public class MemberModel implements DataAccessObject {
         ps.setString(1, id);
         return ps.executeUpdate();
     }
+
 }

@@ -29,6 +29,22 @@ public class MemberModel implements DataAccessObject {
     private String status;
 
     public MemberModel(String memberId, String firstName, String sureName, String gender, String tel, String village,
+            String district, String province, Date birdate, String detp, Date dateRegister, Date dateRegisterEnd) {
+        this.memberId = memberId;
+        this.firstName = firstName;
+        this.sureName = sureName;
+        this.gender = gender;
+        this.tel = tel;
+        this.village = village;
+        this.district = district;
+        this.province = province;
+        this.birdate = birdate;
+        this.detp = detp;
+        this.dateRegister = dateRegister;
+        this.dateRegisterEnd = dateRegisterEnd;
+    }
+
+    public MemberModel(String memberId, String firstName, String sureName, String gender, String tel, String village,
             String district, String province, Date birdate, String detp, Date dateRegister, Date dateRegisterEnd,
             Date dateExit, String status) {
         this.memberId = memberId;

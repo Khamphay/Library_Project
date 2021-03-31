@@ -14,5 +14,6 @@
             "username": "root",
             "password": "1234"
         }
-    ]
+    ],
+    "scenebuilder.home": "C:\\Program Files\\SceneBuilder"
 }

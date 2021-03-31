@@ -3,6 +3,8 @@ package com.mycompany.library_project.Controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.mycompany.library_project.Model.EmployeeModel;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;

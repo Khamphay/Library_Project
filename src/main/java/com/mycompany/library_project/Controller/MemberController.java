@@ -2,16 +2,23 @@ package com.mycompany.library_project.Controller;
 
 import java.net.URL;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import com.mycompany.library_project.Model.MemberModel;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class MemberController implements Initializable {
+
+    private ObservableList<MemberModel> data = null;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @FXML
     private TableView<MemberModel> tableMember;
@@ -20,6 +27,20 @@ public class MemberController implements Initializable {
     private TableColumn<MemberModel, String> id, name, surname, gender, tel, village, district, province, depertment;
     @FXML
     private TableColumn<MemberModel, Date> birthdate, date_register, date_exist;
+
+    private void showData() {
+        try {
+            data = FXCollections.observableArrayList();
+            data.add(new MemberModel("FNS0349.17", "ຄຳໄຟ", "ເສຍລີມົວ", "ຊາຍ", "02076736453", "ດົງໂດກ", "ໍໄຊທານີ",
+                    "ນະຄອນຫຼວງວຽງຈັນ",
+                     Date.valueOf(new LocalDate(2021,8,20)), "ວິທະຍາສາດຄອມພິວເຕິ",
+                    Date.valueOf(dateFormat.format("05-08-2000")), 
+                    Date.valueOf(dateFormat.format("05-08-2000"))));
+            tableMember.setItems(data);
+        } catch (Exception e) {
+           e.printStackTrace();
+        }
+    }
 
     private void initTable() {
         id.setCellValueFactory(new PropertyValueFactory<>("memberId"));
@@ -39,7 +60,7 @@ public class MemberController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTable();
-
+        showData();
     }
 
 }

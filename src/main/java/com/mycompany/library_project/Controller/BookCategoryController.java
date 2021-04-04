@@ -5,8 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
@@ -17,7 +16,6 @@ import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
 import com.mycompany.library_project.Model.CategoryModel;
 
 public class BookCategoryController implements Initializable {
@@ -26,7 +24,7 @@ public class BookCategoryController implements Initializable {
     private ObservableList<CategoryModel> data = null;
     private ResultSet rs = null;
     @FXML
-    private JFXTextField txtcatgId, txtcatgName;
+    private TextField txtcatgId, txtcatgName;
 
     @FXML
     private JFXButton btSave, btEdite, btDelete, btCancel;

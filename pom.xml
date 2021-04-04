@@ -13,17 +13,17 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>15.0.1</version>
+            <version>16</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>15.0.1</version>
+            <version>16</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
-            <version>15.0.1</version>
+            <version>16</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -33,7 +33,7 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-base</artifactId>
-            <version>15.0.1</version>
+            <version>16</version>
         </dependency>
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>

@@ -1,8 +1,6 @@
 package com.mycompany.library_project.Controller;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
 import com.mycompany.library_project.App;
 import com.mycompany.library_project.DesktopController;
 
@@ -10,11 +8,9 @@ import org.controlsfx.control.decoration.*;
 import org.controlsfx.validation.*;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.fxml.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -40,9 +36,9 @@ public class LoginController implements Initializable {
     @FXML
     private JFXButton btClose;
     @FXML
-    private JFXTextField txtUsername;
+    private TextField txtUsername;
     @FXML
-    private JFXPasswordField txtPassword;
+    private PasswordField txtPassword;
 //    @FXML
 //    private JFXSpinner spinner;
 

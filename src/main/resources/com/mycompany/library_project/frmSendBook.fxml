@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXDatePicker?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="563.0" prefWidth="1004.0" style="-fx-background-color: #f3f3f3;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.SendBookController">
+<AnchorPane prefHeight="563.0" prefWidth="1004.0" style="-fx-background-color: #f3f3f3;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.SendBookController">
    <children>
       <BorderPane layoutX="7.0" layoutY="64.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -53,23 +53,23 @@
                         </JFXButton>
                         <AnchorPane layoutX="17.0" layoutY="14.0" minHeight="0.0" minWidth="0.0" prefHeight="124.0" prefWidth="968.0">
                            <children>
-                              <JFXDatePicker defaultColor="#696b78" layoutX="780.0" layoutY="72.0" prefHeight="28.0" prefWidth="173.0" promptText="ວັນທີສົ່ງ">
+                              <DatePicker layoutX="780.0" layoutY="72.0" prefHeight="28.0" prefWidth="173.0" promptText="ວັນທີສົ່ງ">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
-                              </JFXDatePicker>
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="178.0" layoutY="17.0" prefHeight="27.0" prefWidth="220.0" promptText="ຊື່ປຶ້ມ" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="36.0" layoutY="17.0" prefHeight="27.0" prefWidth="110.0" promptText="ລະຫັດປຶ້ມ" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="600.0" layoutY="17.0" prefHeight="27.0" prefWidth="161.0" promptText="ປະເພດ" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="422.0" layoutY="17.0" prefHeight="27.0" prefWidth="161.0" promptText="ໝວດ" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
-                              <JFXDatePicker defaultColor="#696b78" layoutX="780.0" layoutY="17.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີຢືມ">
+                              </DatePicker>
+                              <TextField layoutX="178.0" layoutY="17.0" prefHeight="27.0" prefWidth="220.0" promptText="ຊື່ປຶ້ມ" styleClass="textfield" viewOrder="1.0" />
+                              <TextField layoutX="36.0" layoutY="17.0" prefHeight="27.0" prefWidth="110.0" promptText="ລະຫັດປຶ້ມ" viewOrder="1.0" />
+                              <TextField layoutX="600.0" layoutY="17.0" prefHeight="27.0" prefWidth="161.0" promptText="ປະເພດ" styleClass="textfield" viewOrder="1.0" />
+                              <TextField layoutX="422.0" layoutY="17.0" prefHeight="27.0" prefWidth="161.0" promptText="ໝວດ" styleClass="textfield" viewOrder="1.0" />
+                              <DatePicker layoutX="780.0" layoutY="17.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີຢືມ">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
-                              </JFXDatePicker>
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="177.0" layoutY="73.0" prefHeight="27.0" prefWidth="220.0" promptText="ຄ່າປັບໃໝ/ມື້" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="422.0" layoutY="73.0" prefHeight="27.0" prefWidth="161.0" promptText="ຄ່າປັບໃໝທັງໝົດ" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="36.0" layoutY="73.0" prefHeight="27.0" prefWidth="110.0" promptText="ຈຳນວນມື້ທີ່ຢືມກາຍ" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
+                              </DatePicker>
+                              <TextField layoutX="177.0" layoutY="73.0" prefHeight="27.0" prefWidth="220.0" promptText="ຄ່າປັບໃໝ/ມື້" styleClass="textfield" viewOrder="1.0" />
+                              <TextField layoutX="422.0" layoutY="73.0" prefHeight="27.0" prefWidth="161.0" promptText="ຄ່າປັບໃໝທັງໝົດ" styleClass="textfield" viewOrder="1.0" />
+                              <TextField layoutX="36.0" layoutY="73.0" prefHeight="27.0" prefWidth="110.0" promptText="ຈຳນວນມື້ທີ່ຢືມກາຍ" styleClass="textfield" viewOrder="1.0" />
                            </children>
                         </AnchorPane>
                      </children>

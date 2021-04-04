@@ -38,6 +38,21 @@ public class BookDetailModel implements DataAccessObject {
     }
 
     public BookDetailModel(String bookId, String bookName, String ISBN, Integer page, Integer qty, String catgId,
+            String typeId, String tableLogId, String detail) {
+
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.ISBN = ISBN;
+        this.page = page;
+        this.qty = qty;
+        this.catgId = catgId;
+        this.typeId = typeId;
+        this.tableLogId = tableLogId;
+        this.detail = detail;
+
+    }
+
+    public BookDetailModel(String bookId, String bookName, String ISBN, Integer page, Integer qty, String catgId,
             String typeId, String detail, JFXButton action) {
 
         this.bookId = bookId;
@@ -52,7 +67,7 @@ public class BookDetailModel implements DataAccessObject {
 
     }
 
-    public BookDetailModel(String bookId, String bookName, Integer page, String ISBN, Integer qty, Integer rentQty,
+    public BookDetailModel(String bookId, String bookName, String ISBN, Integer page, Integer qty, Integer rentQty,
             Integer reserQty, String barcode, String catgId, String typeId, String tableLogId, String detail) {
         this.bookId = bookId;
         this.bookName = bookName;

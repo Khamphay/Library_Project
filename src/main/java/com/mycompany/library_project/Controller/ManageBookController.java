@@ -8,7 +8,7 @@ import com.mycompany.library_project.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.*;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 
 public class ManageBookController implements Initializable {
@@ -19,7 +19,7 @@ public class ManageBookController implements Initializable {
     private BorderPane bpManageBook;
 
     @FXML
-    private AnchorPane anchorMenu;
+    private ScrollPane scrollMenu;
 
     private void show_subForm(String form) {
         try {

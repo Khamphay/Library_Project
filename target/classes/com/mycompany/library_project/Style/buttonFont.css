@@ -8,7 +8,7 @@
 .button{
     -fx-font-family: 'BoonBaan';
     /* -fx-font-family: 'Noto Sans Lao'; */
-    -fx-font-size: 14;
+    -fx-font-size: 16;
     -fx-text-fill:#FFF;
 }
 
@@ -22,7 +22,7 @@
 .button-size-16{
     -fx-font-family: 'BoonBaan';
     /* -fx-font-family: 'Noto Sans Lao'; */
-    -fx-font-size: 16;
+    -fx-font-size: 18;
 }
 
 

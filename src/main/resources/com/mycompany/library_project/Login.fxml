@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXPasswordField?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="acPaneLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="663.0" style="-fx-background-color: transparent;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.LoginController">
+<AnchorPane fx:id="acPaneLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="663.0" style="-fx-background-color: transparent;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.LoginController">
    <children>
-      <AnchorPane layoutX="321.0" layoutY="-1.0" prefHeight="462.0" prefWidth="342.0" style="-fx-background-radius: 0px 8px 8px 0px; -fx-background-color: #f3f3f3; -fx-border-color: #101D3D; -fx-border-radius: 0px 8px 8px 0px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="321.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane layoutX="321.0" layoutY="-1.0" prefHeight="462.0" prefWidth="342.0" style="-fx-background-radius: 0px 8px 8px 0px; -fx-background-color: #f3f3f3; -fx-border-radius: 0px 8px 8px 0px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="321.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="144.0" layoutY="25.0" styleClass="label-size-20" text="Login" />
-            <JFXTextField fx:id="txtUsername" labelFloat="true" layoutX="75.0" layoutY="126.0" prefHeight="25.0" prefWidth="231.0" promptText="ຊື່ຜູ້ໃຊ້" styleClass="BoonBaan-size-14-Regular">
-               <font>
-                  <Font name="Phetsarath OT Bold" size="12.0" />
-               </font>
-            </JFXTextField>
-            <JFXPasswordField fx:id="txtPassword" labelFloat="true" layoutX="75.0" layoutY="207.0" prefHeight="25.0" prefWidth="231.0" promptText="ລະຫັດຜ່ານ" styleClass="BoonBaan-size-14-Regular">
-               <font>
-                  <Font name="Phetsarath OT Bold" size="12.0" />
-               </font>
-            </JFXPasswordField>
-            <JFXButton fx:id="btLogin" alignment="CENTER" buttonType="RAISED" cache="true" cacheHint="QUALITY" contentDisplay="CENTER" layoutX="78.0" layoutY="326.0" onAction="#Login" prefHeight="31.0" prefWidth="76.0" style="-fx-background-color: #101D3D; -fx-background-radius: 20px 20px 20px 20px;" stylesheets="@Style/buttonFont.css" text="ເຂົ້າລະບົບ" textFill="WHITE" viewOrder="10.0">
+            <Label layoutX="144.0" layoutY="35.0" styleClass="label-size-20" text="Login" />
+            <TextField id="text-user" fx:id="txtUsername" layoutX="54.0" layoutY="126.0" prefHeight="30.0" prefWidth="250.0" promptText="ຊື່ຜູ້ໃຊ້">
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </TextField>
+            <PasswordField id="text-password" fx:id="txtPassword" layoutX="54.0" layoutY="207.0" prefHeight="30.0" prefWidth="250.0" promptText="ລະຫັດຜ່ານ">
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </PasswordField>
+            <JFXButton fx:id="btLogin" alignment="CENTER" cache="true" cacheHint="QUALITY" contentDisplay="CENTER" layoutX="64.0" layoutY="326.0" onAction="#Login" prefHeight="33.0" prefWidth="90.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 20px 20px 20px 20px;" stylesheets="@Style/buttonFont.css" text="ເຂົ້າລະບົບ" textFill="WHITE" viewOrder="10.0">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </JFXButton>
-            <JFXButton fx:id="btCancel" alignment="CENTER" buttonType="RAISED" cache="true" cacheHint="QUALITY" contentDisplay="CENTER" layoutX="203.0" layoutY="326.0" onAction="#Cancel" prefHeight="31.0" prefWidth="76.0" style="-fx-background-color: #101D3D; -fx-background-radius: 20px 20px 20px 20px;" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE" viewOrder="10.0">
+            <JFXButton fx:id="btCancel" alignment="CENTER" cache="true" cacheHint="QUALITY" contentDisplay="CENTER" layoutX="189.0" layoutY="326.0" onAction="#Cancel" prefHeight="33.0" prefWidth="90.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 20px 20px 20px 20px;" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE" viewOrder="10.0">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
@@ -59,12 +61,12 @@
                   <Font size="1.0" />
                </font>
             </JFXButton>
-            <ImageView fitHeight="31.0" fitWidth="24.0" layoutX="46.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="31.0" fitWidth="24.0" layoutX="57.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Icon/male_user_50px.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="31.0" fitWidth="24.0" layoutX="46.0" layoutY="213.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="31.0" fitWidth="24.0" layoutX="57.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Icon/secure_50px.png" />
                </image>
@@ -81,6 +83,30 @@
             </ImageView>
             <Label layoutX="50.0" layoutY="376.0" styleClass="label-size-16" text="ຫໍສະໝຸດ ຄະນະວິທະຍາສາດທຳມະຊາດ" textFill="WHITE" />
             <Label layoutX="85.0" layoutY="350.0" styleClass="label-size-16" text="ຄະນະວິທະຍາສາດທຳມະຊາດ" textFill="WHITE" />
+            <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="119.0" layoutY="415.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="33.0" ripplerFill="WHITE" style="-fx-background-radius: 2em; -fx-border-radius: 2em;">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Icon/facebook.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip contentDisplay="TOP" text="Facebook" />
+               </tooltip>
+            </JFXButton>
+            <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="178.0" layoutY="415.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="33.0" ripplerFill="WHITE" style="-fx-background-radius: 2em; -fx-border-radius: 2em;">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Icon/website.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip contentDisplay="TOP" text="Website" />
+               </tooltip>
+            </JFXButton>
          </children>
       </AnchorPane>
    </children>

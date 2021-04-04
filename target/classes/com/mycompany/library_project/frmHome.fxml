@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Label?>
@@ -13,9 +15,9 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1400.0" style="-fx-background-color: transparent;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.HomeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="771.0" prefWidth="1400.0" style="-fx-background-color: transparent;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.HomeController">
    <children>
       <BorderPane fx:id="bpDisplay" layoutX="260.0" layoutY="45.0" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f3f3f3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -35,105 +37,110 @@
          <center>
             <ScrollPane fx:id="sclSubHome" fitToHeight="true" fitToWidth="true" pannable="true" prefHeight="502.0" prefWidth="938.0" BorderPane.alignment="CENTER">
                <content>
-                  <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="363.0" prefWidth="880.0">
+                  <JFXBadge>
                      <children>
-                        <Line endX="614.0" layoutX="213.0" layoutY="166.0" startX="-100.0" stroke="#46008d" AnchorPane.leftAnchor="112.5" AnchorPane.rightAnchor="108.5" />
-                        <Accordion layoutX="208.0" layoutY="313.0" />
-                        <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" layoutX="350.0" layoutY="175.0" onAction="#buttonSendBook_Action" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="ສົ່ງປຶ້ມ" textFill="WHITE" viewOrder="2.0" AnchorPane.topAnchor="175.0">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <graphic>
-                              <ImageView fitHeight="47.0" fitWidth="47.0">
-                                 <image>
-                                    <Image url="@Icon/return_book_50px.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXButton>
-                        <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" layoutX="505.0" layoutY="175.0" onAction="#buttonRegister_Action" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="ລົງທະບຽນ" textFill="WHITE" viewOrder="2.0" AnchorPane.topAnchor="175.0">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <graphic>
-                              <ImageView fitHeight="47.0" fitWidth="47.0">
-                                 <image>
-                                    <Image url="@Icon/add_user_male_50px.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXButton>
-                        <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" layoutX="655.0" layoutY="175.0" onAction="#buttonNotify_Action" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="Navigation" textFill="WHITE" viewOrder="2.0">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <graphic>
-                              <ImageView fitHeight="47.0" fitWidth="47.0">
-                                 <image>
-                                    <Image url="@Icon/alarm_50px.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXButton>
-                        <Label layoutX="735.0" layoutY="179.0" text="+10" textFill="#ffe74a">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="887.0" layoutY="14.0" prefHeight="61.0" prefWidth="43.0" AnchorPane.leftAnchor="887.0" />
-                        <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" layoutX="195.0" layoutY="175.0" onAction="#buttonRentBook_Action" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="ຢືມປຶ້ມ" textFill="WHITE" viewOrder="2.0">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <graphic>
-                              <ImageView fitHeight="47.0" fitWidth="47.0">
-                                 <image>
-                                    <Image url="@Icon/send_job_list_50px.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXButton>
-                        <AnchorPane layoutX="112.0" layoutY="47.0" prefHeight="144.0" prefWidth="717.0" style="-fx-background-color: #1F2856; -fx-background-radius: 20px 20px 20px  20px;" AnchorPane.leftAnchor="112.0" AnchorPane.rightAnchor="107.0" AnchorPane.topAnchor="5.0">
+                        <AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="701.0" prefWidth="1094.0">
                            <children>
-                              <Label contentDisplay="CENTER" layoutX="149.0" layoutY="98.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" text="ລະບົບຈັດການ ຫໍສະໝຸດ ຄະນະວິທະຍາສາດທຳມະຊາດ" textAlignment="CENTER" textFill="WHITE" />
-                              <ImageView fitHeight="147.0" fitWidth="149.0" layoutY="-3.0">
-                                 <image>
-                                    <Image url="@Icon/Logo_FNS.png" />
-                                 </image>
-                              </ImageView>
-                              <Label contentDisplay="CENTER" layoutX="149.0" layoutY="74.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" text="Faculty Of Natural Scince Library Management System" textAlignment="CENTER" textFill="WHITE" />
-                              <JFXButton id="#btLogOut" alignment="CENTER" buttonType="RAISED" cache="true" cacheHint="QUALITY" graphicTextGap="10.0" layoutX="613.0" layoutY="14.0" onAction="#LogOut" prefHeight="31.0" prefWidth="131.0" style="-fx-background-radius: 15px 15px 15px 15px; -fx-background-color: #fff;" styleClass="button-color" stylesheets="@Style/buttonFont.css" text="ອອກຈາກລະບົບ" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+                              <Line endX="955.0" layoutX="117.0" layoutY="167.0" startX="-100.0" stroke="#1d0054" AnchorPane.leftAnchor="16.5" AnchorPane.rightAnchor="21.5" />
+                              <Accordion layoutX="112.0" layoutY="318.0" />
+                              <JFXButton alignment="CENTER" contentDisplay="TOP" layoutX="338.0" layoutY="181.0" onAction="#buttonSendBook_Action" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="ສົ່ງປຶ້ມ" textFill="WHITE" viewOrder="2.0" AnchorPane.topAnchor="181.0">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                                  <graphic>
-                                    <ImageView fitHeight="21.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="47.0" fitWidth="47.0">
                                        <image>
-                                          <Image url="@Icon/shutdown_100pxColor.png" />
+                                          <Image url="@Icon/return_book_50px.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
                               </JFXButton>
+                              <JFXButton alignment="CENTER" contentDisplay="TOP" layoutX="496.0" layoutY="181.0" onAction="#buttonRegister_Action" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="ລົງທະບຽນ" textFill="WHITE" viewOrder="2.0" AnchorPane.topAnchor="181.0">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <graphic>
+                                    <ImageView fitHeight="47.0" fitWidth="47.0">
+                                       <image>
+                                          <Image url="@Icon/add_user_male_50px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <JFXButton alignment="CENTER" contentDisplay="TOP" layoutX="646.0" layoutY="181.0" onAction="#buttonNotify_Action" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="Navigation" textFill="WHITE" viewOrder="2.0">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <graphic>
+                                    <ImageView fitHeight="47.0" fitWidth="47.0">
+                                       <image>
+                                          <Image url="@Icon/alarm_50px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <Label layoutX="887.0" layoutY="14.0" prefHeight="61.0" prefWidth="43.0" AnchorPane.leftAnchor="887.0" />
+                              <JFXButton alignment="CENTER" contentDisplay="TOP" layoutX="183.0" layoutY="181.0" onAction="#buttonRentBook_Action" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="ຢືມປຶ້ມ" textFill="WHITE" viewOrder="2.0">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <graphic>
+                                    <ImageView fitHeight="47.0" fitWidth="47.0">
+                                       <image>
+                                          <Image url="@Icon/send_job_list_50px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <AnchorPane layoutX="16.0" layoutY="10.0" prefHeight="144.0" prefWidth="893.0" style="-fx-background-color: #00244A; -fx-background-radius: 0px 20px 0px  20px;" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+                                 <children>
+                                    <Label contentDisplay="CENTER" layoutX="149.0" layoutY="108.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" text="ລະບົບຈັດການ ຫໍສະໝຸດ ຄະນະວິທະຍາສາດທຳມະຊາດ" textAlignment="CENTER" textFill="WHITE" />
+                                    <ImageView fitHeight="147.0" fitWidth="149.0" layoutY="-3.0">
+                                       <image>
+                                          <Image url="@Icon/Logo_FNS.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label contentDisplay="CENTER" layoutX="149.0" layoutY="84.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" text="Faculty Of Natural Scince Library Management System" textAlignment="CENTER" textFill="WHITE" />
+                                    <JFXButton id="#btLogOut" alignment="CENTER" cache="true" cacheHint="QUALITY" graphicTextGap="10.0" layoutX="916.0" layoutY="12.0" onAction="#LogOut" prefHeight="31.0" prefWidth="131.0" style="-fx-background-radius: 15px 15px 15px 15px; -fx-background-color: #fff;" styleClass="button-color" stylesheets="@Style/buttonFont.css" text="ອອກຈາກລະບົບ" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="12.0">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@Icon/shutdown_100pxColor.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </JFXButton>
+                                    <Text fill="WHITE" layoutX="419.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-16" text="ເຂົ້າໃຊ້ລະບົບດ້ວຍ: ທ.ຄຳໄຟ ເສຍລິມົວ" wrappingWidth="220.2166690826416" />
+                                 </children>
+                              </AnchorPane>
+                              <HBox alignment="CENTER_LEFT" layoutX="15.0" layoutY="302.0" prefHeight="32.0" prefWidth="1058.0" style="-fx-background-color: #00244A;">
+                                 <children>
+                                    <Label prefHeight="32.0" prefWidth="95.0" styleClass="label-size-14" text="ລະຫັດປຶ້ມ" textFill="WHITE">
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding>
+                                    </Label>
+                                    <Label prefHeight="32.0" prefWidth="250.0" styleClass="label-size-14" text="ຊື່ປຶ້ມ" textFill="WHITE" />
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="201.0" styleClass="label-size-14" text="ໝວດປຶ້ມ" textFill="WHITE" />
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="184.0" styleClass="label-size-14" text="ປະເພດປື້ມ" textFill="WHITE" />
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="81.0" styleClass="label-size-14" text="ຈຳນວນໜ້າ" textFill="WHITE" />
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="78.0" styleClass="label-size-14" text="ຈຳນວນຫົວ" textFill="WHITE" />
+                                    <Label prefHeight="32.0" prefWidth="170.0" styleClass="label-size-14" text="ພາສາ" textFill="WHITE" />
+                                 </children>
+                                 <cursor>
+                                    <Cursor fx:constant="DEFAULT" />
+                                 </cursor>
+                              </HBox>
+                              <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="14.0" layoutY="334.0" prefHeight="349.0" prefWidth="1059.0" AnchorPane.bottomAnchor="18.0" AnchorPane.topAnchor="334.0">
+                                 <content>
+                                    <FlowPane fx:id="pnItems" prefHeight="200.0" prefWidth="200.0" />
+                                 </content>
+                              </ScrollPane>
+                              <Text fill="WHITE" layoutX="727.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="+10" />
                            </children>
                         </AnchorPane>
-                        <HBox alignment="CENTER_LEFT" layoutX="111.0" layoutY="297.0" prefHeight="32.0" prefWidth="897.0" style="-fx-background-color: #E0E0EB;">
-                           <children>
-                              <Label prefHeight="32.0" prefWidth="77.0" styleClass="label-size-12" text="ລະຫັດປຶ້ມ" />
-                              <Label prefHeight="32.0" prefWidth="220.0" styleClass="label-size-12" text="ຊື່ປຶ້ມ" />
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="112.0" styleClass="label-size-12" text="ໝວດປຶ້ມ" />
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="155.0" styleClass="label-size-12" text="ປະເພດປື້ມ" />
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="81.0" styleClass="label-size-12" text="ຈຳນວນໜ້າ" />
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="78.0" styleClass="label-size-12" text="ຈຳນວນຫົວ" />
-                              <Label prefHeight="32.0" prefWidth="129.0" styleClass="label-size-12" text="ພາສາ" />
-                           </children>
-                           <cursor>
-                              <Cursor fx:constant="DEFAULT" />
-                           </cursor>
-                        </HBox>
-                        <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="110.0" layoutY="329.0" prefHeight="216.0" prefWidth="900.0" AnchorPane.bottomAnchor="14.0" AnchorPane.topAnchor="329.0">
-                           <content>
-                              <FlowPane fx:id="pnItems" prefHeight="200.0" prefWidth="200.0" />
-                           </content>
-                        </ScrollPane>
                      </children>
-                  </AnchorPane>
+                  </JFXBadge>
                </content>
             </ScrollPane>
          </center>

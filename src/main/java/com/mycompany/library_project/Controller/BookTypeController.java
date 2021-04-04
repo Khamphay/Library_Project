@@ -1,13 +1,10 @@
 package com.mycompany.library_project.Controller;
 
-import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.fxml.*;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import com.mycompany.library_project.Model.TypeModel;
@@ -27,10 +24,10 @@ public class BookTypeController implements Initializable {
     private String query = "";
 
     @FXML
-    JFXTextField txtTypeId;
+    TextField txtTypeId;
 
     @FXML
-    JFXTextField txtTypeName;
+    TextField txtTypeName;
 
     @FXML
     private TableView<TypeModel> tableType;

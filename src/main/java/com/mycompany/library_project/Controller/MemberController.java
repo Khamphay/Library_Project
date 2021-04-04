@@ -8,10 +8,8 @@ import java.util.ResourceBundle;
 
 import com.mycompany.library_project.Model.MemberModel;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.collections.*;
+import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -32,13 +30,11 @@ public class MemberController implements Initializable {
         try {
             data = FXCollections.observableArrayList();
             data.add(new MemberModel("FNS0349.17", "ຄຳໄຟ", "ເສຍລີມົວ", "ຊາຍ", "02076736453", "ດົງໂດກ", "ໍໄຊທານີ",
-                    "ນະຄອນຫຼວງວຽງຈັນ",
-                     Date.valueOf(new LocalDate(2021,8,20)), "ວິທະຍາສາດຄອມພິວເຕິ",
-                    Date.valueOf(dateFormat.format("05-08-2000")), 
-                    Date.valueOf(dateFormat.format("05-08-2000"))));
+                    "ນະຄອນຫຼວງວຽງຈັນ", Date.valueOf(LocalDate.of(2021, 8, 20)), "ວິທະຍາສາດຄອມພິວເຕິ",
+                    Date.valueOf(LocalDate.of(2021, 8, 20)), Date.valueOf(LocalDate.of(2021, 8, 20))));
             tableMember.setItems(data);
         } catch (Exception e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
     }
 

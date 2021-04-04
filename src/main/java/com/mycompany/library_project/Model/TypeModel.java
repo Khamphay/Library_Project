@@ -1,8 +1,5 @@
 package com.mycompany.library_project.Model;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
 import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 

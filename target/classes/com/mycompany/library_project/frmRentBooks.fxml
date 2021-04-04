@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXDatePicker?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="603.0" prefWidth="1090.0" style="-fx-background-color: #f3f3f3;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.RentBookController">
+<AnchorPane prefHeight="603.0" prefWidth="1090.0" style="-fx-background-color: #f3f3f3;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.RentBookController">
    <children>
       <BorderPane layoutX="7.0" layoutY="62.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -48,56 +48,56 @@
                         </TableView>
                       <AnchorPane layoutX="20.0" layoutY="21.0" minHeight="0.0" minWidth="0.0" prefHeight="124.0" prefWidth="1048.0">
                            <children>
-                              <JFXDatePicker defaultColor="#696b78" layoutX="858.0" layoutY="80.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີສົ່ງປຶ້ມ" style="-fx-text-fill: #fff;" styleClass="date-picker">
+                              <DatePicker layoutX="858.0" layoutY="80.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີສົ່ງປຶ້ມ" style="-fx-text-fill: #fff;" styleClass="date-picker">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
-                              </JFXDatePicker>
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="167.0" layoutY="81.0" prefHeight="27.0" prefWidth="214.0" promptText="ຊື່ປຶ້ມ" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0">
+                              </DatePicker>
+                              <TextField layoutX="167.0" layoutY="81.0" prefHeight="27.0" prefWidth="214.0" promptText="ຊື່ປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
                                  <font>
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>
-                              </JFXTextField>
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="31.0" layoutY="81.0" prefHeight="27.0" prefWidth="110.0" promptText="ລະຫັດປຶ້ມ" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0">
+                              </TextField>
+                              <TextField layoutX="31.0" layoutY="81.0" prefHeight="27.0" prefWidth="110.0" promptText="ລະຫັດປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
                                  <font>
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>
-                              </JFXTextField>
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="411.0" layoutY="18.0" prefHeight="27.0" prefWidth="190.0" promptText="ນາມສະກຸນ" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0">
+                              </TextField>
+                              <TextField layoutX="411.0" layoutY="18.0" prefHeight="27.0" prefWidth="190.0" promptText="ນາມສະກຸນ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
                                  <font>
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>
-                              </JFXTextField>
-                              <JFXDatePicker fx:id="datePicker" defaultColor="#696b78" layoutX="858.0" layoutY="17.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີຢືມປຶ້ມ" style="-fx-text-fill: #fff;" styleClass="date-picker">
+                              </TextField>
+                              <DatePicker fx:id="datePicker" layoutX="858.0" layoutY="17.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີຢືມປຶ້ມ" style="-fx-text-fill: #fff;" styleClass="date-picker">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
-                              </JFXDatePicker>
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="167.0" layoutY="18.0" prefHeight="27.0" prefWidth="214.0" promptText="ຊື່" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0">
+                              </DatePicker>
+                              <TextField layoutX="167.0" layoutY="18.0" prefHeight="27.0" prefWidth="214.0" promptText="ຊື່" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
                                  <font>
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>
-                              </JFXTextField>
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="31.0" layoutY="18.0" prefHeight="27.0" prefWidth="110.0" promptText="ລະຫັດສະມາຊີກ" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0">
+                              </TextField>
+                              <TextField layoutX="31.0" layoutY="18.0" prefHeight="27.0" prefWidth="110.0" promptText="ລະຫັດສະມາຊີກ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
                                  <font>
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>
-                              </JFXTextField>
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="630.0" layoutY="18.0" prefHeight="25.0" prefWidth="190.0" promptText="ເບີໂທ" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0">
+                              </TextField>
+                              <TextField layoutX="630.0" layoutY="18.0" prefHeight="25.0" prefWidth="190.0" promptText="ເບີໂທ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
                                  <font>
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>
-                              </JFXTextField>
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="630.0" layoutY="81.0" prefHeight="27.0" prefWidth="190.0" promptText="ຊື່ປຶ້ມ" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0">
+                              </TextField>
+                              <TextField layoutX="630.0" layoutY="81.0" prefHeight="27.0" prefWidth="190.0" promptText="ຊື່ປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
                                  <font>
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>
-                              </JFXTextField>
-                              <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="411.0" layoutY="81.0" prefHeight="27.0" prefWidth="190.0" promptText="ຊື່ປຶ້ມ" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0">
+                              </TextField>
+                              <TextField layoutX="411.0" layoutY="81.0" prefHeight="27.0" prefWidth="190.0" promptText="ຊື່ປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
                                  <font>
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>
-                              </JFXTextField>
+                              </TextField>
                            </children>
                         </AnchorPane>
                      </children>

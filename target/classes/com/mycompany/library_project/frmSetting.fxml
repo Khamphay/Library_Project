@@ -2,8 +2,8 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXColorPicker?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
@@ -58,14 +58,14 @@
          <center>
             <AnchorPane prefHeight="417.0" prefWidth="729.0" style="-fx-background-color: #f3f3f3; -fx-background-radius: 0px 0px 8px 8px; -fx-border-color: #101D3D; -fx-border-radius: 0px 0px 8px 8px; -fx-border-width: 1px 1.7px 1px 1px;" BorderPane.alignment="CENTER">
                <children>
-                  <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="455.0" layoutY="75.0" prefHeight="25.0" prefWidth="252.0" promptText="ຄ່າລົງທະບຽນ" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0">
+                  <TextField  layoutX="455.0" layoutY="75.0" prefHeight="25.0" prefWidth="252.0" promptText="ຄ່າລົງທະບຽນ" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular"  viewOrder="1.0">
                      <font>
                         <Font name="Phetsarath OT" size="12.0" />
-                     </font></JFXTextField>
-                  <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="455.0" layoutY="142.0" prefHeight="25.0" prefWidth="252.0" promptText="ຄ່າປັບໃຫມ" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0">
+                     </font></TextField>
+                  <TextField  layoutX="455.0" layoutY="142.0" prefHeight="25.0" prefWidth="252.0" promptText="ຄ່າປັບໃຫມ" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular"  viewOrder="1.0">
                      <font>
                         <Font name="Phetsarath OT" size="12.0" />
-                     </font></JFXTextField>
+                     </font></TextField>
                   <JFXButton id="btClick" buttonType="RAISED" layoutX="637.0" layoutY="362.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="#0a1eff" stylesheets="@Style/buttonFont.css" text="ບັນທຶກ" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />

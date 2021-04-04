@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="615.0" prefWidth="1070.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.EmployeeController">
+<BorderPane prefHeight="615.0" prefWidth="1070.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.EmployeeController">
    <center>
       <ScrollPane fitToHeight="true" fitToWidth="true">
          <content>
@@ -22,8 +22,8 @@
                   <TableView fx:id="tableEmployee" layoutX="9.0" layoutY="106.0" minWidth="-Infinity" prefHeight="443.0" prefWidth="1050.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="106.0">
                      <columns>
                         <TableColumn fx:id="id" prefWidth="164.0" text="ລະຫັດພະນັກງານ" />
-                        <TableColumn prefWidth="882.0" text="ຊື່ພະນັກງານ" />
-                        <TableColumn fx:id="name" prefWidth="882.0" text="ນາມສະກຸນ" />
+                        <TableColumn fx:id="name" prefWidth="882.0" text="ຊື່ພະນັກງານ" />
+                        <TableColumn fx:id="surname" prefWidth="882.0" text="ນາມສະກຸນ" />
                         <TableColumn fx:id="gender" prefWidth="882.0" text="ເພດ" />
                         <TableColumn fx:id="tel" prefWidth="882.0" text="ເບີໂທ" />
                      </columns>

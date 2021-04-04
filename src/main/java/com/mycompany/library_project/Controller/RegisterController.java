@@ -4,9 +4,8 @@ import com.jfoenix.controls.*;
 
 import javafx.collections.*;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.ToggleGroup;
+import javafx.fxml.*;
+import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.stage.*;
 
@@ -35,23 +34,23 @@ public class RegisterController implements Initializable {
     private Image img = null;
 
     @FXML
-    private JFXTextField txtId;
+    private TextField txtId;
     @FXML
-    private JFXTextField txtFName;
+    private TextField txtFName;
     @FXML
-    private JFXTextField txtLName;
+    private TextField txtLName;
     @FXML
-    private JFXTextField txtTel;
+    private TextField txtTel;
     @FXML
-    private JFXTextField txtVill;
+    private TextField txtVill;
     @FXML
-    private JFXTextField txtDist;
+    private TextField txtDist;
     @FXML
-    private JFXTextField txtProv;
+    private TextField txtProv;
     @FXML
-    private JFXComboBox cmbDept;
+    private ComboBox cmbDept;
     @FXML
-    private JFXComboBox cmbYears;
+    private ComboBox cmbYears;
 
     @FXML
     private JFXRadioButton rdbMale;
@@ -59,13 +58,8 @@ public class RegisterController implements Initializable {
     private JFXRadioButton rdbFemale;
 
     @FXML
-    private JFXDatePicker birtDate;
-    @FXML
-    private JFXDatePicker registerDate;
-    @FXML
-    private JFXDatePicker endDate;
-    @FXML
-    private JFXDatePicker exitDate;
+    private DatePicker birtDate, registerDate, endDate, exitDate;
+
     @FXML
     private ImageView imgPic;
 
@@ -108,8 +102,7 @@ public class RegisterController implements Initializable {
             memberModel = new MemberModel(txtId.getText(), txtFName.getText(), txtLName.getText(), rdbMale.getText(),
                     txtTel.getText(), txtVill.getText(), txtDist.getText(), txtProv.getText(),
                     Date.valueOf(dateFormat.format("05/08/2000")), "Computer",
-                    Date.valueOf(dateFormat.format("05/08/2000")),
-                    Date.valueOf(dateFormat.format("05/08/2000")),
+                    Date.valueOf(dateFormat.format("05/08/2000")), Date.valueOf(dateFormat.format("05/08/2000")),
                     Date.valueOf(dateFormat.format("05/08/2000")), "Emty");
             if (memberModel.saveData() == 1) {
                 JOptionPane.showMessageDialog(null, "Save Completed!!!");

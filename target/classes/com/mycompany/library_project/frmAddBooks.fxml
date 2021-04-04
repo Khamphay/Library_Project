@@ -1,47 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXTextArea?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane cache="true" cacheHint="QUALITY" prefHeight="562.0" prefWidth="875.0" style="-fx-background-color: #f3f3f3;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.AddBookController">
+<AnchorPane cache="true" cacheHint="QUALITY" prefHeight="562.0" prefWidth="875.0" style="-fx-background-color: #f3f3f3;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.AddBookController">
    <children>
       <BorderPane layoutY="48.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
             <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="497.0" prefWidth="779.0">
                <content>
-                  <AnchorPane prefHeight="490.0" prefWidth="768.0">
+                  <JFXBadge prefHeight="512.0" prefWidth="142.0">
                      <children>
-                        <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="293.0" layoutY="93.0" prefHeight="27.0" prefWidth="238.0" promptText="ຊື່ປຶ້ມ" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
-                        <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="103.0" layoutY="93.0" prefHeight="27.0" prefWidth="161.0" promptText="ລະຫັດປຶ້ມ" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
-                        <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="569.0" layoutY="93.0" prefHeight="27.0" prefWidth="91.0" promptText="ຈຳນວນໜ້າ" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
-                        <JFXTextField focusColor="#0a1eff" labelFloat="true" layoutX="677.0" layoutY="93.0" prefHeight="27.0" prefWidth="91.0" promptText="ຈຳນວນຫົວ" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular" unFocusColor="BLACK" viewOrder="1.0" />
-                        <JFXComboBox fx:id="cmbCagtegory" focusColor="#0a1eff" labelFloat="true" layoutX="569.0" layoutY="154.0" prefHeight="27.0" prefWidth="202.0" promptText="ໝວດ" styleClass="combobox" />
-                        <JFXComboBox fx:id="cmbType" focusColor="#0a1eff" labelFloat="true" layoutX="293.0" layoutY="154.0" prefHeight="27.0" prefWidth="238.0" promptText="ປະເພດ" styleClass="combobox" />
-                        <JFXComboBox fx:id="cmbStatus" focusColor="#0a1eff" labelFloat="true" layoutX="293.0" layoutY="219.0" prefHeight="27.0" prefWidth="238.0" promptText="ສະຖານະ" styleClass="combobox" />
-                        <JFXComboBox fx:id="cmbTable" focusColor="#0a1eff" labelFloat="true" layoutX="569.0" layoutY="219.0" prefHeight="27.0" prefWidth="91.0" promptText="ເລກຕູ້" styleClass="combobox" />
-                        <JFXComboBox fx:id="cmbtableLog" focusColor="#0a1eff" labelFloat="true" layoutX="680.0" layoutY="219.0" prefHeight="27.0" prefWidth="91.0" promptText="ລ໋ອກຕູ້" styleClass="combobox" />
-                        <JFXTextArea focusColor="#0a1eff" labelFloat="true" layoutX="103.0" layoutY="159.0" prefHeight="148.0" prefWidth="161.0" promptText="ບາໂຄດປຶ້ມ" style="-fx-border-color: #999999;" styleClass="BoonBaan-size-14-Regular" />
-                        <JFXButton buttonType="RAISED" layoutX="309.0" layoutY="383.0" prefHeight="35.0" prefWidth="80.0" ripplerFill="#0a1eff" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </JFXButton>
-                        <JFXButton buttonType="RAISED" layoutX="501.0" layoutY="383.0" prefHeight="35.0" prefWidth="80.0" ripplerFill="#0a1eff" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </JFXButton>
+                        <AnchorPane maxWidth="-Infinity" prefHeight="439.0" prefWidth="771.0">
+                           <children>
+                              <TextField fx:id="txtName" layoutX="250.0" layoutY="83.0" prefHeight="27.0" prefWidth="238.0" promptText="ຊື່ປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" />
+                              <TextField fx:id="txtId" layoutX="60.0" layoutY="83.0" prefHeight="27.0" prefWidth="161.0" promptText="ລະຫັດປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" />
+                              <TextField fx:id="txtPage" layoutX="250.0" layoutY="149.0" prefHeight="31.0" prefWidth="114.0" promptText="ຈຳນວນໜ້າ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" />
+                              <TextField fx:id="txtQty" layoutX="384.0" layoutY="149.0" prefHeight="31.0" prefWidth="104.0" promptText="ຈຳນວນຫົວ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" />
+                              <ComboBox fx:id="cmbCagtegory" layoutX="250.0" layoutY="208.0" prefHeight="31.0" prefWidth="241.0" promptText="ໝວດ" />
+                              <ComboBox fx:id="cmbType" layoutX="510.0" layoutY="149.0" prefHeight="31.0" prefWidth="218.0" promptText="ປະເພດ" />
+                              <ComboBox fx:id="cmbStatus" layoutX="252.0" layoutY="266.0" prefHeight="27.0" prefWidth="238.0" promptText="ສະຖານະ" />
+                              <ComboBox fx:id="cmbTable" layoutX="511.0" layoutY="208.0" prefHeight="31.0" prefWidth="101.0" promptText="ເລກຕູ້" />
+                              <ComboBox fx:id="cmbtableLog" layoutX="630.0" layoutY="208.0" prefHeight="31.0" prefWidth="98.0" promptText="ລ໋ອກຕູ້" />
+                              <TextArea layoutX="60.0" layoutY="149.0" prefHeight="148.0" prefWidth="161.0" promptText="ບາໂຄດປຶ້ມ" style="-fx-border-color: #999999;" styleClass="BoonBaan-size-14-Regular" />
+                              <JFXButton buttonType="RAISED" layoutX="266.0" layoutY="373.0" prefHeight="35.0" prefWidth="80.0" ripplerFill="#0a1eff" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <JFXButton buttonType="RAISED" layoutX="458.0" layoutY="373.0" prefHeight="35.0" prefWidth="80.0" ripplerFill="#0a1eff" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </JFXButton>
+                              <TextField fx:id="txtISBN" layoutX="507.0" layoutY="83.0" prefHeight="31.0" prefWidth="219.0" promptText="ISBN" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" />
+                           </children>
+                        </AnchorPane>
                      </children>
-                  </AnchorPane>
+                  </JFXBadge>
                </content>
             </ScrollPane>
          </center>

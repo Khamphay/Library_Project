@@ -22,11 +22,11 @@ import javafx.stage.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javax.swing.JOptionPane;
-
 public class HomeController implements Initializable {
 
     public static Stage homeStage = null;
+    public static String summaryValue = null;
+
     private boolean max_min = false;
     private double x, y;
     private Parent subroot = null;
@@ -35,8 +35,8 @@ public class HomeController implements Initializable {
     private boolean fragMenu = false;
     private Node node;
     private Parent rootMenu = null;
-    Node[] nodeItem = new Node[100];
-    String[] data = { "Computer", "sifur", "wo9eur", "setue9t8ye5", "09", "87", "efuw" };
+    private Node[] nodeItem = new Node[100];
+    private String[] data = { "Computer", "sifur", "wo9eur", "setue9t8ye5", "09", "87", "efuw" };
 
     @FXML
     private AnchorPane acHomePaneToolbar;
@@ -87,10 +87,6 @@ public class HomeController implements Initializable {
             homeStage.setOpacity(1.0f);
         });
     }
-
-    // private void showListItems() {
-
-    // }
 
     private void sliderMenuHamburger() {
         hamburgerTransition = new HamburgerSlideCloseTransition(humberger);
@@ -318,6 +314,6 @@ public class HomeController implements Initializable {
         show_menu();
         sliderMenuHamburger();
         // thItem.start();
+        System.out.println("Summary data: " + summaryValue);
     }
-
 }

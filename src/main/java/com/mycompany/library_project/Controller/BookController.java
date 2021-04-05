@@ -27,7 +27,6 @@ public class BookController implements Initializable {
     private ResultSet rs = null;
     private BookDetailModel bookDetail = null;
     private ObservableList<BookDetailModel> data = null;
-    private JFXButton btnAction = new JFXButton("Active");
 
     @FXML
     private TableView<BookDetailModel> tableBook;
@@ -75,13 +74,13 @@ public class BookController implements Initializable {
             bookDetail = new BookDetailModel();
             rs = bookDetail.findAll();
             while (rs.next()) {
-                // data.add(new BookDetailModel(rs.getString(0), rs.getString(1),
-                // rs.getString(2), rs.getInt(3),
-                // rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7), btnAction));
+                data.add(new BookDetailModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4),
+                        rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), getAction()));
             }
 
-            data.add(new BookDetailModel("rs.getString(0)", "rs.getString(1)", "rs.getString(2)", 309, 10,
-                    "rs.getString(5)", "rs.getString(6)", "rs.getString(7)", btnAction));
+            // data.add(new BookDetailModel("rs.getString(0)", "rs.getString(1)",
+            // "rs.getString(2)", 309, 10,
+            // "rs.getString(5)", "rs.getString(6)", "rs.getString(7)", btnAction));
 
             tableBook.setItems(data);
 
@@ -103,7 +102,18 @@ public class BookController implements Initializable {
         ation.setCellValueFactory(new PropertyValueFactory<>("action"));
     }
 
-    private void initButtons() {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // showBooks();
+        initColumn();
+        showData();
+    }
+
+    private JFXButton getAction() {
+
+        JFXButton btnAction = new JFXButton();
+        final ImageView imageView = new ImageView();
+
         final ContextMenu contMenu = new ContextMenu();
         final ImageView imgshow = new ImageView();
         final ImageView imgedit = new ImageView();
@@ -132,17 +142,14 @@ public class BookController implements Initializable {
         delete.setGraphic(imgdel);
 
         contMenu.getItems().addAll(show, edit, delete);
-
+        img = new Image("/com/mycompany/library_project/Icon/menu_dot.png");
+        imageView.setImage(img);
+        imageView.setFitHeight(20);
+        imageView.setFitWidth(20);
+        btnAction.setGraphic(imageView);
         btnAction.setId("btnAction");
-
         btnAction.setContextMenu(contMenu);
-    }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        // showBooks();
-        initColumn();
-        initButtons();
-        showData();
+        return btnAction;
     }
 }

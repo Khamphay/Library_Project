@@ -3,6 +3,7 @@ package com.mycompany.library_project.Controller;
 import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.App;
 import com.mycompany.library_project.DesktopController;
+import com.mycompany.library_project.ModelShow.SummaryData;
 
 import org.controlsfx.control.decoration.*;
 import org.controlsfx.validation.*;
@@ -131,10 +132,19 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        getSummaryData();
         opacityFromMove();
         //MyProgress();
         textRules();
 
+    }
+
+    public void getSummaryData() {
+        SummaryData book = new SummaryData("call sumBook();");
+        book.start();
+
+        SummaryData member = new SummaryData("call sumMember();");
+        member.start();
     }
 
 }

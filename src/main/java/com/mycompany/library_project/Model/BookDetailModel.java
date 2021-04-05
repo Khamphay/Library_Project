@@ -1,8 +1,6 @@
 package com.mycompany.library_project.Model;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.ParseException;
 
 import com.jfoenix.controls.JFXButton;
@@ -13,7 +11,8 @@ public class BookDetailModel implements DataAccessObject {
 
     private Connection con = MyConnection.getConnect();
     private ResultSet rs = null;
-    String sql = null;
+    private PreparedStatement ps = null;
+    private String sql = null;
 
     private String bookId;
     private String bookName;
@@ -231,8 +230,38 @@ public class BookDetailModel implements DataAccessObject {
 
     @Override
     public int saveData() throws SQLException, ParseException {
-        // TODO Auto-generated method stub
-        return 0;
+
+        try {
+            sql = "call book_detail_Insert(?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, getBookId());
+            ps.setString(2, getBookName());
+            ps.setString(3, getISBN());
+            ps.setInt(4, getPage());
+            ps.setInt(5, getQty());
+            ps.setString(6, getDetail());
+            ps.setString(7, getCatgId());
+            ps.setString(8, getTypeId());
+            ps.setString(9, getTableLogId());
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error on save: " + e.getMessage());
+            return -1;
+        }
+    }
+
+    public int saveBookBarCode(String barcode, String bookid, String status) {
+        try {
+            sql = "call book_Insert(?, ?, ?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, barcode);
+            ps.setString(2, bookid);
+            ps.setString(3, status);
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error save barcode: " + e.getMessage());
+            return -1;
+        }
     }
 
     @Override

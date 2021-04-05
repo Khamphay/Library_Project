@@ -34,25 +34,65 @@
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>
                               </TextField>
-                              <JFXButton id="btClick" contentDisplay="CENTER" layoutX="51.0" layoutY="97.0" onAction="#Save" prefHeight="30.0" prefWidth="80.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
+                              <JFXButton id="btClick" layoutX="51.0" layoutY="97.0" onAction="#Save" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/checked.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="-4.0" />
+                                 </padding>
                               </JFXButton>
-                              <JFXButton id="btClick" contentDisplay="CENTER" layoutX="175.0" layoutY="97.0" onAction="#Update" prefHeight="30.0" prefWidth="80.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ແກັໄຂ້" textFill="WHITE">
+                              <JFXButton id="btClick" layoutX="175.0" layoutY="97.0" onAction="#Update" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ແກັໄຂ້" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/checked.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="-4.0" />
+                                 </padding>
                               </JFXButton>
-                              <JFXButton id="btClick" contentDisplay="CENTER" layoutX="299.0" layoutY="97.0" onAction="#Delete" prefHeight="30.0" prefWidth="80.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ລືບ" textFill="WHITE">
+                              <JFXButton id="btClick" layoutX="299.0" layoutY="97.0" onAction="#Delete" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ລືບ" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/checked.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="-4.0" />
+                                 </padding>
                               </JFXButton>
-                              <JFXButton id="btClick" contentDisplay="CENTER" layoutX="423.0" layoutY="97.0" onAction="#ClearText" prefHeight="30.0" prefWidth="80.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
+                              <JFXButton id="btClick" layoutX="423.0" layoutY="97.0" onAction="#ClearText" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/checked.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="-4.0" />
+                                 </padding>
                               </JFXButton>
                               <TextField layoutX="249.0" layoutY="167.0" prefHeight="30.0" prefWidth="300.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-14-Regular">
                                  <padding>

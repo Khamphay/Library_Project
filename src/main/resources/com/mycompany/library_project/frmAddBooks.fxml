@@ -2,6 +2,8 @@
 
 <?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -21,29 +23,53 @@
                <content>
                   <JFXBadge prefHeight="512.0" prefWidth="142.0">
                      <children>
-                        <AnchorPane maxWidth="-Infinity" prefHeight="439.0" prefWidth="771.0">
+                        <AnchorPane maxWidth="-Infinity" prefHeight="510.0" prefWidth="699.0">
                            <children>
-                              <TextField fx:id="txtName" layoutX="250.0" layoutY="83.0" prefHeight="27.0" prefWidth="238.0" promptText="ຊື່ປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" />
-                              <TextField fx:id="txtId" layoutX="60.0" layoutY="83.0" prefHeight="27.0" prefWidth="161.0" promptText="ລະຫັດປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" />
-                              <TextField fx:id="txtPage" layoutX="250.0" layoutY="149.0" prefHeight="31.0" prefWidth="114.0" promptText="ຈຳນວນໜ້າ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" />
-                              <TextField fx:id="txtQty" layoutX="384.0" layoutY="149.0" prefHeight="31.0" prefWidth="104.0" promptText="ຈຳນວນຫົວ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" />
-                              <ComboBox fx:id="cmbCagtegory" layoutX="250.0" layoutY="208.0" prefHeight="31.0" prefWidth="241.0" promptText="ໝວດ" />
-                              <ComboBox fx:id="cmbType" layoutX="510.0" layoutY="149.0" prefHeight="31.0" prefWidth="218.0" promptText="ປະເພດ" />
-                              <ComboBox fx:id="cmbStatus" layoutX="252.0" layoutY="266.0" prefHeight="27.0" prefWidth="238.0" promptText="ສະຖານະ" />
-                              <ComboBox fx:id="cmbTable" layoutX="511.0" layoutY="208.0" prefHeight="31.0" prefWidth="101.0" promptText="ເລກຕູ້" />
-                              <ComboBox fx:id="cmbtableLog" layoutX="630.0" layoutY="208.0" prefHeight="31.0" prefWidth="98.0" promptText="ລ໋ອກຕູ້" />
-                              <TextArea layoutX="60.0" layoutY="149.0" prefHeight="148.0" prefWidth="161.0" promptText="ບາໂຄດປຶ້ມ" style="-fx-border-color: #999999;" styleClass="BoonBaan-size-14-Regular" />
-                              <JFXButton buttonType="RAISED" layoutX="266.0" layoutY="373.0" prefHeight="35.0" prefWidth="80.0" ripplerFill="#0a1eff" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
+                              <TextField fx:id="txtName" layoutX="204.0" layoutY="83.0" prefHeight="27.0" prefWidth="238.0" promptText="ຊື່ປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" />
+                              <TextField fx:id="txtId" layoutX="14.0" layoutY="83.0" prefHeight="27.0" prefWidth="161.0" promptText="ລະຫັດປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" />
+                              <TextField fx:id="txtPage" layoutX="204.0" layoutY="149.0" prefHeight="31.0" prefWidth="114.0" promptText="ຈຳນວນໜ້າ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" />
+                              <TextField fx:id="txtQty" layoutX="338.0" layoutY="149.0" prefHeight="31.0" prefWidth="104.0" promptText="ຈຳນວນຫົວ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" />
+                              <ComboBox fx:id="cmbCagtegory" layoutX="203.0" layoutY="255.0" prefHeight="31.0" prefWidth="241.0" promptText="ໝວດ" />
+                              <ComboBox fx:id="cmbType" layoutX="203.0" layoutY="199.0" prefHeight="31.0" prefWidth="242.0" promptText="ປະເພດ" />
+                              <ComboBox fx:id="cmbStatus" layoutX="205.0" layoutY="313.0" prefHeight="27.0" prefWidth="238.0" promptText="ສະຖານະ" />
+                              <ComboBox fx:id="cmbTable" layoutX="461.0" layoutY="149.0" prefHeight="31.0" prefWidth="101.0" promptText="ເລກຕູ້" />
+                              <ComboBox fx:id="cmbtableLog" layoutX="582.0" layoutY="149.0" prefHeight="31.0" prefWidth="98.0" promptText="ລ໋ອກຕູ້" />
+                              <TextArea fx:id="txtBarcode" editable="false" layoutX="14.0" layoutY="149.0" prefHeight="197.0" prefWidth="161.0" promptText="ບາໂຄດປຶ້ມ" styleClass="BoonBaan-size-14-Regular" />
+                              <JFXButton alignment="CENTER" layoutX="233.0" layoutY="408.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#btSave" prefHeight="35.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/checked.png" />
+                                       </image>
+                                       <rotationAxis>
+                                          <Point3D />
+                                       </rotationAxis>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="-2.0" />
+                                 </padding>
                               </JFXButton>
-                              <JFXButton buttonType="RAISED" layoutX="458.0" layoutY="373.0" prefHeight="35.0" prefWidth="80.0" ripplerFill="#0a1eff" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
+                              <JFXButton alignment="CENTER" layoutX="350.0" layoutY="408.0" onAction="#btClearText" prefHeight="35.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/cancel.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="-5.0" />
+                                 </padding>
                               </JFXButton>
-                              <TextField fx:id="txtISBN" layoutX="507.0" layoutY="83.0" prefHeight="31.0" prefWidth="219.0" promptText="ISBN" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" />
+                              <TextField fx:id="txtISBN" layoutX="461.0" layoutY="83.0" prefHeight="31.0" prefWidth="219.0" promptText="ISBN" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" />
+                              <TextArea fx:id="txtDetail" layoutX="462.0" layoutY="199.0" prefHeight="144.0" prefWidth="218.0" promptText="ລາຍລະອຽດ" />
                            </children>
                         </AnchorPane>
                      </children>

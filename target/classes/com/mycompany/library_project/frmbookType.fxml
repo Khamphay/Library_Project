@@ -26,20 +26,50 @@
                            <children>
                               <TextField fx:id="txtTypeId" layoutX="55.0" layoutY="54.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="170.0" promptText="ລະຫັດປະເພດ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" />
                               <TextField fx:id="txtTypeName" layoutX="261.0" layoutY="53.0" prefHeight="27.0" prefWidth="298.0" promptText="ປະເພດປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" />
-                              <JFXButton id="btClick" buttonType="RAISED" contentDisplay="CENTER" layoutX="157.0" layoutY="114.0" onAction="#Save" prefHeight="30.0" prefWidth="80.0" ripplerFill="#0a1eff" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
+                              <JFXButton id="btClick" alignment="CENTER" buttonType="RAISED" layoutX="157.0" layoutY="114.0" onAction="#Save" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/checked.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="-4.0" />
+                                 </padding>
                               </JFXButton>
-                              <JFXButton id="btClick" buttonType="RAISED" contentDisplay="CENTER" layoutX="257.0" layoutY="114.0" onAction="#Delete" prefHeight="30.0" prefWidth="80.0" ripplerFill="#0a1eff" stylesheets="@Style/buttonFont.css" text="ລົບ" textFill="WHITE">
+                              <JFXButton id="btClick" alignment="CENTER" buttonType="RAISED" layoutX="257.0" layoutY="114.0" onAction="#Delete" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ລົບ" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/checked.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="-4.0" />
+                                 </padding>
                               </JFXButton>
-                              <JFXButton id="btClick" buttonType="RAISED" contentDisplay="CENTER" layoutX="357.0" layoutY="114.0" onAction="#ClearText" prefHeight="30.0" prefWidth="80.0" ripplerFill="#0a1eff" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
+                              <JFXButton id="btClick" alignment="CENTER" buttonType="RAISED" layoutX="357.0" layoutY="114.0" onAction="#ClearText" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/checked.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="-4.0" />
+                                 </padding>
                               </JFXButton>
                               <TextField layoutX="257.0" layoutY="172.0" prefHeight="30.0" prefWidth="300.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular">
                                  <padding>

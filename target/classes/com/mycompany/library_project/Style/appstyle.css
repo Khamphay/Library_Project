@@ -286,7 +286,8 @@
 
 
 .table-row-cell:selected .text {
-    -fx-fill: #111B27;
+    /* -fx-fill: #111B27; */
+    -fx-font-weight:bold;
 
 }
 

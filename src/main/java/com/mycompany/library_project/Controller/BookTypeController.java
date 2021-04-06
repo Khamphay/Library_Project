@@ -6,9 +6,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+
 import com.mycompany.library_project.Model.TypeModel;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
 import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
 
 import javax.swing.*;
 import java.net.URL;
@@ -20,14 +27,14 @@ public class BookTypeController implements Initializable {
     private Connection con = MyConnection.getConnect();
     private ResultSet rs;
     private TypeModel type = null;
-    private ObservableList<TypeModel> data=null;
-    private String query = "";
+    private ObservableList<TypeModel> data = null;
+    private DialogMessage dialog = null;
 
     @FXML
-    TextField txtTypeId;
+    private StackPane stackePane;
 
     @FXML
-    TextField txtTypeName;
+    TextField txtTypeId, txtTypeName;
 
     @FXML
     private TableView<TypeModel> tableType;
@@ -35,6 +42,8 @@ public class BookTypeController implements Initializable {
     private TableColumn<TypeModel, String> colId;
     @FXML
     private TableColumn<TypeModel, String> colName;
+    @FXML
+    private TableColumn<TypeModel, JFXButton> colAction;
 
     private void ShowData() {
         try {
@@ -42,7 +51,7 @@ public class BookTypeController implements Initializable {
             type = new TypeModel();
             rs = type.findAll();
             while (rs.next()) {
-                data.add(new TypeModel(rs.getString(1), rs.getString(2)));
+                data.add(new TypeModel(rs.getString(1), rs.getString(2), btDelete(rs.getString(1))));
             }
             tableType.setItems(data);
         } catch (SQLException e) {
@@ -58,9 +67,9 @@ public class BookTypeController implements Initializable {
     @FXML
     private void selectTableType(MouseEvent clickEvent) {
         if (clickEvent.getClickCount() > 0 && tableType.getSelectionModel().getSelectedItem() != null) {
-            TypeModel selectedType = tableType.getSelectionModel().getSelectedItem();
-            txtTypeId.setText(selectedType.getTypeId());
-            txtTypeName.setText(selectedType.getTypeName());
+            type = tableType.getSelectionModel().getSelectedItem();
+            txtTypeId.setText(type.getTypeId());
+            txtTypeName.setText(type.getTypeName());
         }
     }
 
@@ -85,16 +94,6 @@ public class BookTypeController implements Initializable {
     }
 
     @FXML
-    private void Delete(ActionEvent event) throws SQLException {
-        type = new TypeModel();
-        if (type.deleteData(txtTypeId.getText()) == 1) {
-            JOptionPane.showMessageDialog(null, "Delete Type Completed!!!.", "Save", JOptionPane.INFORMATION_MESSAGE);
-            ShowData();
-            ClearData();
-        }
-    }
-
-    @FXML
     private void ClearText(ActionEvent event) {
         ClearData();
     }
@@ -103,6 +102,60 @@ public class BookTypeController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colId.setCellValueFactory(new PropertyValueFactory<>("typeId"));
         colName.setCellValueFactory(new PropertyValueFactory<>("typeName"));
+        colAction.setCellValueFactory(new PropertyValueFactory<>("action"));
         ShowData();
+    }
+
+    private JFXButton btDelete(String id) {
+        JFXButton delete = new JFXButton("ລົບ");
+        final Image img = new Image("/com/mycompany/library_project/Icon/bin.png");
+        final ImageView imgView = new ImageView();
+        imgView.setImage(img);
+        imgView.setFitWidth(20);
+        imgView.setFitHeight(20);
+        delete.setId(id);
+        delete.setGraphic(imgView);
+        delete.setStyle("-fx-background-radius: 2em; -fx-background-color:#101D3D; -fx-text-fill:#FFF;");
+        delete.setOnAction(e -> {
+            JFXButton[] buttons = { buttonYes(delete.getId()), buttonNo(), buttonCancel() };
+            dialog = new DialogMessage(stackePane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
+                    JFXDialog.DialogTransition.CENTER, buttons, false);
+            dialog.showDialog();
+        });
+        return delete;
+    }
+
+    private JFXButton buttonYes(String typeid) {
+        JFXButton btyes = new JFXButton("ຕົກລົງ");
+        btyes.setOnAction(e -> {
+            // Todo: Delete Data
+            try {
+                type = new TypeModel();
+                if (type.deleteData(typeid) > 0) {
+                    ShowData();
+                    ClearData();
+                    dialog.closeDialog();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
+        return btyes;
+    }
+
+    private JFXButton buttonNo() {
+        JFXButton btno = new JFXButton("  ບໍ່  ");
+        btno.setOnAction(e -> {
+            dialog.closeDialog();
+        });
+        return btno;
+    }
+
+    private JFXButton buttonCancel() {
+        JFXButton btcancel = new JFXButton("ຍົກເລີກ");
+        btcancel.setOnAction(e -> {
+            dialog.closeDialog();
+        });
+        return btcancel;
     }
 }

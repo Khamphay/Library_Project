@@ -1,5 +1,6 @@
 package com.mycompany.library_project.Model;
 
+import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 
@@ -18,6 +19,7 @@ public class TypeModel implements DataAccessObject {
 
     private String typeId;
     private String typeName;
+    private JFXButton action;
 
     public TypeModel() {
         
@@ -30,6 +32,12 @@ public class TypeModel implements DataAccessObject {
     public TypeModel(String typeId, String typeName) {
         this.typeId = typeId;
         this.typeName = typeName;
+    }
+
+    public TypeModel(String typeId, String typeName, JFXButton action) {
+        this.typeId = typeId;
+        this.typeName = typeName;
+        this.action = action;
     }
 
     public String getTypeId() {
@@ -46,6 +54,14 @@ public class TypeModel implements DataAccessObject {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public JFXButton getAction() {
+        return action;
+    }
+
+    public void setAction(JFXButton action) {
+        this.action = action;
     }
 
     @Override
@@ -107,5 +123,6 @@ public class TypeModel implements DataAccessObject {
         ps.setString(1, id);
         return ps.executeUpdate();
     }
+
 
 }

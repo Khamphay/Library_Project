@@ -10,10 +10,15 @@ import javafx.fxml.*;
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 
 public class ManagePersonalCotroller implements Initializable {
 
     private Parent subForm = null;
+
+    @FXML
+    private Text txtMember, txtEmployee, txtAuthor, txtDep;
+
     @FXML
     private BorderPane bpManagePerson;
 
@@ -52,7 +57,10 @@ public class ManagePersonalCotroller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resources) {
-        // TODO Auto-generated method stub
+        txtMember.setText(HomeController.summaryValue[6] + " ຄົນ");
+        txtEmployee.setText(HomeController.summaryValue[7] + " ຄົນ");
+        txtAuthor.setText(HomeController.summaryValue[8] + " ຄົນ");
+        txtDep.setText(HomeController.summaryValue[9] + " ພາກວິຊາ");
     }
 
 }

@@ -32,7 +32,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <Text fill="WHITE" layoutX="65.0" layoutY="106.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="2 ປະເພດ" />
+                        <Text fx:id="txtType" fill="WHITE" layoutX="65.0" layoutY="106.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="2 ປະເພດ" />
                         <JFXButton alignment="TOP_LEFT" layoutX="432.0" layoutY="41.0" onAction="#btBooks_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປຶ້ມ" textFill="#ffeded">
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
@@ -51,7 +51,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <Text fill="WHITE" layoutX="488.0" layoutY="104.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນ 4850 ຫົວ" />
+                        <Text fx:id="txtBook" fill="WHITE" layoutX="488.0" layoutY="104.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນ 4850 ຫົວ" />
                         <JFXButton alignment="TOP_LEFT" layoutX="647.0" layoutY="43.0" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປຶ້ມເສຍ" textFill="#ffeded">
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
@@ -61,7 +61,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <Text fill="WHITE" layoutX="706.0" layoutY="105.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນ 50 ຫົວ" />
+                        <Text fx:id="txtBookLost" fill="WHITE" layoutX="706.0" layoutY="105.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນ 50 ຫົວ" />
                         <JFXButton alignment="TOP_LEFT" layoutX="860.0" layoutY="43.0" onAction="#btBookTableLog_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນລ໋ອກຕູ້" textFill="#ffeded">
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
@@ -71,8 +71,8 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <Text fill="WHITE" layoutX="916.0" layoutY="104.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນ 40 ຕູ້ ແລະ 160 ລ໋ອກຕູ້" wrappingWidth="106.55000305175781" />
-                        <Text fill="WHITE" layoutX="274.0" layoutY="102.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="4 ຫວດໝູ່" />
+                        <Text fx:id="txtTableLog" fill="WHITE" layoutX="916.0" layoutY="104.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນ 40 ຕູ້ ແລະ 160 ລ໋ອກຕູ້" wrappingWidth="106.55000305175781" />
+                        <Text fx:id="txtCategory" fill="WHITE" layoutX="274.0" layoutY="102.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="4 ຫວດໝູ່" />
                         <HBox alignment="CENTER_LEFT" layoutX="6.0" layoutY="172.0" prefHeight="32.0" prefWidth="1044.0" style="-fx-background-color: #00244A;">
                            <children>
                               <Label prefHeight="32.0" prefWidth="90.0" styleClass="label-size-14" text="ລະຫັດປຶ້ມ" textFill="WHITE">

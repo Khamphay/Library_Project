@@ -3,11 +3,9 @@ package com.mycompany.library_project.Model;
 import java.sql.*;
 import java.text.ParseException;
 
+import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
-
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 public class DepartmentModel implements DataAccessObject {
 
@@ -16,39 +14,46 @@ public class DepartmentModel implements DataAccessObject {
     private Connection con = MyConnection.getConnect();
     private String sql = null;
 
-    private StringProperty depId;
-    private StringProperty depName;
+    private String depId;
+    private String depName;
+    private JFXButton action;
 
     public DepartmentModel() {
     }
 
     public DepartmentModel(String depId, String depName) {
-        this.depId = new SimpleStringProperty(depId);
-        this.depName = new SimpleStringProperty(depName);
+        this.depId = depId;
+        this.depName = depName;
+    }
+
+    public DepartmentModel(String depId, String depName, JFXButton action) {
+        this.depId = depId;
+        this.depName = depName;
+        this.action = action;
     }
 
     public String getDepId() {
-        return depId.get();
-    }
-
-    public StringProperty depIdProperty() {
         return depId;
     }
 
     public void setDepId(String depId) {
-        this.depId.set(depId);
+        this.depId = depId;
     }
 
     public String getDepName() {
-        return depName.get();
-    }
-
-    public StringProperty depNameProperty() {
         return depName;
     }
 
     public void setDepName(String depName) {
-        this.depName.set(depName);
+        this.depName = depName;
+    }
+
+    public JFXButton getAction() {
+        return action;
+    }
+
+    public void setAction(JFXButton action) {
+        this.action = action;
     }
 
     @Override

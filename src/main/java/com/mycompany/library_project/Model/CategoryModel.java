@@ -1,8 +1,6 @@
 package com.mycompany.library_project.Model;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
+import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 
@@ -18,40 +16,48 @@ public class CategoryModel implements DataAccessObject {
     private Connection con = MyConnection.getConnect();
     private ResultSet rs = null;
 
-    private StringProperty catgId;
-    private StringProperty catgName;
+    private String catgId;
+    private String catgName;
+
+    private JFXButton action;
 
     public CategoryModel() {
         
     }
 
     public CategoryModel(String catgId, String catgName) {
-        this.catgId = new SimpleStringProperty(catgId);
-        this.catgName = new SimpleStringProperty(catgName);
+        this.catgId = catgId;
+        this.catgName = catgName;
     }
 
-    public void setCatgId(String catgId) {
-        this.catgId.set(catgId);
-    }
-
-    public void setCatgName(String catgName) {
-        this.catgName.set(catgName);
+    public CategoryModel(String catgId, String catgName, JFXButton action) {
+        this.catgId = catgId;
+        this.catgName = catgName;
+        this.action = action;
     }
 
     public String getCatgId() {
-        return catgId.get();
-    }
-
-    public String getCatgName() {
-        return catgName.get();
-    }
-
-    public StringProperty catgIdProperty() {
         return catgId;
     }
 
-    public StringProperty ctgNameProperty() {
+    public void setCatgId(String catgId) {
+        this.catgId = catgId;
+    }
+
+    public String getCatgName() {
         return catgName;
+    }
+
+    public void setCatgName(String catgName) {
+        this.catgName = catgName;
+    }
+
+    public JFXButton getAction() {
+        return action;
+    }
+
+    public void setAction(JFXButton action) {
+        this.action = action;
     }
 
     // Todo: Method management data
@@ -114,4 +120,5 @@ public class CategoryModel implements DataAccessObject {
         ps.setString(1, id);
         return ps.executeUpdate();
     }
+
 }

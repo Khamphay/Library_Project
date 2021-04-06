@@ -8,12 +8,16 @@ import com.mycompany.library_project.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.*;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 
 public class ManageBookController implements Initializable {
 
     private Parent subForm = null;
+
+    @FXML
+    private Text txtType, txtCategory, txtBook, txtBookLost, txtTableLog;
 
     @FXML
     private BorderPane bpManageBook;
@@ -58,8 +62,14 @@ public class ManageBookController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // TODO Auto-generated method stub
-
+        txtType.setText(HomeController.summaryValue[0] + " ປະເພດ");
+        txtCategory.setText(HomeController.summaryValue[1] + " ຫວດໝູ່");
+        txtBook.setText(
+                "ຈຳນວນ " + ((HomeController.summaryValue[2] != null) ? HomeController.summaryValue[2] : "0") + " ຫົວ");
+        txtBookLost.setText(
+                "ຈຳນວນ " + ((HomeController.summaryValue[3] != null) ? HomeController.summaryValue[3] : "0") + " ຫົວ");
+        txtTableLog.setText("ຈຳນວນ " + HomeController.summaryValue[4] + " ຕູ້ ແລະ "
+                + ((HomeController.summaryValue[5] != null) ? HomeController.summaryValue[5] : "0") + " ລ໋ອກຕູ້");
     }
 
 }

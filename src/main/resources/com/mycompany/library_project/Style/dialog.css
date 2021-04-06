@@ -1,0 +1,9 @@
+.dialog{
+    -fx-border: 1px solid;
+    -fx-border-radius:0.5em;
+    -fx-background-radius: 0.5em;
+    -fx-background-color: #101156;
+    -fx-font-family: 'Time New Roman';
+    -fx-font-size: 14; -fx-font-weight: bold;
+    
+}

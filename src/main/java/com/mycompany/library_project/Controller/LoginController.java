@@ -1,8 +1,10 @@
 package com.mycompany.library_project.Controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
 import com.mycompany.library_project.App;
 import com.mycompany.library_project.DesktopController;
+import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
 import com.mycompany.library_project.ModelShow.SummaryData;
 
 import org.controlsfx.control.decoration.*;
@@ -13,6 +15,7 @@ import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -22,26 +25,23 @@ import java.util.ResourceBundle;
 public class LoginController implements Initializable {
 
     private double x, y;
-    public static Stage loginSatge = null;//Seted object when open form 'Login' in class 'DesktopController.java'
+    public static Stage loginSatge = null;// Seted object when open form 'Login' in class 'DesktopController.java'
     private ValidationSupport validRules;
     private Decoration decoration;
+    private DialogMessage dialog = null;
 
     @FXML
     private AnchorPane acPaneLogin;
     @FXML
-    private JFXButton btLogin;
+    private StackPane stakePane;
     @FXML
-    private  JFXButton btCancel;
-    @FXML
-    private JFXButton btMinimize;
-    @FXML
-    private JFXButton btClose;
+    private JFXButton btLogin, btCancel, btMinimize, btClose;
     @FXML
     private TextField txtUsername;
     @FXML
     private PasswordField txtPassword;
-//    @FXML
-//    private JFXSpinner spinner;
+    // @FXML
+    // private JFXSpinner spinner;
 
     // TODO: Custom move form
     private void opacityFromMove() {
@@ -49,7 +49,7 @@ public class LoginController implements Initializable {
             x = mouseEvent.getSceneX();
             y = mouseEvent.getSceneY();
         });
-        //TODO: Set for move form
+        // TODO: Set for move form
         acPaneLogin.setOnMouseDragged(mouseEvent -> {
             loginSatge.setX(mouseEvent.getScreenX() - x);
             loginSatge.setY(mouseEvent.getScreenY() - y);
@@ -65,24 +65,7 @@ public class LoginController implements Initializable {
         });
     }
 
-    //Close Desktop Form
-    private void closeDesktopForm() {
-        Stage dststg = DesktopController.desktopStage;
-        dststg.close();
-    }
 
-    //Close this form
-    private void closeThisForm() {
-        //Close Login Form
-       // spinner.setVisible(false);
-
-        loginSatge.close();
-
-        //Todo:  Or use 
-        Stage loginStg = (Stage) acPaneLogin.getScene().getWindow();
-        loginStg.close();
-    }
-    
     private void textRules() {
         validRules = new ValidationSupport();
         validRules.registerValidator(txtUsername, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່ຜູ້ໃຊ້"));
@@ -92,8 +75,8 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private void Login(ActionEvent event) throws Exception{
-      //  spinner.setVisible(true);
+    private void Login(ActionEvent event) throws Exception {
+        // spinner.setVisible(true);
         Parent root = FXMLLoader.load(App.class.getResource("frmHome.fxml"));
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
@@ -104,47 +87,64 @@ public class LoginController implements Initializable {
         // windows form able Resize
         HomeController.homeStage.show();
 
-        closeThisForm();
-       // closeDesktopForm();
+        loginSatge.close();
+        // Todo: Or use
+        // Stage loginStg = (Stage) acPaneLogin.getScene().getWindow();
+        // loginStg.close();
     }
 
     @FXML
-    private void Cancel(ActionEvent event){
+    private void Cancel(ActionEvent event) {
         txtUsername.setText("");
-       // spinner.setVisible(true);
+        // spinner.setVisible(true);
     }
 
     @FXML
-    private void minimizeFrom(ActionEvent mouseEvent){
+    private void minimizeFrom(ActionEvent mouseEvent) {
         loginSatge.setIconified(true);
     }
 
-    //Exit Programe
+    // Exit Programe
     @FXML
     private void closeForm(ActionEvent mouseEvent) {
         // System.exit(0);
-        closeThisForm();
+        final JFXButton[] buttons = { buttonYes(), buttonNo() };
+
+        dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ", "ຕ້ອງການອອກຈາກໂປຣແກຣມບໍ?", JFXDialog.DialogTransition.CENTER,
+                buttons, false);
+        // Todo: Or: dialog.setDialogProperty(stakePane, "ຄຳເຕືອນ",
+        // "ຕ້ອງການອອກຈາກໂປຣແກຣມບໍ?", JFXDialog.DialogTransition.CENTER,
+        // buttons);
+
+        dialog.showDialog();
     }
 
-//    private void MyProgress(){
-//        spinner.setVisible(false);
-//    }
+    // private void MyProgress(){
+    // spinner.setVisible(false);
+    // }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        getSummaryData();
         opacityFromMove();
-        //MyProgress();
+        // MyProgress();
         textRules();
 
     }
 
-    public void getSummaryData() {
-        SummaryData book = new SummaryData("call sumBook();");
-        book.start();
-
-        SummaryData member = new SummaryData("call sumMember();");
-        member.start();
+    private JFXButton buttonYes() {
+        JFXButton btyes = new JFXButton("ຕົກລົງ");
+        btyes.setOnAction(e -> {
+            dialog.closeDialog();
+            loginSatge.close();
+        });
+        return btyes;
     }
 
+    private JFXButton buttonNo() {
+        JFXButton btno = new JFXButton("  ບໍ່  ");
+        btno.setOnAction(e -> {
+            dialog.closeDialog();
+        });
+        return btno;
+    }
 }

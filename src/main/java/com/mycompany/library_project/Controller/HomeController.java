@@ -6,6 +6,7 @@ import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import com.mycompany.library_project.App;
 import com.mycompany.library_project.Controller.List.ListitemController;
 import com.mycompany.library_project.ModelShow.MyArrayList;
+import com.mycompany.library_project.ModelShow.SummaryData;
 
 import javafx.application.Platform;
 import javafx.event.*;
@@ -25,7 +26,7 @@ import java.util.ResourceBundle;
 public class HomeController implements Initializable {
 
     public static Stage homeStage = null;
-    public static String summaryValue = null;
+    public static String[] summaryValue = new String[10];
 
     private boolean max_min = false;
     private double x, y;
@@ -136,6 +137,21 @@ public class HomeController implements Initializable {
 
                 @Override
                 public void handle(Event event) {
+                    SummaryData catg = new SummaryData("call sumCategory();", "ThreadingCatg");
+                    catg.start();
+
+                    SummaryData type = new SummaryData("call sumType();", "ThreadingType");
+                    type.start();
+
+                    SummaryData book = new SummaryData("call sumBook();", "ThreadingBook");
+                    book.start();
+
+                    SummaryData booklost = new SummaryData("call sumBookLost();", "ThreadingBookLost");
+                    booklost.start();
+
+                    SummaryData tablelog = new SummaryData("call sumTableLog();", "ThreadingTableLog");
+                    tablelog.start();
+
                     showSubFrom("frmManageBook.fxml");
                 }
             });
@@ -144,6 +160,17 @@ public class HomeController implements Initializable {
 
                 @Override
                 public void handle(Event event) {
+                    SummaryData member = new SummaryData("call sumMember();", "ThreadingMember");
+                    member.start();
+
+                    SummaryData employee = new SummaryData("call sumEmployee();", "ThreadingEmployee");
+                    employee.start();
+
+                    SummaryData author = new SummaryData("call sumAuthor();", "ThreadingAuthor");
+                    author.start();
+
+                    SummaryData dep = new SummaryData("call sumDepartment();", "ThreadingDep");
+                    dep.start();
                     showSubFrom("frmManagePersonal.fxml");
                 }
             });
@@ -314,6 +341,5 @@ public class HomeController implements Initializable {
         show_menu();
         sliderMenuHamburger();
         // thItem.start();
-        System.out.println("Summary data: " + summaryValue);
     }
 }

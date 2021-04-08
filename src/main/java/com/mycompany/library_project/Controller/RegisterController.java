@@ -5,14 +5,15 @@ import com.jfoenix.controls.*;
 import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.*;
 
 import com.mycompany.library_project.Model.*;
 import com.mycompany.library_project.MyConnection;
-
-import javax.swing.*;
+import com.mycompany.library_project.ControllerDAOModel.*;
 
 import java.io.File;
 import java.net.URL;
@@ -32,30 +33,18 @@ public class RegisterController implements Initializable {
             "ປີ 2 ຕໍ່ເນື່ອງ", "ປີ 3", "ປີ 4", "");
     private FileChooser chooser = null;
     private Image img = null;
+    private AlertMessage alertMessage = new AlertMessage();
 
     @FXML
-    private TextField txtId;
-    @FXML
-    private TextField txtFName;
-    @FXML
-    private TextField txtLName;
-    @FXML
-    private TextField txtTel;
-    @FXML
-    private TextField txtVill;
-    @FXML
-    private TextField txtDist;
-    @FXML
-    private TextField txtProv;
-    @FXML
-    private ComboBox cmbDept;
-    @FXML
-    private ComboBox cmbYears;
+    private BorderPane borderPane;
 
     @FXML
-    private JFXRadioButton rdbMale;
+    private TextField txtId, txtFName, txtLName, txtTel, txtVill, txtDist, txtProv;
     @FXML
-    private JFXRadioButton rdbFemale;
+    private ComboBox<String> cmbDept, cmbYears;
+
+    @FXML
+    private JFXRadioButton rdbMale, rdbFemale;
 
     @FXML
     private DatePicker birtDate, registerDate, endDate, exitDate;
@@ -75,7 +64,8 @@ public class RegisterController implements Initializable {
             cmbDept.setItems(items);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            alertMessage.showErrorMessage(borderPane, "Load Department", "Error: " + e.getMessage(), 4,
+                    Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -91,7 +81,7 @@ public class RegisterController implements Initializable {
                 imgPic.setImage(img);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            alertMessage.showErrorMessage(borderPane, "Choose Image", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -105,10 +95,10 @@ public class RegisterController implements Initializable {
                     Date.valueOf(dateFormat.format("05/08/2000")), Date.valueOf(dateFormat.format("05/08/2000")),
                     Date.valueOf(dateFormat.format("05/08/2000")), "Emty");
             if (memberModel.saveData() == 1) {
-                JOptionPane.showMessageDialog(null, "Save Completed!!!");
+                alertMessage.showCompletedMessage(borderPane, "Save", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            alertMessage.showErrorMessage(borderPane, "Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 

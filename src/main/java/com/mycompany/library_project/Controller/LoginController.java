@@ -3,19 +3,14 @@ package com.mycompany.library_project.Controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.mycompany.library_project.App;
-import com.mycompany.library_project.DesktopController;
-import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
-import com.mycompany.library_project.ModelShow.SummaryData;
-
-import org.controlsfx.control.decoration.*;
+import com.mycompany.library_project.ControllerDAOModel.*;
 import org.controlsfx.validation.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -27,7 +22,6 @@ public class LoginController implements Initializable {
     private double x, y;
     public static Stage loginSatge = null;// Seted object when open form 'Login' in class 'DesktopController.java'
     private ValidationSupport validRules;
-    private Decoration decoration;
     private DialogMessage dialog = null;
 
     @FXML

@@ -4,9 +4,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.mycompany.library_project.App;
+import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
@@ -15,6 +17,7 @@ import javafx.scene.text.Text;
 public class ManagePersonalCotroller implements Initializable {
 
     private Parent subForm = null;
+    private AlertMessage alertMessage = new AlertMessage();
 
     @FXML
     private Text txtMember, txtEmployee, txtAuthor, txtDep;
@@ -31,7 +34,7 @@ public class ManagePersonalCotroller implements Initializable {
             subForm = FXMLLoader.load(App.class.getResource(form));
             bpManagePerson.setCenter(subForm);
         } catch (Exception e) {
-            e.printStackTrace();
+            alertMessage.showErrorMessage(bpManagePerson, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 

@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import com.mycompany.library_project.App;
 import com.mycompany.library_project.Controller.List.ListitemController;
+import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.ModelShow.MyArrayList;
 import com.mycompany.library_project.ModelShow.SummaryData;
 
@@ -12,6 +13,7 @@ import javafx.application.Platform;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.*;
 import javafx.scene.control.ScrollPane;
@@ -38,9 +40,11 @@ public class HomeController implements Initializable {
     private Parent rootMenu = null;
     private Node[] nodeItem = new Node[100];
     private String[] data = { "Computer", "sifur", "wo9eur", "setue9t8ye5", "09", "87", "efuw" };
+    private AlertMessage alertMessage = new AlertMessage();
 
     @FXML
     private AnchorPane acHomePaneToolbar;
+
     @FXML
     public ScrollPane sclSubHome;
 
@@ -206,7 +210,8 @@ public class HomeController implements Initializable {
                             SettingController.settingStage.show();
                         }
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        alertMessage.showErrorMessage(bpDisplay, "Open Form", "Error: " + e.getMessage(), 4,
+                                Pos.BOTTOM_RIGHT);
                     }
                 }
             });

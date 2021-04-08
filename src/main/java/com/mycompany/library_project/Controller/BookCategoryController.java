@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -17,10 +18,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import javax.swing.JOptionPane;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
+import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
 import com.mycompany.library_project.Model.CategoryModel;
 
@@ -30,6 +30,7 @@ public class BookCategoryController implements Initializable {
     private ObservableList<CategoryModel> data = null;
     private ResultSet rs = null;
     private DialogMessage dialog = null;
+    private AlertMessage alertMessage = new AlertMessage();
 
     @FXML
     private StackPane stakePane;
@@ -58,7 +59,7 @@ public class BookCategoryController implements Initializable {
             }
             tableCategory.setItems(data);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            alertMessage.showErrorMessage(stakePane, "Load data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -88,9 +89,10 @@ public class BookCategoryController implements Initializable {
             if (category.saveData() > 0) {
                 showData();
                 ClearData();
+                alertMessage.showCompletedMessage(stakePane, "Save", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            alertMessage.showErrorMessage(stakePane, "Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -101,9 +103,10 @@ public class BookCategoryController implements Initializable {
             if (category.updateData() > 0) {
                 showData();
                 ClearData();
+                alertMessage.showCompletedMessage(stakePane, "Edit", "Edit data successfully.", 4, Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            alertMessage.showErrorMessage(stakePane, "Edit", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -144,9 +147,11 @@ public class BookCategoryController implements Initializable {
                     showData();
                     ClearData();
                     dialog.closeDialog();
+                    alertMessage.showCompletedMessage(stakePane, "Delete", "Delete data successfully.", 4,
+                            Pos.BOTTOM_RIGHT);
                 }
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                alertMessage.showErrorMessage(stakePane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
             }
         });
         return btyes;

@@ -4,15 +4,19 @@ import javafx.beans.value.*;
 import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.*;
+import javafx.scene.layout.StackPane;
 
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.TableLogModel;
 import org.controlsfx.validation.ValidationSupport;
 
@@ -23,9 +27,15 @@ public class TableLogController implements Initializable {
     private TreeItem<TableLogModel> subItem, root, node;
     private ValidationSupport validRules;
     private ObservableList<TreeItem<TableLogModel>> data = FXCollections.observableArrayList();
+    private AlertMessage alertMessage = new AlertMessage();
+    private DialogMessage dialog = null;
+
+    @FXML
+    private StackPane stackPane;
 
     @FXML
     private TextField txtId, txtQty;
+
     @FXML
     private TextArea txtLog;
 
@@ -33,10 +43,7 @@ public class TableLogController implements Initializable {
     private TreeTableView<TableLogModel> tableLog;
 
     @FXML
-    private TreeTableColumn<TableLogModel, String> colid;
-
-    @FXML
-    private TreeTableColumn<TableLogModel, String> colqty;
+    private TreeTableColumn<TableLogModel, String> colid, colqty;
 
     @FXML
     private TreeTableColumn<TableLogModel, JFXButton> colaction;
@@ -60,7 +67,7 @@ public class TableLogController implements Initializable {
 
                 while (sublog.next()) {
                     subItem = new TreeItem<>(
-                            new TableLogModel(sublog.getString(1), 1, getSubRootAction(sublog.getString(1))));
+                            new TableLogModel(sublog.getString(2), 1, getSubRootAction(sublog.getString(2))));
                     root.getChildren().add(subItem);
                 }
 
@@ -71,8 +78,7 @@ public class TableLogController implements Initializable {
             tableLog.setRoot(node);
 
         } catch (Exception e) {
-            System.out.println("Error Show Date: " + e.getMessage());
-            e.printStackTrace();
+            alertMessage.showErrorMessage(stackPane, "Load Data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -138,36 +144,38 @@ public class TableLogController implements Initializable {
                         tableLogModel = new TableLogModel(txtId.getText(), lineCount[i]);
                         result = (tableLogModel.saveData() > 0) ? "Save Completed" : null; // Todo: if...else
                     } catch (Exception e) {
-                        System.out.println("Error Save Log: " + e.getMessage());
                         tableLogModel.deleteTable(txtId.getText());
                         return;
                     }
                 }
             } else {
-                System.out.println("Cannot Save");
+                alertMessage.showWarningMessage(stackPane, "Save", "Warning: Can not save data.", 4, Pos.BOTTOM_RIGHT);
             }
 
             if (result != null) {
-                System.out.println(result);
                 showData();
                 clearText();
-            } else {
-                System.out.println("Save Fail");
+                alertMessage.showCompletedMessage("Save", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
             }
 
         } catch (Exception e) {
-            System.out.println("Error Save Table: " + e.getMessage());
-            // e.printStackTrace();
+            alertMessage.showErrorMessage(stackPane, "Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
     @FXML
-    private void btDelete(ActionEvent event) {
+    private void btUpdate(ActionEvent event) {
         try {
-            tableLogModel = new TableLogModel();
-            tableLogModel.deleteData(txtId.getText());
+            tableLogModel = new TableLogModel(txtId.getText(), Integer.parseInt(txtQty.getText()));
+            if (tableLogModel.updateData() > 0) {
+                alertMessage.showCompletedMessage(stackPane, "Edit", "Edit data successfully.", 4, Pos.BOTTOM_RIGHT);
+                showData();
+            } else {
+                alertMessage.showWarningMessage(stackPane, "Edit", "Can not edit data", 4, Pos.BOTTOM_RIGHT);
+            }
+
         } catch (Exception e) {
-            // TODO: handle exception
+            alertMessage.showErrorMessage(stackPane, "Edit", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -189,18 +197,11 @@ public class TableLogController implements Initializable {
             actionRoot.setGraphic(imgView);
             actionRoot.setId(id);
             actionRoot.setOnAction(e -> {
-                tableLogModel = new TableLogModel();
-                try {
-                    if (tableLogModel.deleteTable(actionRoot.getId()) > 0) {
-                        System.out.println("Delete Completed");
-                        showData();
-                    } else {
-                        System.out.println("Delete Fail");
-                    }
-                } catch (Exception ex) {
-                    System.out.println("Delete error:" + ex.getMessage());
-                    // ex.printStackTrace();
-                }
+                JFXButton[] buttons = { buttonYesTable(actionRoot.getId()), buttonNo(), buttonCancel() };
+                dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
+                        JFXDialog.DialogTransition.CENTER, buttons, false);
+                dialog.showDialog();
+
             });
         } catch (Exception e) {
             System.out.println("Error on action root: " + e.getMessage());
@@ -219,21 +220,81 @@ public class TableLogController implements Initializable {
             actionSubRoot.setId(id);
             actionSubRoot.setGraphic(imgView);
             actionSubRoot.setOnAction(e -> {
-                tableLogModel = new TableLogModel();
-                try {
-                    if (tableLogModel.deleteData(actionSubRoot.getId()) > 0) {
-                        System.out.println("Delete Completed");
-                        showData();
-                    } else {
-                        System.out.println("Delete Fail");
-                    }
-                } catch (SQLException ex) {
-                    System.out.println("Delete error:" + ex.getMessage());
-                }
+
+                JFXButton[] buttons = { buttonYesTableLog(actionSubRoot.getId()), buttonNo(), buttonCancel() };
+                dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
+                        JFXDialog.DialogTransition.CENTER, buttons, false);
+                dialog.showDialog();
+
             });
         } catch (Exception e) {
-            System.out.println("Error on action subroot: " + e.getMessage());
+            alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
         return actionSubRoot;
+    }
+
+    private JFXButton buttonYesTable(String tableid) {
+        JFXButton btyes = new JFXButton("ຕົກລົງ");
+        btyes.setOnAction(e -> {
+            // Todo: Delete Data
+            tableLogModel = new TableLogModel();
+            try {
+                if (tableLogModel.deleteTable(tableid) > 0) {
+                    showData();
+                    dialog.closeDialog();
+                    alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4, Pos.BOTTOM_RIGHT);
+                } else {
+                    alertMessage.showWarningMessage("Delete", "Can not delete data.", 4, Pos.BOTTOM_RIGHT);
+
+                }
+            } catch (Exception ex) {
+                alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            }
+        });
+        return btyes;
+    }
+
+    private JFXButton buttonYesTableLog(String tablelogid) {
+        JFXButton btyes = new JFXButton("ຕົກລົງ");
+        btyes.setOnAction(e -> {
+            // Todo: Delete Data
+            tableLogModel = new TableLogModel();
+            try {
+                rs = tableLogModel.findById(tablelogid);
+                if (tableLogModel.deleteData(tablelogid) > 0) {
+                    if (rs.next()) {
+                        if (tableLogModel.updateTableQty(rs.getString(1)) > 0) {
+                            showData();
+                            alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4,
+                                    Pos.BOTTOM_RIGHT);
+                        } else {
+                            alertMessage.showWarningMessage("Delete", "Can update table qty.", 4, Pos.BOTTOM_RIGHT);
+                        }
+                    }
+                    dialog.closeDialog();
+                } else {
+                    alertMessage.showWarningMessage("Delete", "Can not delete data. ", 4, Pos.BOTTOM_RIGHT);
+                }
+            } catch (SQLException ex) {
+                alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            }
+        });
+        return btyes;
+    }
+
+    private JFXButton buttonNo() {
+        JFXButton btno = new JFXButton("  ບໍ່  ");
+        btno.setOnAction(e -> {
+            dialog.closeDialog();
+        });
+        return btno;
+    }
+
+    private JFXButton buttonCancel() {
+        JFXButton btcancel = new JFXButton("ຍົກເລີກ");
+        btcancel.setOnAction(e -> {
+            dialog.closeDialog();
+        });
+        return btcancel;
     }
 }

@@ -24,7 +24,7 @@ public class SettingController  implements Initializable {
     private AnchorPane acSettings;
 
     @FXML
-    private ComboBox cmbFont;
+    private ComboBox<String> cmbFont;
 
     private void setMoveForm(){
         acSettings.setOnMousePressed(mouseEvent -> {

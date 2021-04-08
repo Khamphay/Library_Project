@@ -4,9 +4,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.mycompany.library_project.App;
+import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
+import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -15,6 +17,7 @@ import javafx.scene.text.Text;
 public class ManageBookController implements Initializable {
 
     private Parent subForm = null;
+    private AlertMessage alertMessage = new AlertMessage();
 
     @FXML
     private Text txtType, txtCategory, txtBook, txtBookLost, txtTableLog;
@@ -31,7 +34,7 @@ public class ManageBookController implements Initializable {
             subForm = FXMLLoader.load(App.class.getResource(form));
             bpManageBook.setCenter(subForm);
         } catch (Exception e) {
-            e.printStackTrace();
+            alertMessage.showErrorMessage(bpManageBook, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 

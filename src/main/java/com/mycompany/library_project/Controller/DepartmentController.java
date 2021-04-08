@@ -4,19 +4,16 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
+import com.jfoenix.controls.*;
+import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.DepartmentModel;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.collections.*;
+import javafx.fxml.*;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
 import javafx.scene.layout.StackPane;
 
 public class DepartmentController implements Initializable {
@@ -25,6 +22,7 @@ public class DepartmentController implements Initializable {
     private ResultSet rs = null;
     private ObservableList<DepartmentModel> data = null;
     private DialogMessage dialog = null;
+    private AlertMessage alertMessage = new AlertMessage();
 
     @FXML
     private StackPane stackPane;
@@ -64,9 +62,13 @@ public class DepartmentController implements Initializable {
                 if (depertment.saveData() > 0) {
                     showData();
                     ClearText();
+                    alertMessage.showCompletedMessage(stackPane, "Save", "Save data successfully.", 3,
+                            Pos.BOTTOM_RIGHT);
+                } else {
+                    alertMessage.showWarningMessage(stackPane, "Save", "Can not save data.", 4, Pos.BOTTOM_RIGHT);
                 }
             } catch (Exception ex) {
-                ex.printStackTrace();
+                alertMessage.showErrorMessage(stackPane, "Save", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
             }
         });
 
@@ -76,9 +78,13 @@ public class DepartmentController implements Initializable {
                 if (depertment.updateData() > 0) {
                     showData();
                     ClearText();
+                    alertMessage.showCompletedMessage(stackPane, "Edit", "Edit data successfully.", 4,
+                            Pos.BOTTOM_RIGHT);
+                } else {
+                    alertMessage.showWarningMessage(stackPane, "Edit", "Can not edit data.", 4, Pos.BOTTOM_RIGHT);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                alertMessage.showErrorMessage(stackPane, "Edit", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             }
         });
 
@@ -102,6 +108,7 @@ public class DepartmentController implements Initializable {
             }
             tableDepartment.setItems(data);
         } catch (Exception e) {
+            alertMessage.showErrorMessage("ໂຫຼດຂໍ້ມູນ", e.getMessage(), 3, Pos.BOTTOM_RIGHT);
             e.printStackTrace();
         }
     }
@@ -143,9 +150,13 @@ public class DepartmentController implements Initializable {
                     showData();
                     ClearText();
                     dialog.closeDialog();
+                    alertMessage.showCompletedMessage(stackPane, "Delete", "Delete data successfully.", 4,
+                            Pos.BOTTOM_RIGHT);
+                } else {
+                    alertMessage.showWarningMessage(stackPane, "Delete", "Can not delete data.", 4, Pos.BOTTOM_RIGHT);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             }
         });
         return btyes;

@@ -3,10 +3,12 @@ package com.mycompany.library_project.Controller;
 import javafx.application.Platform;
 import javafx.collections.*;
 import javafx.fxml.*;
+import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -16,6 +18,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.App;
 import com.mycompany.library_project.Controller.List.book_item;
+import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.Model.BookDetailModel;
 import com.mycompany.library_project.ModelShow.MyArrayList;
 
@@ -27,6 +30,10 @@ public class BookController implements Initializable {
     private ResultSet rs = null;
     private BookDetailModel bookDetail = null;
     private ObservableList<BookDetailModel> data = null;
+    private AlertMessage alertMessage = new AlertMessage();
+
+    @FXML
+    private BorderPane borderPane;
 
     @FXML
     private TableView<BookDetailModel> tableBook;
@@ -62,7 +69,8 @@ public class BookController implements Initializable {
                         i++;
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    alertMessage.showErrorMessage(borderPane, "Load data", "Error: " + e.getMessage(), 4,
+                            Pos.BOTTOM_RIGHT);
                 }
             }
         });
@@ -85,7 +93,7 @@ public class BookController implements Initializable {
             tableBook.setItems(data);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            alertMessage.showErrorMessage(borderPane, "Load data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 

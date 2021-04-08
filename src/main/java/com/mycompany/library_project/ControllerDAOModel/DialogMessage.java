@@ -1,23 +1,20 @@
 package com.mycompany.library_project.ControllerDAOModel;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
-
-import javafx.scene.layout.AnchorPane;
+import com.jfoenix.controls.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
 public class DialogMessage {
 
     private JFXDialogLayout content = new JFXDialogLayout();
-    private String title, message, buttonType;
+    private String title, message;
     public String result = null;
     private JFXDialog dialog = null;
     private StackPane stackPane;
     private JFXDialog.DialogTransition dialogStyle;
     private JFXButton[] buttons;
     private boolean topOnly;
+    
 
     public DialogMessage() {
     }

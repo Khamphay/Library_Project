@@ -40,6 +40,11 @@ public class TableLogModel implements DataAccessObject {
         this.tableLog = tableLog;
     }
 
+    public TableLogModel(String tableId, int qty) {
+        this.tableId = tableId;
+        this.logQty = qty;
+    }
+
     public TableLogModel(String tableId, String tableLog, String newLog) {
         this.tableId = tableId;
         this.tableLog = tableLog;
@@ -143,19 +148,41 @@ public class TableLogModel implements DataAccessObject {
 
     @Override
     public int updateData() throws SQLException {
-        query = "call  tablelog_Update(?, ?) ";
-        ps = con.prepareStatement(query);
-        ps.setString(2, getTableLog());
-        ps.setString(3, getNewLog());
-        return ps.executeUpdate();
+        try {
+            query = "call  table_Update(?, ?) ";
+            ps = con.prepareStatement(query);
+            ps.setString(1, getTableId());
+            ps.setInt(2, getLogQty());
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public int updateTableQty(String id) {
+        try {
+            query = "call table_UpdateQty(?);";
+            ps = con.prepareStatement(query);
+            ps.setString(1, id);
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
     @Override
     public int deleteData(String id) throws SQLException {
-        query = "call tablelog_Delete(?);";
-        ps = con.prepareStatement(query);
-        ps.setString(1, id);
-        return ps.executeUpdate();
+        try {
+            query = "call tablelog_Delete(?);";
+            ps = con.prepareStatement(query);
+            ps.setString(1, id);
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
     public int deleteTable(String id) {

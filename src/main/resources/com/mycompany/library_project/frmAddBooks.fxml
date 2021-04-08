@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane cache="true" cacheHint="QUALITY" prefHeight="562.0" prefWidth="875.0" style="-fx-background-color: #f3f3f3;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.AddBookController">
+<AnchorPane fx:id="acPane" cache="true" cacheHint="QUALITY" prefHeight="562.0" prefWidth="875.0" style="-fx-background-color: #f3f3f3;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.AddBookController">
    <children>
       <BorderPane layoutY="48.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>

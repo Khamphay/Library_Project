@@ -5,10 +5,8 @@ import java.util.ResourceBundle;
 
 import com.mycompany.library_project.Model.EmployeeModel;
 
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.fxml.*;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class EmployeeController implements Initializable {

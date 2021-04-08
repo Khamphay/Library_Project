@@ -4,20 +4,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 import com.mycompany.library_project.Model.TypeModel;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.*;
 import com.mycompany.library_project.MyConnection;
-import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
-
-import javax.swing.*;
+import com.mycompany.library_project.ControllerDAOModel.*;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
@@ -29,6 +26,7 @@ public class BookTypeController implements Initializable {
     private TypeModel type = null;
     private ObservableList<TypeModel> data = null;
     private DialogMessage dialog = null;
+    private AlertMessage alertMessage = new AlertMessage();
 
     @FXML
     private StackPane stackePane;
@@ -55,7 +53,7 @@ public class BookTypeController implements Initializable {
             }
             tableType.setItems(data);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getSQLState());
+            alertMessage.showErrorMessage(stackePane, "Load data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -75,21 +73,29 @@ public class BookTypeController implements Initializable {
 
     @FXML
     private void Save(ActionEvent actionEvent) throws SQLException {
-        type = new TypeModel(txtTypeId.getText(), txtTypeName.getText());
-        if (type.saveData() == 1) {
-            JOptionPane.showMessageDialog(null, "Save Type Completed!!!.", "Save", JOptionPane.INFORMATION_MESSAGE);
-            ShowData();
-            ClearData();
+        try {
+            type = new TypeModel(txtTypeId.getText(), txtTypeName.getText());
+            if (type.saveData() == 1) {
+                ShowData();
+                ClearData();
+                alertMessage.showCompletedMessage(stackePane, "Save", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
+            }
+        } catch (Exception e) {
+            alertMessage.showErrorMessage(stackePane, "Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
     @FXML
     private void Update(ActionEvent event) throws SQLException {
-        type = new TypeModel(txtTypeId.getText(), txtTypeName.getText());
-        if (type.updateData() == 1) {
-            JOptionPane.showMessageDialog(null, "Update Type Completed!!!.", "Save", JOptionPane.INFORMATION_MESSAGE);
-            ShowData();
-            ClearData();
+        try {
+            type = new TypeModel(txtTypeId.getText(), txtTypeName.getText());
+            if (type.updateData() == 1) {
+                ShowData();
+                ClearData();
+                alertMessage.showCompletedMessage("Edit", "Edit data successfully.", 4, Pos.BOTTOM_RIGHT);
+            }
+        } catch (Exception e) {
+            alertMessage.showErrorMessage(stackePane, "Edit", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -135,9 +141,10 @@ public class BookTypeController implements Initializable {
                     ShowData();
                     ClearData();
                     dialog.closeDialog();
+                    alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4, Pos.BOTTOM_RIGHT);
                 }
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                alertMessage.showErrorMessage(stackePane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
             }
         });
         return btyes;

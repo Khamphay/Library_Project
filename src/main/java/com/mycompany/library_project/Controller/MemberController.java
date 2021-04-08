@@ -6,23 +6,31 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.MemberModel;
 
 import javafx.collections.*;
 import javafx.fxml.*;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 
 public class MemberController implements Initializable {
 
     private ObservableList<MemberModel> data = null;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private AlertMessage alertMessage = new AlertMessage();
 
+    @FXML
+    private BorderPane boderPane;
+    
     @FXML
     private TableView<MemberModel> tableMember;
 
     @FXML
     private TableColumn<MemberModel, String> id, name, surname, gender, tel, village, district, province, depertment;
+
     @FXML
     private TableColumn<MemberModel, Date> birthdate, date_register, date_exist;
 
@@ -34,7 +42,8 @@ public class MemberController implements Initializable {
                     Date.valueOf(LocalDate.of(2021, 8, 20)), Date.valueOf(LocalDate.of(2021, 8, 20))));
             tableMember.setItems(data);
         } catch (Exception e) {
-            e.printStackTrace();
+            alertMessage.showErrorMessage(boderPane, "Show Data Error", "Error: " + e.getMessage(), 4,
+                    Pos.BOTTOM_RIGHT);
         }
     }
 

@@ -1,13 +1,12 @@
 package com.mycompany.library_project.Controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.beans.value.*;
+import javafx.collections.*;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.*;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.sql.ResultSet;
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
+import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 
 public class AddBookController implements Initializable {
@@ -27,7 +27,10 @@ public class AddBookController implements Initializable {
     private BookDetailModel bookDetail = null;
     private ArrayList<String> arr_type, arr_category, arr_table;
     private int index_type, index_category;
+    private AlertMessage alertMessage = new AlertMessage();
 
+    @FXML
+    private AnchorPane acPane;
     @FXML
     private TextField txtId, txtName, txtPage, txtQty, txtISBN;
 
@@ -38,7 +41,7 @@ public class AddBookController implements Initializable {
     private TextArea txtBarcode, txtDetail;
 
     @FXML
-    private ComboBox cmbType, cmbCagtegory, cmbTable, cmbtableLog, cmbStatus;
+    private ComboBox<String> cmbType, cmbCagtegory, cmbTable, cmbtableLog, cmbStatus;
 
     @FXML
     private void coloseForm() {
@@ -54,7 +57,7 @@ public class AddBookController implements Initializable {
                 }
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            alertMessage.showErrorMessage("Gennerate barcode", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -115,7 +118,7 @@ public class AddBookController implements Initializable {
                     cmbtableLog.setItems(items);
                 }
             } catch (Exception ex) {
-                ex.printStackTrace();
+                alertMessage.showErrorMessage(acPane, "Selete data", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
             }
         });
     }
@@ -139,8 +142,7 @@ public class AddBookController implements Initializable {
             }
             cmbType.setItems(items);
         } catch (Exception e) {
-            System.out.println("Error fill value type: " + e.getMessage());
-            e.printStackTrace();
+            alertMessage.showErrorMessage(acPane, "Load type", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -162,8 +164,7 @@ public class AddBookController implements Initializable {
             }
             cmbCagtegory.setItems(items);
         } catch (Exception e) {
-            System.out.println("Error fill value category: " + e.getMessage());
-            e.printStackTrace();
+            alertMessage.showErrorMessage(acPane, "Load category", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -179,8 +180,7 @@ public class AddBookController implements Initializable {
             }
             cmbTable.setItems(items);
         } catch (Exception e) {
-            System.out.println("Error fill value tablel: " + e.getMessage());
-            e.printStackTrace();
+            alertMessage.showErrorMessage(acPane, "Load table", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -207,7 +207,6 @@ public class AddBookController implements Initializable {
                             msg = null;
                         }
                     } catch (Exception e) {
-
                         // Todo:................................
                         return;
                     }
@@ -218,12 +217,12 @@ public class AddBookController implements Initializable {
             }
 
             if (msg != null) {
-                System.out.println(msg);
+                alertMessage.showCompletedMessage(acPane, "Save", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
             } else {
-                System.out.println("Save Fail");
+                alertMessage.showWarningMessage("Save", "Can not save data.", 4, Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            alertMessage.showErrorMessage(acPane, "Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 

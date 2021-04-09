@@ -59,7 +59,6 @@ public class BookController implements Initializable {
             public void run() {
                 try {
                     while (i < node.length) {
-
                         MyArrayList array_listnew = new MyArrayList();
                         book_item.book = array_listnew.bookList(values);
                         Parent list = FXMLLoader.load(App.class.getResource("bookList.fxml"));

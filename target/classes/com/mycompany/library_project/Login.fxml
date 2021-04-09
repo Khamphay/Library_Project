@@ -13,25 +13,24 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
 <StackPane fx:id="stakePane" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.LoginController">
    <children>
       <AnchorPane fx:id="acPaneLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="663.0" style="-fx-background-color: transparent;" stylesheets="@Style/appstyle.css">
          <children>
             <AnchorPane layoutX="321.0" layoutY="-1.0" prefHeight="462.0" prefWidth="342.0" style="-fx-background-radius: 0px 8px 8px 0px; -fx-background-color: #fff; -fx-border-radius: 0px 8px 8px 0px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="321.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <ImageView fitHeight="93.0" fitWidth="182.0" layoutX="216.0" layoutY="366.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="94.0" fitWidth="127.0" layoutX="209.0" layoutY="364.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Icon/undraw_book_lover_mkck.png" />
+                        <Image url="@Icon/reading.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="144.0" layoutY="35.0" styleClass="label-size-20" text="Login" />
-                  <TextField id="text-user" fx:id="txtUsername" layoutX="54.0" layoutY="126.0" prefHeight="30.0" prefWidth="250.0" promptText="ຊື່ຜູ້ໃຊ້">
+                  <Label layoutX="137.0" layoutY="77.0" styleClass="label-size-20" text="Login" textFill="#051336" />
+                  <TextField id="text-user" fx:id="txtUsername" layoutX="56.0" layoutY="150.0" prefHeight="30.0" prefWidth="250.0" promptText="ຊື່ຜູ້ໃຊ້">
                      <padding>
                         <Insets left="30.0" />
                      </padding>
                   </TextField>
-                  <PasswordField id="text-password" fx:id="txtPassword" layoutX="54.0" layoutY="207.0" prefHeight="30.0" prefWidth="250.0" promptText="ລະຫັດຜ່ານ">
+                  <PasswordField id="text-password" fx:id="txtPassword" layoutX="56.0" layoutY="231.0" prefHeight="30.0" prefWidth="250.0" promptText="ລະຫັດຜ່ານ">
                      <padding>
                         <Insets left="30.0" />
                      </padding>
@@ -60,14 +59,9 @@
                         <Font size="1.0" />
                      </font>
                   </JFXButton>
-                  <ImageView fitHeight="31.0" fitWidth="24.0" layoutX="57.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="31.0" fitWidth="24.0" layoutX="59.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Icon/male_user_50px.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="31.0" fitWidth="24.0" layoutX="57.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Icon/secure_50px.png" />
                      </image>
                   </ImageView>
                   <JFXButton fx:id="btCancel" alignment="CENTER" cache="true" cacheHint="QUALITY" contentDisplay="CENTER" layoutX="189.0" layoutY="326.0" onAction="#Cancel" prefHeight="33.0" prefWidth="90.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 20px 20px 20px 20px;" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE" viewOrder="10.0">
@@ -80,6 +74,16 @@
                         <Cursor fx:constant="DEFAULT" />
                      </cursor>
                   </JFXButton>
+                  <ImageView fitHeight="31.0" fitWidth="24.0" layoutX="59.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Icon/secure_50px.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="76.0" fitWidth="106.0" layoutX="125.0" layoutY="7.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Icon/userLogin.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
             <AnchorPane layoutX="37.0" layoutY="41.0" prefHeight="462.0" prefWidth="323.0" style="-fx-background-color: #051336; -fx-background-radius: 8px 0px 0px 8px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">

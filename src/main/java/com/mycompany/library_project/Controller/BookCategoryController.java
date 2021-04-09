@@ -139,6 +139,8 @@ public class BookCategoryController implements Initializable {
 
     private JFXButton buttonYes(String catgid) {
         JFXButton btyes = new JFXButton("ຕົກລົງ");
+        btyes.setStyle(
+                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
         btyes.setOnAction(e -> {
             // Todo: Delete Data
             try {
@@ -159,6 +161,8 @@ public class BookCategoryController implements Initializable {
 
     private JFXButton buttonNo() {
         JFXButton btno = new JFXButton("  ບໍ່  ");
+        btno.setStyle(
+                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
         btno.setOnAction(e -> {
             dialog.closeDialog();
         });
@@ -167,6 +171,8 @@ public class BookCategoryController implements Initializable {
 
     private JFXButton buttonCancel() {
         JFXButton btcancel = new JFXButton("ຍົກເລີກ");
+        btcancel.setStyle(
+                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
         btcancel.setOnAction(e -> {
             dialog.closeDialog();
         });
@@ -175,6 +181,8 @@ public class BookCategoryController implements Initializable {
 
     private JFXButton buttonOK() {
         JFXButton btok = new JFXButton("OK");
+        btok.setStyle(
+                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
         btok.setOnAction(e -> {
             dialog.closeDialog();
         });

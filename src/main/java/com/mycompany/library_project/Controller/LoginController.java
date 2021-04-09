@@ -127,6 +127,8 @@ public class LoginController implements Initializable {
 
     private JFXButton buttonYes() {
         JFXButton btyes = new JFXButton("ຕົກລົງ");
+        btyes.setStyle(
+                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
         btyes.setOnAction(e -> {
             dialog.closeDialog();
             loginSatge.close();
@@ -136,6 +138,8 @@ public class LoginController implements Initializable {
 
     private JFXButton buttonNo() {
         JFXButton btno = new JFXButton("  ບໍ່  ");
+        btno.setStyle(
+                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
         btno.setOnAction(e -> {
             dialog.closeDialog();
         });

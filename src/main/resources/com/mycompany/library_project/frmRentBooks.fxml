@@ -48,7 +48,7 @@
                         </TableView>
                       <AnchorPane layoutX="20.0" layoutY="21.0" minHeight="0.0" minWidth="0.0" prefHeight="124.0" prefWidth="1048.0">
                            <children>
-                              <DatePicker layoutX="858.0" layoutY="80.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີສົ່ງປຶ້ມ" style="-fx-text-fill: #fff;" styleClass="date-picker">
+                              <DatePicker layoutX="858.0" layoutY="80.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີສົ່ງປຶ້ມ" showWeekNumbers="true" style="-fx-text-fill: #fff;" styleClass="date-picker">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -68,7 +68,7 @@
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>
                               </TextField>
-                              <DatePicker fx:id="datePicker" layoutX="858.0" layoutY="17.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີຢືມປຶ້ມ" style="-fx-text-fill: #fff;" styleClass="date-picker">
+                              <DatePicker fx:id="datePicker" layoutX="858.0" layoutY="17.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີຢືມປຶ້ມ" showWeekNumbers="true" style="-fx-text-fill: #fff;" styleClass="date-picker">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>

@@ -113,7 +113,7 @@ public class AddBookController implements Initializable {
                     items = FXCollections.observableArrayList();
                     ResultSet rs = table.findById(cmbTable.getSelectionModel().getSelectedItem().toString());
                     while (rs.next()) {
-                        items.add(rs.getString(1));
+                        items.add(rs.getString(2));
                     }
                     cmbtableLog.setItems(items);
                 }

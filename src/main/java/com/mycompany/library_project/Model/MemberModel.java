@@ -1,5 +1,6 @@
 package com.mycompany.library_project.Model;
 
+import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 
@@ -26,27 +27,16 @@ public class MemberModel implements DataAccessObject {
     private Date dateRegister;
     private Date dateRegisterEnd;
     private Date dateExit;
-    private String status;
+    private byte[] byimg;
+    private JFXButton action;
 
-    public MemberModel(String memberId, String firstName, String sureName, String gender, String tel, String village,
-            String district, String province, Date birdate, String detp, Date dateRegister, Date dateRegisterEnd) {
-        this.memberId = memberId;
-        this.firstName = firstName;
-        this.sureName = sureName;
-        this.gender = gender;
-        this.tel = tel;
-        this.village = village;
-        this.district = district;
-        this.province = province;
-        this.birdate = birdate;
-        this.detp = detp;
-        this.dateRegister = dateRegister;
-        this.dateRegisterEnd = dateRegisterEnd;
+    public MemberModel() {
+
     }
 
     public MemberModel(String memberId, String firstName, String sureName, String gender, String tel, String village,
             String district, String province, Date birdate, String detp, Date dateRegister, Date dateRegisterEnd,
-            Date dateExit, String status) {
+            Date dateExit, byte[] byimg) {
         this.memberId = memberId;
         this.firstName = firstName;
         this.sureName = sureName;
@@ -60,7 +50,26 @@ public class MemberModel implements DataAccessObject {
         this.dateRegister = dateRegister;
         this.dateRegisterEnd = dateRegisterEnd;
         this.dateExit = dateExit;
-        this.status = status;
+        this.byimg = byimg;
+    }
+
+    public MemberModel(String memberId, String firstName, String sureName, String gender, String tel, String village,
+            String district, String province, Date birdate, String detp, Date dateRegister, Date dateRegisterEnd,
+            Date dateExit, JFXButton action) {
+        this.memberId = memberId;
+        this.firstName = firstName;
+        this.sureName = sureName;
+        this.gender = gender;
+        this.tel = tel;
+        this.village = village;
+        this.district = district;
+        this.province = province;
+        this.birdate = birdate;
+        this.detp = detp;
+        this.dateRegister = dateRegister;
+        this.dateRegisterEnd = dateRegisterEnd;
+        this.dateExit = dateExit;
+        this.action = action;
     }
 
     public String getMemberId() {
@@ -167,19 +176,33 @@ public class MemberModel implements DataAccessObject {
         this.dateExit = dateExit;
     }
 
-    public String getStatus() {
-        return status;
+    public byte[] getByimg() {
+        return byimg;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setByimg(byte[] byimg) {
+        this.byimg = byimg;
+    }
+
+    public JFXButton getAction() {
+        return action;
+    }
+
+    public void setAction(JFXButton action) {
+        this.action = action;
     }
 
     @Override
     public ResultSet findAll() throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
-    }
+        try {
+            query = "call  member_Show();";
+            rs = con.createStatement().executeQuery(query);
+            return rs;
+        } catch (Exception e) {
+            e.printStackTrace();
+           return null;
+       }
+   }
 
     @Override
     public ResultSet findById(String id) throws SQLException {
@@ -195,14 +218,26 @@ public class MemberModel implements DataAccessObject {
 
     @Override
     public ResultSet searchData(String values) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+        try {
+            query = "call  member_Search(?);";
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public int saveData() throws SQLException, ParseException {
-        query = "call saveMember(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-        ps = con.prepareStatement(query);
+        if (getByimg() != null) {
+            query = "call  member_Insert_Img(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            ps = con.prepareStatement(query);
+            ps.setBytes(14, getByimg());
+        } else {
+            query = "call  member_Insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            ps = con.prepareStatement(query);
+        }
         ps.setString(1, getMemberId());
         ps.setString(2, getFirstName());
         ps.setString(3, getSureName());
@@ -211,20 +246,24 @@ public class MemberModel implements DataAccessObject {
         ps.setString(6, getVillage());
         ps.setString(7, getDistrict());
         ps.setString(8, getProvince());
-        ps.setDate(9, getBirdate());
-        ps.setString(10, getDetp());
+        ps.setDate(10, getBirdate());
+        ps.setString(9, getDetp());
         ps.setDate(11, getDateRegister());
         ps.setDate(12, getDateRegisterEnd());
         ps.setDate(13, getDateExit());
-        ps.setString(14, getStatus());
-
         return ps.executeUpdate();
     }
 
     @Override
     public int updateData() throws SQLException, ParseException {
-        query = "call updateMember(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-        ps = con.prepareStatement(query);
+        if (getByimg() != null) {
+            query = "call  member_Update_Img(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            ps = con.prepareStatement(query);
+            ps.setBytes(14, getByimg());
+        } else {
+            query = "call  member_Update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            ps = con.prepareStatement(query);
+        }
         ps.setString(1, getMemberId());
         ps.setString(2, getFirstName());
         ps.setString(3, getSureName());
@@ -233,21 +272,21 @@ public class MemberModel implements DataAccessObject {
         ps.setString(6, getVillage());
         ps.setString(7, getDistrict());
         ps.setString(8, getProvince());
-        ps.setDate(9, getBirdate());
-        ps.setString(10, getDetp());
+        ps.setDate(10, getBirdate());
+        ps.setString(9, getDetp());
         ps.setDate(11, getDateRegister());
         ps.setDate(12, getDateRegisterEnd());
         ps.setDate(13, getDateExit());
-        ps.setString(14, getStatus());
         return ps.executeUpdate();
     }
 
     @Override
     public int deleteData(String id) throws SQLException {
-        query = "call deleteMember(?);";
+        query = "call  member_Delete(?);";
         ps = con.prepareStatement(query);
         ps.setString(1, id);
         return ps.executeUpdate();
     }
+
 
 }

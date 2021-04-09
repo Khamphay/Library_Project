@@ -18,8 +18,8 @@ public class AlertMessage {
     public void showCompletedMessage(String title, String message, int time, Pos pos) {
         img = new Image("/com/mycompany/library_project/Icon/completed.png");
         imgView = new ImageView();
-        imgView.setFitWidth(90);
-        imgView.setFitHeight(90);
+        imgView.setFitWidth(70);
+        imgView.setFitHeight(70);
         imgView.setImage(img);
 
         notificationsBuilder = Notifications.create().title(title).text(message).graphic(imgView)
@@ -30,8 +30,8 @@ public class AlertMessage {
     public void showWarningMessage(String title, String message, int time, Pos pos) {
         img = new Image("/com/mycompany/library_project/Icon/warning.png");
         imgView = new ImageView();
-        imgView.setFitWidth(90);
-        imgView.setFitHeight(90);
+        imgView.setFitWidth(70);
+        imgView.setFitHeight(70);
         imgView.setImage(img);
 
         notificationsBuilder = Notifications.create().title(title).text(message).graphic(imgView)
@@ -42,8 +42,8 @@ public class AlertMessage {
     public void showErrorMessage(String title, String message, int time, Pos pos) {
         img = new Image("/com/mycompany/library_project/Icon/error.png");
         imgView = new ImageView();
-        imgView.setFitWidth(90);
-        imgView.setFitHeight(90);
+        imgView.setFitWidth(70);
+        imgView.setFitHeight(70);
         imgView.setImage(img);
 
         notificationsBuilder = Notifications.create().title(title).text(message).graphic(imgView)
@@ -73,8 +73,8 @@ public class AlertMessage {
     public void showCompletedMessage(Node node, String title, String message, int time, Pos pos) {
         img = new Image("/com/mycompany/library_project/Icon/completed.png");
         imgView = new ImageView();
-        imgView.setFitWidth(90);
-        imgView.setFitHeight(90);
+        imgView.setFitWidth(70);
+        imgView.setFitHeight(70);
         imgView.setImage(img);
 
         notificationsBuilder = Notifications.create().owner(node).title(title).text(message).graphic(imgView)
@@ -85,8 +85,8 @@ public class AlertMessage {
     public void showWarningMessage(Node node, String title, String message, int time, Pos pos) {
         img = new Image("/com/mycompany/library_project/Icon/warning.png");
         imgView = new ImageView();
-        imgView.setFitWidth(90);
-        imgView.setFitHeight(90);
+        imgView.setFitWidth(70);
+        imgView.setFitHeight(70);
         imgView.setImage(img);
 
         notificationsBuilder = Notifications.create().owner(node).title(title).text(message).graphic(imgView)
@@ -97,8 +97,8 @@ public class AlertMessage {
     public void showErrorMessage(Node node, String title, String message, int time, Pos pos) {
         img = new Image("/com/mycompany/library_project/Icon/error.png");
         imgView = new ImageView();
-        imgView.setFitWidth(90);
-        imgView.setFitHeight(90);
+        imgView.setFitWidth(70);
+        imgView.setFitHeight(70);
         imgView.setImage(img);
 
         notificationsBuilder = Notifications.create().owner(node).title(title).text(message).graphic(imgView)

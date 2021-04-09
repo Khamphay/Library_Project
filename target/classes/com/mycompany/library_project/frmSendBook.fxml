@@ -53,7 +53,7 @@
                         </JFXButton>
                         <AnchorPane layoutX="17.0" layoutY="14.0" minHeight="0.0" minWidth="0.0" prefHeight="124.0" prefWidth="968.0">
                            <children>
-                              <DatePicker layoutX="780.0" layoutY="72.0" prefHeight="28.0" prefWidth="173.0" promptText="ວັນທີສົ່ງ">
+                              <DatePicker layoutX="780.0" layoutY="72.0" prefHeight="28.0" prefWidth="173.0" promptText="ວັນທີສົ່ງ" showWeekNumbers="true">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -62,7 +62,7 @@
                               <TextField layoutX="36.0" layoutY="17.0" prefHeight="27.0" prefWidth="110.0" promptText="ລະຫັດປຶ້ມ" viewOrder="1.0" />
                               <TextField layoutX="600.0" layoutY="17.0" prefHeight="27.0" prefWidth="161.0" promptText="ປະເພດ" styleClass="textfield" viewOrder="1.0" />
                               <TextField layoutX="422.0" layoutY="17.0" prefHeight="27.0" prefWidth="161.0" promptText="ໝວດ" styleClass="textfield" viewOrder="1.0" />
-                              <DatePicker layoutX="780.0" layoutY="17.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີຢືມ">
+                              <DatePicker layoutX="780.0" layoutY="17.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີຢືມ" showWeekNumbers="true">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>

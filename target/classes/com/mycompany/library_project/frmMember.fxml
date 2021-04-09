@@ -11,64 +11,70 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="boderPane" prefHeight="615.0" prefWidth="1248.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.MemberController">
    <center>
-      <ScrollPane fitToHeight="true" fitToWidth="true">
-         <content>
-            <AnchorPane prefHeight="563.0" prefWidth="815.0">
-               <children>
-                  <TableView fx:id="tableMember" layoutX="9.0" layoutY="106.0" minWidth="-Infinity" prefHeight="443.0" prefWidth="1222.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="106.0">
-                     <columns>
-                        <TableColumn fx:id="id" prefWidth="97.0" text="ລະຫັົດນັກສຶກສາ" />
-                        <TableColumn fx:id="name" prefWidth="191.0" text="ຊື່ສະມາຊີກ" />
-                        <TableColumn fx:id="surname" prefWidth="183.0" text="ນາມສະກຸນ" />
-                        <TableColumn fx:id="gender" prefWidth="70.0" style="-fx-text-alignment: center;" text="ເພດ" />
-                        <TableColumn fx:id="tel" minWidth="8.0" prefWidth="118.0" text="ເບີໂທ" />
-                        <TableColumn fx:id="village" prefWidth="121.0" text="ບ້ານຢູ່ປັດຈຸບັນ" />
-                        <TableColumn fx:id="district" prefWidth="147.0" text="ເມືອງ" />
-                        <TableColumn fx:id="province" prefWidth="135.0" text="ແຂວງ" />
-                        <TableColumn fx:id="birthdate" prefWidth="95.0" text="ວ.ດ.ປ ເກີດ" />
-                        <TableColumn fx:id="depertment" prefWidth="156.0" text="ພາກວິຊາ" />
-                        <TableColumn fx:id="date_register" prefWidth="109.0" text="ວ.ດ.ປ ລົງທະບຽນ" />
-                        <TableColumn fx:id="date_exist" minWidth="4.0" prefWidth="102.0" text="ວ.ດ.ປ ໝົດອາຍຸ" />
-                     </columns>
-                  </TableView>
-                  <JFXButton id="btClick" buttonType="RAISED" layoutX="104.0" layoutY="57.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="#0a1eff" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </JFXButton>
-                  <JFXButton id="btClick" buttonType="RAISED" layoutX="243.0" layoutY="57.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="#0a1eff" stylesheets="@Style/buttonFont.css" text="ແກ້ໄຂ" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </JFXButton>
-                  <JFXButton id="btClick" buttonType="RAISED" layoutX="380.0" layoutY="57.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="#0a1eff" stylesheets="@Style/buttonFont.css" text="ລົບ" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </JFXButton>
-                  <TextField layoutX="941.0" layoutY="69.0" prefHeight="30.0" prefWidth="291.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular" AnchorPane.rightAnchor="14.0">
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding>
-                  </TextField>
-                  <ImageView fitHeight="21.0" fitWidth="23.0" layoutX="951.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="274.0">
-                     <image>
-                        <Image url="@Icon/search_50px.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </AnchorPane>
-         </content>
-      </ScrollPane>
+      <StackPane fx:id="stackPane">
+         <children>
+            <ScrollPane fitToHeight="true" fitToWidth="true">
+               <content>
+                  <AnchorPane prefHeight="563.0" prefWidth="815.0">
+                     <children>
+                        <TableView fx:id="tableMember" layoutX="9.0" layoutY="106.0" minWidth="-Infinity" prefHeight="443.0" prefWidth="1222.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="106.0">
+                           <columns>
+                              <TableColumn fx:id="id" prefWidth="97.0" text="ລະຫັົດນັກສຶກສາ" />
+                              <TableColumn fx:id="name" prefWidth="191.0" text="ຊື່ສະມາຊີກ" />
+                              <TableColumn fx:id="surname" prefWidth="183.0" text="ນາມສະກຸນ" />
+                              <TableColumn fx:id="gender" prefWidth="70.0" style="-fx-text-alignment: center;" text="ເພດ" />
+                              <TableColumn fx:id="tel" minWidth="8.0" prefWidth="118.0" text="ເບີໂທ" />
+                              <TableColumn fx:id="village" prefWidth="121.0" text="ບ້ານຢູ່ປັດຈຸບັນ" />
+                              <TableColumn fx:id="district" prefWidth="147.0" text="ເມືອງ" />
+                              <TableColumn fx:id="province" prefWidth="135.0" text="ແຂວງ" />
+                              <TableColumn fx:id="birthdate" prefWidth="95.0" text="ວ.ດ.ປ ເກີດ" />
+                              <TableColumn fx:id="depertment" prefWidth="200.0" text="ພາກວິຊາ" />
+                              <TableColumn fx:id="date_register" prefWidth="109.0" text="ວ.ດ.ປ ລົງທະບຽນ" />
+                              <TableColumn fx:id="date_exist" minWidth="4.0" prefWidth="102.0" text="ວ.ດ.ປ ໝົດອາຍຸ" />
+                              <TableColumn fx:id="colAction" minWidth="4.0" prefWidth="70.0" resizable="false" />
+                           </columns>
+                        </TableView>
+                        <JFXButton id="btClick" buttonType="RAISED" layoutX="104.0" layoutY="57.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="#0a1eff" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton id="btClick" buttonType="RAISED" layoutX="243.0" layoutY="57.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="#0a1eff" stylesheets="@Style/buttonFont.css" text="ແກ້ໄຂ" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton id="btClick" buttonType="RAISED" layoutX="380.0" layoutY="57.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="#0a1eff" stylesheets="@Style/buttonFont.css" text="ລົບ" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </JFXButton>
+                        <TextField layoutX="941.0" layoutY="69.0" prefHeight="30.0" prefWidth="291.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular" AnchorPane.rightAnchor="14.0">
+                           <padding>
+                              <Insets left="40.0" />
+                           </padding>
+                        </TextField>
+                        <ImageView fitHeight="21.0" fitWidth="23.0" layoutX="951.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="274.0">
+                           <image>
+                              <Image url="@Icon/search_50px.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+         </children>
+      </StackPane>
    </center>
    <top>
       <AnchorPane prefHeight="50.0" prefWidth="1158.0" style="-fx-background-color: #101D3D;" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="1127.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0">
+            <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="1127.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0">
                <graphic>
                   <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                      <image>

@@ -142,6 +142,8 @@ public class DepartmentController implements Initializable {
 
     private JFXButton buttonYes(String depid) {
         JFXButton btyes = new JFXButton("ຕົກລົງ");
+        btyes.setStyle(
+                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
         btyes.setOnAction(event -> {
             // Todo: Delete Data
             try {
@@ -164,6 +166,8 @@ public class DepartmentController implements Initializable {
 
     private JFXButton buttonNo() {
         JFXButton btno = new JFXButton("  ບໍ່  ");
+        btno.setStyle(
+                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
         btno.setOnAction(e -> {
             dialog.closeDialog();
         });
@@ -172,6 +176,8 @@ public class DepartmentController implements Initializable {
 
     private JFXButton buttonCancel() {
         JFXButton btcancel = new JFXButton("ຍົກເລີກ");
+        btcancel.setStyle(
+                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
         btcancel.setOnAction(e -> {
             dialog.closeDialog();
         });

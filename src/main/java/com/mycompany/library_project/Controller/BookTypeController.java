@@ -1,7 +1,6 @@
 package com.mycompany.library_project.Controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
@@ -13,7 +12,6 @@ import javafx.scene.layout.StackPane;
 
 import com.mycompany.library_project.Model.TypeModel;
 import com.jfoenix.controls.*;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import java.net.URL;
 import java.sql.*;
@@ -21,7 +19,6 @@ import java.util.ResourceBundle;
 
 public class BookTypeController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
     private ResultSet rs;
     private TypeModel type = null;
     private ObservableList<TypeModel> data = null;
@@ -92,7 +89,7 @@ public class BookTypeController implements Initializable {
             if (type.updateData() == 1) {
                 ShowData();
                 ClearData();
-                alertMessage.showCompletedMessage("Edit", "Edit data successfully.", 4, Pos.BOTTOM_RIGHT);
+                alertMessage.showCompletedMessage(stackePane, "Edit", "Edit data successfully.", 4, Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
             alertMessage.showErrorMessage(stackePane, "Edit", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
@@ -133,6 +130,8 @@ public class BookTypeController implements Initializable {
 
     private JFXButton buttonYes(String typeid) {
         JFXButton btyes = new JFXButton("ຕົກລົງ");
+        btyes.setStyle(
+                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
         btyes.setOnAction(e -> {
             // Todo: Delete Data
             try {
@@ -141,7 +140,8 @@ public class BookTypeController implements Initializable {
                     ShowData();
                     ClearData();
                     dialog.closeDialog();
-                    alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4, Pos.BOTTOM_RIGHT);
+                    alertMessage.showCompletedMessage(stackePane, "Delete", "Delete data successfully.", 4,
+                            Pos.BOTTOM_RIGHT);
                 }
             } catch (SQLException ex) {
                 alertMessage.showErrorMessage(stackePane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
@@ -152,14 +152,19 @@ public class BookTypeController implements Initializable {
 
     private JFXButton buttonNo() {
         JFXButton btno = new JFXButton("  ບໍ່  ");
+        btno.setStyle(
+                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
         btno.setOnAction(e -> {
             dialog.closeDialog();
+
         });
         return btno;
     }
 
     private JFXButton buttonCancel() {
         JFXButton btcancel = new JFXButton("ຍົກເລີກ");
+        btcancel.setStyle(
+                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
         btcancel.setOnAction(e -> {
             dialog.closeDialog();
         });

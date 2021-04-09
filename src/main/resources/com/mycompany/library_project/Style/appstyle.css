@@ -74,15 +74,23 @@
     -fx-background-color:#9395EB;
 }
 
-
+.text{
+    -fx-font-smoothing-type:gray;
+}
 /*-------------------TextField -----------------*/
 .text-field{
     -fx-font-family: 'BoonBaan';
     -fx-font-size: 14;
+    /* -fx-background-color: #fff; */
     /* -fx-background-color: transparent; */
     -fx-background-radius:0.5em;
     -fx-border-radius: 0.5em;
     -fx-border-color:  #101D3D;
+    -fx-text-fill: #0a1eff;
+}
+
+.text-field:focus{
+    -fx-border-color:#026b02;
 }
 
 .text-area{
@@ -114,7 +122,6 @@
     -fx-font-family: 'BoonHome';
     -fx-font-size: 12;
 } */
-
 
 
 #btnAction{
@@ -194,7 +201,9 @@
     /* -fx-font-weight: bold; */
     -fx-background-radius:0.5em;
     -fx-border-radius: 0.5em;
-    -fx-border-color: #2b2d8d;
+    -fx-border-color: #101D3D;
+    -fx-text-fill: #0a1eff;
+    -fx-background-color: #fff;
 }
 
 /*-------------------Label -----------------*/

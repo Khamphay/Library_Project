@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXRadioButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -13,86 +14,59 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="borderPane" prefHeight="612.0" prefWidth="1070.0" style="-fx-background-color: #f3f3f3;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.RegisterController">
-   <children>
-      <BorderPane layoutY="49.0" prefHeight="613.0" prefWidth="969.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <center>
-            <ScrollPane fitToHeight="true" fitToWidth="true">
-               <content>
-                  <JFXBadge>
+<BorderPane fx:id="borderPane" prefHeight="613.0" prefWidth="969.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.RegisterController">
+   <center>
+      <ScrollPane fitToHeight="true" fitToWidth="true">
+         <content>
+            <JFXBadge>
+               <children>
+                  <AnchorPane maxWidth="-Infinity" prefHeight="561.0" prefWidth="849.0">
                      <children>
-                        <AnchorPane maxWidth="-Infinity" prefHeight="560.0" prefWidth="949.0">
+                        <AnchorPane layoutX="3.0" layoutY="36.0" minHeight="0.0" minWidth="0.0" prefHeight="412.0" prefWidth="837.0" style="-fx-border-color: #101D3D; -fx-border-radius: 0.5em;">
                            <children>
-                              <TextField fx:id="txtFName" layoutX="235.0" layoutY="83.0" prefHeight="25.0" prefWidth="190.0" promptText="ຊື່" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
-                                 <font>
-                                    <Font name="Phetsarath OT" size="12.0" />
-                                 </font>
-                              </TextField>
-                              <TextField fx:id="txtId" layoutX="13.0" layoutY="83.0" prefHeight="25.0" prefWidth="190.0" promptText="ລະຫັດສະມາຊີກ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
-                                 <font>
-                                    <Font name="Phetsarath OT" size="12.0" />
-                                 </font>
-                              </TextField>
-                              <TextField fx:id="txtLName" layoutX="453.0" layoutY="83.0" prefHeight="25.0" prefWidth="190.0" promptText="ນາມສະກຸນ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
-                                 <font>
-                                    <Font name="Phetsarath OT" size="12.0" />
-                                 </font>
-                              </TextField>
-                              <TextField fx:id="txtTel" layoutX="455.0" layoutY="144.0" prefHeight="25.0" prefWidth="190.0" promptText="ເບີໂທ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
-                                 <font>
-                                    <Font name="Phetsarath OT" size="12.0" />
-                                 </font>
-                              </TextField>
-                              <TextField fx:id="txtVill" layoutX="235.0" layoutY="211.0" prefHeight="25.0" prefWidth="190.0" promptText="ບ້ານ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
-                                 <font>
-                                    <Font name="Phetsarath OT" size="12.0" />
-                                 </font>
-                              </TextField>
-                              <TextField layoutX="14.0" layoutY="211.0" prefHeight="25.0" prefWidth="190.0" promptText="ອີເມວ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
-                                 <font>
-                                    <Font name="Phetsarath OT" size="12.0" />
-                                 </font>
-                              </TextField>
-                              <TextField fx:id="txtProv" layoutX="13.0" layoutY="275.0" prefHeight="25.0" prefWidth="190.0" promptText="ແຂວງ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
-                                 <font>
-                                    <Font name="Phetsarath OT" size="12.0" />
-                                 </font>
-                              </TextField>
-                              <TextField fx:id="txtDist" layoutX="453.0" layoutY="211.0" prefHeight="25.0" prefWidth="190.0" promptText="ເມຶອງ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
-                                 <font>
-                                    <Font name="Phetsarath OT" size="12.0" />
-                                 </font>
-                              </TextField>
-                              <JFXRadioButton fx:id="rdbMale" layoutX="13.0" layoutY="157.0" style="-jfx-selected-color: #0a1eff;" styleClass="BoonBaan-size-14-Regular" text="ເພດຊາຍ">
-                                 <font>
-                                    <Font name="Phetsarath OT" size="12.0" />
-                                 </font>
-                              </JFXRadioButton>
-                              <JFXRadioButton fx:id="rdbFemale" layoutX="119.0" layoutY="157.0" style="-jfx-selected-color: #0a1eff;" styleClass="BoonBaan-size-14-Regular" text="ເພດຍິງ">
-                                 <font>
-                                    <Font name="Phetsarath OT" size="12.0" />
-                                 </font>
-                              </JFXRadioButton>
-                              <DatePicker fx:id="birtDate" layoutX="234.0" layoutY="143.0" prefHeight="28.0" prefWidth="197.0" promptText="ວ.ດ.ປ ເກີດ" styleClass="date-picker" />
-                              <ComboBox fx:id="cmbDept" layoutX="232.0" layoutY="275.0" prefHeight="25.0" prefWidth="197.0" promptText="ຮຽນພາກວີຊາ" />
-                              <ComboBox fx:id="cmbYears" layoutX="453.0" layoutY="275.0" prefHeight="27.0" prefWidth="190.0" promptText="ຮຽນປີ" />
-                              <JFXButton id="btClick" layoutX="257.0" layoutY="428.0" onAction="#Save" prefHeight="30.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
+                              <TextField fx:id="txtFName" layoutX="232.0" layoutY="39.0" prefHeight="31.0" prefWidth="196.0" promptText="ຊື່" viewOrder="1.0" />
+                              <TextField fx:id="txtId" layoutX="10.0" layoutY="39.0" prefHeight="25.0" prefWidth="190.0" promptText="ລະຫັດສະມາຊີກ" viewOrder="1.0" />
+                              <TextField fx:id="txtLName" layoutX="450.0" layoutY="39.0" prefHeight="25.0" prefWidth="190.0" promptText="ນາມສະກຸນ" viewOrder="1.0" />
+                              <TextField fx:id="txtTel" layoutX="452.0" layoutY="103.0" prefHeight="25.0" prefWidth="190.0" promptText="ເບີໂທ" viewOrder="1.0" />
+                              <TextField fx:id="txtVill" layoutX="11.0" layoutY="173.0" prefHeight="25.0" prefWidth="190.0" promptText="ບ້ານ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" />
+                              <TextField fx:id="txtProv" layoutX="452.0" layoutY="173.0" prefHeight="25.0" prefWidth="190.0" promptText="ແຂວງ" viewOrder="1.0" />
+                              <TextField fx:id="txtDist" layoutX="231.0" layoutY="173.0" prefHeight="31.0" prefWidth="194.0" promptText="ເມືອງ" viewOrder="1.0" />
+                              <DatePicker fx:id="birtDate" cache="true" layoutX="231.0" layoutY="103.0" prefHeight="28.0" prefWidth="197.0" promptText="ວ.ດ.ປ ເກີດ" showWeekNumbers="true" />
+                              <ComboBox fx:id="cmbDept" layoutX="11.0" layoutY="239.0" prefHeight="25.0" prefWidth="197.0" promptText="ຮຽນພາກວີຊາ" />
+                              <ComboBox fx:id="cmbYears" layoutX="232.0" layoutY="239.0" prefHeight="27.0" prefWidth="190.0" promptText="ຮຽນປີ" />
+                              <JFXButton id="btClick" alignment="CENTER" layoutX="260.0" layoutY="351.0" minHeight="-Infinity" onAction="#Save" prefHeight="32.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/checked.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="-5.0" />
+                                 </padding>
                               </JFXButton>
-                              <JFXButton id="btClick" layoutX="440.0" layoutY="428.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
+                              <JFXButton id="btClick" alignment="CENTER" layoutX="386.0" layoutY="351.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/cancel.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="-5.0" />
+                                 </padding>
                               </JFXButton>
-                              <ImageView fx:id="imgPic" cache="true" cacheHint="QUALITY" fitHeight="219.0" fitWidth="283.0" layoutX="657.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@Icon/male_user_127px.png" />
-                                 </image>
-                              </ImageView>
-                              <JFXButton id="btClick" alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="716.0" layoutY="309.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#setImage" prefHeight="35.0" prefWidth="101.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ເລືອກຮູບ" textFill="WHITE">
+                              <JFXButton id="btClick" alignment="CENTER" graphicTextGap="6.0" layoutX="688.0" layoutY="268.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#setImage" prefHeight="32.0" prefWidth="92.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ເລືອກຮູບ" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="1.0" />
                                  </font>
@@ -103,42 +77,75 @@
                                        </image>
                                     </ImageView>
                                  </graphic>
+                                 <padding>
+                                    <Insets left="-2.0" />
+                                 </padding>
                               </JFXButton>
-                              <Label layoutX="443.0" layoutY="454.0" prefHeight="17.0" prefWidth="64.0" />
+                              <Label layoutX="452.0" layoutY="19.0" styleClass="BoonBaan-size-14" text="ນາມສະກຸນ" />
+                              <Label layoutX="452.0" layoutY="83.0" styleClass="BoonBaan-size-14" text="ເບີໂທລະສັບ" />
+                              <Label layoutX="11.0" layoutY="153.0" styleClass="BoonBaan-size-14" text="ບ້ານຢູ່ປັດຈຸບັນ" />
+                              <Label layoutX="233.0" layoutY="152.0" styleClass="BoonBaan-size-14" text="ເມືອງ" />
+                              <Label layoutX="453.0" layoutY="151.0" styleClass="BoonBaan-size-14" text="ແຂວງ" />
+                              <Label layoutX="13.0" layoutY="219.0" styleClass="BoonBaan-size-14" text="ຮຽນພາກວີຊາ" />
+                              <Label layoutX="234.0" layoutY="219.0" styleClass="BoonBaan-size-14" text="ນັກສຶກສາປື" />
+                              <AnchorPane layoutX="10.0" layoutY="93.0" minHeight="0.0" minWidth="0.0" prefHeight="41.0" prefWidth="190.0" style="-fx-border-color: #101D3D; -fx-border-radius: 0.5em;">
+                                 <children>
+                                    <JFXRadioButton fx:id="rdbMale" layoutX="14.0" layoutY="14.0" style="-jfx-selected-color: #0a1eff;" styleClass="BoonBaan-size-14-Regular" text="ຊາຍ">
+                                       <font>
+                                          <Font name="Phetsarath OT" size="12.0" />
+                                       </font>
+                                    </JFXRadioButton>
+                                    <JFXRadioButton fx:id="rdbFemale" layoutX="115.0" layoutY="14.0" style="-jfx-selected-color: #0a1eff;" styleClass="BoonBaan-size-14-Regular" text="ຍິງ">
+                                       <font>
+                                          <Font name="Phetsarath OT" size="12.0" />
+                                       </font>
+                                    </JFXRadioButton>
+                                    <Label alignment="CENTER" layoutX="3.0" layoutY="-10.0" prefHeight="19.0" prefWidth="26.0" style="-fx-background-color: #F4F4F4;" styleClass="BoonBaan-size-14" text="ເພດ" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane layoutX="649.0" layoutY="40.0" prefHeight="221.0" prefWidth="165.0" style="-fx-border-color: #101D3D; -fx-border-radius: 0.5em;">
+                                 <children>
+                                    <ImageView fx:id="imgPic" fitHeight="221.0" fitWidth="170.0" layoutX="3.0" layoutY="1.0" preserveRatio="true" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+                                 </children>
+                              </AnchorPane>
+                              <Label layoutX="715.0" layoutY="20.0" prefWidth="44.0" styleClass="BoonBaan-size-14" text="ຮູບ 3x4" />
+                              <Text layoutX="232.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊື່ສະມາຊີກ" wrappingWidth="55.13671875" />
+                              <Text layoutX="11.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລະຫັດສະມາຊີກ" wrappingWidth="97.13671875" />
+                              <Text layoutX="232.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ວັນເດືອນປືເກີດ" wrappingWidth="83.13671875" />
                            </children>
                         </AnchorPane>
                      </children>
-                  </JFXBadge>
-               </content>
-            </ScrollPane>
-         </center>
-         <top>
-            <AnchorPane prefHeight="50.0" prefWidth="768.0" style="-fx-background-color: #101D3D;" BorderPane.alignment="CENTER">
-               <children>
-                  <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="949.0" layoutY="3.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
-                     <graphic>
-                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Icon/no_50px.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <font>
-                        <Font size="1.0" />
-                     </font>
-                  </JFXButton>
-                  <Label graphicTextGap="10.0" layoutX="14.0" layoutY="9.0" prefHeight="26.0" prefWidth="161.0" styleClass="label-size-16" text="ລົງທະບຽນ" textAlignment="CENTER" textFill="WHITE">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0">
-                           <image>
-                              <Image url="@Icon/add_user_male_50px.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Label>
+                  </AnchorPane>
                </children>
-            </AnchorPane>
-         </top>
-      </BorderPane>
-   </children>
-</AnchorPane>
+            </JFXBadge>
+         </content>
+      </ScrollPane>
+   </center>
+   <top>
+      <AnchorPane prefHeight="50.0" prefWidth="768.0" style="-fx-background-color: #101D3D;" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="949.0" layoutY="3.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
+               <graphic>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Icon/no_50px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="1.0" />
+               </font>
+            </JFXButton>
+            <Label graphicTextGap="10.0" layoutX="14.0" layoutY="9.0" prefHeight="26.0" prefWidth="161.0" styleClass="label-size-16" text="ລົງທະບຽນ" textAlignment="CENTER" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@Icon/add_user_male_50px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>

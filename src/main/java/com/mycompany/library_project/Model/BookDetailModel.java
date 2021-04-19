@@ -231,48 +231,54 @@ public class BookDetailModel implements DataAccessObject {
     @Override
     public int saveData() throws SQLException, ParseException {
 
-        try {
-            sql = "call book_detail_Insert(?, ?, ?, ?, ?, ?, ?, ?, ?);";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, getBookId());
-            ps.setString(2, getBookName());
-            ps.setString(3, getISBN());
-            ps.setInt(4, getPage());
-            ps.setInt(5, getQty());
-            ps.setString(6, getDetail());
-            ps.setString(7, getCatgId());
-            ps.setString(8, getTypeId());
-            ps.setString(9, getTableLogId());
-            return ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("Error on save: " + e.getMessage());
-            return -1;
-        }
+        sql = "call book_detail_Insert(?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, getBookId());
+        ps.setString(2, getBookName());
+        ps.setString(3, getISBN());
+        ps.setInt(4, getPage());
+        ps.setInt(5, getQty());
+        ps.setString(6, getDetail());
+        ps.setString(7, getCatgId());
+        ps.setString(8, getTypeId());
+        ps.setString(9, getTableLogId());
+        return ps.executeUpdate();
     }
 
-    public int saveBookBarCode(String barcode, String bookid, String status) {
-        try {
-            sql = "call book_Insert(?, ?, ?);";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, barcode);
-            ps.setString(2, bookid);
-            ps.setString(3, status);
-            return ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("Error save barcode: " + e.getMessage());
-            return -1;
-        }
+    public int saveBookBarCode(String barcode, String bookid, String status) throws SQLException {
+
+        sql = "call book_Insert(?, ?, ?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, barcode);
+        ps.setString(2, bookid);
+        ps.setString(3, status);
+        return ps.executeUpdate();
+
     }
 
     @Override
     public int updateData() throws SQLException, ParseException {
-        // TODO Auto-generated method stub
-        return 0;
+
+        sql = "call book_detail_Update(?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, getBookId());
+        ps.setString(2, getBookName());
+        ps.setString(3, getISBN());
+        ps.setInt(4, getPage());
+        ps.setInt(5, getQty());
+        ps.setString(6, getDetail());
+        ps.setString(7, getCatgId());
+        ps.setString(8, getTypeId());
+        ps.setString(9, getTableLogId());
+        return ps.executeUpdate();
     }
 
     @Override
     public int deleteData(String id) throws SQLException {
-        // TODO Auto-generated method stub
-        return 0;
+
+        sql = "call book_detail_Delete(?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, id);
+        return ps.executeUpdate();
     }
 }

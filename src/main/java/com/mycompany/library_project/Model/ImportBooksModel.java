@@ -147,22 +147,18 @@ public class ImportBooksModel extends ImportBook {
         this.price = price;
     }
 
-    public int saveImportDetail() {
+    public int saveImportDetail() throws SQLException {
         int result = 0;
-        try {
-            sql = "call inertImport_Detail(:importid, :bookid, :book_qty, :book_price);";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, getImport_id());
-            ps.setString(2, getBook_id());
-            ps.setInt(3, getQty());
-            ps.setDouble(4, getPrice());
-            if (ps.executeUpdate() > 0) {
-                result = 1;
-            }
-            return result;
-        } catch (Exception e) {
-            return -1;
+        sql = "call inertImport_Detail(:importid, :bookid, :book_qty, :book_price);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, getImport_id());
+        ps.setString(2, getBook_id());
+        ps.setInt(3, getQty());
+        ps.setDouble(4, getPrice());
+        if (ps.executeUpdate() > 0) {
+            result = 1;
         }
+        return result;
     }
 
 }

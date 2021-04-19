@@ -114,9 +114,9 @@
             </StackPane>
          </center>
          <top>
-            <AnchorPane prefHeight="50.0" prefWidth="768.0" style="-fx-background-color: #101D3D;" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="34.0" prefWidth="768.0" style="-fx-background-color: #101D3D;" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="735.0" layoutY="5.0" prefHeight="24.0" prefWidth="24.0" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="11.0">
+                  <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="735.0" layoutY="5.0" prefHeight="24.0" prefWidth="24.0" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -128,7 +128,7 @@
                         <Font size="1.0" />
                      </font>
                   </JFXButton>
-                  <Label graphicTextGap="10.0" layoutX="14.0" layoutY="13.0" prefHeight="26.0" prefWidth="161.0" styleClass="label-size-16" text="ຂໍ້ມູນພາກວິຊາ" textAlignment="CENTER" textFill="WHITE">
+                  <Label graphicTextGap="10.0" layoutX="14.0" layoutY="13.0" prefHeight="32.0" prefWidth="161.0" styleClass="label-size-16" text="ຂໍ້ມູນພາກວິຊາ" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="1.0" AnchorPane.topAnchor="2.0">
                      <graphic>
                         <ImageView fitHeight="26.0" fitWidth="26.0">
                            <image>

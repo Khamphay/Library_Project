@@ -18,6 +18,7 @@ public class ManageBookController implements Initializable {
 
     private Parent subForm = null;
     private AlertMessage alertMessage = new AlertMessage();
+    public static BorderPane mainBorder = null;
 
     @FXML
     private Text txtType, txtCategory, txtBook, txtBookLost, txtTableLog;

@@ -2,6 +2,7 @@ package com.mycompany.library_project.Controller;
 
 import com.jfoenix.controls.*;
 
+import javafx.beans.value.*;
 import javafx.collections.*;
 import javafx.event.*;
 import javafx.fxml.*;
@@ -9,11 +10,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
 import javafx.stage.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.io.*;
 
 import com.mycompany.library_project.Model.*;
 
@@ -23,7 +23,6 @@ import com.mycompany.library_project.ControllerDAOModel.*;
 
 import java.net.URL;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -34,10 +33,8 @@ import java.awt.image.BufferedImage;
 
 public class RegisterController implements Initializable {
 
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private LocalDate localDateExit;
-
-    private MemberModel memberModel = null;
+    public static MemberModel memberModel = null;
     private DepartmentModel depertment = new DepartmentModel();
     private ObservableList<String> items = null;
     private ObservableList<String> years = FXCollections.observableArrayList("ປີ 1", "ປີ 1 ຕໍ່ເນື່ອງ", "ປີ 2",
@@ -45,15 +42,19 @@ public class RegisterController implements Initializable {
     private ArrayList<String> depIdList = null;
     private int index = -1;
     private FileChooser chooser = null;
-    private Image img = null;
     private AlertMessage alertMessage = new AlertMessage();
-    private String gender = "";
+    private String memberid_edit = "", gender = "";
     private byte[] byimg = null;
-    private BufferedImage resizeImg;
-    private ByteArrayOutputStream byteStrem;
+    private BufferedImage resizeImg = null;
+    private ByteArrayOutputStream byteStrem = null;
+    private OutputStream outStrem = null;
+    private File lastPath = null;
+    private Double x, y;
 
     @FXML
     private BorderPane borderPane;
+    @FXML
+    private AnchorPane acPaneHeader;
 
     @FXML
     private TextField txtId, txtFName, txtLName, txtTel, txtVill, txtDist, txtProv;
@@ -93,16 +94,19 @@ public class RegisterController implements Initializable {
             final Stage stage = new Stage();
             stage.setTitle("Choose image");
             chooser = new FileChooser();
+            if (lastPath != null) {
+                chooser.setInitialDirectory(lastPath);
+            }
             File file = chooser.showOpenDialog(stage);
             if (file != null) {
-                img = new Image(file.toURI().toASCIIString());
-                img.isSmooth();
+                lastPath = file.getParentFile();// Todo: set last path of open
+
                 imgPic.setFitWidth(173);
                 imgPic.setFitHeight(221);
-                imgPic.setImage(img);
+                imgPic.setImage(new Image(file.toURI().toASCIIString()));
 
                 // TODO: Resize image
-                resizeImg = Scalr.resize(ImageIO.read(new File(file.toURI().toURL().getPath())),
+                resizeImg = Scalr.resize(ImageIO.read(new File(file.getAbsolutePath())),
                         Scalr.Method.AUTOMATIC, /*
                                                  * Scalr. Mode. AUTOMATIC,
                                                  */
@@ -128,45 +132,80 @@ public class RegisterController implements Initializable {
                 memberModel = new MemberModel(txtId.getText(), txtFName.getText(), txtLName.getText(), gender,
                         txtTel.getText(), txtVill.getText(), txtDist.getText(), txtProv.getText(),
                         Date.valueOf(birtDate.getValue()), depIdList.get(index), Date.valueOf(LocalDate.now()),
-                        Date.valueOf(LocalDate.now().plusYears(1)), Date.valueOf(localDateExit), byimg);
-                if (memberModel.saveData() > 0) {
-                    alertMessage.showCompletedMessage(borderPane, "Save", "Save data successfully.", 4,
-                            Pos.BOTTOM_RIGHT);
+                        Date.valueOf(LocalDate.now().plusYears(1)), Date.valueOf(localDateExit), byimg, memberid_edit);
+
+                if (memberid_edit == "") {
+                    // Todo: Insert (if save memberid_edit if null)
+                    if (memberModel.saveData() > 0) {
+                        alertMessage.showCompletedMessage(borderPane, "Saved", "Saved data successfully.", 4,
+                                Pos.BOTTOM_RIGHT);
+                    }
+                } else {
+                    if (memberModel.updateData() > 0) {
+                        alertMessage.showCompletedMessage(borderPane, "Edited", "Edited data successfully.", 4,
+                                Pos.BOTTOM_RIGHT);
+                    }
                 }
+
             } else {
                 alertMessage.showWarningMessage(borderPane, "Save", "Please chack your information and try again.", 4,
                         Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
             alertMessage.showErrorMessage(borderPane, "Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            e.printStackTrace();
         }
     }
 
     @FXML
     private void clearText() {
+        memberid_edit = "";
+        byimg = null;
+        index = -1;
         txtId.clear();
         txtFName.clear();
         txtLName.clear();
         txtTel.clear();
+        txtTel.clear();
         txtVill.clear();
         txtDist.clear();
         txtProv.clear();
-
+        birtDate.setValue(null);
+        imgPic.setImage(null);
+        cmbDept.getSelectionModel().clearSelection();
+        cmbYears.getSelectionModel().clearSelection();
     }
+
+    @FXML
+    private void closeForm() {
+        if (MemberController.addMemberStage != null) {
+            MemberController.addMemberStage.close();
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         // Todo: Groud RadioButton
         ToggleGroup group = new ToggleGroup();
         rdbMale.setToggleGroup(group);
-        rdbMale.setSelected(true);
         rdbFemale.setToggleGroup(group);
+        rdbMale.setSelected(true);
+
+        txtTel.textProperty().addListener(new ChangeListener<String>() {
+            // Todo: set properties type only numeric
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    txtTel.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
 
         cmbYears.setItems(years);
         fillDep();
+        moveForm();
 
-        imgPic.setOnMouseClicked(new EventHandler<>() {
+        imgPic.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
@@ -175,26 +214,18 @@ public class RegisterController implements Initializable {
                 chooser = new FileChooser();
                 File file = chooser.showOpenDialog(stage);
                 if (file != null) {
-                    img = new Image(file.toURI().toASCIIString());
-                    img.isSmooth();
                     imgPic.setFitWidth(165);
                     imgPic.setFitHeight(221);
-                    imgPic.setImage(img);
+                    imgPic.setImage(new Image(file.toURI().toASCIIString()));
                 }
             }
-
         });
 
-        cmbDept.setOnAction(new EventHandler<>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                index = cmbDept.getSelectionModel().getSelectedIndex();
-            }
-
+        cmbDept.setOnAction(event -> {
+            index = cmbDept.getSelectionModel().getSelectedIndex();
         });
 
-        cmbYears.setOnAction(e -> {
+        cmbYears.setOnAction(evt -> {
             if (cmbYears.getSelectionModel().getSelectedItem() == "ປີ 1 ຕໍ່ເນື່ອງ") {
                 localDateExit = LocalDate.now().plusYears(1);
             } else if (cmbYears.getSelectionModel().getSelectedItem() == "ປີ 2 ຕໍ່ເນື່ອງ") {
@@ -202,6 +233,57 @@ public class RegisterController implements Initializable {
             } else {
                 localDateExit = LocalDate.now().plusYears((4 - (cmbYears.getSelectionModel().getSelectedIndex() - 2)));
             }
+        });
+
+        if (memberModel != null) {
+            // Todo: if by edit from 'Form Member'
+            memberid_edit = memberModel.getMemberId();
+            txtId.setText(memberModel.getMemberId());
+            txtFName.setText(memberModel.getFirstName());
+            txtLName.setText(memberModel.getSureName());
+
+            if (memberModel.getGender().equals("ຊາຍ")) {
+                rdbMale.setSelected(true);
+            } else {
+                rdbFemale.setSelected(true);
+            }
+            txtTel.setText(memberModel.getTel());
+            txtVill.setText(memberModel.getVillage());
+            txtDist.setText(memberModel.getDistrict());
+            txtProv.setText(memberModel.getProvince());
+            birtDate.setValue(memberModel.getBirdate().toLocalDate());
+
+            // cmbYears.getSelectionModel().select(memberModel.getYears());
+
+            // TODO: Show Image
+            if (memberModel.getByimg() != null) {
+                try {
+                    outStrem = new FileOutputStream(new File("img.png"));
+                    try {
+                        outStrem.write(memberModel.getByimg());
+                        imgPic.setImage(new Image("file:img.png"));
+                    } catch (IOException e) {
+                        alertMessage.showErrorMessage(borderPane, "Read Image", "Error: " + e.getMessage(), 4,
+                                Pos.BOTTOM_RIGHT);
+                    }
+                } catch (FileNotFoundException e) {
+                    alertMessage.showErrorMessage(borderPane, "Write Image", "Error: " + e.getMessage(), 4,
+                            Pos.BOTTOM_RIGHT);
+                }
+            }
+            memberModel = null;
+        }
+    }
+
+    private void moveForm() {
+
+        acPaneHeader.setOnMousePressed(event -> {
+            x = event.getSceneX();
+            y = event.getSceneY();
+        });
+        acPaneHeader.setOnMouseDragged(event -> {
+            MemberController.addMemberStage.setX(event.getScreenX() - x);
+            MemberController.addMemberStage.setY(event.getScreenY() - y);
         });
     }
 }

@@ -30,6 +30,5 @@
 }
 
 .button:hover{
-    -fx-font-weight: bold;
-    /* -fx-text-fill:#493DF5; */
+    -fx-background-color: derive(#0b2e80, 10%);
 }

@@ -63,36 +63,52 @@ public class CategoryModel implements DataAccessObject {
     // Todo: Method management data
     @Override
     public ResultSet findAll() throws SQLException {
-        sql = "call category_ShowAll();";
-        rs = con.createStatement().executeQuery(sql);
-        return rs;
+        try {
+          sql = "call category_ShowAll();";
+          rs = con.createStatement().executeQuery(sql);
+          return rs;
+      } catch (Exception e) {
+          return null;
+      }
     }
 
     @Override
     public ResultSet findById(String id) throws SQLException {
-        sql = "call category_ShowById(?);";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, id);
-        rs = ps.executeQuery();
-        return rs;
+        try {
+            sql = "call category_ShowById(?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public ResultSet findByName(String name) throws SQLException {
-        sql = "call category_ShowByName(?);";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, name);
-        rs = ps.executeQuery();
-        return rs;
+        try {
+            sql = "call category_ShowByName(?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, name);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public ResultSet searchData(String values) throws SQLException {
-        sql = "call category_Search(?);";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, values);
-        rs = ps.executeQuery();
-        return rs;
+        try {
+           sql = "call category_Search(?);";
+           ps = con.prepareStatement(sql);
+           ps.setString(1, values);
+           rs = ps.executeQuery();
+           return rs;
+       } catch (Exception e) {
+           return null;
+       }
     }
 
     @Override

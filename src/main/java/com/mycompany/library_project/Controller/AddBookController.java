@@ -2,18 +2,18 @@ package com.mycompany.library_project.Controller;
 
 import javafx.beans.value.*;
 import javafx.collections.*;
-import javafx.event.ActionEvent;
+import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.jfoenix.controls.*;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 
@@ -24,18 +24,22 @@ public class AddBookController implements Initializable {
     private TypeModel type = null;
     private CategoryModel category = null;
     private TableLogModel table = null;
-    private BookDetailModel bookDetail = null;
+    public static BookDetailModel addBook = null;
     private ArrayList<String> arr_type, arr_category, arr_table;
     private int index_type, index_category;
     private AlertMessage alertMessage = new AlertMessage();
+    private String bookid = "";
+
+    private double x, y;
 
     @FXML
-    private AnchorPane acPane;
+    private BorderPane borderPane;
+
+    @FXML
+    private AnchorPane acHeaderPane;
+
     @FXML
     private TextField txtId, txtName, txtPage, txtQty, txtISBN;
-
-    @FXML
-    private JFXButton btclose;
 
     @FXML
     private TextArea txtBarcode, txtDetail;
@@ -45,7 +49,21 @@ public class AddBookController implements Initializable {
 
     @FXML
     private void coloseForm() {
+        if (BookController.addNewBook != null) {
+            BookController.addNewBook.close();
+        }
+    }
 
+    private void moveForm() {
+        acHeaderPane.setOnMousePressed(mouseEvent -> {
+            x = mouseEvent.getSceneX();
+            y = mouseEvent.getSceneY();
+        });
+
+        acHeaderPane.setOnMouseDragged(mouseEvent -> {
+            BookController.addNewBook.setX(mouseEvent.getScreenX() - x);
+            BookController.addNewBook.setY(mouseEvent.getScreenY() - y);
+        });
     }
 
     private void generatedBarcode() {
@@ -69,13 +87,15 @@ public class AddBookController implements Initializable {
         txtQty.clear();
         txtBarcode.clear();
         txtDetail.clear();
-        // cmbCagtegory.getSelectionModel().clearSelection();
-        // cmbType.getSelectionModel().clearSelection();
-        // cmbTable.getSelectionModel().clearSelection();
-        // cmbtableLog.getSelectionModel().clearSelection();
+        cmbCagtegory.getSelectionModel().select("");
+        cmbType.getSelectionModel().select("");
+        cmbTable.getSelectionModel().select("");
+        cmbtableLog.getSelectionModel().select("");
+        bookid = "";
     }
 
     private void initEvents() {
+
         txtPage.textProperty().addListener(new ChangeListener<String>() {
 
             @Override
@@ -118,7 +138,8 @@ public class AddBookController implements Initializable {
                     cmbtableLog.setItems(items);
                 }
             } catch (Exception ex) {
-                alertMessage.showErrorMessage(acPane, "Selete data", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                alertMessage.showErrorMessage(borderPane, "Selete data", "Error: " + ex.getMessage(), 4,
+                        Pos.BOTTOM_RIGHT);
             }
         });
     }
@@ -142,7 +163,7 @@ public class AddBookController implements Initializable {
             }
             cmbType.setItems(items);
         } catch (Exception e) {
-            alertMessage.showErrorMessage(acPane, "Load type", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage(borderPane, "Load type", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -164,7 +185,7 @@ public class AddBookController implements Initializable {
             }
             cmbCagtegory.setItems(items);
         } catch (Exception e) {
-            alertMessage.showErrorMessage(acPane, "Load category", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage(borderPane, "Load category", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -180,8 +201,25 @@ public class AddBookController implements Initializable {
             }
             cmbTable.setItems(items);
         } catch (Exception e) {
-            alertMessage.showErrorMessage(acPane, "Load table", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage(borderPane, "Load table", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
+    }
+
+    private void fillValue() {
+
+        if (addBook != null) {
+            bookid = addBook.getBookId();
+            txtId.setText(addBook.getBookId());
+            txtName.setText(addBook.getBookName());
+            txtISBN.setText(addBook.getISBN());
+            txtPage.setText(addBook.getPage().toString());
+            txtQty.setText(addBook.getQty().toString());
+            txtDetail.setText(addBook.getDetail());
+            cmbType.getSelectionModel().select(addBook.getTypeId());
+            cmbCagtegory.getSelectionModel().select(addBook.getCatgId());
+            cmbtableLog.getSelectionModel().select(addBook.getTableLogId());
+        }
+        addBook = null;
     }
 
     @FXML
@@ -189,40 +227,44 @@ public class AddBookController implements Initializable {
         // cmbType.g
         String msg = null;
         try {
-            bookDetail = new BookDetailModel(txtId.getText(), txtName.getText(), txtISBN.getText(),
+            addBook = new BookDetailModel(txtId.getText(), txtName.getText(), txtISBN.getText(),
                     Integer.parseInt(txtPage.getText()), Integer.parseInt(txtQty.getText()),
                     arr_category.get(index_category), arr_type.get(index_type),
                     cmbtableLog.getSelectionModel().getSelectedItem().toString(), txtDetail.getText());
-            if (bookDetail.saveData() > 0) {
-                String line = txtBarcode.getText();
-                String[] lineCount = line.split("\n");
+            if (bookid == "") {
+                if (addBook.saveData() > 0) {
+                    String line = txtBarcode.getText();
+                    String[] lineCount = line.split("\n");
 
-                for (int i = 0; i < lineCount.length; i++) {
-                    try {
-                        int result = bookDetail.saveBookBarCode(lineCount[i], txtId.getText(),
-                                cmbStatus.getSelectionModel().getSelectedItem().toString());
-                        if (result > 0) {
-                            msg = "Save Completed";
-                        } else {
-                            msg = null;
+                    for (int i = 0; i < lineCount.length; i++) {
+                        try {
+                            int result = addBook.saveBookBarCode(lineCount[i], txtId.getText(),
+                                    cmbStatus.getSelectionModel().getSelectedItem().toString());
+                            if (result > 0) {
+                                msg = "Save Completed";
+                            } else {
+                                msg = null;
+                            }
+                        } catch (Exception e) {
+                            // Todo:................................
+                            return;
                         }
-                    } catch (Exception e) {
-                        // Todo:................................
-                        return;
                     }
+
+                } else {
+                    msg = null;
                 }
-
             } else {
-                msg = null;
+                
             }
-
+            
             if (msg != null) {
-                alertMessage.showCompletedMessage(acPane, "Save", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
+                alertMessage.showCompletedMessage(borderPane, "Save", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
             } else {
                 alertMessage.showWarningMessage("Save", "Can not save data.", 4, Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
-            alertMessage.showErrorMessage(acPane, "Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage(borderPane, "Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -231,13 +273,23 @@ public class AddBookController implements Initializable {
         clearText();
     }
 
+    @FXML
+    private void closeForm() {
+        if (BookController.addNewBook != null) {
+            final Stage stage = (Stage) borderPane.getScene().getWindow();
+            stage.close();
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        moveForm();
         cmbStatus.setItems(status);
         initEvents();
         fillType();
         fillCategory();
         fillTable();
+        fillValue();
     }
 
 }

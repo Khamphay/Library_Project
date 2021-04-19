@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
+import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.DepartmentModel;
 
@@ -130,7 +131,7 @@ public class DepartmentController implements Initializable {
         imgView.setFitHeight(20);
         delete.setId(id);
         delete.setGraphic(imgView);
-        delete.setStyle("-fx-background-radius: 2em; -fx-background-color:#101D3D; -fx-text-fill:#FFF;");
+        delete.setStyle(Style.buttonStyle);
         delete.setOnAction(e -> {
             JFXButton[] buttons = { buttonYes(delete.getId()), buttonNo(), buttonCancel() };
             dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
@@ -142,8 +143,7 @@ public class DepartmentController implements Initializable {
 
     private JFXButton buttonYes(String depid) {
         JFXButton btyes = new JFXButton("ຕົກລົງ");
-        btyes.setStyle(
-                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
+        btyes.setStyle(Style.buttonDialogStyle);
         btyes.setOnAction(event -> {
             // Todo: Delete Data
             try {
@@ -166,8 +166,7 @@ public class DepartmentController implements Initializable {
 
     private JFXButton buttonNo() {
         JFXButton btno = new JFXButton("  ບໍ່  ");
-        btno.setStyle(
-                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
+        btno.setStyle(Style.buttonDialogStyle);
         btno.setOnAction(e -> {
             dialog.closeDialog();
         });
@@ -176,8 +175,7 @@ public class DepartmentController implements Initializable {
 
     private JFXButton buttonCancel() {
         JFXButton btcancel = new JFXButton("ຍົກເລີກ");
-        btcancel.setStyle(
-                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
+        btcancel.setStyle(Style.buttonDialogStyle);
         btcancel.setOnAction(e -> {
             dialog.closeDialog();
         });

@@ -6,16 +6,17 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Launch FakeApp",
+            "name": "Launch App",
             "request": "launch",
-            "mainClass": "com.mycompany.library_project.FakeApp",
+            "mainClass": "com.mycompany.library_project/com.mycompany.library_project.App",
             "projectName": "Library_Project"
         },
         {
             "type": "java",
-            "name": "Launch App",
+            "name": "Launch FakeApp",
             "request": "launch",
-            "mainClass": "com.mycompany.library_project.App",
+            // "mainClass": "com.mycompany.library_project/com.mycompany.library_project.FakeApp",
+            "mainClass": "com.mycompany.library_project.FakeApp",
             "projectName": "Library_Project"
         },
         {

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="acPaneMenu" accessibleRole="DATE_PICKER" prefHeight="571.0" prefWidth="60.0" style="-fx-background-color: #101D3D;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.MenuController2">
+<AnchorPane fx:id="acPaneMenu" accessibleRole="DATE_PICKER" prefHeight="571.0" prefWidth="60.0" style="-fx-background-color: #101D3D;" stylesheets="@Style/buttonStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.MenuController2">
    <children>
       <JFXButton id="btHome" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" layoutY="33.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
          <cursor>

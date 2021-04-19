@@ -1,15 +1,11 @@
 package com.mycompany.library_project.Model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.ParseException;
 
+import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
-
-import javafx.beans.property.*;
 
 public class EmployeeModel implements DataAccessObject {
 
@@ -18,78 +14,117 @@ public class EmployeeModel implements DataAccessObject {
     private Connection con = MyConnection.getConnect();
     private String sql = null;
 
-    private StringProperty employeeId;
-    private StringProperty firstName;
-    private StringProperty lastName;
-    private StringProperty gender;
-    private StringProperty tel;
+    private String employeeId;
+    private String firstName;
+    private String lastName;
+    private String gender;
+    private String tel;
+    private String email;
+    private String user;
+    private String password;
+    private JFXButton action;
 
-    public EmployeeModel(String employeeId, String firstName, String lastName, String gender, String tel) {
-        this.employeeId = new SimpleStringProperty(employeeId);
-        this.firstName = new SimpleStringProperty(firstName);
-        this.lastName = new SimpleStringProperty(lastName);
-        this.gender = new SimpleStringProperty(gender);
-        this.tel = new SimpleStringProperty(tel);
+    public EmployeeModel() {
+
+    }
+
+    public EmployeeModel(String employeeId, String user, String password) {
+        this.employeeId = employeeId;
+        this.user = user;
+        this.password = password;
+    }
+
+    public EmployeeModel(String employeeId, String firstName, String lastName, String gender, String tel,
+            String email) {
+        this.employeeId = employeeId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.tel = tel;
+        this.email = email;
+    }
+
+    public EmployeeModel(String employeeId, String firstName, String lastName, String gender, String tel, String email,
+            JFXButton action) {
+        this.employeeId = employeeId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.tel = tel;
+        this.email = email;
+        this.action = action;
     }
 
     public String getEmployeeId() {
-        return employeeId.get();
-    }
-
-    public StringProperty employeeIdProperty() {
         return employeeId;
     }
 
     public void setEmployeeId(String employeeId) {
-        this.employeeId.set(employeeId);
+        this.employeeId = employeeId;
     }
 
     public String getFirstName() {
-        return firstName.get();
-    }
-
-    public StringProperty firstNameProperty() {
         return firstName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName.set(firstName);
+        this.firstName = firstName;
     }
 
     public String getLastName() {
-        return lastName.get();
-    }
-
-    public StringProperty sureNameProperty() {
         return lastName;
     }
 
     public void setLastName(String lastName) {
-        this.lastName.set(lastName);
+        this.lastName = lastName;
     }
 
     public String getGender() {
-        return gender.get();
-    }
-
-    public StringProperty genderProperty() {
         return gender;
     }
 
     public void setGender(String gender) {
-        this.gender.set(gender);
+        this.gender = gender;
     }
 
     public String getTel() {
-        return tel.get();
-    }
-
-    public StringProperty telProperty() {
         return tel;
     }
 
     public void setTel(String tel) {
-        this.tel.set(tel);
+        this.tel = tel;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public JFXButton getAction() {
+        return action;
+    }
+
+    public void setAction(JFXButton action) {
+        this.action = action;
     }
 
     @Override
@@ -142,49 +177,35 @@ public class EmployeeModel implements DataAccessObject {
 
     @Override
     public int saveData() throws SQLException, ParseException {
-        try {
-            sql = "call employee_Insert(?, ?, ?, ?, ?)";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, getEmployeeId());
-            ps.setString(2, getFirstName());
-            ps.setString(3, getLastName());
-            ps.setString(4, getGender());
-            ps.setString(5, getTel());
-            return ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
+        sql = "call employee_Insert(?, ?, ?, ?, ?, ?)";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, getEmployeeId());
+        ps.setString(2, getFirstName());
+        ps.setString(3, getLastName());
+        ps.setString(4, getGender());
+        ps.setString(5, getTel());
+        ps.setString(6, getEmail());
+        return ps.executeUpdate();
     }
 
     @Override
     public int updateData() throws SQLException, ParseException {
-        try {
-            sql = "call employee_Update(?, ?, ?, ?, ?)";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, getEmployeeId());
-            ps.setString(2, getFirstName());
-            ps.setString(3, getLastName());
-            ps.setString(4, getGender());
-            ps.setString(5, getTel());
-            return ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
+        sql = "call employee_Update(?, ?, ?, ?, ?, ?)";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, getEmployeeId());
+        ps.setString(2, getFirstName());
+        ps.setString(3, getLastName());
+        ps.setString(4, getGender());
+        ps.setString(5, getTel());
+        ps.setString(6, getEmail());
+        return ps.executeUpdate();
     }
 
     @Override
     public int deleteData(String id) throws SQLException {
-        try {
-            sql = "call employee_Delete(?)";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, getEmployeeId());
-            return ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
+        sql = "call employee_Delete(?)";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, id);
+        return ps.executeUpdate();
     }
-
 }

@@ -2,20 +2,25 @@ package com.mycompany.library_project.Controller;
 
 import java.net.URL;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.*;
+import com.mycompany.library_project.App;
+import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.MemberModel;
 
 import javafx.collections.*;
+import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
+import javafx.stage.*;
 
 public class MemberController implements Initializable {
 
@@ -24,12 +29,20 @@ public class MemberController implements Initializable {
     private MemberModel memberModel = new MemberModel();
     private ResultSet rs = null;
     private DialogMessage dialog = null;
+    private ArrayList<byte[]> byimg;
+    public static Stage addMemberStage = null;
 
     @FXML
     private BorderPane boderPane;
 
     @FXML
     private StackPane stackPane;
+
+    @FXML
+    private JFXButton btAddUser;
+
+    @FXML
+    private MenuItem menuEdit, menuDelete;
 
     @FXML
     private TableView<MemberModel> tableMember;
@@ -47,11 +60,13 @@ public class MemberController implements Initializable {
         try {
             data = FXCollections.observableArrayList();
             rs = memberModel.findAll();
+            byimg = new ArrayList<>();
             while (rs.next()) {
                 data.add(new MemberModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
                         rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),
                         Date.valueOf(rs.getString(10)), rs.getString(9), Date.valueOf(rs.getString(11)),
                         Date.valueOf(rs.getString(12)), Date.valueOf(rs.getString(13)), btDelete(rs.getString(1))));
+                byimg.add(rs.getBytes(14));
             }
             tableMember.setItems(data);
         } catch (Exception e) {
@@ -74,10 +89,84 @@ public class MemberController implements Initializable {
         date_register.setCellValueFactory(new PropertyValueFactory<>("dateRegister"));
         date_exist.setCellValueFactory(new PropertyValueFactory<>("dateRegisterEnd"));
         colAction.setCellValueFactory(new PropertyValueFactory<>("action"));
+
+        tableMember.setOnMouseClicked(mevt -> {
+            if (mevt.getClickCount() > 0 && tableMember.getSelectionModel().getSelectedItem() != null) {
+                memberModel = new MemberModel();
+                memberModel = tableMember.getSelectionModel().getSelectedItem();
+            }
+        });
+    }
+
+    private void initEvents() {
+        btAddUser.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    final Parent root = FXMLLoader.load(App.class.getResource("frmRegister.fxml"));
+                    final Scene scene = new Scene(root);
+                    addMemberStage = new Stage();
+                    addMemberStage.setScene(scene);
+                    addMemberStage.initStyle(StageStyle.UNDECORATED);
+                    // addMemberStage.setAlwaysOnTop(true);
+                    addMemberStage.show();
+
+                } catch (Exception e) {
+                    alertMessage.showErrorMessage(stackPane, "Open New Form", "Error: " + e.getMessage(), 4,
+                            Pos.BOTTOM_RIGHT);
+                }
+            }
+        });
+
+        menuEdit.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                if (tableMember.getSelectionModel().getSelectedItem() != null) {
+
+                    RegisterController.memberModel = tableMember.getSelectionModel().getSelectedItem();
+                    RegisterController.memberModel
+                            .setByimg(byimg.get(tableMember.getSelectionModel().getSelectedIndex()));
+                    try {
+                        final Parent root = FXMLLoader.load(App.class.getResource("frmRegister.fxml"));
+                        final Scene scene = new Scene(root);
+                        addMemberStage = new Stage();
+                        addMemberStage.setScene(scene);
+                        addMemberStage.initStyle(StageStyle.TRANSPARENT);
+                        // addMemberStage.setAlwaysOnTop(true);
+                        addMemberStage.show();
+                    } catch (Exception e) {
+                        alertMessage.showErrorMessage(stackPane, "Open New Form", "Error: " + e.getMessage(), 4,
+                                Pos.BOTTOM_RIGHT);
+                    }
+                } else {
+                    alertMessage.showWarningMessage(stackPane, "Edit", "Please selecte the data and try again", 4,
+                            Pos.BOTTOM_RIGHT);
+                }
+            }
+        });
+
+        menuDelete.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (tableMember.getSelectionModel().getSelectedItem() != null) {
+                    JFXButton[] buttons = { buttonYes(tableMember.getSelectionModel().getSelectedItem().getMemberId()),
+                            buttonNo(), buttonCancel() };
+                    dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
+                            JFXDialog.DialogTransition.CENTER, buttons, false);
+                    dialog.showDialog();
+                } else {
+                    alertMessage.showWarningMessage(stackPane, "Delete", "Please selecte the data and try again", 4,
+                            Pos.BOTTOM_RIGHT);
+                }
+            }
+        });
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) { 
+        initEvents();
         initTable();
         showData();
     }
@@ -91,7 +180,7 @@ public class MemberController implements Initializable {
         imgView.setFitHeight(20);
         delete.setId(id);
         delete.setGraphic(imgView);
-        delete.setStyle("-fx-background-radius: 2em; -fx-background-color:#101D3D; -fx-text-fill:#FFF;");
+        delete.setStyle(Style.buttonStyle);
         delete.setOnAction(e -> {
             JFXButton[] buttons = { buttonYes(delete.getId()), buttonNo(), buttonCancel() };
             dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
@@ -103,8 +192,7 @@ public class MemberController implements Initializable {
 
     private JFXButton buttonYes(String memberid) {
         JFXButton btyes = new JFXButton("ຕົກລົງ");
-        btyes.setStyle(
-                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
+        btyes.setStyle(Style.buttonDialogStyle);
         btyes.setOnAction(e -> {
             // Todo: Delete Data
             try {
@@ -122,8 +210,7 @@ public class MemberController implements Initializable {
 
     private JFXButton buttonNo() {
         JFXButton btno = new JFXButton("  ບໍ່  ");
-        btno.setStyle(
-                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
+        btno.setStyle(Style.buttonDialogStyle);
         btno.setOnAction(e -> {
             dialog.closeDialog();
         });
@@ -132,12 +219,10 @@ public class MemberController implements Initializable {
 
     private JFXButton buttonCancel() {
         JFXButton btcancel = new JFXButton("ຍົກເລີກ");
-        btcancel.setStyle(
-                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
+        btcancel.setStyle(Style.buttonDialogStyle);
         btcancel.setOnAction(e -> {
             dialog.closeDialog();
         });
         return btcancel;
     }
-
 }

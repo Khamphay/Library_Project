@@ -23,7 +23,7 @@
                <children>
                   <AnchorPane fx:id="anchorMenu" maxWidth="-Infinity" prefHeight="519.0" prefWidth="1084.0">
                      <children>
-                        <JFXButton alignment="TOP_LEFT" layoutX="3.0" layoutY="43.0" onAction="#btBookType_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປະເພດປຶ້ມ" textFill="#ffeded">
+                        <JFXButton alignment="TOP_LEFT" buttonType="RAISED" layoutX="3.0" layoutY="43.0" onAction="#btBookType_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປະເພດປຶ້ມ" textFill="#ffeded">
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -33,7 +33,7 @@
                            </graphic>
                         </JFXButton>
                         <Text fx:id="txtType" fill="WHITE" layoutX="65.0" layoutY="106.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="2 ປະເພດ" />
-                        <JFXButton alignment="TOP_LEFT" layoutX="432.0" layoutY="41.0" onAction="#btBooks_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປຶ້ມ" textFill="#ffeded">
+                        <JFXButton alignment="TOP_LEFT" buttonType="RAISED" layoutX="432.0" layoutY="41.0" onAction="#btBooks_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປຶ້ມ" textFill="#ffeded">
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -42,7 +42,7 @@
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                        <JFXButton alignment="TOP_LEFT" layoutX="217.0" layoutY="40.0" onAction="#btBookCategory_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນໝວດປຶ້ມ" textFill="#ffeded">
+                        <JFXButton alignment="TOP_LEFT" buttonType="RAISED" layoutX="217.0" layoutY="40.0" onAction="#btBookCategory_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນໝວດປຶ້ມ" textFill="#ffeded">
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -52,7 +52,7 @@
                            </graphic>
                         </JFXButton>
                         <Text fx:id="txtBook" fill="WHITE" layoutX="488.0" layoutY="104.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນ 4850 ຫົວ" />
-                        <JFXButton alignment="TOP_LEFT" layoutX="647.0" layoutY="43.0" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປຶ້ມເສຍ" textFill="#ffeded">
+                        <JFXButton alignment="TOP_LEFT" buttonType="RAISED" layoutX="647.0" layoutY="43.0" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປຶ້ມເສຍ" textFill="#ffeded">
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -62,7 +62,7 @@
                            </graphic>
                         </JFXButton>
                         <Text fx:id="txtBookLost" fill="WHITE" layoutX="706.0" layoutY="105.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນ 50 ຫົວ" />
-                        <JFXButton alignment="TOP_LEFT" layoutX="860.0" layoutY="43.0" onAction="#btBookTableLog_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນລ໋ອກຕູ້" textFill="#ffeded">
+                        <JFXButton alignment="TOP_LEFT" buttonType="RAISED" layoutX="860.0" layoutY="43.0" onAction="#btBookTableLog_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນລ໋ອກຕູ້" textFill="#ffeded">
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

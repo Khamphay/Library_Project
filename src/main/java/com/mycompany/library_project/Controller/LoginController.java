@@ -1,11 +1,12 @@
 package com.mycompany.library_project.Controller;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.*;
 import com.mycompany.library_project.App;
+import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import org.controlsfx.validation.*;
 
+import io.github.gleidson28.GNAvatarView;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.*;
@@ -23,6 +24,7 @@ public class LoginController implements Initializable {
     public static Stage loginSatge = null;// Seted object when open form 'Login' in class 'DesktopController.java'
     private ValidationSupport validRules;
     private DialogMessage dialog = null;
+    GNAvatarView im = new GNAvatarView();
 
     @FXML
     private AnchorPane acPaneLogin;
@@ -58,7 +60,6 @@ public class LoginController implements Initializable {
             loginSatge.setOpacity(1.0f);
         });
     }
-
 
     private void textRules() {
         validRules = new ValidationSupport();
@@ -127,8 +128,7 @@ public class LoginController implements Initializable {
 
     private JFXButton buttonYes() {
         JFXButton btyes = new JFXButton("ຕົກລົງ");
-        btyes.setStyle(
-                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
+        btyes.setStyle(Style.buttonDialogStyle);
         btyes.setOnAction(e -> {
             dialog.closeDialog();
             loginSatge.close();
@@ -138,8 +138,7 @@ public class LoginController implements Initializable {
 
     private JFXButton buttonNo() {
         JFXButton btno = new JFXButton("  ບໍ່  ");
-        btno.setStyle(
-                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
+        btno.setStyle(Style.buttonDialogStyle);
         btno.setOnAction(e -> {
             dialog.closeDialog();
         });

@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
+import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.TableLogModel;
 import org.controlsfx.validation.ValidationSupport;
@@ -196,6 +197,7 @@ public class TableLogController implements Initializable {
             imgView.setFitWidth(20);
             actionRoot.setGraphic(imgView);
             actionRoot.setId(id);
+            actionRoot.setStyle(Style.buttonStyle);
             actionRoot.setOnAction(e -> {
                 JFXButton[] buttons = { buttonYesTable(actionRoot.getId()), buttonNo(), buttonCancel() };
                 dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
@@ -219,6 +221,7 @@ public class TableLogController implements Initializable {
             imgView.setFitWidth(20);
             actionSubRoot.setId(id);
             actionSubRoot.setGraphic(imgView);
+            actionSubRoot.setStyle(Style.buttonStyle);
             actionSubRoot.setOnAction(e -> {
 
                 JFXButton[] buttons = { buttonYesTableLog(actionSubRoot.getId()), buttonNo(), buttonCancel() };
@@ -235,8 +238,7 @@ public class TableLogController implements Initializable {
 
     private JFXButton buttonYesTable(String tableid) {
         JFXButton btyes = new JFXButton("ຕົກລົງ");
-        btyes.setStyle(
-                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
+        btyes.setStyle(Style.buttonDialogStyle);
         btyes.setOnAction(e -> {
             // Todo: Delete Data
             tableLogModel = new TableLogModel();
@@ -258,8 +260,7 @@ public class TableLogController implements Initializable {
 
     private JFXButton buttonYesTableLog(String tablelogid) {
         JFXButton btyes = new JFXButton("ຕົກລົງ");
-        btyes.setStyle(
-                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
+        btyes.setStyle(Style.buttonDialogStyle);
         btyes.setOnAction(e -> {
             // Todo: Delete Data
             tableLogModel = new TableLogModel();
@@ -288,8 +289,7 @@ public class TableLogController implements Initializable {
 
     private JFXButton buttonNo() {
         JFXButton btno = new JFXButton("  ບໍ່  ");
-        btno.setStyle(
-                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
+        btno.setStyle(Style.buttonDialogStyle);
         btno.setOnAction(e -> {
             dialog.closeDialog();
         });
@@ -298,8 +298,7 @@ public class TableLogController implements Initializable {
 
     private JFXButton buttonCancel() {
         JFXButton btcancel = new JFXButton("ຍົກເລີກ");
-        btcancel.setStyle(
-                "-fx-border-radius: 0.5em; -fx-border-color: derive(#060621, 95%); -fx-background-radius: 0.5em;");
+        btcancel.setStyle(Style.buttonDialogStyle);
         btcancel.setOnAction(e -> {
             dialog.closeDialog();
         });

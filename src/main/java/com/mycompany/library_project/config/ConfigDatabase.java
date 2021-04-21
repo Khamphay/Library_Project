@@ -31,7 +31,6 @@ public class ConfigDatabase {
             server.put("userName", userName);
             server.put("password", password);
             Jsoner.serialize(server, writer);
-
             writer.close();
             return true;
         } catch (Exception e) {

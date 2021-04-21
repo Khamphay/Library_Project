@@ -1,6 +1,5 @@
 package com.mycompany.library_project.Controller;
 
-import javafx.application.Platform;
 import javafx.collections.*;
 import javafx.event.*;
 import javafx.fxml.*;
@@ -19,10 +18,8 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
 import com.mycompany.library_project.*;
-import com.mycompany.library_project.Controller.List.book_item;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.BookDetailModel;
-import com.mycompany.library_project.ModelShow.MyArrayList;
 
 public class BookController implements Initializable {
 
@@ -101,29 +98,30 @@ public class BookController implements Initializable {
         });
     }
 
-    private void showBooks() {
-        vbListBooks.getChildren().clear();
-        Platform.runLater(new Runnable() {
-            int i = 0;
+    // private void showBooks() {
+    // vbListBooks.getChildren().clear();
+    // Platform.runLater(new Runnable() {
+    // int i = 0;
 
-            @Override
-            public void run() {
-                try {
-                    while (i < node.length) {
-                        MyArrayList array_listnew = new MyArrayList();
-                        book_item.book = array_listnew.bookList(values);
-                        Parent list = FXMLLoader.load(App.class.getResource("bookList.fxml"));
-                        node[i] = list;
-                        vbListBooks.getChildren().addAll(node[i]);
-                        i++;
-                    }
-                } catch (Exception e) {
-                    alertMessage.showErrorMessage(borderPane, "Load data", "Error: " + e.getMessage(), 4,
-                            Pos.BOTTOM_RIGHT);
-                }
-            }
-        });
-    }
+    // @Override
+    // public void run() {
+    // try {
+    // while (i < node.length) {
+    // MyArrayList array_listnew = new MyArrayList();
+    // book_item.book = array_listnew.bookList(values);
+    // Parent list = FXMLLoader.load(App.class.getResource("bookList.fxml"));
+    // node[i] = list;
+    // vbListBooks.getChildren().addAll(node[i]);
+    // i++;
+    // }
+    // } catch (Exception e) {
+    // alertMessage.showErrorMessage(borderPane, "Load data", "Error: " +
+    // e.getMessage(), 4,
+    // Pos.BOTTOM_RIGHT);
+    // }
+    // }
+    // });
+    // }
 
     private void showAddBook() {
         try {

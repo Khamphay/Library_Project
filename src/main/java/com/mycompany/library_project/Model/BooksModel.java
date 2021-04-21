@@ -1,9 +1,6 @@
 package com.mycompany.library_project.Model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.ParseException;
 
 import com.mycompany.library_project.MyConnection;
@@ -12,7 +9,6 @@ import com.mycompany.library_project.MyConnection;
 public class BooksModel {
 
     private PreparedStatement ps = null;
-    private ResultSet rs = null;
     private Connection con = MyConnection.getConnect();
     private String sql = null;
 

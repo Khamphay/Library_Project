@@ -11,7 +11,7 @@
 .button-color{
     -fx-font-family: 'BoonBaan';
     /* -fx-font-family: 'Noto Sans Lao'; */
-    -fx-font-size: 14;
+    /* -fx-font-size: 14; */
     -fx-text-fill:#101D3D;
 }
 

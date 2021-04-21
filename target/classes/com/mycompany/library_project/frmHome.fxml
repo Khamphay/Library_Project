@@ -3,22 +3,24 @@
 <?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXHamburger?>
-<?import io.github.gleidson28.GNAvatarView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="771.0" prefWidth="1400.0" style="-fx-background-color: transparent;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.HomeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="783.0" prefWidth="1392.0" style="-fx-background-color: transparent;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.HomeController">
    <children>
       <BorderPane fx:id="bpDisplay" layoutX="260.0" layoutY="45.0" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f3f3f3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -32,12 +34,19 @@
                   </ImageView>
                   <Label contentDisplay="CENTER" layoutX="132.0" layoutY="16.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" text="Faculty Of Natural Scince Library Management System" textAlignment="CENTER" textFill="WHITE" />
                   <JFXHamburger fx:id="humberger" layoutX="6.0" layoutY="24.0" prefHeight="33.0" prefWidth="45.0" />
-                  <GNAvatarView layoutX="1123.0" layoutY="14.0" prefHeight="40.0" prefWidth="40.0" type="CIRCLE" viewOrder="6.0" AnchorPane.rightAnchor="237.0">
-                     <image>
-                        <Image url="@Icon/male_user_100px.png" />
-                     </image>
-                  </GNAvatarView>
-                  <Text fill="WHITE" layoutX="1179.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-16" text="ທ.ຄຳໄຟ ເສຍລິມົວ" wrappingWidth="206.21666717529297" AnchorPane.rightAnchor="14.783332824707031" />
+                  <Text fill="WHITE" layoutX="1030.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-16" text="ທ.ຄຳໄຟ ເສຍລິມົວ" wrappingWidth="206.21666717529297" AnchorPane.rightAnchor="155.78333282470703" />
+                  <JFXButton id="#btLogOut" alignment="CENTER" cache="true" cacheHint="QUALITY" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="1337.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="31.0" onAction="#LogOut" pickOnBounds="false" prefHeight="31.0" prefWidth="31.0" style="-fx-background-radius: 15px 15px 15px 15px; -fx-background-color: #fff;" styleClass="button-color" stylesheets="@Style/buttonFont.css" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="19.0">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icon/shutdown_100pxColor.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip anchorLocation="CONTENT_TOP_RIGHT" text="ອອກຈາກລະບົບ" />
+                     </tooltip>
+                  </JFXButton>
                </children>
             </AnchorPane>
          </top>
@@ -46,11 +55,11 @@
                <content>
                   <JFXBadge>
                      <children>
-                        <AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="701.0" prefWidth="1094.0">
+                        <AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="701.0" prefWidth="1388.0">
                            <children>
-                              <Line endX="955.0" layoutX="117.0" layoutY="167.0" startX="-100.0" stroke="#1d0054" AnchorPane.leftAnchor="16.5" AnchorPane.rightAnchor="21.5" />
+                              <Line endX="1255.0" layoutX="115.0" layoutY="205.0" startX="-100.0" stroke="#1d0054" AnchorPane.leftAnchor="14.5" AnchorPane.rightAnchor="26.5" />
                               <Accordion layoutX="112.0" layoutY="318.0" />
-                              <JFXButton alignment="CENTER" contentDisplay="TOP" layoutX="338.0" layoutY="181.0" onAction="#buttonSendBook_Action" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="ສົ່ງປຶ້ມ" textFill="WHITE" viewOrder="2.0" AnchorPane.topAnchor="181.0">
+                              <JFXButton alignment="CENTER" contentDisplay="TOP" layoutX="563.0" layoutY="45.0" onAction="#buttonSendBook_Action" prefHeight="93.0" prefWidth="110.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="ສົ່ງປຶ້ມ" textFill="WHITE" viewOrder="2.0" AnchorPane.topAnchor="45.0">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -62,7 +71,7 @@
                                     </ImageView>
                                  </graphic>
                               </JFXButton>
-                              <JFXButton alignment="CENTER" contentDisplay="TOP" layoutX="496.0" layoutY="181.0" onAction="#buttonRegister_Action" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="ລົງທະບຽນ" textFill="WHITE" viewOrder="2.0" AnchorPane.topAnchor="181.0">
+                              <JFXButton alignment="CENTER" contentDisplay="TOP" layoutX="721.0" layoutY="45.0" onAction="#buttonRegister_Action" prefHeight="93.0" prefWidth="110.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="ລົງທະບຽນ" textFill="WHITE" viewOrder="2.0" AnchorPane.topAnchor="45.0">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -74,7 +83,7 @@
                                     </ImageView>
                                  </graphic>
                               </JFXButton>
-                              <JFXButton alignment="CENTER" contentDisplay="TOP" layoutX="646.0" layoutY="181.0" onAction="#buttonNotify_Action" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="Navigation" textFill="WHITE" viewOrder="2.0">
+                              <JFXButton alignment="CENTER" contentDisplay="TOP" layoutX="871.0" layoutY="45.0" onAction="#buttonNotify_Action" prefHeight="93.0" prefWidth="110.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="Navigation" textFill="WHITE" viewOrder="2.0">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -87,7 +96,7 @@
                                  </graphic>
                               </JFXButton>
                               <Label layoutX="887.0" layoutY="14.0" prefHeight="61.0" prefWidth="43.0" AnchorPane.leftAnchor="887.0" />
-                              <JFXButton alignment="CENTER" contentDisplay="TOP" layoutX="183.0" layoutY="181.0" onAction="#buttonRentBook_Action" prefHeight="80.0" prefWidth="110.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="ຢືມປຶ້ມ" textFill="WHITE" viewOrder="2.0">
+                              <JFXButton alignment="CENTER" contentDisplay="TOP" layoutX="408.0" layoutY="45.0" onAction="#buttonRentBook_Action" prefHeight="93.0" prefWidth="110.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 8px 8px;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="ຢືມປຶ້ມ" textFill="WHITE" viewOrder="2.0">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
@@ -99,53 +108,71 @@
                                     </ImageView>
                                  </graphic>
                               </JFXButton>
-                              <AnchorPane layoutX="16.0" layoutY="10.0" prefHeight="144.0" prefWidth="893.0" style="-fx-background-color: #00244A; -fx-background-radius: 0px 20px 0px  20px;" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+                              <Text fill="WHITE" layoutX="945.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="+10" />
+                              <AnchorPane layoutX="14.0" layoutY="247.0" prefHeight="449.0" prefWidth="844.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 5px 5px 5px 5px;" AnchorPane.bottomAnchor="17.0" AnchorPane.topAnchor="247.0">
+                                 <effect>
+                                    <DropShadow height="18.03" offsetX="1.0" offsetY="1.0" radius="8.515" width="18.03">
+                                       <color>
+                                          <Color green="0.1411764770746231" blue="0.29019609093666077" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
                                  <children>
-                                    <Label contentDisplay="CENTER" layoutX="149.0" layoutY="108.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" text="ລະບົບຈັດການ ຫໍສະໝຸດ ຄະນະວິທະຍາສາດທຳມະຊາດ" textAlignment="CENTER" textFill="WHITE" />
-                                    <ImageView fitHeight="147.0" fitWidth="149.0" layoutY="-3.0">
-                                       <image>
-                                          <Image url="@Icon/Logo_FNS.png" />
-                                       </image>
-                                    </ImageView>
-                                    <Label contentDisplay="CENTER" layoutX="149.0" layoutY="84.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" text="Faculty Of Natural Scince Library Management System" textAlignment="CENTER" textFill="WHITE" />
-                                    <JFXButton id="#btLogOut" alignment="CENTER" cache="true" cacheHint="QUALITY" graphicTextGap="10.0" layoutX="916.0" layoutY="12.0" onAction="#LogOut" prefHeight="31.0" prefWidth="131.0" style="-fx-background-radius: 15px 15px 15px 15px; -fx-background-color: #fff;" styleClass="button-color" stylesheets="@Style/buttonFont.css" text="ອອກຈາກລະບົບ" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="12.0">
-                                       <graphic>
-                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@Icon/shutdown_100pxColor.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <padding>
-                                          <Insets left="-2.0" />
-                                       </padding>
-                                    </JFXButton>
+                                    <HBox alignment="CENTER_LEFT" layoutX="4.0" layoutY="5.0" prefHeight="32.0" prefWidth="834.0" style="-fx-background-color: #00244A;" AnchorPane.leftAnchor="4.0">
+                                       <cursor>
+                                          <Cursor fx:constant="DEFAULT" />
+                                       </cursor>
+                                       <children>
+                                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊື່ປຶ້ມ" wrappingWidth="193.46667098999023">
+                                             <HBox.margin>
+                                                <Insets left="4.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ໝວດປຶ້ມ" textAlignment="CENTER" wrappingWidth="161.46667098999023" />
+                                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ປະເພດປື້ມ" textAlignment="CENTER" wrappingWidth="162.46667098999023" />
+                                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນໜ້າ" textAlignment="CENTER" wrappingWidth="97.46667098999023" />
+                                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນຫົວ" textAlignment="CENTER" wrappingWidth="97.46667098999023" />
+                                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນຫົວ" textAlignment="CENTER" wrappingWidth="97.46667098999023" />
+                                       </children>
+                                    </HBox>
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="-335.0" layoutY="44.0" prefHeight="338.0" prefWidth="834.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.topAnchor="40.0">
+                                       <content>
+                                          <FlowPane fx:id="pnItems" prefHeight="200.0" prefWidth="200.0" />
+                                       </content>
+                                    </ScrollPane>
                                  </children>
                               </AnchorPane>
-                              <HBox alignment="CENTER_LEFT" layoutX="15.0" layoutY="302.0" prefHeight="32.0" prefWidth="1058.0" style="-fx-background-color: #00244A;">
+                              <AnchorPane layoutX="877.0" layoutY="248.0" prefHeight="448.0" prefWidth="499.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 5px 5px 5px 5px;" AnchorPane.bottomAnchor="17.0" AnchorPane.topAnchor="248.0">
+                                 <effect>
+                                    <DropShadow height="18.03" offsetX="1.0" offsetY="1.0" radius="8.515" width="18.03">
+                                       <color>
+                                          <Color green="0.1411764770746231" blue="0.29019609093666077" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
                                  <children>
-                                    <Label prefHeight="32.0" prefWidth="95.0" styleClass="label-size-14" text="ລະຫັດປຶ້ມ" textFill="WHITE">
-                                       <padding>
-                                          <Insets left="10.0" />
-                                       </padding>
-                                    </Label>
-                                    <Label prefHeight="32.0" prefWidth="250.0" styleClass="label-size-14" text="ຊື່ປຶ້ມ" textFill="WHITE" />
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="201.0" styleClass="label-size-14" text="ໝວດປຶ້ມ" textFill="WHITE" />
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="184.0" styleClass="label-size-14" text="ປະເພດປື້ມ" textFill="WHITE" />
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="81.0" styleClass="label-size-14" text="ຈຳນວນໜ້າ" textFill="WHITE" />
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="32.0" prefWidth="78.0" styleClass="label-size-14" text="ຈຳນວນຫົວ" textFill="WHITE" />
-                                    <Label prefHeight="32.0" prefWidth="170.0" styleClass="label-size-14" text="ພາສາ" textFill="WHITE" />
+                                    <HBox alignment="CENTER_LEFT" layoutX="4.0" layoutY="5.0" prefHeight="32.0" prefWidth="488.0" style="-fx-background-color: #00244A;">
+                                       <cursor>
+                                          <Cursor fx:constant="DEFAULT" />
+                                       </cursor>
+                                       <children>
+                                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລະຫັດປຶ້ມ" wrappingWidth="89.46667098999023">
+                                             <HBox.margin>
+                                                <Insets left="4.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊື່ປຶ້ມ" wrappingWidth="140.46667098999023" />
+                                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ໝວດປຶ້ມ" textAlignment="CENTER" wrappingWidth="118.46667098999023" />
+                                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນຫົວ" textAlignment="CENTER" wrappingWidth="97.46667098999023" />
+                                       </children>
+                                    </HBox>
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="5.0" layoutY="41.0" prefHeight="342.0" prefWidth="488.0" AnchorPane.bottomAnchor="4.0" AnchorPane.topAnchor="41.0">
+                                       <content>
+                                          <FlowPane fx:id="pnItems1" prefHeight="364.0" prefWidth="486.0" style="-fx-background-color: transparent;" />
+                                       </content>
+                                    </ScrollPane>
                                  </children>
-                                 <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
-                                 </cursor>
-                              </HBox>
-                              <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="14.0" layoutY="334.0" prefHeight="349.0" prefWidth="1059.0" AnchorPane.bottomAnchor="18.0" AnchorPane.topAnchor="334.0">
-                                 <content>
-                                    <FlowPane fx:id="pnItems" prefHeight="200.0" prefWidth="200.0" />
-                                 </content>
-                              </ScrollPane>
-                              <Text fill="WHITE" layoutX="727.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="+10" />
+                              </AnchorPane>
                            </children>
                         </AnchorPane>
                      </children>

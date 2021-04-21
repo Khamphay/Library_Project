@@ -19,14 +19,13 @@ import com.jfoenix.controls.JFXDialog;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.TableLogModel;
-import org.controlsfx.validation.ValidationSupport;
 
 public class TableLogController implements Initializable {
 
     private TableLogModel tableLogModel = null;
     private ResultSet rs = null;
     private TreeItem<TableLogModel> subItem, root, node;
-    private ValidationSupport validRules;
+    // private ValidationSupport validRules;
     private ObservableList<TreeItem<TableLogModel>> data = FXCollections.observableArrayList();
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = null;

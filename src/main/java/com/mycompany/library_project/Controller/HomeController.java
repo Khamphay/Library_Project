@@ -27,7 +27,7 @@ public class HomeController implements Initializable {
     public static String[] summaryValue = new String[10];
 
     private boolean max_min = false;
-    private double x, y;
+    // private double x, y;
     private Parent subroot = null;
     private Rectangle2D bounds = null;
     private HamburgerSlideCloseTransition hamburgerTransition = null;
@@ -69,25 +69,25 @@ public class HomeController implements Initializable {
     private JFXHamburger humberger;
 
     // TODO: Custom move form
-    private void moveWinForm() {
-        acHomePaneToolbar.setOnMousePressed(mouseEvent -> {
-            x = mouseEvent.getSceneX();
-            y = mouseEvent.getSceneY();
-        });
-        // TODO: Set for move form
-        acHomePaneToolbar.setOnMouseDragged(mouseEvent -> {
-            homeStage.setX(mouseEvent.getScreenX() - x);
-            homeStage.setY(mouseEvent.getScreenY() - y);
-            homeStage.setOpacity(0.4f);
-        });
+    // private void moveWinForm() {
+    // acHomePaneToolbar.setOnMousePressed(mouseEvent -> {
+    // x = mouseEvent.getSceneX();
+    // y = mouseEvent.getSceneY();
+    // });
+    // // TODO: Set for move form
+    // acHomePaneToolbar.setOnMouseDragged(mouseEvent -> {
+    // homeStage.setX(mouseEvent.getScreenX() - x);
+    // homeStage.setY(mouseEvent.getScreenY() - y);
+    // homeStage.setOpacity(0.4f);
+    // });
 
-        acHomePaneToolbar.setOnDragDone(dragEvent -> {
-            homeStage.setOpacity(1.0f);
-        });
-        acHomePaneToolbar.setOnMouseReleased(mouseEvent -> {
-            homeStage.setOpacity(1.0f);
-        });
-    }
+    // acHomePaneToolbar.setOnDragDone(dragEvent -> {
+    // homeStage.setOpacity(1.0f);
+    // });
+    // acHomePaneToolbar.setOnMouseReleased(mouseEvent -> {
+    // homeStage.setOpacity(1.0f);
+    // });
+    // }
 
     private void sliderMenuHamburger() {
         hamburgerTransition = new HamburgerSlideCloseTransition(humberger);

@@ -6,7 +6,6 @@ import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import org.controlsfx.validation.*;
 
-import io.github.gleidson28.GNAvatarView;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.*;
@@ -24,7 +23,6 @@ public class LoginController implements Initializable {
     public static Stage loginSatge = null;// Seted object when open form 'Login' in class 'DesktopController.java'
     private ValidationSupport validRules;
     private DialogMessage dialog = null;
-    GNAvatarView im = new GNAvatarView();
 
     @FXML
     private AnchorPane acPaneLogin;

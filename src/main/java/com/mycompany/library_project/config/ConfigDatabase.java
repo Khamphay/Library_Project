@@ -1,16 +1,12 @@
 package com.mycompany.library_project.config;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 
 import com.github.cliftonlabs.json_simple.*;
 
 public class ConfigDatabase {
-    private String fileConfig = "Server_infor.json";
-    private String path = "\\config";
+    private String fileConfig = "/Server_infor.json";
+    private String path = new File("").getAbsolutePath().concat("/src/main/java/com/mycompany/library_project/config/");
 
     public ConfigDatabase() {
     }
@@ -20,17 +16,19 @@ public class ConfigDatabase {
         return jsonFile.exists();
     }
 
-    public boolean createFileConfig(String serverName, String userName, String password) {
+    public boolean createFileConfig(String host, String port, String userName, String password) {
         try {
             FileWriter fileWriter = new FileWriter(path + fileConfig);
             BufferedWriter writer = new BufferedWriter(fileWriter);
 
             JsonObject server = new JsonObject();
-            server.put("serverName", serverName);
+            server.put("host", host);
+            server.put("port", port);
             server.put("userName", userName);
             server.put("password", password);
             Jsoner.serialize(server, writer);
-
+            
+            writer.close();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,13 +38,16 @@ public class ConfigDatabase {
 
     public String[] getServerInfor() {
         try {
-            String server[] = new String[3];
+            String server[] = new String[4];
             FileReader fileReader = new FileReader(path + fileConfig);
             BufferedReader reader = new BufferedReader(fileReader);
             JsonObject parser = (JsonObject) Jsoner.deserialize(reader);
-            server[0] = (String) parser.get("serverName");
-            server[1] = (String) parser.get("userName");
-            server[2] = (String) parser.get("password");
+            server[0] = (String) parser.get("host");
+            server[1] = (String) parser.get("port");
+            server[2] = (String) parser.get("userName");
+            server[3] = (String) parser.get("password");
+
+            reader.close();
             return server;
         } catch (Exception e) {
             e.printStackTrace();

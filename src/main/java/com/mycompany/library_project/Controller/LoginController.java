@@ -1,20 +1,25 @@
 package com.mycompany.library_project.Controller;
 
 import com.jfoenix.controls.*;
-import com.mycompany.library_project.App;
-import com.mycompany.library_project.Style;
+import com.mycompany.library_project.*;
 import com.mycompany.library_project.ControllerDAOModel.*;
+import com.mycompany.library_project.config.ConfigDatabase;
+
 import org.controlsfx.validation.*;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
+import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -23,7 +28,10 @@ public class LoginController implements Initializable {
     public static Stage loginSatge = null;// Seted object when open form 'Login' in class 'DesktopController.java'
     private ValidationSupport validRules;
     private DialogMessage dialog = null;
-
+    private Connection con = null;
+    private ConfigDatabase server = null;
+    private AlertMessage alertMessage = new AlertMessage();
+    
     @FXML
     private AnchorPane acPaneLogin;
     @FXML
@@ -118,10 +126,35 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         opacityFromMove();
         // MyProgress();
         textRules();
 
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                server = new ConfigDatabase();
+                if (server.chackFileConfig() == true) {
+                    ConfigServerController.chack = true;
+                    String[] infor = server.getServerInfor();
+                    if (infor != null) {
+                        MyConnection.server = infor[0] + ":" + infor[1];
+                        MyConnection.userName = infor[2];
+                        MyConnection.password = infor[3];
+                        con = MyConnection.getConnect();
+                        if (con == null) {
+                            openConfigForm();
+                        }
+                    } else {
+                        openConfigForm();
+                    }
+                } else {
+                    openConfigForm();
+                }
+            }
+        });
     }
 
     private JFXButton buttonYes() {
@@ -142,4 +175,19 @@ public class LoginController implements Initializable {
         });
         return btno;
     }
+
+    private void openConfigForm() {
+        try {
+            final Parent root = FXMLLoader.load(App.class.getResource("frmConfig.fxml"));
+            final Scene scene = new Scene(root);
+            scene.setFill(Color.TRANSPARENT);
+            ConfigServerController.configStage = new Stage();
+            ConfigServerController.configStage.setScene(scene);
+            ConfigServerController.configStage.initStyle(StageStyle.TRANSPARENT);
+            ConfigServerController.configStage.show();
+        } catch (Exception e) {
+            alertMessage.showErrorMessage("Open Config", "Error: " + e.getMessage(), 4, Pos.TOP_CENTER);
+        }
+    }
+
 }

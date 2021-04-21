@@ -56,6 +56,11 @@
             <version>4.2</version>
         </dependency>
         <dependency>
+            <groupId>io.github.Gleidson28</groupId>
+            <artifactId>GNAvatarView</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+        <dependency>
             <groupId>com.github.cliftonlabs</groupId>
             <artifactId>json-simple</artifactId>
             <version>3.1.1</version>

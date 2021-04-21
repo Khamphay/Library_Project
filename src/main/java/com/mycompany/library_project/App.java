@@ -11,7 +11,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.mycompany.library_project.Controller.LoginController;
-import com.mycompany.library_project.config.ConfigDatabase;
 
 
 //Todo:
@@ -35,15 +34,6 @@ public class App extends Application implements Initializable {
 
         LoginController.loginSatge = primaryStage;
         primaryStage.show();
-
-        ConfigDatabase server = new ConfigDatabase();
-
-        if (server.chackFileConfig()) {
-            System.out.println("Has file server configuration");
-        } else {
-            System.out.println("Not found file server configuration");
-        }
-
     }
 
     public static void main(String[] args) {

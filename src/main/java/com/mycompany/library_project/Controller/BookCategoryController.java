@@ -85,12 +85,19 @@ public class BookCategoryController implements Initializable {
     @FXML
     private void Save(ActionEvent event) {
         try {
-            category = new CategoryModel(txtcatgId.getText(), txtcatgName.getText());
-            if (category.saveData() > 0) {
-                showData();
-                ClearData();
-                alertMessage.showCompletedMessage(stakePane, "Save", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
+            if (txtcatgId.getText().equals("") && txtcatgName.getText().equals("")) {
+                category = new CategoryModel(txtcatgId.getText(), txtcatgName.getText());
+                if (category.saveData() > 0) {
+                    showData();
+                    ClearData();
+                    alertMessage.showCompletedMessage(stakePane, "Save", "Save data successfully.", 4,
+                            Pos.BOTTOM_RIGHT);
+                }
+            } else {
+                alertMessage.showWarningMessage(stakePane, "Save Warning",
+                        "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
             }
+
         } catch (Exception e) {
             alertMessage.showErrorMessage(stakePane, "Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
@@ -99,11 +106,17 @@ public class BookCategoryController implements Initializable {
     @FXML
     private void Update(ActionEvent event) {
         try {
-            category = new CategoryModel(txtcatgId.getText(), txtcatgName.getText());
-            if (category.updateData() > 0) {
-                showData();
-                ClearData();
-                alertMessage.showCompletedMessage(stakePane, "Edit", "Edit data successfully.", 4, Pos.BOTTOM_RIGHT);
+            if (txtcatgId.getText().equals("") && txtcatgName.getText().equals("")) {
+                category = new CategoryModel(txtcatgId.getText(), txtcatgName.getText());
+                if (category.updateData() > 0) {
+                    showData();
+                    ClearData();
+                    alertMessage.showCompletedMessage(stakePane, "Edit", "Edit data successfully.", 4,
+                            Pos.BOTTOM_RIGHT);
+                }
+            } else {
+                alertMessage.showWarningMessage(stakePane, "Edit Warning",
+                        "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
             alertMessage.showErrorMessage(stakePane, "Edit", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
@@ -176,12 +189,12 @@ public class BookCategoryController implements Initializable {
     }
 
     // private JFXButton buttonOK() {
-    //     JFXButton btok = new JFXButton("OK");
-    //     btok.setStyle(Style.buttonDialogStyle);
-    //     btok.setOnAction(e -> {
-    //         dialog.closeDialog();
-    //     });
-    //     return btok;
+    // JFXButton btok = new JFXButton("OK");
+    // btok.setStyle(Style.buttonDialogStyle);
+    // btok.setOnAction(e -> {
+    // dialog.closeDialog();
+    // });
+    // return btok;
     // }
 
 }

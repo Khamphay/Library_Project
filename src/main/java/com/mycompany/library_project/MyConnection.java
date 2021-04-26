@@ -9,7 +9,9 @@ public class MyConnection {
     public static Connection getConnect() {
         try {
             Class.forName("org.mariadb.jdbc.Driver");
-            return DriverManager.getConnection("jdbc:mariadb://" + server + "/dblibrary", userName, password);
+            return DriverManager.getConnection(
+                    "jdbc:mariadb://" + server + "/dblibrary?useUnicode=true&characterEncoding=UTF-8", userName,
+                    password);
         } catch (Exception e) {
             return null;
         }

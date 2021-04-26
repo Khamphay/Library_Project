@@ -59,33 +59,47 @@ public class DepartmentController implements Initializable {
     private void initEvents() {
         btSave.setOnAction(event -> {
             try {
-                depertment = new DepartmentModel(txtId.getText(), txtName.getText());
-                if (depertment.saveData() > 0) {
-                    showData();
-                    ClearText();
-                    alertMessage.showCompletedMessage(stackPane, "Save", "Save data successfully.", 3,
-                            Pos.BOTTOM_RIGHT);
+                if (txtId.getText().equals("") && txtName.getText().equals("")) {
+                    depertment = new DepartmentModel(txtId.getText(), txtName.getText());
+                    if (depertment.saveData() > 0) {
+                        showData();
+                        ClearText();
+                        alertMessage.showCompletedMessage(stackPane, "Saved", "Save data successfully.", 3,
+                                Pos.BOTTOM_RIGHT);
+                    } else {
+                        alertMessage.showWarningMessage(stackPane, "Save Warning", "Can not save data.", 4,
+                                Pos.BOTTOM_RIGHT);
+                    }
                 } else {
-                    alertMessage.showWarningMessage(stackPane, "Save", "Can not save data.", 4, Pos.BOTTOM_RIGHT);
+                    alertMessage.showWarningMessage(stackPane, "Save Warning",
+                            "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                 }
             } catch (Exception ex) {
-                alertMessage.showErrorMessage(stackPane, "Save", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                alertMessage.showErrorMessage(stackPane, "Save Error", "Error: " + ex.getMessage(), 4,
+                        Pos.BOTTOM_RIGHT);
             }
         });
 
         btEdit.setOnAction(event -> {
             try {
-                depertment = new DepartmentModel(txtId.getText(), txtName.getText());
-                if (depertment.updateData() > 0) {
-                    showData();
-                    ClearText();
-                    alertMessage.showCompletedMessage(stackPane, "Edit", "Edit data successfully.", 4,
-                            Pos.BOTTOM_RIGHT);
+                if (txtId.getText().equals("") && txtName.getText().equals("")) {
+                    depertment = new DepartmentModel(txtId.getText(), txtName.getText());
+                    if (depertment.updateData() > 0) {
+                        showData();
+                        ClearText();
+                        alertMessage.showCompletedMessage(stackPane, "Edited", "Edit data successfully.", 4,
+                                Pos.BOTTOM_RIGHT);
+                    } else {
+                        alertMessage.showWarningMessage(stackPane, "Edit Warning", "Can not edit data.", 4,
+                                Pos.BOTTOM_RIGHT);
+                    }
                 } else {
-                    alertMessage.showWarningMessage(stackPane, "Edit", "Can not edit data.", 4, Pos.BOTTOM_RIGHT);
+                    alertMessage.showWarningMessage(stackPane, "Edit Warning",
+                            "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                 }
             } catch (Exception e) {
-                alertMessage.showErrorMessage(stackPane, "Edit", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                alertMessage.showErrorMessage(stackPane, "Edit Error", "Error: " + e.getMessage(), 4,
+                        Pos.BOTTOM_RIGHT);
             }
         });
 

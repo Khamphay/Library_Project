@@ -88,8 +88,7 @@ public class RegisterController implements Initializable {
         }
     }
 
-    @FXML
-    private void setImage(ActionEvent event) {
+    private void loadIMager() {
         try {
             final Stage stage = new Stage();
             stage.setTitle("Choose image");
@@ -124,11 +123,20 @@ public class RegisterController implements Initializable {
     }
 
     @FXML
+    private void setImage(ActionEvent event) {
+        loadIMager();
+    }
+
+    @FXML
     private void Save(ActionEvent event) {
         try {
             gender = (rdbMale.isSelected()) ? rdbMale.getText() : rdbFemale.getText();
 
-            if (index > -1) {
+            if (index > -1 && !txtId.getText().equals("") && !txtFName.getText().equals("")
+                    && !txtLName.getText().equals("") && !txtTel.getText().equals("") && !txtVill.getText().equals("")
+                    && !txtDist.getText().equals("") && !txtProv.getText().equals("") && gender != ""
+                    && !birtDate.getValue().equals(null)) {
+
                 memberModel = new MemberModel(txtId.getText(), txtFName.getText(), txtLName.getText(), gender,
                         txtTel.getText(), txtVill.getText(), txtDist.getText(), txtProv.getText(),
                         Date.valueOf(birtDate.getValue()), depIdList.get(index), Date.valueOf(LocalDate.now()),
@@ -148,11 +156,11 @@ public class RegisterController implements Initializable {
                 }
 
             } else {
-                alertMessage.showWarningMessage(borderPane, "Save", "Please chack your information and try again.", 4,
-                        Pos.BOTTOM_RIGHT);
+                alertMessage.showWarningMessage(borderPane, "Save Warning",
+                        "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
-            alertMessage.showErrorMessage(borderPane, "Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage(borderPane, "Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -209,15 +217,7 @@ public class RegisterController implements Initializable {
 
             @Override
             public void handle(MouseEvent event) {
-                final Stage stage = new Stage();
-                stage.setTitle("Choose image");
-                chooser = new FileChooser();
-                File file = chooser.showOpenDialog(stage);
-                if (file != null) {
-                    imgPic.setFitWidth(165);
-                    imgPic.setFitHeight(221);
-                    imgPic.setImage(new Image(file.toURI().toASCIIString()));
-                }
+                loadIMager();
             }
         });
 

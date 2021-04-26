@@ -11,11 +11,16 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
+
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.*;
 
 public class AddBookController implements Initializable {
 
@@ -29,6 +34,8 @@ public class AddBookController implements Initializable {
     private int index_type, index_category;
     private AlertMessage alertMessage = new AlertMessage();
     private String bookid = "";
+    private ResultSet rs = null;
+    private ValidationSupport validRules = null;
 
     private double x, y;
 
@@ -69,13 +76,14 @@ public class AddBookController implements Initializable {
     private void generatedBarcode() {
         try {
             txtBarcode.clear();
-            if (txtId.getText() != "" && txtQty.getText() != "") {
+            if (!txtId.getText().equals("") && !txtQty.getText().equals("")) {
                 for (int i = 1; i <= Integer.parseInt(txtQty.getText()); i++) {
                     txtBarcode.appendText(txtId.getText() + "000" + i + "\n");
                 }
             }
         } catch (Exception e) {
             alertMessage.showErrorMessage("Gennerate barcode", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            e.printStackTrace();
         }
     }
 
@@ -138,8 +146,7 @@ public class AddBookController implements Initializable {
                     cmbtableLog.setItems(items);
                 }
             } catch (Exception ex) {
-                alertMessage.showErrorMessage(borderPane, "Selete data", "Error: " + ex.getMessage(), 4,
-                        Pos.BOTTOM_RIGHT);
+                alertMessage.showErrorMessage("Selete data", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
             }
         });
     }
@@ -163,7 +170,7 @@ public class AddBookController implements Initializable {
             }
             cmbType.setItems(items);
         } catch (Exception e) {
-            alertMessage.showErrorMessage(borderPane, "Load type", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Load type", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -185,7 +192,7 @@ public class AddBookController implements Initializable {
             }
             cmbCagtegory.setItems(items);
         } catch (Exception e) {
-            alertMessage.showErrorMessage(borderPane, "Load category", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Load category", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -201,7 +208,7 @@ public class AddBookController implements Initializable {
             }
             cmbTable.setItems(items);
         } catch (Exception e) {
-            alertMessage.showErrorMessage(borderPane, "Load table", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Load table", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -218,6 +225,15 @@ public class AddBookController implements Initializable {
             cmbType.getSelectionModel().select(addBook.getTypeId());
             cmbCagtegory.getSelectionModel().select(addBook.getCatgId());
             cmbtableLog.getSelectionModel().select(addBook.getTableLogId());
+
+            try {
+                rs = addBook.showBarcode(bookid);
+                while (rs.next()) {
+                    txtBarcode.appendText(rs.getString("barcode") + "\n");
+                }
+            } catch (SQLException e) {
+
+            }
         }
         addBook = null;
     }
@@ -227,44 +243,58 @@ public class AddBookController implements Initializable {
         // cmbType.g
         String msg = null;
         try {
-            addBook = new BookDetailModel(txtId.getText(), txtName.getText(), txtISBN.getText(),
-                    Integer.parseInt(txtPage.getText()), Integer.parseInt(txtQty.getText()),
-                    arr_category.get(index_category), arr_type.get(index_type),
-                    cmbtableLog.getSelectionModel().getSelectedItem().toString(), txtDetail.getText());
-            if (bookid == "") {
-                if (addBook.saveData() > 0) {
-                    String line = txtBarcode.getText();
-                    String[] lineCount = line.split("\n");
 
-                    for (int i = 0; i < lineCount.length; i++) {
-                        try {
-                            int result = addBook.saveBookBarCode(lineCount[i], txtId.getText(),
-                                    cmbStatus.getSelectionModel().getSelectedItem().toString());
-                            if (result > 0) {
-                                msg = "Save Completed";
-                            } else {
+            if (!txtId.getText().equals("") && !txtName.getText().equals("") && !txtPage.getText().equals("")
+                    && !txtQty.getText().equals("") && !cmbCagtegory.getSelectionModel().getSelectedItem().equals(null)
+                    && !cmbType.getSelectionModel().getSelectedItem().equals(null)
+                    && !cmbtableLog.getSelectionModel().getSelectedItem().equals(null)) {
+
+                addBook = new BookDetailModel(txtId.getText(), txtName.getText(), txtISBN.getText(),
+                        Integer.parseInt(txtPage.getText()), Integer.parseInt(txtQty.getText()),
+                        arr_category.get(index_category), arr_type.get(index_type),
+                        cmbtableLog.getSelectionModel().getSelectedItem().toString(), txtDetail.getText());
+                if (bookid == "") {
+                    if (addBook.saveData() > 0) {
+                        String line = txtBarcode.getText();
+                        String[] lineCount = line.split("\n");
+
+                        for (int i = 0; i < lineCount.length; i++) {
+                            try {
+                                int result = addBook.saveBookBarCode(lineCount[i], txtId.getText(),
+                                        cmbStatus.getSelectionModel().getSelectedItem().toString());
+                                if (result > 0) {
+                                    msg = "Save data successfully.";
+                                } else {
+                                    msg = null;
+                                }
+                            } catch (Exception e) {
+                                // Todo:................................
                                 msg = null;
+                                return;
                             }
-                        } catch (Exception e) {
-                            // Todo:................................
-                            return;
                         }
-                    }
 
+                    } else {
+                        msg = null;
+                    }
                 } else {
-                    msg = null;
+                    if (addBook.updateData() > 0) {
+                        msg = "Edit data successfully.";
+                    }
+                }
+
+                if (msg != null) {
+                    alertMessage.showCompletedMessage("Save", msg, 4, Pos.BOTTOM_RIGHT);
+                } else {
+                    alertMessage.showWarningMessage("Save Warning", "Can not save data.", 4, Pos.BOTTOM_RIGHT);
                 }
             } else {
-                
-            }
-            
-            if (msg != null) {
-                alertMessage.showCompletedMessage(borderPane, "Save", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
-            } else {
-                alertMessage.showWarningMessage("Save", "Can not save data.", 4, Pos.BOTTOM_RIGHT);
+                alertMessage.showWarningMessage("Saved Warning", "Please chack your information and try again.", 4,
+                        Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
-            alertMessage.showErrorMessage(borderPane, "Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            e.printStackTrace();
         }
     }
 
@@ -290,6 +320,7 @@ public class AddBookController implements Initializable {
         fillCategory();
         fillTable();
         fillValue();
+
     }
 
 }

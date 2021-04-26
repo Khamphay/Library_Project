@@ -92,11 +92,11 @@ public class EmployeeController implements Initializable {
                                     Pos.BOTTOM_RIGHT);
                         }
                     } else {
-                        alertMessage.showWarningMessage(stackPane, "Saved",
+                        alertMessage.showWarningMessage(stackPane, "Save Warning",
                                 "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                     }
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage(stackPane, "Saved", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                    alertMessage.showErrorMessage(stackPane, "Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
                 }
             }
         });
@@ -121,11 +121,12 @@ public class EmployeeController implements Initializable {
                                     Pos.BOTTOM_RIGHT);
                         }
                     } else {
-                        alertMessage.showWarningMessage(stackPane, "Edited",
+                        alertMessage.showWarningMessage(stackPane, "Edit Warning",
                                 "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                     }
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage(stackPane, "Edited", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                    alertMessage.showErrorMessage(stackPane, "Edit Error", "Error: " + e.getMessage(), 4,
+                            Pos.BOTTOM_RIGHT);
                 }
             }
         });

@@ -112,7 +112,7 @@ public class TableLogController implements Initializable {
     }
 
     private void generatedLog() {
-        if (txtId.getText() != "" && txtQty.getText() != "") {
+        if (!txtId.getText().equals("") && !txtQty.getText().equals("")) {
             txtLog.clear();
             for (int i = 1; i <= Integer.parseInt(txtQty.getText()); i++) {
                 txtLog.appendText(txtId.getText() + "000" + i + "\n");
@@ -135,27 +135,33 @@ public class TableLogController implements Initializable {
     private void tbSaveData(ActionEvent event) {
         String result = null;
         try {
-            tableLogModel = new TableLogModel();
-            if (tableLogModel.saveTable(txtId.getText(), Integer.parseInt(txtQty.getText())) > 0) {
-                String line = txtLog.getText();
-                String[] lineCount = line.split("\n");
-                for (int i = 0; i < lineCount.length; i++) {
-                    try {
-                        tableLogModel = new TableLogModel(txtId.getText(), lineCount[i]);
-                        result = (tableLogModel.saveData() > 0) ? "Save Completed" : null; // Todo: if...else
-                    } catch (Exception e) {
-                        tableLogModel.deleteTable(txtId.getText());
-                        return;
+            if (!txtId.getText().equals("") && !txtId.getText().equals("") && !txtQty.getText().equals("")) {
+                tableLogModel = new TableLogModel();
+                if (tableLogModel.saveTable(txtId.getText(), Integer.parseInt(txtQty.getText())) > 0) {
+                    String line = txtLog.getText();
+                    String[] lineCount = line.split("\n");
+                    for (int i = 0; i < lineCount.length; i++) {
+                        try {
+                            tableLogModel = new TableLogModel(txtId.getText(), lineCount[i]);
+                            result = (tableLogModel.saveData() > 0) ? "Save Completed" : null; // Todo: if...else
+                        } catch (Exception e) {
+                            tableLogModel.deleteTable(txtId.getText());
+                            return;
+                        }
                     }
+                } else {
+                    alertMessage.showWarningMessage(stackPane, "Saved", "Warning: Can not save data.", 4,
+                            Pos.BOTTOM_RIGHT);
+                }
+
+                if (result != null) {
+                    showData();
+                    clearText();
+                    alertMessage.showCompletedMessage("Saved", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
                 }
             } else {
-                alertMessage.showWarningMessage(stackPane, "Save", "Warning: Can not save data.", 4, Pos.BOTTOM_RIGHT);
-            }
-
-            if (result != null) {
-                showData();
-                clearText();
-                alertMessage.showCompletedMessage("Save", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
+                alertMessage.showWarningMessage(stackPane, "Save Warning",
+                        "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
             }
 
         } catch (Exception e) {
@@ -166,16 +172,20 @@ public class TableLogController implements Initializable {
     @FXML
     private void btUpdate(ActionEvent event) {
         try {
+            if (!txtId.getText().equals("") && !txtId.getText().equals("") && !txtQty.getText().equals("")) {
             tableLogModel = new TableLogModel(txtId.getText(), Integer.parseInt(txtQty.getText()));
             if (tableLogModel.updateData() > 0) {
-                alertMessage.showCompletedMessage(stackPane, "Edit", "Edit data successfully.", 4, Pos.BOTTOM_RIGHT);
+                alertMessage.showCompletedMessage(stackPane, "Edited", "Edit data successfully.", 4, Pos.BOTTOM_RIGHT);
                 showData();
             } else {
-                alertMessage.showWarningMessage(stackPane, "Edit", "Can not edit data", 4, Pos.BOTTOM_RIGHT);
+                alertMessage.showWarningMessage(stackPane, "Edit Warning", "Can not edit data", 4, Pos.BOTTOM_RIGHT);
             }
-
+        } else {
+            alertMessage.showWarningMessage(stackPane, "Edit Warning", "Please chack your information and try again.",
+                    4, Pos.BOTTOM_RIGHT);
+        }
         } catch (Exception e) {
-            alertMessage.showErrorMessage(stackPane, "Edit", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage(stackPane, "Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 

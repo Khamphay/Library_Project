@@ -13,7 +13,6 @@ public class BookDetailModel implements DataAccessObject {
     private ResultSet rs = null;
     private PreparedStatement ps = null;
     private String sql = null;
-
     private String bookId;
     private String bookName;
     private Integer page;
@@ -26,6 +25,7 @@ public class BookDetailModel implements DataAccessObject {
     private String typeId;
     private String tableLogId;
     private String detail;
+    private String status;
     private JFXButton action;
 
     public BookDetailModel() {
@@ -34,6 +34,12 @@ public class BookDetailModel implements DataAccessObject {
     public BookDetailModel(String bookId, String barcode) {
         this.bookId = bookId;
         this.barcode = (barcode);
+    }
+
+    public BookDetailModel(String barcode, String status, JFXButton action) {
+        this.barcode = barcode;
+        this.status = status;
+        this.action = action;
     }
 
     public BookDetailModel(String bookId, String bookName, String ISBN, Integer page, Integer qty, String catgId,
@@ -178,6 +184,14 @@ public class BookDetailModel implements DataAccessObject {
         this.detail = detail;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public JFXButton getAction() {
         return action;
     }
@@ -245,17 +259,7 @@ public class BookDetailModel implements DataAccessObject {
         return ps.executeUpdate();
     }
 
-    public int saveBookBarCode(String barcode, String bookid, String status) throws SQLException {
-
-        sql = "call book_Insert(?, ?, ?);";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, barcode);
-        ps.setString(2, bookid);
-        ps.setString(3, status);
-        return ps.executeUpdate();
-
-    }
-
+   
     @Override
     public int updateData() throws SQLException, ParseException {
 
@@ -281,4 +285,47 @@ public class BookDetailModel implements DataAccessObject {
         ps.setString(1, id);
         return ps.executeUpdate();
     }
+
+    public ResultSet showBarcode(String book_id) {
+        try {
+            sql = "call  book_ShowByBookId(?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, book_id);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public int saveBookBarCode(String barcode, String bookid, String status) throws SQLException {
+
+        sql = "call book_Insert(?, ?, ?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, barcode);
+        ps.setString(2, bookid);
+        ps.setString(3, status);
+        return ps.executeUpdate();
+
+    }
+
+    public int updateData(String book_id, String book_barcode, String new_book_barcode, String book_status)
+            throws SQLException, ParseException {
+        sql = "call book_Update(?, ?, ?, ?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, book_barcode);
+        ps.setString(2, new_book_barcode);
+        ps.setString(3, book_id);
+        ps.setString(4, book_status);
+        return ps.executeUpdate();
+    }
+
+    public int deleteBarcode(String book_id, String barcode) throws SQLException {
+        sql = "call book_Delete(?,?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, book_id);
+        ps.setString(2, barcode);
+        return ps.executeUpdate();
+    }
+
 }

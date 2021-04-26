@@ -51,7 +51,8 @@ public class BookTypeController implements Initializable {
             }
             tableType.setItems(data);
         } catch (SQLException e) {
-            alertMessage.showErrorMessage(stackePane, "Load data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage(stackePane, "Load Data Error", "Error: " + e.getMessage(), 4,
+                    Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -72,28 +73,40 @@ public class BookTypeController implements Initializable {
     @FXML
     private void Save(ActionEvent actionEvent) throws SQLException {
         try {
-            type = new TypeModel(txtTypeId.getText(), txtTypeName.getText());
-            if (type.saveData() == 1) {
-                ShowData();
-                ClearData();
-                alertMessage.showCompletedMessage(stackePane, "Save", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
+            if (!txtTypeId.getText().equals("") && !txtTypeName.getText().equals("")) {
+                type = new TypeModel(txtTypeId.getText(), txtTypeName.getText());
+                if (type.saveData() == 1) {
+                    alertMessage.showCompletedMessage(stackePane, "Save", "Save data successfully.", 4,
+                            Pos.BOTTOM_RIGHT);
+                    ShowData();
+                    ClearData();
+                }
+            } else {
+                alertMessage.showWarningMessage(stackePane, "Save Warning",
+                        "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
-            alertMessage.showErrorMessage(stackePane, "Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage(stackePane, "Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
     @FXML
     private void Update(ActionEvent event) throws SQLException {
         try {
-            type = new TypeModel(txtTypeId.getText(), txtTypeName.getText());
-            if (type.updateData() == 1) {
-                ShowData();
-                ClearData();
-                alertMessage.showCompletedMessage(stackePane, "Edit", "Edit data successfully.", 4, Pos.BOTTOM_RIGHT);
+            if (!txtTypeId.getText().equals("") && !txtTypeName.getText().equals("")) {
+                type = new TypeModel(txtTypeId.getText(), txtTypeName.getText());
+                if (type.updateData() == 1) {
+                    alertMessage.showCompletedMessage(stackePane, "Edited", "Edit data successfully.", 4,
+                            Pos.BOTTOM_RIGHT);
+                    ShowData();
+                    ClearData();
+                }
+            } else {
+                alertMessage.showWarningMessage(stackePane, "Edit Warning",
+                        "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
-            alertMessage.showErrorMessage(stackePane, "Edit", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage(stackePane, "Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 

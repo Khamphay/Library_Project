@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.*;
 
 import java.io.IOException;
@@ -32,6 +33,8 @@ public class BookController implements Initializable {
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = null;
     public static Stage addNewBook = null;
+    public static Stage addBarcode = null;
+    public static String _book_id = "";
 
     @FXML
     private BorderPane borderPane;
@@ -65,7 +68,18 @@ public class BookController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                showAddBook();
+                try {
+                    _book_id = tableBook.getSelectionModel().getSelectedItem().getBookId();
+                    final Parent root = FXMLLoader.load(App.class.getResource("frmBookBarcode.fxml"));
+                    final Scene scene = new Scene(root);
+                    scene.setFill(Color.TRANSPARENT);
+                    addBarcode = new Stage();
+                    addBarcode.setScene(scene);
+                    addBarcode.initStyle(StageStyle.TRANSPARENT);
+                    addBarcode.show();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
             }
 
         });

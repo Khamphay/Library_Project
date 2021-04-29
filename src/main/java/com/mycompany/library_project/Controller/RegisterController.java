@@ -53,8 +53,12 @@ public class RegisterController implements Initializable {
 
     @FXML
     private BorderPane borderPane;
+
     @FXML
     private AnchorPane acPaneHeader;
+
+    @FXML
+    private JFXButton btClose;
 
     @FXML
     private TextField txtId, txtFName, txtLName, txtTel, txtVill, txtDist, txtProv;
@@ -83,8 +87,7 @@ public class RegisterController implements Initializable {
             cmbDept.setItems(items);
 
         } catch (Exception e) {
-            alertMessage.showErrorMessage(borderPane, "Load Department", "Error: " + e.getMessage(), 4,
-                    Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Load Department", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -117,7 +120,7 @@ public class RegisterController implements Initializable {
                 byimg = byteStrem.toByteArray();
             }
         } catch (Exception e) {
-            alertMessage.showErrorMessage(borderPane, "Choose Image", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Choose Image", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             e.printStackTrace();
         }
     }
@@ -139,28 +142,28 @@ public class RegisterController implements Initializable {
 
                 memberModel = new MemberModel(txtId.getText(), txtFName.getText(), txtLName.getText(), gender,
                         txtTel.getText(), txtVill.getText(), txtDist.getText(), txtProv.getText(),
-                        Date.valueOf(birtDate.getValue()), depIdList.get(index), Date.valueOf(LocalDate.now()),
-                        Date.valueOf(LocalDate.now().plusYears(1)), Date.valueOf(localDateExit), byimg, memberid_edit);
+                        Date.valueOf(birtDate.getValue()), cmbYears.getSelectionModel().getSelectedItem(),
+                        depIdList.get(index), Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now().plusYears(1)),
+                        Date.valueOf(localDateExit), byimg, memberid_edit);
 
                 if (memberid_edit == "") {
                     // Todo: Insert (if save memberid_edit if null)
                     if (memberModel.saveData() > 0) {
-                        alertMessage.showCompletedMessage(borderPane, "Saved", "Saved data successfully.", 4,
-                                Pos.BOTTOM_RIGHT);
-                    }
+                        alertMessage.showCompletedMessage("Saved", "Saved data successfully.", 4, Pos.BOTTOM_RIGHT);
+                                            }
                 } else {
                     if (memberModel.updateData() > 0) {
-                        alertMessage.showCompletedMessage(borderPane, "Edited", "Edited data successfully.", 4,
-                                Pos.BOTTOM_RIGHT);
+                        alertMessage.showCompletedMessage("Edited", "Edited data successfully.", 4, Pos.BOTTOM_RIGHT);
                     }
                 }
+                
 
             } else {
-                alertMessage.showWarningMessage(borderPane, "Save Warning",
-                        "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
+                alertMessage.showWarningMessage("Save Warning", "Please chack your information and try again.", 4,
+                        Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
-            alertMessage.showErrorMessage(borderPane, "Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -183,12 +186,6 @@ public class RegisterController implements Initializable {
         cmbYears.getSelectionModel().clearSelection();
     }
 
-    @FXML
-    private void closeForm() {
-        if (MemberController.addMemberStage != null) {
-            MemberController.addMemberStage.close();
-        }
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -209,10 +206,10 @@ public class RegisterController implements Initializable {
             }
         });
 
+
         cmbYears.setItems(years);
         fillDep();
-        moveForm();
-
+       
         imgPic.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
@@ -235,6 +232,19 @@ public class RegisterController implements Initializable {
             }
         });
 
+        if (MemberController.add) {
+            moveForm();
+            btClose.setVisible(true);
+            btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    MemberController.addMemberStage.close();
+                    MemberController.add = false;
+                }
+            });
+        }
+
         if (memberModel != null) {
             // Todo: if by edit from 'Form Member'
             memberid_edit = memberModel.getMemberId();
@@ -252,7 +262,9 @@ public class RegisterController implements Initializable {
             txtDist.setText(memberModel.getDistrict());
             txtProv.setText(memberModel.getProvince());
             birtDate.setValue(memberModel.getBirdate().toLocalDate());
-
+            cmbDept.getSelectionModel().select(memberModel.getDetp());
+            index = cmbDept.getSelectionModel().getSelectedIndex();
+            cmbYears.getSelectionModel().select(memberModel.getStudy_year());
             // cmbYears.getSelectionModel().select(memberModel.getYears());
 
             // TODO: Show Image
@@ -263,12 +275,10 @@ public class RegisterController implements Initializable {
                         outStrem.write(memberModel.getByimg());
                         imgPic.setImage(new Image("file:img.png"));
                     } catch (IOException e) {
-                        alertMessage.showErrorMessage(borderPane, "Read Image", "Error: " + e.getMessage(), 4,
-                                Pos.BOTTOM_RIGHT);
+                        alertMessage.showErrorMessage("Read Image", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
                     }
                 } catch (FileNotFoundException e) {
-                    alertMessage.showErrorMessage(borderPane, "Write Image", "Error: " + e.getMessage(), 4,
-                            Pos.BOTTOM_RIGHT);
+                    alertMessage.showErrorMessage("Write Image", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
                 }
             }
             memberModel = null;

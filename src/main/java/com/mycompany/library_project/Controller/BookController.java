@@ -35,6 +35,7 @@ public class BookController implements Initializable {
     public static Stage addNewBook = null;
     public static Stage addBarcode = null;
     public static String _book_id = "";
+    public static boolean add = false;
 
     @FXML
     private BorderPane borderPane;
@@ -43,7 +44,7 @@ public class BookController implements Initializable {
     private StackPane stackPane;
 
     @FXML
-    private JFXButton btAddNewBook;
+    private JFXButton btAddNewBook, btRefresh;
 
     @FXML
     private MenuItem menuList, menuEdit;
@@ -52,7 +53,8 @@ public class BookController implements Initializable {
     private TableView<BookDetailModel> tableBook;
 
     @FXML
-    private TableColumn<BookDetailModel, String> bookid, bookname, bookisbn, bppkcategory, bppktype, bookdetail;
+    private TableColumn<BookDetailModel, String> bookid, bookname, bookisbn, bppkcategory, bppktype, tableid,
+            bookdetail;
 
     @FXML
     private TableColumn<BookDetailModel, Integer> bookpage, bookqty;
@@ -64,6 +66,14 @@ public class BookController implements Initializable {
     private VBox vbListBooks;
 
     private void initEvents() {
+        btRefresh.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                showData();
+            }
+
+        });
         menuList.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -112,33 +122,10 @@ public class BookController implements Initializable {
         });
     }
 
-    // private void showBooks() {
-    // vbListBooks.getChildren().clear();
-    // Platform.runLater(new Runnable() {
-    // int i = 0;
-
-    // @Override
-    // public void run() {
-    // try {
-    // while (i < node.length) {
-    // MyArrayList array_listnew = new MyArrayList();
-    // book_item.book = array_listnew.bookList(values);
-    // Parent list = FXMLLoader.load(App.class.getResource("bookList.fxml"));
-    // node[i] = list;
-    // vbListBooks.getChildren().addAll(node[i]);
-    // i++;
-    // }
-    // } catch (Exception e) {
-    // alertMessage.showErrorMessage(borderPane, "Load data", "Error: " +
-    // e.getMessage(), 4,
-    // Pos.BOTTOM_RIGHT);
-    // }
-    // }
-    // });
-    // }
-
+   
     private void showAddBook() {
         try {
+            add = true;
             final Parent root = FXMLLoader.load(App.class.getResource("frmAddBooks.fxml"));
             final Scene scene = new Scene(root);
             addNewBook = new Stage();
@@ -156,12 +143,9 @@ public class BookController implements Initializable {
             rs = bookDetail.findAll();
             while (rs.next()) {
                 data.add(new BookDetailModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4),
-                        rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), getAction(rs.getString(1))));
+                        rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9),
+                        getAction(rs.getString(1))));
             }
-
-            // data.add(new BookDetailModel("rs.getString(0)", "rs.getString(1)",
-            // "rs.getString(2)", 309, 10,
-            // "rs.getString(5)", "rs.getString(6)", "rs.getString(7)", btnAction));
 
             tableBook.setItems(data);
 
@@ -179,6 +163,7 @@ public class BookController implements Initializable {
         bookqty.setCellValueFactory(new PropertyValueFactory<>("qty"));
         bppkcategory.setCellValueFactory(new PropertyValueFactory<>("catgId"));
         bppktype.setCellValueFactory(new PropertyValueFactory<>("typeId"));
+        tableid.setCellValueFactory(new PropertyValueFactory<>("tableId"));
         bookdetail.setCellValueFactory(new PropertyValueFactory<>("detail"));
         ation.setCellValueFactory(new PropertyValueFactory<>("action"));
     }

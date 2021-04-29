@@ -31,6 +31,7 @@ public class MemberController implements Initializable {
     private DialogMessage dialog = null;
     private ArrayList<byte[]> byimg;
     public static Stage addMemberStage = null;
+    public static boolean add = false;
 
     @FXML
     private BorderPane boderPane;
@@ -48,7 +49,8 @@ public class MemberController implements Initializable {
     private TableView<MemberModel> tableMember;
 
     @FXML
-    private TableColumn<MemberModel, String> id, name, surname, gender, tel, village, district, province, depertment;
+    private TableColumn<MemberModel, String> id, name, surname, gender, tel, village, district, province, depertment,
+            studyYear;
 
     @FXML
     private TableColumn<MemberModel, Date> birthdate, date_register, date_exist;
@@ -56,7 +58,7 @@ public class MemberController implements Initializable {
     @FXML
     private TableColumn<MemberModel, JFXButton> colAction;
 
-    private void showData() {
+    public void showData() {
         try {
             data = FXCollections.observableArrayList();
             rs = memberModel.findAll();
@@ -64,9 +66,10 @@ public class MemberController implements Initializable {
             while (rs.next()) {
                 data.add(new MemberModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
                         rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),
-                        Date.valueOf(rs.getString(10)), rs.getString(9), Date.valueOf(rs.getString(11)),
-                        Date.valueOf(rs.getString(12)), Date.valueOf(rs.getString(13)), btDelete(rs.getString(1))));
-                byimg.add(rs.getBytes(14));
+                        Date.valueOf(rs.getString(10)), rs.getString(11), rs.getString(9),
+                        Date.valueOf(rs.getString(12)), Date.valueOf(rs.getString(13)), Date.valueOf(rs.getString(14)),
+                        btDelete(rs.getString(1))));
+                byimg.add(rs.getBytes(15));
             }
             tableMember.setItems(data);
         } catch (Exception e) {
@@ -85,6 +88,7 @@ public class MemberController implements Initializable {
         district.setCellValueFactory(new PropertyValueFactory<>("district"));
         province.setCellValueFactory(new PropertyValueFactory<>("province"));
         birthdate.setCellValueFactory(new PropertyValueFactory<>("birdate"));
+        studyYear.setCellValueFactory(new PropertyValueFactory<>("study_year"));
         depertment.setCellValueFactory(new PropertyValueFactory<>("detp"));
         date_register.setCellValueFactory(new PropertyValueFactory<>("dateRegister"));
         date_exist.setCellValueFactory(new PropertyValueFactory<>("dateRegisterEnd"));
@@ -104,6 +108,7 @@ public class MemberController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
+                    add = true;
                     final Parent root = FXMLLoader.load(App.class.getResource("frmRegister.fxml"));
                     final Scene scene = new Scene(root);
                     addMemberStage = new Stage();
@@ -129,6 +134,10 @@ public class MemberController implements Initializable {
                     RegisterController.memberModel
                             .setByimg(byimg.get(tableMember.getSelectionModel().getSelectedIndex()));
                     try {
+                        if (addMemberStage != null) {
+                            addMemberStage.close();
+                        }
+
                         final Parent root = FXMLLoader.load(App.class.getResource("frmRegister.fxml"));
                         final Scene scene = new Scene(root);
                         addMemberStage = new Stage();
@@ -136,6 +145,7 @@ public class MemberController implements Initializable {
                         addMemberStage.initStyle(StageStyle.TRANSPARENT);
                         // addMemberStage.setAlwaysOnTop(true);
                         addMemberStage.show();
+
                     } catch (Exception e) {
                         alertMessage.showErrorMessage(stackPane, "Open New Form", "Error: " + e.getMessage(), 4,
                                 Pos.BOTTOM_RIGHT);
@@ -165,7 +175,7 @@ public class MemberController implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) { 
+    public void initialize(URL location, ResourceBundle resources) {
         initEvents();
         initTable();
         showData();

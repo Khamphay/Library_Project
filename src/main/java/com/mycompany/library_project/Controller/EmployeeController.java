@@ -154,7 +154,7 @@ public class EmployeeController implements Initializable {
 
             @Override
             public void handle(MouseEvent event) {
-                if (event.getClickCount() > 0 && tableEmployee.getSelectionModel().getSelectedItem() != null) {
+                if (event.getClickCount() >= 2 && tableEmployee.getSelectionModel().getSelectedItem() != null) {
                     txtId.setText(tableEmployee.getSelectionModel().getSelectedItem().getEmployeeId());
                     txtFname.setText(tableEmployee.getSelectionModel().getSelectedItem().getFirstName());
                     txtLname.setText(tableEmployee.getSelectionModel().getSelectedItem().getLastName());
@@ -184,7 +184,7 @@ public class EmployeeController implements Initializable {
             }
             tableEmployee.setItems(data);
         } catch (Exception e) {
-            // TODO: handle exception
+            alertMessage.showErrorMessage(stackPane, "Load Data", "Error" + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 

@@ -50,7 +50,7 @@ public class ManagePersonalCotroller implements Initializable {
 
     @FXML
     private void btAncthor_Click(ActionEvent event) {
-        // show_subForm("");
+        show_subForm("frmAuthor.fxml");
     }
 
     @FXML

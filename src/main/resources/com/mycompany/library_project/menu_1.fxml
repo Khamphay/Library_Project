@@ -4,11 +4,12 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="acPaneMenu" accessibleRole="DATE_PICKER" prefHeight="571.0" prefWidth="197.0" style="-fx-background-color: #101D3D;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.MenuController1">
+<AnchorPane fx:id="acPaneMenu" accessibleRole="DATE_PICKER" prefHeight="571.0" prefWidth="197.0" style="-fx-background-color: #101D3D;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.MenuController1">
    <children>
       <JFXButton id="btHome" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutY="33.0" lineSpacing="2.0" prefHeight="40.0" styleClass="BoonBaan-size-14-Regular" text="ໜ້າຫຼັກ" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
          <cursor>
@@ -86,7 +87,7 @@
             <URL value="@Style/buttonStyle.css" />
          </stylesheets>
       </JFXButton>
-      <JFXButton id="btReport" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutY="205.0" lineSpacing="2.0" prefHeight="40.0" styleClass="BoonBaan-size-14-Regular" text="ລາຍງານ" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="231.0">
+      <JFXButton id="btReport" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutY="205.0" lineSpacing="2.0" prefHeight="40.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" text="ລາຍງານ" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="231.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -100,10 +101,6 @@
          <padding>
             <Insets bottom="1.0" left="18.0" right="1.0" top="1.0" />
          </padding>
-         <stylesheets>
-            <URL value="@Style/appstyle.css" />
-            <URL value="@Style/buttonStyle.css" />
-         </stylesheets>
       </JFXButton>
       <JFXButton id="btSetting" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutY="254.0" lineSpacing="2.0" prefHeight="40.0" styleClass="BoonBaan-size-14-Regular" text="ການຕັ້ງຄ່າ" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="280.0">
          <cursor>
@@ -123,6 +120,21 @@
             <URL value="@Style/appstyle.css" />
             <URL value="@Style/buttonStyle.css" />
          </stylesheets>
+      </JFXButton>
+      <JFXButton id="btLogOut" alignment="CENTER" cache="true" cacheHint="QUALITY" graphicTextGap="10.0" layoutX="29.0" layoutY="520.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="31.0" pickOnBounds="false" prefHeight="31.0" prefWidth="140.0" style="-fx-background-radius: 15px 15px 15px 15px; -fx-background-color: #fff;" styleClass="button-color" stylesheets="@Style/buttonFont.css" text="ອອກຈາກລະບົບ" AnchorPane.bottomAnchor="20.0">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Icon/shutdown_100pxColor.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip anchorLocation="CONTENT_TOP_RIGHT" text="ອອກຈາກລະບົບ" />
+         </tooltip>
+         <padding>
+            <Insets left="-4.0" />
+         </padding>
       </JFXButton>
    </children>
 </AnchorPane>

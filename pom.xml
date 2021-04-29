@@ -76,6 +76,24 @@
                     <release>11</release>
                 </configuration>
             </plugin>
+
+            <!--Add My Code -->
+            <plugin> 
+                <!-- Building an executable jar -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                  <archive>
+                    <manifest>
+                    <!-- give full qualified name of your main class-->
+                      <mainClass>com.mycompany.library_project.FakeApp.main</mainClass>
+                    </manifest>
+                  </archive>
+                </configuration>
+            </plugin>
+            <!-- End -->
+
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>

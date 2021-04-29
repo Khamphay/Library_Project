@@ -84,7 +84,7 @@ public class TableLogController implements Initializable {
 
     private void initEvents() {
         tableLog.setOnMouseClicked(e -> {
-            if (e.getClickCount() > 0 && tableLog.getSelectionModel().getSelectedItem() != null) {
+            if (e.getClickCount() >= 2 && tableLog.getSelectionModel().getSelectedItem() != null) {
                 data = tableLog.getSelectionModel().getSelectedItems();
                 txtId.setText(data.get(0).getValue().getTableId());
                 txtQty.setText("" + data.get(0).getValue().getLogQty());

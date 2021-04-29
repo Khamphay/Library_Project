@@ -3,8 +3,10 @@ package com.mycompany.library_project.Controller;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import com.mycompany.library_project.App;
+import com.mycompany.library_project.Style;
 import com.mycompany.library_project.Controller.List.ListitemController;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
+import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
 import com.mycompany.library_project.ModelShow.*;
 
 import javafx.application.Platform;
@@ -12,7 +14,7 @@ import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.*;
 import javafx.scene.*;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -37,6 +39,10 @@ public class HomeController implements Initializable {
     private Node[] nodeItem = new Node[100];
     private String[] data = { "Computer", "sifur", "wo9eur", "setue9t8ye5", "09", "87", "efuw" };
     private AlertMessage alertMessage = new AlertMessage();
+    private DialogMessage dialog = null;
+
+    @FXML
+    private StackPane stackPane;
 
     @FXML
     private AnchorPane acHomePaneToolbar;
@@ -212,29 +218,25 @@ public class HomeController implements Initializable {
                 }
             });
 
+            node.lookup("#btLogOut").setOnMouseClicked(new EventHandler<Event>() {
+
+                @Override
+                public void handle(Event event) {
+                    final JFXButton[] buttons = { buttonYes(), buttonNo() };
+                    dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການອອກຈາກລະບົບ ຫຼື ບໍ?",
+                            JFXDialog.DialogTransition.CENTER, buttons, false);
+                    dialog.showDialog();
+                }
+            });
+
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error: " + e.getMessage());
+
         }
     }
 
     @FXML
     private void sliderMenu(ActionEvent event) {
         // sliderMenuHamburger();
-    }
-
-    @FXML
-    private void LogOut(ActionEvent event) throws Exception {
-        Parent desktopRoot = FXMLLoader.load(App.class.getResource("Login.fxml"));
-        Scene sceneDesktop = new Scene(desktopRoot);
-        sceneDesktop.setFill(Color.TRANSPARENT);
-        // DesktopController.desktopStage = new Stage(StageStyle.TRANSPARENT);
-        LoginController.loginSatge.setTitle("FNS Library Management System - Login");
-        LoginController.loginSatge.setScene(sceneDesktop);
-        LoginController.loginSatge.show();
-
-        // Close this form
-        homeStage.close();
     }
 
     @FXML
@@ -343,4 +345,37 @@ public class HomeController implements Initializable {
         sliderMenuHamburger();
         // thItem.start();
     }
+
+    private JFXButton buttonYes() {
+        JFXButton btyes = new JFXButton("ຕົກລົງ");
+        btyes.setStyle(Style.buttonDialogStyle);
+        btyes.setOnAction(event -> {
+            try {
+                dialog.closeDialog();
+                Parent desktopRoot = FXMLLoader.load(App.class.getResource("Login.fxml"));
+                Scene sceneDesktop = new Scene(desktopRoot);
+                sceneDesktop.setFill(Color.TRANSPARENT);
+                // DesktopController.desktopStage = new Stage(StageStyle.TRANSPARENT);
+                LoginController.loginSatge.setTitle("FNS Library Management System - Login");
+                LoginController.loginSatge.setScene(sceneDesktop);
+                LoginController.loginSatge.show();
+
+                // Close this form
+                homeStage.close();
+            } catch (Exception e) {
+                alertMessage.showErrorMessage(stackPane, "Log out", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            }
+        });
+        return btyes;
+    }
+
+    private JFXButton buttonNo() {
+        JFXButton btno = new JFXButton("  ບໍ່  ");
+        btno.setStyle(Style.buttonDialogStyle);
+        btno.setOnAction(e -> {
+            dialog.closeDialog();
+        });
+        return btno;
+    }
+
 }

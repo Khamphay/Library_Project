@@ -38,6 +38,7 @@
                               <TableColumn fx:id="district" prefWidth="147.0" text="ເມືອງ" />
                               <TableColumn fx:id="province" prefWidth="135.0" text="ແຂວງ" />
                               <TableColumn fx:id="birthdate" prefWidth="95.0" text="ວ.ດ.ປ ເກີດ" />
+                              <TableColumn fx:id="studyYear" prefWidth="95.0" text="ຮຽນປິ" />
                               <TableColumn fx:id="depertment" prefWidth="200.0" text="ພາກວິຊາ" />
                               <TableColumn fx:id="date_register" prefWidth="109.0" text="ວ.ດ.ປ ລົງທະບຽນ" />
                               <TableColumn fx:id="date_exist" minWidth="4.0" prefWidth="102.0" text="ວ.ດ.ປ ໝົດອາຍຸ" />
@@ -98,13 +99,13 @@
                               <Text layoutX="14.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ໝົດສິດເປັນສະມາຊິກມີ 24 ຄົນ" wrappingWidth="233.13671875" />
                            </children>
                         </Pane>
-                        <Pane layoutX="282.0" layoutY="21.0" prefHeight="73.0" prefWidth="512.0" style="-fx-background-color: #D4D4F7; -fx-background-radius: 0.5em; -fx-border-color: #101D3D; -fx-border-width: 0px 0px 2px 0px;">
+                        <Pane layoutX="282.0" layoutY="21.0" prefHeight="73.0" prefWidth="383.0" style="-fx-background-color: #D4D4F7; -fx-background-radius: 0.5em; -fx-border-color: #101D3D; -fx-border-width: 0px 0px 2px 0px;">
                            <children>
-                              <Text layoutX="8.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ພາກວິຊາ ວິທະຍາສາດຄອມພິວເຕີມີ 120 ຄົນ " wrappingWidth="254.13671875" />
-                              <Text layoutX="8.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ພາກວິຊາ ເຄມີສາດມີ 120 ຄົນ " wrappingWidth="231.13671875" />
-                              <Text layoutX="8.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ພາກວິຊາ ຄະນິດສາດມີ 120 ຄົນ " wrappingWidth="231.13671875" />
-                              <Text layoutX="273.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ພາກວິຊາ ຟີຊິກສາດມີ 120 ຄົນ " wrappingWidth="231.13671875" />
-                              <Text layoutX="273.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ພາກວິຊາ ຊິວະສາດມີ 120 ຄົນ " wrappingWidth="231.13671875" />
+                              <Text layoutX="8.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ວິທະຍາສາດຄອມພິວເຕີມີ 120 ຄົນ " wrappingWidth="200.13671875" />
+                              <Text layoutX="8.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ເຄມີສາດມີ 120 ຄົນ " wrappingWidth="222.13671875" />
+                              <Text layoutX="8.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຄະນິດສາດມີ 120 ຄົນ " wrappingWidth="231.13671875" />
+                              <Text layoutX="231.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຟີຊິກສາດມີ 120 ຄົນ " wrappingWidth="138.13671875" />
+                              <Text layoutX="231.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊິວະສາດມີ 120 ຄົນ " wrappingWidth="144.13671875" />
                            </children>
                         </Pane>
                         <Separator layoutX="975.0" layoutY="63.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="0.0" AnchorPane.rightAnchor="265.0" />

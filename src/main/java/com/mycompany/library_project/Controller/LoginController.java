@@ -113,10 +113,6 @@ public class LoginController implements Initializable {
 
         dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ", "ຕ້ອງການອອກຈາກໂປຣແກຣມບໍ?", JFXDialog.DialogTransition.CENTER,
                 buttons, false);
-        // Todo: Or: dialog.setDialogProperty(stakePane, "ຄຳເຕືອນ",
-        // "ຕ້ອງການອອກຈາກໂປຣແກຣມບໍ?", JFXDialog.DialogTransition.CENTER,
-        // buttons);
-
         dialog.showDialog();
     }
 

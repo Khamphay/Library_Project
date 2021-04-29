@@ -48,7 +48,7 @@ public class DepartmentController implements Initializable {
         colName.setCellValueFactory(new PropertyValueFactory<>("depName"));
         colAction.setCellValueFactory(new PropertyValueFactory<>("action"));
         tableDepartment.setOnMouseClicked(e -> {
-            if (e.getClickCount() > 0 && tableDepartment.getSelectionModel().getSelectedItem() != null) {
+            if (e.getClickCount() >=2 && tableDepartment.getSelectionModel().getSelectedItem() != null) {
                 depertment = tableDepartment.getSelectionModel().getSelectedItem();
                 txtId.setText(depertment.getDepId());
                 txtName.setText(depertment.getDepName());
@@ -98,8 +98,7 @@ public class DepartmentController implements Initializable {
                             "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                 }
             } catch (Exception e) {
-                alertMessage.showErrorMessage(stackPane, "Edit Error", "Error: " + e.getMessage(), 4,
-                        Pos.BOTTOM_RIGHT);
+                alertMessage.showErrorMessage(stackPane, "Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             }
         });
 

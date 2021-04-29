@@ -70,7 +70,7 @@ public class BookCategoryController implements Initializable {
 
     @FXML
     private void selectTable(MouseEvent clickEvent) {
-        if (clickEvent.getClickCount() > 0 && tableCategory.getSelectionModel().getSelectedItem() != null) {
+        if (clickEvent.getClickCount() >= 2 && tableCategory.getSelectionModel().getSelectedItem() != null) {
             CategoryModel selectCatg = tableCategory.getSelectionModel().getSelectedItem();
             txtcatgId.setText(selectCatg.getCatgId());
             txtcatgName.setText(selectCatg.getCatgName());

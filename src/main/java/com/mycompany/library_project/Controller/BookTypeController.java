@@ -63,7 +63,7 @@ public class BookTypeController implements Initializable {
 
     @FXML
     private void selectTableType(MouseEvent clickEvent) {
-        if (clickEvent.getClickCount() > 0 && tableType.getSelectionModel().getSelectedItem() != null) {
+        if (clickEvent.getClickCount() >= 2 && tableType.getSelectionModel().getSelectedItem() != null) {
             type = tableType.getSelectionModel().getSelectedItem();
             txtTypeId.setText(type.getTypeId());
             txtTypeName.setText(type.getTypeName());

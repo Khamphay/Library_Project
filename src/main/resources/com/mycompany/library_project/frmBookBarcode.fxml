@@ -47,10 +47,11 @@
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <TableView fx:id="tableBarcode" layoutX="29.0" layoutY="31.0" prefHeight="494.0" prefWidth="569.0">
+                  <TableView fx:id="tableBarcode" layoutX="29.0" layoutY="31.0" prefHeight="494.0" prefWidth="569.0" tableMenuButtonVisible="true">
                     <columns>
                       <TableColumn fx:id="colBarcode" maxWidth="3500.0" prefWidth="141.0" text="ບາໂຄດ (Barcode)" />
-                      <TableColumn fx:id="colStatus" maxWidth="6000.0" prefWidth="319.0" text="ສະຖານະ" />
+                        <TableColumn fx:id="colTableLog" maxWidth="2000.0" text="ລ໋ອກຕູ້" />
+                      <TableColumn fx:id="colStatus" maxWidth="6000.0" prefWidth="300.0" text="ສະຖານະ" />
                         <TableColumn fx:id="colAction" maxWidth="2000.0" prefWidth="88.0" />
                     </columns>
                      <columnResizePolicy>
@@ -91,7 +92,7 @@
                         </JFXButton>
                         <TextField fx:id="txtBarcode" layoutX="26.0" layoutY="40.0" prefHeight="31.0" prefWidth="245.0" promptText="ລະຫັດ" />
                         <Label layoutX="28.0" layoutY="20.0" styleClass="BoonBaan-size-14" text="ລະຫັດ" />
-                        <Label layoutX="28.0" layoutY="99.0" styleClass="BoonBaan-size-14" text="ຊື່ພະນັກງານ" />
+                        <Label layoutX="30.0" layoutY="220.0" styleClass="BoonBaan-size-14" text="ຊື່ພະນັກງານ" />
                         <JFXButton id="btClick" fx:id="btCancel" alignment="CENTER" layoutX="202.0" layoutY="308.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE" AnchorPane.topAnchor="308.0">
                            <font>
                               <Font name="System Bold" size="12.0" />
@@ -107,7 +108,7 @@
                               <Insets left="-6.0" />
                            </padding>
                         </JFXButton>
-                        <ComboBox fx:id="cmbStatus" layoutX="26.0" layoutY="125.0" prefHeight="31.0" prefWidth="245.0" />
+                        <ComboBox fx:id="cmbStatus" layoutX="28.0" layoutY="240.0" prefHeight="31.0" prefWidth="245.0" />
                         <JFXButton id="btClick" fx:id="btPrintBarcode" alignment="CENTER" layoutX="17.0" layoutY="386.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="271.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ພີມບາໂຄດ (Print Barcode)" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
@@ -116,6 +117,10 @@
                               <Insets left="-6.0" />
                            </padding>
                         </JFXButton>
+                        <Label layoutX="28.0" layoutY="153.0" prefWidth="45.0" styleClass="BoonBaan-size-14" text="ລ໋ອກຕູ້" />
+                        <ComboBox fx:id="cmbTabLog_id" layoutX="28.0" layoutY="172.0" prefHeight="31.0" prefWidth="245.0" />
+                        <Label layoutX="28.0" layoutY="89.0" prefWidth="45.0" styleClass="BoonBaan-size-14" text="ເລກຕູ້" />
+                        <ComboBox fx:id="cmbTable" layoutX="28.0" layoutY="108.0" prefHeight="31.0" prefWidth="245.0" />
                      </children>
                   </AnchorPane>
                </children>

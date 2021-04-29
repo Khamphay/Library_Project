@@ -9,7 +9,6 @@
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -17,42 +16,35 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="783.0" prefWidth="1392.0" style="-fx-background-color: transparent;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.HomeController">
+<StackPane fx:id="stackPane" prefHeight="783.0" prefWidth="1392.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.HomeController">
    <children>
-      <BorderPane fx:id="bpDisplay" layoutX="260.0" layoutY="45.0" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f3f3f3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane fx:id="bpDisplay" minWidth="700.0" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f3f3f3;">
          <top>
             <AnchorPane fx:id="acHomePaneToolbar" prefHeight="55.0" prefWidth="1143.0" style="-fx-background-color: #101D3D;" BorderPane.alignment="CENTER">
                <children>
-                  <Label contentDisplay="CENTER" layoutX="132.0" layoutY="39.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" text="ລະບົບຈັດການ ຫໍສະໝຸດ ຄະນະວິທະຍາສາດທຳມະຊາດ" textAlignment="CENTER" textFill="WHITE" />
+                  <Label contentDisplay="CENTER" layoutX="132.0" layoutY="39.0" prefHeight="25.0" prefWidth="340.0" styleClass="label-size-16" text="ລະບົບຈັດການ ຫໍສະໝຸດ ຄະນະວິທະຍາສາດທຳມະຊາດ" textAlignment="CENTER" textFill="WHITE" />
                   <ImageView fitHeight="66.0" fitWidth="74.0" layoutX="58.0" layoutY="1.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="58.0" AnchorPane.topAnchor="1.0">
                      <image>
                         <Image url="@Icon/Logo_FNS.png" />
                      </image>
                   </ImageView>
-                  <Label contentDisplay="CENTER" layoutX="132.0" layoutY="16.0" prefHeight="25.0" prefWidth="434.0" styleClass="label-size-16" text="Faculty Of Natural Scince Library Management System" textAlignment="CENTER" textFill="WHITE" />
+                  <Label contentDisplay="CENTER" layoutX="132.0" layoutY="16.0" prefHeight="25.0" prefWidth="340.0" styleClass="label-size-16" text="FNS Library Management System" textAlignment="CENTER" textFill="WHITE" />
                   <JFXHamburger fx:id="humberger" layoutX="6.0" layoutY="24.0" prefHeight="33.0" prefWidth="45.0" />
-                  <Text fill="WHITE" layoutX="1198.433349609375" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-16" text="ທ.ຄຳໄຟ ເສຍລິມົວ" wrappingWidth="119.2166748046875" AnchorPane.rightAnchor="74.3499755859375" />
-                  <JFXButton id="#btLogOut" alignment="CENTER" cache="true" cacheHint="QUALITY" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="1337.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="31.0" onAction="#LogOut" pickOnBounds="false" prefHeight="31.0" prefWidth="31.0" style="-fx-background-radius: 15px 15px 15px 15px; -fx-background-color: #fff;" styleClass="button-color" stylesheets="@Style/buttonFont.css" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="19.0">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                  <HBox alignment="CENTER_LEFT" layoutX="673.0" layoutY="7.0" prefHeight="68.0" prefWidth="231.0" spacing="10.0" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
+                     <children>
+                        <GNAvatarView prefHeight="40.0" prefWidth="40.0" type="CIRCLE">
                            <image>
-                              <Image url="@Icon/shutdown_100pxColor.png" />
+                              <Image url="@Icon/male_user_100px.png" />
                            </image>
-                        </ImageView>
-                     </graphic>
-                     <tooltip>
-                        <Tooltip anchorLocation="CONTENT_TOP_RIGHT" text="ອອກຈາກລະບົບ" />
-                     </tooltip>
-                  </JFXButton>
-                  <GNAvatarView layoutX="1153.0" layoutY="17.0" prefHeight="40.0" prefWidth="40.0" type="CIRCLE" AnchorPane.rightAnchor="199.0">
-                     <image>
-                        <Image url="@Icon/male_user_100px.png" />
-                     </image>
-                  </GNAvatarView>
+                        </GNAvatarView>
+                        <Text boundsType="LOGICAL_VERTICAL_CENTER" fill="WHITE" lineSpacing="4.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-20" text="ທ.ຄຳໄຟ ເສຍລິມົວ" textOrigin="CENTER" wrappingWidth="181.2166748046875" />
+                     </children>
+                  </HBox>
                </children>
             </AnchorPane>
          </top>
@@ -188,4 +180,4 @@
          </center>
       </BorderPane>
    </children>
-</AnchorPane>
+</StackPane>

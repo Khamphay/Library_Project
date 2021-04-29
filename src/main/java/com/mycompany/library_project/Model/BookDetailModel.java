@@ -24,6 +24,7 @@ public class BookDetailModel implements DataAccessObject {
     private String catgId;
     private String typeId;
     private String tableLogId;
+    private String tableId;
     private String detail;
     private String status;
     private JFXButton action;
@@ -31,19 +32,21 @@ public class BookDetailModel implements DataAccessObject {
     public BookDetailModel() {
     }
 
-    public BookDetailModel(String bookId, String barcode) {
+    public BookDetailModel(String bookId, String tableLogId, String barcode) {
         this.bookId = bookId;
         this.barcode = (barcode);
+        this.tableLogId = tableLogId;
     }
 
-    public BookDetailModel(String barcode, String status, JFXButton action) {
+    public BookDetailModel(String barcode, String tableLogId, String status, JFXButton action) {
         this.barcode = barcode;
         this.status = status;
+        this.tableLogId = tableLogId;
         this.action = action;
     }
 
     public BookDetailModel(String bookId, String bookName, String ISBN, Integer page, Integer qty, String catgId,
-            String typeId, String tableLogId, String detail) {
+            String typeId, String tableId, String detail) {
 
         this.bookId = bookId;
         this.bookName = bookName;
@@ -52,13 +55,13 @@ public class BookDetailModel implements DataAccessObject {
         this.qty = qty;
         this.catgId = catgId;
         this.typeId = typeId;
-        this.tableLogId = tableLogId;
+        this.tableId = tableId;
         this.detail = detail;
 
     }
 
     public BookDetailModel(String bookId, String bookName, String ISBN, Integer page, Integer qty, String catgId,
-            String typeId, String detail, JFXButton action) {
+            String typeId, String tableId, String detail, JFXButton action) {
 
         this.bookId = bookId;
         this.bookName = bookName;
@@ -67,13 +70,14 @@ public class BookDetailModel implements DataAccessObject {
         this.qty = qty;
         this.catgId = catgId;
         this.typeId = typeId;
+        this.tableId = tableId;
         this.detail = detail;
         this.action = action;
 
     }
 
     public BookDetailModel(String bookId, String bookName, String ISBN, Integer page, Integer qty, Integer rentQty,
-            Integer reserQty, String barcode, String catgId, String typeId, String tableLogId, String detail) {
+            Integer reserQty, String barcode, String catgId, String typeId, String tableId, String detail) {
         this.bookId = bookId;
         this.bookName = bookName;
         this.page = page;
@@ -84,7 +88,7 @@ public class BookDetailModel implements DataAccessObject {
         this.barcode = barcode;
         this.catgId = catgId;
         this.typeId = typeId;
-        this.tableLogId = tableLogId;
+        this.tableId = tableId;
         this.detail = detail;
     }
 
@@ -176,6 +180,14 @@ public class BookDetailModel implements DataAccessObject {
         this.tableLogId = tableLogId;
     }
 
+    public String getTableId() {
+        return tableId;
+    }
+
+    public void setTableId(String tableId) {
+        this.tableId = tableId;
+    }
+
     public String getDetail() {
         return detail;
     }
@@ -200,22 +212,11 @@ public class BookDetailModel implements DataAccessObject {
         this.action = action;
     }
 
-    public String[] showBookType() throws SQLException {
-        sql = "Select typename From tbtype";
-        String[] type = null;
-        rs = con.createStatement().executeQuery(sql);
-        if (rs.getRow() > 0) {
-            while (rs.next()) {
-                type = new String[] { rs.getString(1) };
-            }
-        }
-        return type;
-    }
-
+    // Todo: Book Detail
     @Override
     public ResultSet findAll() throws SQLException {
         try {
-            sql = "call book_ShowAll();";
+            sql = "call book_detail_ShowAll();";
             rs = con.createStatement().executeQuery(sql);
             return rs;
         } catch (Exception e) {
@@ -255,11 +256,10 @@ public class BookDetailModel implements DataAccessObject {
         ps.setString(6, getDetail());
         ps.setString(7, getCatgId());
         ps.setString(8, getTypeId());
-        ps.setString(9, getTableLogId());
+        ps.setString(9, getTableId());
         return ps.executeUpdate();
     }
 
-   
     @Override
     public int updateData() throws SQLException, ParseException {
 
@@ -273,7 +273,14 @@ public class BookDetailModel implements DataAccessObject {
         ps.setString(6, getDetail());
         ps.setString(7, getCatgId());
         ps.setString(8, getTypeId());
-        ps.setString(9, getTableLogId());
+        ps.setString(9, getTableId());
+        return ps.executeUpdate();
+    }
+
+    public int updateBookQty(String book_id) throws SQLException {
+        sql = "Update tbbooks_detail set qty=qty-1 Where book_id=?";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, book_id);
         return ps.executeUpdate();
     }
 
@@ -286,6 +293,7 @@ public class BookDetailModel implements DataAccessObject {
         return ps.executeUpdate();
     }
 
+    // Todo: Book (Barcode)
     public ResultSet showBarcode(String book_id) {
         try {
             sql = "call  book_ShowByBookId(?);";
@@ -298,25 +306,26 @@ public class BookDetailModel implements DataAccessObject {
         }
     }
 
-    public int saveBookBarCode(String barcode, String bookid, String status) throws SQLException {
-
-        sql = "call book_Insert(?, ?, ?);";
+    public int saveBookBarCode(String barcode, String bookid, String table_log_id, String status) throws SQLException {
+        sql = "call book_Insert(?, ?, ?, ?);";
         ps = con.prepareStatement(sql);
         ps.setString(1, barcode);
         ps.setString(2, bookid);
-        ps.setString(3, status);
+        ps.setString(3, table_log_id);
+        ps.setString(4, status);
         return ps.executeUpdate();
 
     }
 
-    public int updateData(String book_id, String book_barcode, String new_book_barcode, String book_status)
-            throws SQLException, ParseException {
-        sql = "call book_Update(?, ?, ?, ?);";
+    public int updateData(String book_id, String old_barcode, String new_book_barcode, String table_log_id,
+            String book_status) throws SQLException, ParseException {
+        sql = "call book_Update(?, ?, ?, ?, ?);";
         ps = con.prepareStatement(sql);
-        ps.setString(1, book_barcode);
+        ps.setString(1, old_barcode);
         ps.setString(2, new_book_barcode);
         ps.setString(3, book_id);
-        ps.setString(4, book_status);
+        ps.setString(4, table_log_id);
+        ps.setString(5, book_status);
         return ps.executeUpdate();
     }
 
@@ -328,4 +337,40 @@ public class BookDetailModel implements DataAccessObject {
         return ps.executeUpdate();
     }
 
+    // Todo: Write Book
+    public ResultSet showWrite(String book_id) {
+        try {
+            sql = "call  write_Show('" + book_id + "');";
+            rs = con.createStatement().executeQuery(sql);
+            return rs;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public int saveWrite(String book_id, String author_id, String year) throws SQLException {
+        sql = "call write_Insert(?, ?, ?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, book_id);
+        ps.setString(2, author_id);
+        ps.setString(3, year);
+        return ps.executeUpdate();
+    }
+
+    public int updateWrite(String book_id, String newauthor_id, String oldauthor_id, String year) throws SQLException {
+        sql = "call write_Update(?, ?, ?, ?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, book_id);
+        ps.setString(2, newauthor_id);
+        ps.setString(3, oldauthor_id);
+        ps.setString(4, year);
+        return ps.executeUpdate();
+    }
+
+    public int deleteWrite(String book_id) throws SQLException {
+        sql = "call write_Update(?, ?, ?, ?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, book_id);
+        return ps.executeUpdate();
+    }
 }

@@ -8,7 +8,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
-import com.mycompany.library_project.config.ConfigDatabase;
+import com.mycompany.library_project.config.*;
 
 import javafx.event.*;
 import javafx.fxml.*;
@@ -26,7 +26,7 @@ public class ConfigServerController implements Initializable {
     public static boolean chack = false;
     private Double x, y;
     private AlertMessage alertMessage = new AlertMessage();
-    private ConfigDatabase config = new ConfigDatabase();
+    private CreateLogFile config = new CreateLogFile();
     private ValidationSupport validate = null;
 
     @FXML

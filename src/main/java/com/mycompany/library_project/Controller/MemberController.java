@@ -10,6 +10,7 @@ import com.mycompany.library_project.App;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.MemberModel;
+import com.mycompany.library_project.config.CreateLogFile;
 
 import javafx.collections.*;
 import javafx.event.*;
@@ -32,6 +33,7 @@ public class MemberController implements Initializable {
     private ArrayList<byte[]> byimg;
     public static Stage addMemberStage = null;
     public static boolean add = false;
+    private CreateLogFile logfile = new CreateLogFile();
 
     @FXML
     private BorderPane boderPane;
@@ -120,6 +122,7 @@ public class MemberController implements Initializable {
                 } catch (Exception e) {
                     alertMessage.showErrorMessage(stackPane, "Open New Form", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
+                    logfile.createLogFile("ເກີດບັນຫາໃນການເປືດຟອມລົງທະບຽນ", e);
                 }
             }
         });
@@ -149,6 +152,7 @@ public class MemberController implements Initializable {
                     } catch (Exception e) {
                         alertMessage.showErrorMessage(stackPane, "Open New Form", "Error: " + e.getMessage(), 4,
                                 Pos.BOTTOM_RIGHT);
+                        logfile.createLogFile("ເກີດບັນຫາໃນການເປືດຟອມແກ້ໂຂຂໍ້ມູນ", e);
                     }
                 } else {
                     alertMessage.showWarningMessage(stackPane, "Edit", "Please selecte the data and try again", 4,
@@ -213,6 +217,7 @@ public class MemberController implements Initializable {
                 }
             } catch (SQLException ex) {
                 alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                logfile.createLogFile("ມີບັນຫາໃນການລົບຂໍ້ມູນສະມາຊີກ", ex);
             }
         });
         return btyes;

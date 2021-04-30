@@ -9,6 +9,7 @@ import com.jfoenix.controls.*;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.EmployeeModel;
+import com.mycompany.library_project.config.CreateLogFile;
 
 import javafx.beans.value.*;
 import javafx.collections.*;
@@ -30,6 +31,7 @@ public class EmployeeController implements Initializable {
     private DialogMessage dialog = null;
     private ObservableList<EmployeeModel> data = null;
     private ArrayList<EmployeeModel> users = null;
+    private CreateLogFile logfile = new CreateLogFile();
 
     @FXML
     private StackPane stackPane;
@@ -96,7 +98,9 @@ public class EmployeeController implements Initializable {
                                 "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                     }
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage(stackPane, "Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                    alertMessage.showErrorMessage(stackPane, "Save Error", "Error: " + e.getMessage(), 4,
+                            Pos.BOTTOM_RIGHT);
+                    logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນພະນັກງານ", e);
                 }
             }
         });
@@ -127,6 +131,7 @@ public class EmployeeController implements Initializable {
                 } catch (Exception e) {
                     alertMessage.showErrorMessage(stackPane, "Edit Error", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
+                    logfile.createLogFile("ມີບັນຫາໃນການແກ້ໄຂຂໍ້ມູນພະນັກງານ", e);
                 }
             }
         });
@@ -247,6 +252,7 @@ public class EmployeeController implements Initializable {
                 } catch (SQLException e) {
                     alertMessage.showErrorMessage(stackPane, "Deleted", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
+                    logfile.createLogFile("ມີບັນຫາໃນການລົບຂໍ້ມູນພະນັກງານ", e);
                 }
             }
         });

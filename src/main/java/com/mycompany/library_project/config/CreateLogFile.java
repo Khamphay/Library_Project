@@ -1,19 +1,20 @@
 package com.mycompany.library_project.config;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.github.cliftonlabs.json_simple.*;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 
 import javafx.geometry.Pos;
 
-public class ConfigDatabase {
+public class CreateLogFile {
     private String fileConfig = "Server_infor.json";
     private AlertMessage alertMessage = new AlertMessage();
 
-    public ConfigDatabase() {
+    public CreateLogFile() {
     }
 
     public boolean chackFileConfig() {
@@ -59,4 +60,24 @@ public class ConfigDatabase {
             return null;
         }
     }
+
+    public boolean createLogFile(String title, Exception ex) {
+        try {
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            File file = new File("log file2.log");
+            // Todo: PrintWriter
+            FileWriter fw = new FileWriter(file, true);
+            PrintWriter pw = new PrintWriter(fw);
+            pw.write("\n=======" + dateFormat.format(LocalDateTime.now()) + " (" + title
+                    + ")===============================\nSummary: " + ex.getMessage() + "\n");
+            ex.printStackTrace(pw);
+            fw.close();
+            pw.close();
+            return true;
+        } catch (Exception e) {
+            alertMessage.showErrorMessage("Logfile Error", "Error: " + e.getMessage(), 4, Pos.TOP_CENTER);
+            return false;
+        }
+    }
+
 }

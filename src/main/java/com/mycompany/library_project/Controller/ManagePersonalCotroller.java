@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import com.mycompany.library_project.App;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
+import com.mycompany.library_project.config.CreateLogFile;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
@@ -18,6 +19,7 @@ public class ManagePersonalCotroller implements Initializable {
 
     private Parent subForm = null;
     private AlertMessage alertMessage = new AlertMessage();
+    private CreateLogFile logfile = new CreateLogFile();
 
     @FXML
     private Text txtMember, txtEmployee, txtAuthor, txtDep;
@@ -35,6 +37,7 @@ public class ManagePersonalCotroller implements Initializable {
             bpManagePerson.setCenter(subForm);
         } catch (Exception e) {
             alertMessage.showErrorMessage(bpManagePerson, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນສ່ວນບຸກຄົນມີບັນຫາ: "+form, e);
         }
     }
 

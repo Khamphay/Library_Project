@@ -16,6 +16,7 @@ import javafx.stage.*;
 import java.io.*;
 
 import com.mycompany.library_project.Model.*;
+import com.mycompany.library_project.config.CreateLogFile;
 
 import org.imgscalr.Scalr;
 
@@ -34,6 +35,7 @@ import java.awt.image.BufferedImage;
 public class RegisterController implements Initializable {
 
     private LocalDate localDateExit;
+    private CreateLogFile logfile = new CreateLogFile();
     public static MemberModel memberModel = null;
     private DepartmentModel depertment = new DepartmentModel();
     private ObservableList<String> items = null;
@@ -91,7 +93,7 @@ public class RegisterController implements Initializable {
         }
     }
 
-    private void loadIMager() {
+    private void loadImager() {
         try {
             final Stage stage = new Stage();
             stage.setTitle("Choose image");
@@ -121,13 +123,13 @@ public class RegisterController implements Initializable {
             }
         } catch (Exception e) {
             alertMessage.showErrorMessage("Choose Image", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            e.printStackTrace();
+            logfile.createLogFile("ເກີດບັນຫາໃນການເລືອກຮູບພາບ", e);
         }
     }
 
     @FXML
     private void setImage(ActionEvent event) {
-        loadIMager();
+        loadImager();
     }
 
     @FXML
@@ -164,6 +166,7 @@ public class RegisterController implements Initializable {
             }
         } catch (Exception e) {
             alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນສະມາຊີກ", e);
         }
     }
 
@@ -214,7 +217,7 @@ public class RegisterController implements Initializable {
 
             @Override
             public void handle(MouseEvent event) {
-                loadIMager();
+                loadImager();
             }
         });
 

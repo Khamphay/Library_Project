@@ -18,25 +18,30 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
+import com.mycompany.library_project.config.CreateLogFile;
 
 public class AddBookController implements Initializable {
 
-    private ObservableList<String> status = FXCollections.observableArrayList("ຫວ່າງ", "ກຳລົງຢືມ", "ເສຍ");;
-    private ObservableList<String> items = null, author_items = null;
+    private ResultSet rs = null;
+    private AlertMessage alertMessage = new AlertMessage();
     private TypeModel type = null;
     private CategoryModel category = null;
     private TableLogModel table = null;
-    public static BookDetailModel addBook = null;
-    private ArrayList<String> arr_type, arr_category;
-    private int index_type, index_category;
-    private AlertMessage alertMessage = new AlertMessage();
-    private String bookid = "";
-    private ResultSet rs = null;
-    private ArrayList<AuthorModel> author_id = null;
     private AuthorModel author = null;
+    public static BookDetailModel addBook = null;
+    private CreateLogFile logfile = new CreateLogFile();
+
+    private ArrayList<AuthorModel> author_id = null;
+    private ArrayList<String> arr_type, arr_category;
+
+    private ObservableList<String> status = FXCollections.observableArrayList("ຫວ່າງ", "ກຳລົງຢືມ", "ເສຍ");;
+    private ObservableList<String> items = null, author_items = null;
+
     private String[] arr_author = new String[6];
     private String[] oldarr_author = new String[6];
 
+    private int index_type, index_category;
+    private String bookid = "";
     private double x, y;
 
     @FXML
@@ -82,7 +87,7 @@ public class AddBookController implements Initializable {
             }
         } catch (Exception e) {
             alertMessage.showErrorMessage("Gennerate barcode", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            e.printStackTrace();
+            logfile.createLogFile("ມີບັນຫາໃນການສ້າງ Barcode ປຶ້ມ", e);
         }
     }
 
@@ -508,6 +513,7 @@ public class AddBookController implements Initializable {
             }
         } catch (Exception e) {
             alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນປຶ້ມ", e);
         }
     }
 

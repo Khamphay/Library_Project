@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import com.mycompany.library_project.App;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
+import com.mycompany.library_project.config.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
@@ -36,6 +37,8 @@ public class ManageBookController implements Initializable {
             bpManageBook.setCenter(subForm);
         } catch (Exception e) {
             alertMessage.showErrorMessage(bpManageBook, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            CreateLogFile config = new CreateLogFile();
+            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: " + form, e);
         }
     }
 

@@ -23,6 +23,7 @@ import com.jfoenix.controls.JFXDialog;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.CategoryModel;
+import com.mycompany.library_project.config.CreateLogFile;
 
 public class BookCategoryController implements Initializable {
 
@@ -31,6 +32,7 @@ public class BookCategoryController implements Initializable {
     private ResultSet rs = null;
     private DialogMessage dialog = null;
     private AlertMessage alertMessage = new AlertMessage();
+    private CreateLogFile logfile = new CreateLogFile();
 
     @FXML
     private StackPane stakePane;
@@ -85,7 +87,7 @@ public class BookCategoryController implements Initializable {
     @FXML
     private void Save(ActionEvent event) {
         try {
-            if (txtcatgId.getText().equals("") && txtcatgName.getText().equals("")) {
+            if (!txtcatgId.getText().equals("") && !txtcatgName.getText().equals("")) {
                 category = new CategoryModel(txtcatgId.getText(), txtcatgName.getText());
                 if (category.saveData() > 0) {
                     showData();
@@ -100,13 +102,14 @@ public class BookCategoryController implements Initializable {
 
         } catch (Exception e) {
             alertMessage.showErrorMessage(stakePane, "Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນໝວດປຶ້ມ", e);
         }
     }
 
     @FXML
     private void Update(ActionEvent event) {
         try {
-            if (txtcatgId.getText().equals("") && txtcatgName.getText().equals("")) {
+            if (!txtcatgId.getText().equals("") && !txtcatgName.getText().equals("")) {
                 category = new CategoryModel(txtcatgId.getText(), txtcatgName.getText());
                 if (category.updateData() > 0) {
                     showData();
@@ -120,6 +123,7 @@ public class BookCategoryController implements Initializable {
             }
         } catch (Exception e) {
             alertMessage.showErrorMessage(stakePane, "Edit", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("ມີບັນຫາໃນການແກ້ໄຂຂໍ້ມູນໝວດປຶ້ມ", e);
         }
     }
 
@@ -165,6 +169,7 @@ public class BookCategoryController implements Initializable {
                 }
             } catch (SQLException ex) {
                 alertMessage.showErrorMessage(stakePane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                logfile.createLogFile("ມີບັນຫາໃນການລົບຂໍ້ມູນໝວດປຶ້ມ", ex);
             }
         });
         return btyes;

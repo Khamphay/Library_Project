@@ -19,6 +19,7 @@ import com.jfoenix.controls.JFXDialog;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.TableLogModel;
+import com.mycompany.library_project.config.CreateLogFile;
 
 public class TableLogController implements Initializable {
 
@@ -29,6 +30,7 @@ public class TableLogController implements Initializable {
     private ObservableList<TreeItem<TableLogModel>> data = FXCollections.observableArrayList();
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = null;
+    private CreateLogFile logfile = new CreateLogFile();
 
     @FXML
     private StackPane stackPane;
@@ -146,6 +148,7 @@ public class TableLogController implements Initializable {
                             result = (tableLogModel.saveData() > 0) ? "Save Completed" : null; // Todo: if...else
                         } catch (Exception e) {
                             tableLogModel.deleteTable(txtId.getText());
+                            logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນລ໋ອກຕູ້", e);
                             return;
                         }
                     }
@@ -166,6 +169,7 @@ public class TableLogController implements Initializable {
 
         } catch (Exception e) {
             alertMessage.showErrorMessage(stackPane, "Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນຕູ້", e);
         }
     }
 
@@ -186,6 +190,7 @@ public class TableLogController implements Initializable {
         }
         } catch (Exception e) {
             alertMessage.showErrorMessage(stackPane, "Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("ມີບັນຫາໃນການແກ້ໄຂຂໍ້ມູນລ໋ອກຕູ້", e);
         }
     }
 
@@ -215,7 +220,7 @@ public class TableLogController implements Initializable {
 
             });
         } catch (Exception e) {
-            System.out.println("Error on action root: " + e.getMessage());
+
         }
         return actionRoot;
     }
@@ -240,7 +245,6 @@ public class TableLogController implements Initializable {
 
             });
         } catch (Exception e) {
-            alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
         return actionSubRoot;
     }
@@ -262,6 +266,7 @@ public class TableLogController implements Initializable {
                 }
             } catch (Exception ex) {
                 alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                logfile.createLogFile("ມີບັນຫາໃນການລົບຂໍ້ມູນຕູ້", ex);
             }
         });
         return btyes;
@@ -291,6 +296,7 @@ public class TableLogController implements Initializable {
                 }
             } catch (SQLException ex) {
                 alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                logfile.createLogFile("ມີບັນຫາໃນການລົບຂໍ້ມູນລ໋ອກຕູ້", ex);
             }
         });
         return btyes;

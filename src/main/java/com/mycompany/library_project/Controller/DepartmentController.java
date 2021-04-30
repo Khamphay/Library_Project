@@ -8,6 +8,7 @@ import com.jfoenix.controls.*;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.DepartmentModel;
+import com.mycompany.library_project.config.CreateLogFile;
 
 import javafx.collections.*;
 import javafx.fxml.*;
@@ -24,6 +25,7 @@ public class DepartmentController implements Initializable {
     private ObservableList<DepartmentModel> data = null;
     private DialogMessage dialog = null;
     private AlertMessage alertMessage = new AlertMessage();
+    private CreateLogFile logfile = new CreateLogFile();
 
     @FXML
     private StackPane stackPane;
@@ -77,6 +79,7 @@ public class DepartmentController implements Initializable {
             } catch (Exception ex) {
                 alertMessage.showErrorMessage(stackPane, "Save Error", "Error: " + ex.getMessage(), 4,
                         Pos.BOTTOM_RIGHT);
+                logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນພາກວິຊາ", ex);
             }
         });
 
@@ -99,6 +102,7 @@ public class DepartmentController implements Initializable {
                 }
             } catch (Exception e) {
                 alertMessage.showErrorMessage(stackPane, "Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                logfile.createLogFile("ມີບັນຫາໃນການແກ້ໄຂຂໍ້ມູນພາກວິຊາ", e);
             }
         });
 
@@ -172,6 +176,7 @@ public class DepartmentController implements Initializable {
                 }
             } catch (Exception e) {
                 alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                logfile.createLogFile("ມີບັນຫາໃນການລົບຂໍ້ມູນພາກວິຊາ", e);
             }
         });
         return btyes;

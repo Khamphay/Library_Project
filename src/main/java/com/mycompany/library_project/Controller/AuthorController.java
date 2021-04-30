@@ -8,6 +8,7 @@ import com.jfoenix.controls.*;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.AuthorModel;
+import com.mycompany.library_project.config.CreateLogFile;
 
 import javafx.beans.value.*;
 import javafx.collections.*;
@@ -28,6 +29,7 @@ public class AuthorController implements Initializable {
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = null;
     private ObservableList<AuthorModel> data = null;
+    private CreateLogFile logfile = new CreateLogFile();
 
     @FXML
     private StackPane stackPane;
@@ -96,6 +98,7 @@ public class AuthorController implements Initializable {
                 } catch (Exception e) {
                     alertMessage.showErrorMessage(stackPane, "Save Error", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
+                    logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນນັກແຕ່ງປຶ້ມ", e);
                 }
             }
         });
@@ -126,6 +129,7 @@ public class AuthorController implements Initializable {
                 } catch (Exception e) {
                     alertMessage.showErrorMessage(stackPane, "Edit Error", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
+                    logfile.createLogFile("ມີບັນຫາໃນການແກ້ໄຂຂໍ້ມູນນັກແຕ່ງປຶ້ມ", e);
                 }
             }
         });
@@ -166,7 +170,6 @@ public class AuthorController implements Initializable {
                     }
                 }
             }
-
         });
     }
 
@@ -244,6 +247,7 @@ public class AuthorController implements Initializable {
                 } catch (SQLException e) {
                     alertMessage.showErrorMessage(stackPane, "Deleted", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
+                    logfile.createLogFile("ມີບັນຫາໃນການລົບຂໍ້ມູນນັກແຕ່ງປຶ້ມ", e);
                 }
             }
         });

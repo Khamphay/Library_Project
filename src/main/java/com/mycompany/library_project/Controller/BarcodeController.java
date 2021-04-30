@@ -10,6 +10,7 @@ import com.jfoenix.controls.*;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
+import com.mycompany.library_project.config.CreateLogFile;
 
 import javafx.collections.*;
 import javafx.event.*;
@@ -34,6 +35,7 @@ public class BarcodeController implements Initializable {
     private Double x, y;
     private ObservableList<String> items = null;
     private TableLogModel table = null;
+    private CreateLogFile logfile = new CreateLogFile();
 
     @FXML
     private StackPane stackPane;
@@ -85,6 +87,7 @@ public class BarcodeController implements Initializable {
                     }
                 } catch (Exception e) {
                     alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                    logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນ Barcode ປຶ້ມ", e);
                 }
             }
 
@@ -106,6 +109,7 @@ public class BarcodeController implements Initializable {
                     }
                 } catch (Exception e) {
                     alertMessage.showErrorMessage("Edited", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                    logfile.createLogFile("ມີບັນຫາໃນການແກ້ໄຂຂໍ້ມູນ Barcode ປຶ້ມ", e);
                 }
             }
 

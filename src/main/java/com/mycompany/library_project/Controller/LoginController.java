@@ -3,7 +3,7 @@ package com.mycompany.library_project.Controller;
 import com.jfoenix.controls.*;
 import com.mycompany.library_project.*;
 import com.mycompany.library_project.ControllerDAOModel.*;
-import com.mycompany.library_project.config.ConfigDatabase;
+import com.mycompany.library_project.config.*;
 
 import org.controlsfx.validation.*;
 
@@ -29,7 +29,7 @@ public class LoginController implements Initializable {
     private ValidationSupport validRules;
     private DialogMessage dialog = null;
     private Connection con = null;
-    private ConfigDatabase server = null;
+    private CreateLogFile server = null;
     private AlertMessage alertMessage = new AlertMessage();
     
     @FXML
@@ -131,7 +131,7 @@ public class LoginController implements Initializable {
 
             @Override
             public void run() {
-                server = new ConfigDatabase();
+                server = new CreateLogFile();
                 if (server.chackFileConfig() == true) {
                     ConfigServerController.chack = true;
                     String[] infor = server.getServerInfor();
@@ -183,6 +183,7 @@ public class LoginController implements Initializable {
             ConfigServerController.configStage.show();
         } catch (Exception e) {
             alertMessage.showErrorMessage("Open Config", "Error: " + e.getMessage(), 4, Pos.TOP_CENTER);
+            server.createLogFile("ການເຂົ້າອອກລະບົບມິບັນຫາ", e);
         }
     }
 

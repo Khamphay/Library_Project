@@ -22,7 +22,6 @@ public class EmployeeModel implements DataAccessObject {
     private String email;
     private String user;
     private String password;
-    private JFXButton action;
 
     public EmployeeModel() {
 
@@ -44,16 +43,6 @@ public class EmployeeModel implements DataAccessObject {
         this.email = email;
     }
 
-    public EmployeeModel(String employeeId, String firstName, String lastName, String gender, String tel, String email,
-            JFXButton action) {
-        this.employeeId = employeeId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.tel = tel;
-        this.email = email;
-        this.action = action;
-    }
 
     public String getEmployeeId() {
         return employeeId;
@@ -117,14 +106,6 @@ public class EmployeeModel implements DataAccessObject {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public JFXButton getAction() {
-        return action;
-    }
-
-    public void setAction(JFXButton action) {
-        this.action = action;
     }
 
     @Override

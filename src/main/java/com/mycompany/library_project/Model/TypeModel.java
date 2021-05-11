@@ -19,7 +19,6 @@ public class TypeModel implements DataAccessObject {
 
     private String typeId;
     private String typeName;
-    private JFXButton action;
 
     public TypeModel() {
 
@@ -32,12 +31,6 @@ public class TypeModel implements DataAccessObject {
     public TypeModel(String typeId, String typeName) {
         this.typeId = typeId;
         this.typeName = typeName;
-    }
-
-    public TypeModel(String typeId, String typeName, JFXButton action) {
-        this.typeId = typeId;
-        this.typeName = typeName;
-        this.action = action;
     }
 
     public String getTypeId() {
@@ -54,14 +47,6 @@ public class TypeModel implements DataAccessObject {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
-    }
-
-    public JFXButton getAction() {
-        return action;
-    }
-
-    public void setAction(JFXButton action) {
-        this.action = action;
     }
 
     @Override

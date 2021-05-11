@@ -21,6 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.util.Callback;
 
 public class EmployeeController implements Initializable {
 
@@ -184,7 +185,7 @@ public class EmployeeController implements Initializable {
             rs = employee.findAll();
             while (rs.next()) {
                 data.add(new EmployeeModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
-                        rs.getString(5), rs.getString(6), buttonDelete(rs.getString(1))));
+                        rs.getString(5), rs.getString(6)));
                 users.add(new EmployeeModel(rs.getString(1), rs.getString(7), rs.getString(8)));
             }
             tableEmployee.setItems(data);
@@ -202,33 +203,51 @@ public class EmployeeController implements Initializable {
         rdbMale.setSelected(true);
 
         initTable();
-        showData();
+        addButtonToTable();
         initEvents();
+        showData();
     }
 
-    private JFXButton buttonDelete(String employee_id) {
-        final JFXButton delete = new JFXButton("ລົບ");
-        final ImageView imgView = new ImageView();
-        imgView.setFitWidth(20);
-        imgView.setFitHeight(20);
-        imgView.setImage(new Image("/com/mycompany/library_project/Icon/bin.png"));
-        delete.setStyle(Style.buttonStyle);
-        delete.setId(employee_id);
-        delete.setGraphic(imgView);
-
-        delete.setOnAction(new EventHandler<ActionEvent>() {
+    private void addButtonToTable() {
+        TableColumn<EmployeeModel, Void> colAtion = new TableColumn<>("Action");
+        Callback<TableColumn<EmployeeModel, Void>, TableCell<EmployeeModel, Void>> cellFactory = new Callback<TableColumn<EmployeeModel, Void>, TableCell<EmployeeModel, Void>>() {
 
             @Override
-            public void handle(ActionEvent event) {
-                JFXButton[] buttons = { buttonYes(delete.getId()), buttonNo(), buttonCancel() };
-                dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
-                        JFXDialog.DialogTransition.CENTER, buttons, false);
-                dialog.showDialog();
+            public TableCell<EmployeeModel, Void> call(TableColumn<EmployeeModel, Void> param) {
+                final TableCell<EmployeeModel, Void> cell = new TableCell<EmployeeModel, Void>() {
+                    final JFXButton delete = new JFXButton("ລົບ");
+
+                    {
+                        final ImageView imgView = new ImageView();
+                        imgView.setFitWidth(20);
+                        imgView.setFitHeight(20);
+                        imgView.setImage(new Image("/com/mycompany/library_project/Icon/bin.png"));
+                        delete.setStyle(Style.buttonStyle);
+                        delete.setGraphic(imgView);
+
+                        delete.setOnAction(new EventHandler<ActionEvent>() {
+
+                            @Override
+                            public void handle(ActionEvent event) {
+                                JFXButton[] buttons = {
+                                        buttonYes(tableEmployee.getItems().get(getIndex()).getEmployeeId()), buttonNo(),
+                                        buttonCancel() };
+                                dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
+                                        JFXDialog.DialogTransition.CENTER, buttons, false);
+                                dialog.showDialog();
+                            }
+
+                        });
+                    }
+
+                };
+                return cell;
             }
 
-        });
+        };
+        colAtion.setCellFactory(cellFactory);
+        tableEmployee.getColumns().add(colAtion);
 
-        return delete;
     }
 
     protected JFXButton buttonYes(String id) {

@@ -342,7 +342,6 @@ public class AddBookController implements Initializable {
 
                 // Todo: Set author id
                 setAuthoID(1, cmbAuthor2.getSelectionModel().getSelectedItem());
-                int s = arr_author.length;
             } else {
                 cmbAuthor2.setVisible(false);
                 arr_author[1] = null;

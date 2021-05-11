@@ -21,6 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class BarcodeController implements Initializable {
 
@@ -210,7 +211,7 @@ public class BarcodeController implements Initializable {
             rs = addBarcode.showBarcode(book_id);
             while (rs.next()) {
                 data.add(new BookDetailModel(rs.getString("barcode"), rs.getString("table_log_id"),
-                        rs.getString("status"), getAction(rs.getString("barcode"))));
+                        rs.getString("status")));
                 book.add(rs.getString("book_id"));
             }
             tableBarcode.setItems(data);
@@ -240,28 +241,42 @@ public class BarcodeController implements Initializable {
         showBarcode(BookController._book_id);
     }
 
-    private JFXButton getAction(String id) {
-
-        JFXButton delete = new JFXButton("ລົບ");
-        final ImageView imageView = new ImageView();
-
-        imageView.setImage(new Image("/com/mycompany/library_project/Icon/bin.png"));
-        imageView.setFitHeight(20);
-        imageView.setFitWidth(20);
-        delete.setStyle(Style.buttonStyle);
-        delete.setGraphic(imageView);
-        delete.setId(id);
-        delete.setOnAction(new EventHandler<ActionEvent>() {
+    private void addButtonToTable() {
+        TableColumn<BookDetailModel, Void> colAtion = new TableColumn<>("Action");
+        Callback<TableColumn<BookDetailModel, Void>, TableCell<BookDetailModel, Void>> cellFactory = new Callback<TableColumn<BookDetailModel, Void>, TableCell<BookDetailModel, Void>>() {
 
             @Override
-            public void handle(ActionEvent event) {
-                JFXButton[] buttons = { buttonYes(delete.getId()), buttonNo(), buttonCancel() };
-                dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
-                        JFXDialog.DialogTransition.CENTER, buttons, false);
-                dialog.showDialog();
+            public TableCell<BookDetailModel, Void> call(TableColumn<BookDetailModel, Void> param) {
+                final TableCell<BookDetailModel, Void> cell = new TableCell<BookDetailModel, Void>() {
+                    final JFXButton delete = new JFXButton("ລົບ");
+
+                    {
+                        final ImageView imageView = new ImageView();
+                        imageView.setImage(new Image("/com/mycompany/library_project/Icon/bin.png"));
+                        imageView.setFitHeight(20);
+                        imageView.setFitWidth(20);
+                        delete.setStyle(Style.buttonStyle);
+                        delete.setGraphic(imageView);
+                        delete.setOnAction(new EventHandler<ActionEvent>() {
+
+                            @Override
+                            public void handle(ActionEvent event) {
+                                JFXButton[] buttons = { buttonYes(tableBarcode.getItems().get(getIndex()).getBarcode()), buttonNo(), buttonCancel() };
+                                dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
+                                        JFXDialog.DialogTransition.CENTER, buttons, false);
+                                dialog.showDialog();
+                            }
+                        });
+                    }
+
+                };
+                return cell;
             }
-        });
-        return delete;
+
+        };
+        colAtion.setCellFactory(cellFactory);
+        tableBarcode.getColumns().add(colAtion);
+
     }
 
     private JFXButton buttonYes(String barcodeid) {

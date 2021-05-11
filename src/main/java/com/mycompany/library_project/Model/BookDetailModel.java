@@ -27,7 +27,6 @@ public class BookDetailModel implements DataAccessObject {
     private String tableId;
     private String detail;
     private String status;
-    private JFXButton action;
 
     public BookDetailModel() {
     }
@@ -36,13 +35,6 @@ public class BookDetailModel implements DataAccessObject {
         this.bookId = bookId;
         this.barcode = (barcode);
         this.tableLogId = tableLogId;
-    }
-
-    public BookDetailModel(String barcode, String tableLogId, String status, JFXButton action) {
-        this.barcode = barcode;
-        this.status = status;
-        this.tableLogId = tableLogId;
-        this.action = action;
     }
 
     public BookDetailModel(String bookId, String bookName, String ISBN, Integer page, Integer qty, String catgId,
@@ -57,22 +49,6 @@ public class BookDetailModel implements DataAccessObject {
         this.typeId = typeId;
         this.tableId = tableId;
         this.detail = detail;
-
-    }
-
-    public BookDetailModel(String bookId, String bookName, String ISBN, Integer page, Integer qty, String catgId,
-            String typeId, String tableId, String detail, JFXButton action) {
-
-        this.bookId = bookId;
-        this.bookName = bookName;
-        this.ISBN = ISBN;
-        this.page = page;
-        this.qty = qty;
-        this.catgId = catgId;
-        this.typeId = typeId;
-        this.tableId = tableId;
-        this.detail = detail;
-        this.action = action;
 
     }
 
@@ -204,14 +180,6 @@ public class BookDetailModel implements DataAccessObject {
         this.status = status;
     }
 
-    public JFXButton getAction() {
-        return action;
-    }
-
-    public void setAction(JFXButton action) {
-        this.action = action;
-    }
-
     // Todo: Book Detail
     @Override
     public ResultSet findAll() throws SQLException {
@@ -294,6 +262,16 @@ public class BookDetailModel implements DataAccessObject {
     }
 
     // Todo: Book (Barcode)
+    public ResultSet findBookByBarcode(String barcode) throws SQLException {
+        try {
+            sql = "call book_detail_ShowByBarcode('" + barcode + "');";
+            rs = con.createStatement().executeQuery(sql);
+            return rs;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public ResultSet showBarcode(String book_id) {
         try {
             sql = "call  book_ShowByBookId(?);";
@@ -364,6 +342,14 @@ public class BookDetailModel implements DataAccessObject {
         ps.setString(2, newauthor_id);
         ps.setString(3, oldauthor_id);
         ps.setString(4, year);
+        return ps.executeUpdate();
+    }
+
+    public int updateStatus(String barcode, String status) throws SQLException {
+        sql = " call book_UpdateStatus(?, ?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, barcode);
+        ps.setString(2, status);
         return ps.executeUpdate();
     }
 

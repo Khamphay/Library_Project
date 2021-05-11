@@ -16,7 +16,6 @@ public class DepartmentModel implements DataAccessObject {
 
     private String depId;
     private String depName;
-    private JFXButton action;
 
     public DepartmentModel() {
     }
@@ -24,12 +23,6 @@ public class DepartmentModel implements DataAccessObject {
     public DepartmentModel(String depId, String depName) {
         this.depId = depId;
         this.depName = depName;
-    }
-
-    public DepartmentModel(String depId, String depName, JFXButton action) {
-        this.depId = depId;
-        this.depName = depName;
-        this.action = action;
     }
 
     public String getDepId() {
@@ -46,14 +39,6 @@ public class DepartmentModel implements DataAccessObject {
 
     public void setDepName(String depName) {
         this.depName = depName;
-    }
-
-    public JFXButton getAction() {
-        return action;
-    }
-
-    public void setAction(JFXButton action) {
-        this.action = action;
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.mycompany.library_project.Controller.List.ListitemController;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
 import com.mycompany.library_project.ModelShow.*;
+import com.mycompany.library_project.config.CreateLogFile;
 
 import javafx.application.Platform;
 import javafx.event.*;
@@ -112,7 +113,9 @@ public class HomeController implements Initializable {
             subroot = FXMLLoader.load(App.class.getResource(subForm));
             bpDisplay.setCenter(subroot);
         } catch (Exception e) {
-            e.printStackTrace();
+            alertMessage.showErrorMessage( "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            CreateLogFile config = new CreateLogFile();
+            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: " + subForm, e);
         }
     }
 

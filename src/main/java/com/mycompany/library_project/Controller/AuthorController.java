@@ -20,6 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.util.Callback;
 
 public class AuthorController implements Initializable {
 
@@ -49,9 +50,6 @@ public class AuthorController implements Initializable {
     @FXML
     private TableColumn<AuthorModel, String> colId, colFname, colSname, colGender, colTel, colEmail;
 
-    @FXML
-    private TableColumn<AuthorModel, JFXButton> colAction;
-
     private void initTable() {
         colId.setCellValueFactory(new PropertyValueFactory<>("author_id"));
         colFname.setCellValueFactory(new PropertyValueFactory<>("full_name"));
@@ -59,7 +57,6 @@ public class AuthorController implements Initializable {
         colGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
         colTel.setCellValueFactory(new PropertyValueFactory<>("tel"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        colAction.setCellValueFactory(new PropertyValueFactory<>("action"));
     }
 
     private void clearText() {
@@ -180,7 +177,7 @@ public class AuthorController implements Initializable {
             rs = author.findAll();
             while (rs.next()) {
                 data.add(new AuthorModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
-                        rs.getString(5), rs.getString(6), buttonDelete(rs.getString(1))));
+                        rs.getString(5), rs.getString(6)));
             }
             tableAuthor.setItems(data);
         } catch (Exception e) {
@@ -197,33 +194,51 @@ public class AuthorController implements Initializable {
         rdbMale.setSelected(true);
 
         initTable();
+        addButtonToTable();
         showData();
         initEvents();
     }
 
-    private JFXButton buttonDelete(String author_id) {
-        final JFXButton delete = new JFXButton("ລົບ");
-        final ImageView imgView = new ImageView();
-        imgView.setFitWidth(20);
-        imgView.setFitHeight(20);
-        imgView.setImage(new Image("/com/mycompany/library_project/Icon/bin.png"));
-        delete.setStyle(Style.buttonStyle);
-        delete.setId(author_id);
-        delete.setGraphic(imgView);
-
-        delete.setOnAction(new EventHandler<ActionEvent>() {
+    private void addButtonToTable() {
+        TableColumn<AuthorModel, Void> colAtion = new TableColumn<>("Action");
+        Callback<TableColumn<AuthorModel, Void>, TableCell<AuthorModel, Void>> cellFactory = new Callback<TableColumn<AuthorModel, Void>, TableCell<AuthorModel, Void>>() {
 
             @Override
-            public void handle(ActionEvent event) {
-                JFXButton[] buttons = { buttonYes(delete.getId()), buttonNo(), buttonCancel() };
-                dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
-                        JFXDialog.DialogTransition.CENTER, buttons, false);
-                dialog.showDialog();
+            public TableCell<AuthorModel, Void> call(TableColumn<AuthorModel, Void> param) {
+                final TableCell<AuthorModel, Void> cell = new TableCell<AuthorModel, Void>() {
+                    final JFXButton delete = new JFXButton("ລົບ");
+
+                    {
+                        final ImageView imgView = new ImageView();
+                        imgView.setFitWidth(20);
+                        imgView.setFitHeight(20);
+                        imgView.setImage(new Image("/com/mycompany/library_project/Icon/bin.png"));
+                        delete.setStyle(Style.buttonStyle);
+                        delete.setGraphic(imgView);
+
+                        delete.setOnAction(new EventHandler<ActionEvent>() {
+
+                            @Override
+                            public void handle(ActionEvent event) {
+                                JFXButton[] buttons = {
+                                        buttonYes(tableAuthor.getItems().get(getIndex()).getAuthor_id()), buttonNo(),
+                                        buttonCancel() };
+                                dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
+                                        JFXDialog.DialogTransition.CENTER, buttons, false);
+                                dialog.showDialog();
+                            }
+
+                        });
+                    }
+
+                };
+                return cell;
             }
 
-        });
+        };
+        colAtion.setCellFactory(cellFactory);
+        tableAuthor.getColumns().add(colAtion);
 
-        return delete;
     }
 
     protected JFXButton buttonYes(String id) {

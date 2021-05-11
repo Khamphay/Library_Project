@@ -65,58 +65,57 @@
                                     <TableColumn fx:id="colType" prefWidth="130.0" styleClass="tablecolumn" text="ປະເພດ" />
                                     <TableColumn fx:id="colDateRent" maxWidth="3000.0" prefWidth="130.0" styleClass="tablecolumn" text="ວັນທີຢືມ" />
                                     <TableColumn fx:id="colDateSend" maxWidth="3000.0" prefWidth="234.0" styleClass="tablecolumn" text="ວັນທີສົ່ງ" />
-                                    <TableColumn fx:id="colAction" maxWidth="2000.0" prefWidth="90.0" styleClass="tablecolumn" text="Action" />
                                  </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
                               </TableView>
-                              <DatePicker editable="false" layoutX="969.0" layoutY="123.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີສົ່ງປຶ້ມ" showWeekNumbers="true" style="-fx-text-fill: #fff;" styleClass="date-picker">
+                              <DatePicker fx:id="sendDate" editable="false" layoutX="969.0" layoutY="123.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີສົ່ງປຶ້ມ" showWeekNumbers="true" style="-fx-text-fill: #fff;" styleClass="date-picker">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </DatePicker>
-                              <TextField editable="false" layoutX="177.0" layoutY="123.0" prefHeight="27.0" prefWidth="260.0" promptText="ຊື່ປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
+                              <TextField fx:id="txtBookName" editable="false" layoutX="177.0" layoutY="123.0" prefHeight="27.0" prefWidth="260.0" promptText="ຊື່ປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
                                  <font>
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>
                               </TextField>
-                              <TextField layoutX="14.0" layoutY="123.0" prefHeight="27.0" prefWidth="140.0" promptText="ລະຫັດປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
+                              <TextField fx:id="txtBookId" layoutX="14.0" layoutY="123.0" prefHeight="27.0" prefWidth="140.0" promptText="ລະຫັດປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
                                  <font>
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>
                               </TextField>
-                              <TextField editable="false" layoutX="463.0" layoutY="43.0" prefHeight="27.0" prefWidth="230.0" promptText="ນາມສະກຸນ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
+                              <TextField fx:id="txtSurName" editable="false" layoutX="463.0" layoutY="43.0" prefHeight="27.0" prefWidth="230.0" promptText="ນາມສະກຸນ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
                                  <font>
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>
                               </TextField>
-                              <DatePicker fx:id="datePicker" editable="false" layoutX="969.0" layoutY="43.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີຢືມປຶ້ມ" showWeekNumbers="true" style="-fx-text-fill: #fff;" styleClass="date-picker">
+                              <DatePicker fx:id="rentDate" editable="false" layoutX="969.0" layoutY="43.0" prefHeight="24.0" prefWidth="173.0" promptText="ວັນທີຢືມປຶ້ມ" showWeekNumbers="true" style="-fx-text-fill: #fff;" styleClass="date-picker">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </DatePicker>
-                              <TextField editable="false" layoutX="177.0" layoutY="43.0" prefHeight="27.0" prefWidth="260.0" promptText="ຊື່ສະມາຊີກ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
+                              <TextField fx:id="txtMemberName" editable="false" layoutX="177.0" layoutY="43.0" prefHeight="27.0" prefWidth="260.0" promptText="ຊື່ສະມາຊີກ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
                                  <font>
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>
                               </TextField>
-                              <TextField layoutX="14.0" layoutY="43.0" prefHeight="27.0" prefWidth="140.0" promptText="ລະຫັດສະມາຊີກ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
+                              <TextField fx:id="txtMemberId" layoutX="14.0" layoutY="43.0" prefHeight="27.0" prefWidth="140.0" promptText="ລະຫັດສະມາຊີກ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
                                  <font>
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>
                               </TextField>
-                              <TextField editable="false" layoutX="718.0" layoutY="43.0" prefHeight="25.0" prefWidth="230.0" promptText="ຮຽນພາກວີຊາ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
+                              <TextField fx:id="txtDep" editable="false" layoutX="718.0" layoutY="43.0" prefHeight="25.0" prefWidth="230.0" promptText="ຮຽນພາກວີຊາ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
                                  <font>
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>
                               </TextField>
-                              <TextField editable="false" layoutX="718.0" layoutY="123.0" prefHeight="27.0" prefWidth="230.0" promptText="ປະເພດປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
+                              <TextField fx:id="txtType" editable="false" layoutX="718.0" layoutY="123.0" prefHeight="27.0" prefWidth="230.0" promptText="ປະເພດປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
                                  <font>
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>
                               </TextField>
-                              <TextField editable="false" layoutX="463.0" layoutY="123.0" prefHeight="27.0" prefWidth="230.0" promptText="ໝວດປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
+                              <TextField fx:id="txtCatg" editable="false" layoutX="463.0" layoutY="123.0" prefHeight="27.0" prefWidth="230.0" promptText="ໝວດປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
                                  <font>
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>

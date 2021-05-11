@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.layout.StackPane;
+import javafx.util.Callback;
 
 public class DepartmentController implements Initializable {
 
@@ -42,13 +43,9 @@ public class DepartmentController implements Initializable {
     @FXML
     private TableColumn<DepartmentModel, String> colId, colName;
 
-    @FXML
-    private TableColumn<DepartmentModel, JFXButton> colAction;
-
     private void initTable() {
         colId.setCellValueFactory(new PropertyValueFactory<>("depId"));
         colName.setCellValueFactory(new PropertyValueFactory<>("depName"));
-        colAction.setCellValueFactory(new PropertyValueFactory<>("action"));
         tableDepartment.setOnMouseClicked(e -> {
             if (e.getClickCount() >=2 && tableDepartment.getSelectionModel().getSelectedItem() != null) {
                 depertment = tableDepartment.getSelectionModel().getSelectedItem();
@@ -122,7 +119,7 @@ public class DepartmentController implements Initializable {
             data = FXCollections.observableArrayList();
             rs = depertment.findAll();
             while (rs.next()) {
-                data.add(new DepartmentModel(rs.getString(1), rs.getString(2), btDelete(rs.getString(1))));
+                data.add(new DepartmentModel(rs.getString(1), rs.getString(2)));
             }
             tableDepartment.setItems(data);
         } catch (Exception e) {
@@ -134,28 +131,46 @@ public class DepartmentController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTable();
+        addButtonToTable();
         initEvents();
         showData();
 
     }
 
-    private JFXButton btDelete(String id) {
-        JFXButton delete = new JFXButton("ລົບ");
-        final Image img = new Image("/com/mycompany/library_project/Icon/bin.png");
-        final ImageView imgView = new ImageView();
-        imgView.setImage(img);
-        imgView.setFitWidth(20);
-        imgView.setFitHeight(20);
-        delete.setId(id);
-        delete.setGraphic(imgView);
-        delete.setStyle(Style.buttonStyle);
-        delete.setOnAction(e -> {
-            JFXButton[] buttons = { buttonYes(delete.getId()), buttonNo(), buttonCancel() };
-            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
-                    JFXDialog.DialogTransition.CENTER, buttons, false);
-            dialog.showDialog();
-        });
-        return delete;
+    private void addButtonToTable() {
+        TableColumn<DepartmentModel, Void> colAtion = new TableColumn<>("Action");
+        Callback<TableColumn<DepartmentModel, Void>, TableCell<DepartmentModel, Void>> cellFactory = new Callback<TableColumn<DepartmentModel, Void>, TableCell<DepartmentModel, Void>>() {
+
+            @Override
+            public TableCell<DepartmentModel, Void> call(TableColumn<DepartmentModel, Void> param) {
+                final TableCell<DepartmentModel, Void> cell = new TableCell<DepartmentModel, Void>() {
+                    final JFXButton delete = new JFXButton("ລົບ");
+
+                    {
+                        final Image img = new Image("/com/mycompany/library_project/Icon/bin.png");
+                        final ImageView imgView = new ImageView();
+                        imgView.setImage(img);
+                        imgView.setFitWidth(20);
+                        imgView.setFitHeight(20);
+                        delete.setGraphic(imgView);
+                        delete.setStyle(Style.buttonStyle);
+                        delete.setOnAction(e -> {
+                            JFXButton[] buttons = { buttonYes(tableDepartment.getItems().get(getIndex()).getDepId()),
+                                    buttonNo(), buttonCancel() };
+                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
+                                    JFXDialog.DialogTransition.CENTER, buttons, false);
+                            dialog.showDialog();
+                        });
+                    }
+
+                };
+                return cell;
+            }
+
+        };
+        colAtion.setCellFactory(cellFactory);
+        tableDepartment.getColumns().add(colAtion);
+
     }
 
     private JFXButton buttonYes(String depid) {

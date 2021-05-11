@@ -112,6 +112,8 @@
                               <Text layoutX="232.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊື່ສະມາຊີກ" wrappingWidth="55.13671875" />
                               <Text layoutX="11.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລະຫັດສະມາຊີກ" wrappingWidth="97.13671875" />
                               <Text layoutX="232.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ວັນເດືອນປືເກີດ" wrappingWidth="83.13671875" />
+                              <TextField fx:id="txtCost" layoutX="449.0" layoutY="234.0" prefHeight="31.0" prefWidth="193.0" promptText="ຄ່າລົງທະບຽນ" viewOrder="1.0" />
+                              <Text layoutX="452.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຄ່າລົງທະບຽນ" wrappingWidth="88.13671875" />
                            </children>
                         </AnchorPane>
                      </children>

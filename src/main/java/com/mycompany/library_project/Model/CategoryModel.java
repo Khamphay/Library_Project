@@ -19,8 +19,6 @@ public class CategoryModel implements DataAccessObject {
     private String catgId;
     private String catgName;
 
-    private JFXButton action;
-
     public CategoryModel() {
         
     }
@@ -28,12 +26,6 @@ public class CategoryModel implements DataAccessObject {
     public CategoryModel(String catgId, String catgName) {
         this.catgId = catgId;
         this.catgName = catgName;
-    }
-
-    public CategoryModel(String catgId, String catgName, JFXButton action) {
-        this.catgId = catgId;
-        this.catgName = catgName;
-        this.action = action;
     }
 
     public String getCatgId() {
@@ -50,14 +42,6 @@ public class CategoryModel implements DataAccessObject {
 
     public void setCatgName(String catgName) {
         this.catgName = catgName;
-    }
-
-    public JFXButton getAction() {
-        return action;
-    }
-
-    public void setAction(JFXButton action) {
-        this.action = action;
     }
 
     // Todo: Method management data

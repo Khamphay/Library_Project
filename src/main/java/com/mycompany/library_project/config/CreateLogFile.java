@@ -64,7 +64,7 @@ public class CreateLogFile {
     public boolean createLogFile(String title, Exception ex) {
         try {
             DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-            File file = new File("log file2.log");
+            File file = new File("log_file.log");
             // Todo: PrintWriter
             FileWriter fw = new FileWriter(file, true);
             PrintWriter pw = new PrintWriter(fw);

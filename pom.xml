@@ -78,20 +78,20 @@
             </plugin>
 
             <!--Add My Code -->
-            <plugin> 
-                <!-- Building an executable jar -->
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
-                <configuration>
-                  <archive>
-                    <manifest>
-                    <!-- give full qualified name of your main class-->
-                      <mainClass>com.mycompany.library_project.FakeApp.main</mainClass>
-                    </manifest>
-                  </archive>
-                </configuration>
-            </plugin>
+<!--            <plugin> -->
+<!--                &lt;!&ndash; Building an executable jar &ndash;&gt;-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-jar-plugin</artifactId>-->
+<!--                <version>3.2.0</version>-->
+<!--                <configuration>-->
+<!--                  <archive>-->
+<!--                    <manifest>-->
+<!--                    &lt;!&ndash; give full qualified name of your main class&ndash;&gt;-->
+<!--                      <mainClass>com.mycompany.library_project.FakeApp.main</mainClass>-->
+<!--                    </manifest>-->
+<!--                  </archive>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
             <!-- End -->
 
             <plugin>
@@ -99,7 +99,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.5</version>
                 <configuration>
-                    <mainClass>com.mycompany.library_project.FakeApp.main</mainClass>
+                    <mainClass>com.mycompany.library_project.FakeApp</mainClass>
                 </configuration>
                 <executions>
                     <execution>

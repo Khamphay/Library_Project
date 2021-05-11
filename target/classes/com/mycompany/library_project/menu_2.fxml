@@ -152,7 +152,7 @@
             </ImageView>
          </graphic>
          <tooltip>
-            <Tooltip anchorLocation="CONTENT_TOP_RIGHT" text="ອອກຈາກລະບົບ" />
+            <Tooltip anchorLocation="CONTENT_TOP_RIGHT" contentDisplay="TOP" text="ອອກຈາກລະບົບ" />
          </tooltip>
       </JFXButton>
    </children>

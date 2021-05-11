@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.sql.ResultSet;
@@ -48,8 +49,6 @@ public class BookCategoryController implements Initializable {
 
     @FXML
     private TableColumn<CategoryModel, String> colCatgId, colCatgName;
-    @FXML
-    private TableColumn<CategoryModel, JFXButton> colAction;
 
     private void showData() {
         try {
@@ -57,7 +56,7 @@ public class BookCategoryController implements Initializable {
             category = new CategoryModel();
             rs = category.findAll();
             while (rs.next()) {
-                data.add(new CategoryModel(rs.getString(1), rs.getString(2), btDelete(rs.getString(1))));
+                data.add(new CategoryModel(rs.getString(1), rs.getString(2)));
             }
             tableCategory.setItems(data);
         } catch (Exception e) {
@@ -131,26 +130,43 @@ public class BookCategoryController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colCatgId.setCellValueFactory(new PropertyValueFactory<>("catgId"));
         colCatgName.setCellValueFactory(new PropertyValueFactory<>("catgName"));
-        colAction.setCellValueFactory(new PropertyValueFactory<>("action"));
+        addButtonToTable();
         showData();
     }
 
-    private JFXButton btDelete(String id) {
-        JFXButton delete = new JFXButton("ລົບ");
-        final ImageView imgView = new ImageView();
-        imgView.setImage(new Image("/com/mycompany/library_project/Icon/bin.png"));
-        imgView.setFitWidth(20);
-        imgView.setFitHeight(20);
-        delete.setId(id);
-        delete.setGraphic(imgView);
-        delete.setStyle(Style.buttonStyle);
-        delete.setOnAction(e -> {
-            JFXButton[] buttons = { buttonYes(delete.getId()), buttonNo(), buttonCancel() };
-            dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
-                    JFXDialog.DialogTransition.CENTER, buttons, false);
-            dialog.showDialog();
-        });
-        return delete;
+    private void addButtonToTable() {
+        TableColumn<CategoryModel, Void> colAtion = new TableColumn<>("Action");
+        Callback<TableColumn<CategoryModel, Void>, TableCell<CategoryModel, Void>> cellFactory = new Callback<TableColumn<CategoryModel, Void>, TableCell<CategoryModel, Void>>() {
+
+            @Override
+            public TableCell<CategoryModel, Void> call(TableColumn<CategoryModel, Void> param) {
+                final TableCell<CategoryModel, Void> cell = new TableCell<CategoryModel, Void>() {
+                    final JFXButton delete = new JFXButton("ລົບ");
+
+                    {
+                        final ImageView imgView = new ImageView();
+                        imgView.setImage(new Image("/com/mycompany/library_project/Icon/bin.png"));
+                        imgView.setFitWidth(20);
+                        imgView.setFitHeight(20);
+                        delete.setGraphic(imgView);
+                        delete.setStyle(Style.buttonStyle);
+                        delete.setOnAction(e -> {
+                            JFXButton[] buttons = { buttonYes(tableCategory.getItems().get(getIndex()).getCatgId()),
+                                    buttonNo(), buttonCancel() };
+                            dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
+                                    JFXDialog.DialogTransition.CENTER, buttons, false);
+                            dialog.showDialog();
+                        });
+                    }
+
+                };
+                return cell;
+            }
+
+        };
+        colAtion.setCellFactory(cellFactory);
+        tableCategory.getColumns().add(colAtion);
+
     }
 
     private JFXButton buttonYes(String catgid) {

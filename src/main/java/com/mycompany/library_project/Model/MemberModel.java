@@ -230,8 +230,13 @@ public class MemberModel implements DataAccessObject {
 
     @Override
     public ResultSet findById(String id) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+        try {
+            query = "call member_ShowById('" + id + "');";
+            rs = con.createStatement().executeQuery(query);
+            return rs;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override

@@ -20,7 +20,6 @@ public class AuthorModel implements DataAccessObject {
     private String gender;
     private String tel;
     private String email;
-    private JFXButton action;
 
     public AuthorModel() {
     }
@@ -37,17 +36,6 @@ public class AuthorModel implements DataAccessObject {
         this.gender = gender;
         this.tel = tel;
         this.email = email;
-    }
-
-    public AuthorModel(String author_id, String full_name, String sur_name, String gender, String tel, String email,
-            JFXButton action) {
-        this.author_id = author_id;
-        this.full_name = full_name;
-        this.sur_name = sur_name;
-        this.gender = gender;
-        this.tel = tel;
-        this.email = email;
-        this.action = action;
     }
 
     public String getAuthor_id() {
@@ -96,14 +84,6 @@ public class AuthorModel implements DataAccessObject {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public JFXButton getAction() {
-        return action;
-    }
-
-    public void setAction(JFXButton action) {
-        this.action = action;
     }
 
     @Override

@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.util.Callback;
 
 import com.mycompany.library_project.Model.TypeModel;
 import com.mycompany.library_project.config.CreateLogFile;
@@ -40,8 +41,6 @@ public class BookTypeController implements Initializable {
     private TableColumn<TypeModel, String> colId;
     @FXML
     private TableColumn<TypeModel, String> colName;
-    @FXML
-    private TableColumn<TypeModel, JFXButton> colAction;
 
     private void ShowData() {
         try {
@@ -49,7 +48,7 @@ public class BookTypeController implements Initializable {
             type = new TypeModel();
             rs = type.findAll();
             while (rs.next()) {
-                data.add(new TypeModel(rs.getString(1), rs.getString(2), btDelete(rs.getString(1))));
+                data.add(new TypeModel(rs.getString(1), rs.getString(2)));
             }
             tableType.setItems(data);
         } catch (SQLException e) {
@@ -123,29 +122,45 @@ public class BookTypeController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colId.setCellValueFactory(new PropertyValueFactory<>("typeId"));
         colName.setCellValueFactory(new PropertyValueFactory<>("typeName"));
-        colAction.setCellValueFactory(new PropertyValueFactory<>("action"));
+        addButtonToTable();
         ShowData();
     }
 
-    private JFXButton btDelete(String id) {
-        JFXButton delete = new JFXButton("ລົບ");
-        final Image img = new Image("/com/mycompany/library_project/Icon/bin.png");
-        final ImageView imgView = new ImageView();
-        imgView.setImage(img);
-        imgView.setFitWidth(20);
-        imgView.setFitHeight(20);
-        delete.setId(id);
-        delete.setGraphic(imgView);
-        delete.setStyle(Style.buttonStyle);
-        delete.setOnAction(e -> {
-            JFXButton[] buttons = { buttonYes(delete.getId()), buttonNo(), buttonCancel() };
-            dialog = new DialogMessage(stackePane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
-                    JFXDialog.DialogTransition.CENTER, buttons, false);
-            dialog.showDialog();
-        });
-        return delete;
-    }
+    private void addButtonToTable() {
+        TableColumn<TypeModel, Void> colAtion = new TableColumn<>("Action");
+        Callback<TableColumn<TypeModel, Void>, TableCell<TypeModel, Void>> cellFactory = new Callback<TableColumn<TypeModel, Void>, TableCell<TypeModel, Void>>() {
 
+            @Override
+            public TableCell<TypeModel, Void> call(TableColumn<TypeModel, Void> param) {
+                final TableCell<TypeModel, Void> cell = new TableCell<TypeModel, Void>() {
+                    final JFXButton delete = new JFXButton("ລົບ");
+
+                    {
+                        final Image img = new Image("/com/mycompany/library_project/Icon/bin.png");
+                        final ImageView imgView = new ImageView();
+                        imgView.setImage(img);
+                        imgView.setFitWidth(20);
+                        imgView.setFitHeight(20);
+                        delete.setGraphic(imgView);
+                        delete.setStyle(Style.buttonStyle);
+                        delete.setOnAction(e -> {
+                            JFXButton[] buttons = { buttonYes(tableType.getItems().get(getIndex()).getTypeId()), buttonNo(), buttonCancel() };
+                            dialog = new DialogMessage(stackePane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
+                                    JFXDialog.DialogTransition.CENTER, buttons, false);
+                            dialog.showDialog();
+                        });
+                    }
+
+                };
+                return cell;
+            }
+
+        };
+        colAtion.setCellFactory(cellFactory);
+        tableType.getColumns().add(colAtion);
+
+    }
+    
     private JFXButton buttonYes(String typeid) {
         JFXButton btyes = new JFXButton("ຕົກລົງ");
         btyes.setStyle(Style.buttonDialogStyle);

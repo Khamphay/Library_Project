@@ -52,7 +52,6 @@
                       <TableColumn fx:id="colBarcode" maxWidth="3500.0" prefWidth="141.0" text="ບາໂຄດ (Barcode)" />
                         <TableColumn fx:id="colTableLog" maxWidth="2000.0" text="ລ໋ອກຕູ້" />
                       <TableColumn fx:id="colStatus" maxWidth="6000.0" prefWidth="300.0" text="ສະຖານະ" />
-                        <TableColumn fx:id="colAction" maxWidth="2000.0" prefWidth="88.0" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

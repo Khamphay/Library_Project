@@ -1,6 +1,8 @@
 package com.mycompany.library_project.Controller;
 
 import javafx.collections.*;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
@@ -33,7 +35,7 @@ public class BookTypeController implements Initializable {
     private StackPane stackePane;
 
     @FXML
-    TextField txtTypeId, txtTypeName;
+    TextField txtTypeId, txtTypeName, txtSearch;
 
     @FXML
     private TableView<TypeModel> tableType;
@@ -50,7 +52,26 @@ public class BookTypeController implements Initializable {
             while (rs.next()) {
                 data.add(new TypeModel(rs.getString(1), rs.getString(2)));
             }
-            tableType.setItems(data);
+            // tableType.setItems(data); //Todo: if you don't filter to Search data bellow:
+
+            // Todo: Search data
+            FilteredList<TypeModel> filterType = new FilteredList<>(data, t -> true);
+            txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                filterType.setPredicate(searchType -> {
+                    if (newValue.isEmpty())
+                        return true;
+
+                    if (searchType.getTypeName().toLowerCase().indexOf(newValue.toLowerCase()) != -1)
+                        return true;
+                    else
+                        return false;
+                });
+            });
+
+            SortedList<TypeModel> sorted = new SortedList<TypeModel>(filterType);
+            sorted.comparatorProperty().bind(tableType.comparatorProperty());
+            tableType.setItems(sorted);
+
         } catch (SQLException e) {
             alertMessage.showErrorMessage(stackePane, "Load Data Error", "Error: " + e.getMessage(), 4,
                     Pos.BOTTOM_RIGHT);
@@ -144,13 +165,22 @@ public class BookTypeController implements Initializable {
                         delete.setGraphic(imgView);
                         delete.setStyle(Style.buttonStyle);
                         delete.setOnAction(e -> {
-                            JFXButton[] buttons = { buttonYes(tableType.getItems().get(getIndex()).getTypeId()), buttonNo(), buttonCancel() };
+                            JFXButton[] buttons = { buttonYes(tableType.getItems().get(getIndex()).getTypeId()),
+                                    buttonNo(), buttonCancel() };
                             dialog = new DialogMessage(stackePane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
                                     JFXDialog.DialogTransition.CENTER, buttons, false);
                             dialog.showDialog();
                         });
                     }
 
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty)
+                            setGraphic(null);
+                        else
+                            setGraphic(delete);
+                    }
                 };
                 return cell;
             }
@@ -160,7 +190,7 @@ public class BookTypeController implements Initializable {
         tableType.getColumns().add(colAtion);
 
     }
-    
+
     private JFXButton buttonYes(String typeid) {
         JFXButton btyes = new JFXButton("ຕົກລົງ");
         btyes.setStyle(Style.buttonDialogStyle);

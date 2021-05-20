@@ -175,11 +175,11 @@
 }
 
 /*-------------------DateTime -----------------*/
-.date-picker{
+/* .date-picker{
     -fx-font-family: 'BoonBaan';
     -fx-font-size: 14;
     -fx-text-fill:#fff;
-    /* -fx-font-weight: bold; */
+    -fx-font-weight: bold;
     -fx-background-radius:0.5em;
     -fx-border-radius: 0.5em;
     -fx-border-color: #2b2d8d;
@@ -187,11 +187,21 @@
 .date-picker-popup>*>.date-picker-view>.virtual-flow>.clipped-container>.sheet>.data-picker-list-cell>.jfx-rippler{
     -jfx-rippler-fill:#fff;
     -fx-text-fill:#fff;
-    /* background-color: transparent; */
-    /* -fx-display: flex; */
+    background-color: transparent;
+    -fx-display: flex;
     
+} */
+
+.date-picker:editable > .arrow-button > * {
+    -fx-opacity: 0; /* Set the node in the button to be visible */
 }
 
+.date-picker > .arrow-button {
+    -fx-background-image: url("../Icon/calendar.png"); /* Url of the icon */
+    -fx-background-size: 60% 60%; /* Can be `cover` or `100% 100%` ect. */
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center; /* Put the icon in the center */
+}
 
 /*-------------------contex menu -----------------*/
 .contex-menu:hover{

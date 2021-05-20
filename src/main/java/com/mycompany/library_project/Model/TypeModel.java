@@ -1,6 +1,5 @@
 package com.mycompany.library_project.Model;
 
-import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 

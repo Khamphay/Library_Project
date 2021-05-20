@@ -47,7 +47,7 @@
                                     <Insets left="-3.0" />
                                  </padding>
                               </JFXButton>
-                              <TextField layoutX="1139.0" layoutY="110.0" prefHeight="30.0" prefWidth="291.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-14-Regular" AnchorPane.rightAnchor="33.0">
+                              <TextField fx:id="txtSearch" layoutX="1139.0" layoutY="110.0" prefHeight="30.0" prefWidth="291.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-14-Regular" AnchorPane.rightAnchor="33.0">
                                  <padding>
                                     <Insets left="40.0" />
                                  </padding>
@@ -68,7 +68,6 @@
                                     <TableColumn fx:id="bppktype" prefWidth="195.0" text="ປະເພດປຶ້ມ" />
                                     <TableColumn fx:id="tableid" prefWidth="77.0" text="ເລກຕູ້" />
                                     <TableColumn fx:id="bookdetail" prefWidth="245.0" text="ລາຍລະອຽດ" />
-                                    <TableColumn fx:id="ation" prefWidth="79.0" text="Action" />
                                 </columns>
                                  <contextMenu>
                                     <ContextMenu>

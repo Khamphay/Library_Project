@@ -13,6 +13,8 @@ import com.mycompany.library_project.Model.MemberModel;
 import com.mycompany.library_project.config.CreateLogFile;
 
 import javafx.collections.*;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
@@ -22,6 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
+import javafx.util.Callback;
 
 public class MemberController implements Initializable {
 
@@ -58,7 +61,7 @@ public class MemberController implements Initializable {
     private TableColumn<MemberModel, Date> birthdate, date_register, date_exist;
 
     @FXML
-    private TableColumn<MemberModel, JFXButton> colAction;
+    private TextField txtSearch;
 
     public void showData() {
         try {
@@ -69,11 +72,39 @@ public class MemberController implements Initializable {
                 data.add(new MemberModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
                         rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),
                         Date.valueOf(rs.getString(10)), rs.getString(11), rs.getString(9),
-                        Date.valueOf(rs.getString(12)), Date.valueOf(rs.getString(13)), Date.valueOf(rs.getString(14)),
-                        btDelete(rs.getString(1))));
+                        Date.valueOf(rs.getString(12)), Date.valueOf(rs.getString(13)),
+                        Date.valueOf(rs.getString(14))));
                 byimg.add(rs.getBytes(15));
             }
-            tableMember.setItems(data);
+            // tableMember.setItems(data); //Todo: if you don't filter to Search data
+            // bellow:
+
+            // Todo: Search data
+            FilteredList<MemberModel> filterMembers = new FilteredList<MemberModel>(data, mb -> true);
+            txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                filterMembers.setPredicate(member -> {
+                    if (newValue.isEmpty())
+                        return true;
+                    if (member.getMemberId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || member.getFirstName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || member.getSureName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || member.getGender().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || member.getTel().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || member.getVillage().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || member.getDistrict().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || member.getProvince().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || member.getStudy_year().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || member.getDetp().toLowerCase().indexOf(newValue.toLowerCase()) != -1)
+                        return true;
+                    else
+                        return false;
+                });
+            });
+
+            SortedList<MemberModel> sorted = new SortedList<>(filterMembers);
+            sorted.comparatorProperty().bind(tableMember.comparatorProperty());
+            tableMember.setItems(sorted);
+
         } catch (Exception e) {
             alertMessage.showErrorMessage(boderPane, "Show Data Error", "Error: " + e.getMessage(), 4,
                     Pos.BOTTOM_RIGHT);
@@ -94,7 +125,6 @@ public class MemberController implements Initializable {
         depertment.setCellValueFactory(new PropertyValueFactory<>("detp"));
         date_register.setCellValueFactory(new PropertyValueFactory<>("dateRegister"));
         date_exist.setCellValueFactory(new PropertyValueFactory<>("dateRegisterEnd"));
-        colAction.setCellValueFactory(new PropertyValueFactory<>("action"));
 
         tableMember.setOnMouseClicked(mevt -> {
             if (mevt.getClickCount() > 0 && tableMember.getSelectionModel().getSelectedItem() != null) {
@@ -182,26 +212,52 @@ public class MemberController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initEvents();
         initTable();
+        addButtonToTable();
         showData();
     }
 
-    private JFXButton btDelete(String id) {
-        JFXButton delete = new JFXButton("ລົບ");
-        final Image img = new Image("/com/mycompany/library_project/Icon/bin.png");
-        final ImageView imgView = new ImageView();
-        imgView.setImage(img);
-        imgView.setFitWidth(20);
-        imgView.setFitHeight(20);
-        delete.setId(id);
-        delete.setGraphic(imgView);
-        delete.setStyle(Style.buttonStyle);
-        delete.setOnAction(e -> {
-            JFXButton[] buttons = { buttonYes(delete.getId()), buttonNo(), buttonCancel() };
-            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
-                    JFXDialog.DialogTransition.CENTER, buttons, false);
-            dialog.showDialog();
-        });
-        return delete;
+    private void addButtonToTable() {
+        TableColumn<MemberModel, Void> colAtion = new TableColumn<>("Action");
+        Callback<TableColumn<MemberModel, Void>, TableCell<MemberModel, Void>> cellFactory = new Callback<TableColumn<MemberModel, Void>, TableCell<MemberModel, Void>>() {
+
+            @Override
+            public TableCell<MemberModel, Void> call(TableColumn<MemberModel, Void> param) {
+                final TableCell<MemberModel, Void> cell = new TableCell<MemberModel, Void>() {
+                    final JFXButton delete = new JFXButton("ລົບ");
+
+                    {
+                        final Image img = new Image("/com/mycompany/library_project/Icon/bin.png");
+                        final ImageView imgView = new ImageView();
+                        imgView.setImage(img);
+                        imgView.setFitWidth(20);
+                        imgView.setFitHeight(20);
+                        delete.setGraphic(imgView);
+                        delete.setStyle(Style.buttonStyle);
+                        delete.setOnAction(e -> {
+                            JFXButton[] buttons = { buttonYes(tableMember.getItems().get(getIndex()).getMemberId()),
+                                    buttonNo(), buttonCancel() };
+                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
+                                    JFXDialog.DialogTransition.CENTER, buttons, false);
+                            dialog.showDialog();
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty)
+                            setGraphic(null);
+                        else
+                            setGraphic(delete);
+                    }
+                };
+                return cell;
+            }
+
+        };
+        colAtion.setCellFactory(cellFactory);
+        tableMember.getColumns().add(colAtion);
+
     }
 
     private JFXButton buttonYes(String memberid) {

@@ -13,6 +13,8 @@ import com.mycompany.library_project.config.CreateLogFile;
 
 import javafx.beans.value.*;
 import javafx.collections.*;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
@@ -41,7 +43,7 @@ public class EmployeeController implements Initializable {
     private JFXButton btSave, btEdit, btCancel;
 
     @FXML
-    private TextField txtId, txtFname, txtLname, txtTel, txtEmail;
+    private TextField txtId, txtFname, txtLname, txtTel, txtEmail, txtSearch;
 
     @FXML
     private RadioButton rdbMale, rdbFemale;
@@ -52,9 +54,6 @@ public class EmployeeController implements Initializable {
     @FXML
     private TableColumn<EmployeeModel, String> colId, colFname, colSname, colGender, colTel, colEmail;
 
-    @FXML
-    private TableColumn<EmployeeModel, JFXButton> colAction;
-
     private void initTable() {
         colId.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
         colFname.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -62,7 +61,6 @@ public class EmployeeController implements Initializable {
         colGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
         colTel.setCellValueFactory(new PropertyValueFactory<>("tel"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        colAction.setCellValueFactory(new PropertyValueFactory<>("action"));
     }
 
     private void clearText() {
@@ -188,7 +186,31 @@ public class EmployeeController implements Initializable {
                         rs.getString(5), rs.getString(6)));
                 users.add(new EmployeeModel(rs.getString(1), rs.getString(7), rs.getString(8)));
             }
-            tableEmployee.setItems(data);
+            // tableEmployee.setItems(data); //Todo: if you don't filter to Search data
+            // bellow:
+
+            // Todo: Search data
+            FilteredList<EmployeeModel> filterEmployees = new FilteredList<EmployeeModel>(data, emp -> true);
+            txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                filterEmployees.setPredicate(emp -> {
+                    if (newValue.isEmpty())
+                        return true;
+                    if (emp.getEmployeeId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || emp.getFirstName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || emp.getLastName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || emp.getEmail().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || emp.getTel().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || emp.getGender().toLowerCase().indexOf(newValue.toLowerCase()) != -1)
+                        return true;
+                    else
+                        return false;
+                });
+            });
+
+            SortedList<EmployeeModel> sorted = new SortedList<>(filterEmployees);
+            sorted.comparatorProperty().bind(tableEmployee.comparatorProperty());
+            tableEmployee.setItems(sorted);
+
         } catch (Exception e) {
             alertMessage.showErrorMessage(stackPane, "Load Data", "Error" + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
@@ -238,6 +260,15 @@ public class EmployeeController implements Initializable {
                             }
 
                         });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty)
+                            setGraphic(null);
+                        else
+                            setGraphic(delete);
                     }
 
                 };

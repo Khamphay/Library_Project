@@ -115,7 +115,6 @@ public class BarcodeController implements Initializable {
             }
 
         });
-
         btCancel.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -150,7 +149,7 @@ public class BarcodeController implements Initializable {
         colBarcode.setCellValueFactory(new PropertyValueFactory<>("barcode"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colTableLog.setCellValueFactory(new PropertyValueFactory<>("tableLogId"));
-        colAction.setCellValueFactory(new PropertyValueFactory<>("action"));
+        addButtonToTable();
 
         tableBarcode.setOnMouseClicked(event -> {
             if (event.getClickCount() >= 2 && tableBarcode.getSelectionModel().getSelectedItem() != null) {
@@ -261,14 +260,23 @@ public class BarcodeController implements Initializable {
 
                             @Override
                             public void handle(ActionEvent event) {
-                                JFXButton[] buttons = { buttonYes(tableBarcode.getItems().get(getIndex()).getBarcode()), buttonNo(), buttonCancel() };
+                                JFXButton[] buttons = { buttonYes(tableBarcode.getItems().get(getIndex()).getBarcode()),
+                                        buttonNo(), buttonCancel() };
                                 dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
                                         JFXDialog.DialogTransition.CENTER, buttons, false);
                                 dialog.showDialog();
                             }
                         });
                     }
-
+                    
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty)
+                            setGraphic(null);
+                        else
+                            setGraphic(delete);
+                    }
                 };
                 return cell;
             }

@@ -11,6 +11,8 @@ import com.mycompany.library_project.Model.DepartmentModel;
 import com.mycompany.library_project.config.CreateLogFile;
 
 import javafx.collections.*;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -32,7 +34,7 @@ public class DepartmentController implements Initializable {
     private StackPane stackPane;
 
     @FXML
-    private JFXButton btSave, btEdit, btCancel;
+    private JFXButton btSave, btEdit, btCancel, txtSearch;
 
     @FXML
     private TextField txtId, txtName;
@@ -121,10 +123,29 @@ public class DepartmentController implements Initializable {
             while (rs.next()) {
                 data.add(new DepartmentModel(rs.getString(1), rs.getString(2)));
             }
-            tableDepartment.setItems(data);
+            // tableDepartment.setItems(data); //Todo: if you don't filter to Search data
+            // bellow:
+
+            // Todo: Search data
+            FilteredList<DepartmentModel> filterDep = new FilteredList<DepartmentModel>(data, dep -> true);
+            txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                filterDep.setPredicate(searchDep -> {
+                    if (newValue.isEmpty())
+                        return true;
+
+                    if (searchDep.getDepName().toLowerCase().indexOf(newValue.toLowerCase()) != -1)
+                        return true;
+                    else
+                        return false;
+                });
+
+                SortedList<DepartmentModel> sorted = new SortedList<DepartmentModel>(filterDep);
+                sorted.comparatorProperty().bind(tableDepartment.comparatorProperty());
+                tableDepartment.setItems(sorted);
+            });
+
         } catch (Exception e) {
             alertMessage.showErrorMessage("ໂຫຼດຂໍ້ມູນ", e.getMessage(), 3, Pos.BOTTOM_RIGHT);
-            e.printStackTrace();
         }
     }
 
@@ -163,6 +184,14 @@ public class DepartmentController implements Initializable {
                         });
                     }
 
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty)
+                            setGraphic(null);
+                        else
+                            setGraphic(delete);
+                    }
                 };
                 return cell;
             }

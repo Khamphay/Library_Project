@@ -231,6 +231,14 @@ public class AuthorController implements Initializable {
                         });
                     }
 
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty)
+                            setGraphic(null);
+                        else
+                            setGraphic(delete);
+                    }
                 };
                 return cell;
             }

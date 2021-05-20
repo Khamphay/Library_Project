@@ -3,7 +3,6 @@ package com.mycompany.library_project.Model;
 import java.sql.*;
 import java.text.ParseException;
 
-import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 
@@ -24,6 +23,7 @@ public class RentBookModel implements DataAccessObject {
     private String type;
     private Date rentDate;
     private Date sendDate;
+    private String rent_status;
 
     public RentBookModel() {
     }
@@ -34,13 +34,15 @@ public class RentBookModel implements DataAccessObject {
         this.status = status;
     }
 
-    public RentBookModel(String rentId, String member, String barcode, Integer qty, Date rentDate, Date sendDate) {
+    public RentBookModel(String rentId, String member, String barcode, Integer qty, Date rentDate, Date sendDate,
+            String rent_status) {
         this.rentId = rentId;
         this.member = member;
         this.barcode = barcode;
         this.qty = qty;
         this.rentDate = rentDate;
         this.sendDate = sendDate;
+        this.rent_status = rent_status;
     }
 
     public RentBookModel(String barcode, String bookName, String catg, String type, Date rentDate, Date sendDate) {
@@ -48,6 +50,17 @@ public class RentBookModel implements DataAccessObject {
         this.bookName = bookName;
         this.catg = catg;
         this.type = type;
+        this.rentDate = rentDate;
+        this.sendDate = sendDate;
+    }
+
+    public RentBookModel(String barcode, String bookName, String catg, String type, String member, Date rentDate,
+            Date sendDate) {
+        this.barcode = barcode;
+        this.bookName = bookName;
+        this.catg = catg;
+        this.type = type;
+        this.member = member;
         this.rentDate = rentDate;
         this.sendDate = sendDate;
     }
@@ -131,6 +144,14 @@ public class RentBookModel implements DataAccessObject {
     public void setSendDate(Date sendDate) {
         this.sendDate = sendDate;
     }
+    
+    public String getRent_status() {
+        return rent_status;
+    }
+
+    public void setRent_status(String rent_status) {
+        this.rent_status = rent_status;
+    }
 
     public ResultSet findAll() throws SQLException {
         sql = "";
@@ -162,7 +183,7 @@ public class RentBookModel implements DataAccessObject {
         // TODO Auto-generated method stub
         return null;
     }
-
+    
     @Override
     public ResultSet searchData(String values) throws SQLException {
         // TODO Auto-generated method stub
@@ -171,13 +192,14 @@ public class RentBookModel implements DataAccessObject {
 
     @Override
     public int saveData() throws SQLException, ParseException {
-        sql = "call rentbook_detail_Insert(?, ?, ?, ?, ?);";
+        sql = "call rentbook_detail_Insert(?, ?, ?, ?, ?, ?);";
         ps = con.prepareStatement(sql);
         ps.setString(1, getRentId());
         ps.setString(2, getMember());
         ps.setInt(3, getQty());
         ps.setDate(4, getRentDate());
         ps.setDate(5, getSendDate());
+        ps.setString(6, getRent_status());
         return ps.executeUpdate();
     }
 
@@ -198,8 +220,48 @@ public class RentBookModel implements DataAccessObject {
 
     @Override
     public int deleteData(String id) throws SQLException {
-        sql = "";
-        return 0;
+        sql = "call rentbook_detail_Delete(?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, id);
+        return ps.executeUpdate();
     }
 
+    public String getMaxID() throws SQLException {
+        sql = "select max(rent_id) as max_id From tbrent_detail;";
+        rs = con.createStatement().executeQuery(sql);
+        if (rs.next()) {
+            return rs.getString("max_id");
+        } else {
+            return null;
+        }
+
+    }
+
+    public ResultSet chackMemberRentBook(String memberid, String rent_status, String book_status) throws SQLException {
+        sql = "call rentBook_Check(?, ?, ?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, memberid);
+        ps.setString(2, rent_status);
+        ps.setString(3, book_status);
+        rs = ps.executeQuery();
+        return rs;
+    }
+
+    public ResultSet getSendBook(String book_barcode, String book_status) throws SQLException {
+        sql = "call sendBook_Show(?,?)";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, book_barcode);
+        ps.setString(2, book_status);
+        rs = ps.executeQuery();
+        return rs;
+    }
+
+    public int sendBook(String rent_id, String book_barcode, String book_status) throws SQLException {
+        sql = "	call sendBook(?, ?, ?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, rent_id);
+        ps.setString(2, book_barcode);
+        ps.setString(3, book_status);
+        return ps.executeUpdate();
+    }
 }

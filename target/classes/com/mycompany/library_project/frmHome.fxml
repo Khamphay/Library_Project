@@ -119,7 +119,7 @@
                                     </JFXButton>
                                  </children>
                               </HBox>
-                              <AnchorPane layoutX="14.0" layoutY="315.0" prefHeight="204.0" prefWidth="844.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 5px 5px 5px 5px;" AnchorPane.bottomAnchor="17.0" AnchorPane.topAnchor="315.0">
+                              <AnchorPane layoutX="14.0" layoutY="304.0" prefHeight="204.0" prefWidth="844.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 5px 5px 5px 5px;" AnchorPane.bottomAnchor="28.0" AnchorPane.topAnchor="304.0">
                                  <effect>
                                     <DropShadow height="18.03" offsetX="1.0" offsetY="1.0" radius="8.515" width="18.03">
                                        <color>
@@ -128,36 +128,32 @@
                                     </DropShadow>
                                  </effect>
                                  <children>
-                                    <VBox layoutX="4.0" layoutY="5.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                                    <HBox alignment="CENTER_LEFT" layoutX="2.0" layoutY="2.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="834.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                                       <cursor>
+                                          <Cursor fx:constant="DEFAULT" />
+                                       </cursor>
                                        <children>
-                                          <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="32.0" prefWidth="834.0">
-                                             <cursor>
-                                                <Cursor fx:constant="DEFAULT" />
-                                             </cursor>
-                                             <children>
-                                                <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊື່ປຶ້ມ" wrappingWidth="193.46667098999023">
-                                                   <HBox.margin>
-                                                      <Insets left="4.0" />
-                                                   </HBox.margin>
-                                                </Text>
-                                                <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ໝວດປຶ້ມ" textAlignment="CENTER" wrappingWidth="161.46667098999023" />
-                                                <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ປະເພດປື້ມ" textAlignment="CENTER" wrappingWidth="162.46667098999023" />
-                                                <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນໜ້າ" textAlignment="CENTER" wrappingWidth="97.46667098999023" />
-                                                <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນຫົວ" textAlignment="CENTER" wrappingWidth="97.46667098999023" />
-                                                <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນຫົວ" textAlignment="CENTER" wrappingWidth="97.46667098999023" />
-                                             </children>
-                                          </HBox>
-                                          <Line endX="738.0762329101562" endY="-1.4483928680419922E-5" startX="-100.0" stroke="#1d0054" />
-                                          <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="338.0" prefWidth="834.0">
-                                             <content>
-                                                <FlowPane fx:id="pnItems" prefHeight="200.0" prefWidth="200.0" />
-                                             </content>
-                                          </ScrollPane>
+                                          <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊື່ປຶ້ມ" wrappingWidth="193.46667098999023">
+                                             <HBox.margin>
+                                                <Insets left="4.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ໝວດປຶ້ມ" textAlignment="CENTER" wrappingWidth="161.46667098999023" />
+                                          <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ປະເພດປື້ມ" textAlignment="CENTER" wrappingWidth="162.46667098999023" />
+                                          <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນໜ້າ" textAlignment="CENTER" wrappingWidth="97.46667098999023" />
+                                          <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນຫົວ" textAlignment="CENTER" wrappingWidth="97.46667098999023" />
+                                          <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນຫົວ" textAlignment="CENTER" wrappingWidth="97.46667098999023" />
                                        </children>
-                                    </VBox>
+                                    </HBox>
+                                    <Line endX="738.0762329101562" endY="-1.4483928680419922E-5" layoutX="102.70710754394531" layoutY="34.707122802734375" startX="-100.0" stroke="#1d0054" />
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="2.0" layoutY="36.0" prefHeight="350.0" prefWidth="840.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="36.0">
+                                       <content>
+                                          <FlowPane fx:id="pnItems" prefHeight="200.0" prefWidth="200.0" />
+                                       </content>
+                                    </ScrollPane>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane layoutX="877.0" layoutY="316.0" prefHeight="388.0" prefWidth="499.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 5px 5px 5px 5px;" AnchorPane.bottomAnchor="17.0" AnchorPane.topAnchor="316.0">
+                              <AnchorPane layoutX="877.0" layoutY="305.0" prefHeight="388.0" prefWidth="499.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 5px 5px 5px 5px;" AnchorPane.bottomAnchor="28.0" AnchorPane.topAnchor="305.0">
                                  <effect>
                                     <DropShadow height="18.03" offsetX="1.0" offsetY="1.0" radius="8.515" width="18.03">
                                        <color>
@@ -166,31 +162,27 @@
                                     </DropShadow>
                                  </effect>
                                  <children>
-                                    <VBox layoutX="4.0" layoutY="5.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                                    <HBox alignment="CENTER_LEFT" layoutX="2.0" layoutY="2.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="488.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                                       <cursor>
+                                          <Cursor fx:constant="DEFAULT" />
+                                       </cursor>
                                        <children>
-                                          <HBox alignment="CENTER_LEFT" minHeight="-Infinity" prefHeight="32.0" prefWidth="488.0">
-                                             <cursor>
-                                                <Cursor fx:constant="DEFAULT" />
-                                             </cursor>
-                                             <children>
-                                                <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລະຫັດປຶ້ມ" wrappingWidth="89.46667098999023">
-                                                   <HBox.margin>
-                                                      <Insets left="4.0" />
-                                                   </HBox.margin>
-                                                </Text>
-                                                <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊື່ປຶ້ມ" wrappingWidth="140.46667098999023" />
-                                                <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ໝວດປຶ້ມ" textAlignment="CENTER" wrappingWidth="118.46667098999023" />
-                                                <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນຫົວ" textAlignment="CENTER" wrappingWidth="97.46667098999023" />
-                                             </children>
-                                          </HBox>
-                                          <Line endX="730.0762329101562" endY="-3.106602191925049" startX="1223.1524658203125" startY="-3.1065783500671387" stroke="#1d0054" />
-                                          <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="342.0" prefWidth="488.0">
-                                             <content>
-                                                <FlowPane fx:id="pnItems1" prefHeight="364.0" prefWidth="486.0" style="-fx-background-color: transparent;" />
-                                             </content>
-                                          </ScrollPane>
+                                          <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລະຫັດປຶ້ມ" wrappingWidth="89.46667098999023">
+                                             <HBox.margin>
+                                                <Insets left="4.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊື່ປຶ້ມ" wrappingWidth="140.46667098999023" />
+                                          <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ໝວດປຶ້ມ" textAlignment="CENTER" wrappingWidth="118.46667098999023" />
+                                          <Text fill="#1623b2" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນຫົວ" textAlignment="CENTER" wrappingWidth="97.46667098999023" />
                                        </children>
-                                    </VBox>
+                                    </HBox>
+                                    <Line endX="730.0762329101562" endY="-3.106602191925049" layoutX="-727.369140625" layoutY="37.8137092590332" startX="1223.1524658203125" startY="-3.1065783500671387" stroke="#1d0054" />
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="2.0" layoutY="36.0" prefHeight="349.0" prefWidth="495.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="36.0">
+                                       <content>
+                                          <FlowPane fx:id="pnItems1" prefHeight="364.0" prefWidth="486.0" style="-fx-background-color: transparent;" />
+                                       </content>
+                                    </ScrollPane>
                                  </children>
                               </AnchorPane>
                            </children>

@@ -42,7 +42,6 @@
                               <TableColumn fx:id="depertment" prefWidth="200.0" text="ພາກວິຊາ" />
                               <TableColumn fx:id="date_register" prefWidth="109.0" text="ວ.ດ.ປ ລົງທະບຽນ" />
                               <TableColumn fx:id="date_exist" minWidth="4.0" prefWidth="102.0" text="ວ.ດ.ປ ໝົດອາຍຸ" />
-                              <TableColumn fx:id="colAction" minWidth="4.0" prefWidth="70.0" resizable="false" />
                            </columns>
                            <contextMenu>
                               <ContextMenu>
@@ -82,7 +81,7 @@
                               <Insets left="-6.0" />
                            </padding>
                         </JFXButton>
-                        <TextField layoutX="941.0" layoutY="59.0" prefHeight="30.0" prefWidth="291.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular" AnchorPane.rightAnchor="14.0">
+                        <TextField fx:id="txtSearch" layoutX="941.0" layoutY="59.0" prefHeight="30.0" prefWidth="291.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular" AnchorPane.rightAnchor="14.0">
                            <padding>
                               <Insets left="40.0" />
                            </padding>

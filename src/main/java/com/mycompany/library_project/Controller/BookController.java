@@ -1,6 +1,8 @@
 package com.mycompany.library_project.Controller;
 
 import javafx.collections.*;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
@@ -61,7 +63,7 @@ public class BookController implements Initializable {
     private TableColumn<BookDetailModel, Integer> bookpage, bookqty;
 
     @FXML
-    private TableColumn<BookDetailModel, JFXButton> ation;
+    private TextField txtSearch;
 
     @FXML
     private VBox vbListBooks;
@@ -123,7 +125,6 @@ public class BookController implements Initializable {
         });
     }
 
-   
     private void showAddBook() {
         try {
             add = true;
@@ -147,7 +148,30 @@ public class BookController implements Initializable {
                         rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9)));
             }
 
-            tableBook.setItems(data);
+            // tableBook.setItems(data); //Todo: if you don't filter to Search data bellow:
+
+            // Todo: Search data
+            FilteredList<BookDetailModel> filterBook = new FilteredList<BookDetailModel>(data, b -> true);
+            txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                filterBook.setPredicate(searchBook -> {
+                    if (newValue.isEmpty())
+                        return true;
+                    if ((searchBook.getBookId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || searchBook.getBookName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || searchBook.getISBN().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || searchBook.getCatgId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || searchBook.getTypeId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || searchBook.getTableId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                            || searchBook.getDetail().toLowerCase().indexOf(newValue.toLowerCase()) != -1))
+                        return true;
+                    else
+                        return false;
+                });
+            });
+
+            SortedList<BookDetailModel> sorted = new SortedList<>(filterBook);
+            sorted.comparatorProperty().bind(tableBook.comparatorProperty());
+            tableBook.setItems(sorted);
 
         } catch (Exception e) {
             alertMessage.showErrorMessage(borderPane, "Load data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
@@ -165,7 +189,6 @@ public class BookController implements Initializable {
         bppktype.setCellValueFactory(new PropertyValueFactory<>("typeId"));
         tableid.setCellValueFactory(new PropertyValueFactory<>("tableId"));
         bookdetail.setCellValueFactory(new PropertyValueFactory<>("detail"));
-        ation.setCellValueFactory(new PropertyValueFactory<>("action"));
     }
 
     @Override
@@ -207,6 +230,14 @@ public class BookController implements Initializable {
                         });
                     }
 
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty)
+                            setGraphic(null);
+                        else
+                            setGraphic(delete);
+                    }
                 };
                 return cell;
             }

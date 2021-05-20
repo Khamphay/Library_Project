@@ -1,6 +1,5 @@
 package com.mycompany.library_project.Model;
 
-import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 
@@ -30,7 +29,6 @@ public class MemberModel implements DataAccessObject {
     private Date dateRegisterEnd;
     private Date dateExit;
     private byte[] byimg;
-    private JFXButton action;
 
     public MemberModel() {
 
@@ -62,7 +60,7 @@ public class MemberModel implements DataAccessObject {
     public MemberModel(String memberId, String firstName, String sureName, String gender, String tel, String village,
             String district, String province, Date birdate, String study_year, String detp, Date dateRegister,
             Date dateRegisterEnd,
-            Date dateExit, JFXButton action) {
+            Date dateExit) {
         this.memberId = memberId;
         this.firstName = firstName;
         this.sureName = sureName;
@@ -77,7 +75,6 @@ public class MemberModel implements DataAccessObject {
         this.dateRegister = dateRegister;
         this.dateRegisterEnd = dateRegisterEnd;
         this.dateExit = dateExit;
-        this.action = action;
     }
 
     public String getMemberId() {
@@ -206,14 +203,6 @@ public class MemberModel implements DataAccessObject {
 
     public void setOldmemberId(String oldmemberId) {
         this.oldmemberId = oldmemberId;
-    }
-
-    public JFXButton getAction() {
-        return action;
-    }
-
-    public void setAction(JFXButton action) {
-        this.action = action;
     }
 
     @Override

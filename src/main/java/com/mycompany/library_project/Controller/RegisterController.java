@@ -235,7 +235,8 @@ public class RegisterController implements Initializable {
             }
         });
 
-        if (MemberController.add) {
+        if (memberModel != null) {
+
             moveForm();
             btClose.setVisible(true);
             btClose.setOnAction(new EventHandler<ActionEvent>() {
@@ -243,12 +244,9 @@ public class RegisterController implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     MemberController.addMemberStage.close();
-                    MemberController.add = false;
                 }
             });
-        }
 
-        if (memberModel != null) {
             // Todo: if by edit from 'Form Member'
             memberid_edit = memberModel.getMemberId();
             txtId.setText(memberModel.getMemberId());

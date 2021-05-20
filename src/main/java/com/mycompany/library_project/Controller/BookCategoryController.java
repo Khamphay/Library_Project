@@ -2,6 +2,8 @@ package com.mycompany.library_project.Controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,7 +41,7 @@ public class BookCategoryController implements Initializable {
     private StackPane stakePane;
 
     @FXML
-    private TextField txtcatgId, txtcatgName;
+    private TextField txtcatgId, txtcatgName, txtSearch;
 
     @FXML
     private JFXButton btSave, btEdite, btCancel;
@@ -58,7 +60,29 @@ public class BookCategoryController implements Initializable {
             while (rs.next()) {
                 data.add(new CategoryModel(rs.getString(1), rs.getString(2)));
             }
-            tableCategory.setItems(data);
+            // tableCategory.setItems(data); //Todo: if you don't filter to Search data
+            // bellow:
+
+            // Todo: Search Data
+            FilteredList<CategoryModel> filterCatg = new FilteredList<>(data, b -> true);
+            txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                filterCatg.setPredicate(searchCategory -> {
+                    if (newValue.isEmpty()) {
+                        return true;
+                    }
+
+                    if (searchCategory.getCatgName().toLowerCase().indexOf(newValue.toLowerCase()) != -1) {
+                        return true;
+                    } else
+                        return false;
+
+                });
+            });
+
+            SortedList<CategoryModel> sorted = new SortedList<>(filterCatg);
+            sorted.comparatorProperty().bind(tableCategory.comparatorProperty());
+            tableCategory.setItems(sorted);
+
         } catch (Exception e) {
             alertMessage.showErrorMessage(stakePane, "Load data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
@@ -130,8 +154,8 @@ public class BookCategoryController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colCatgId.setCellValueFactory(new PropertyValueFactory<>("catgId"));
         colCatgName.setCellValueFactory(new PropertyValueFactory<>("catgName"));
-        addButtonToTable();
         showData();
+        addButtonToTable();
     }
 
     private void addButtonToTable() {
@@ -159,7 +183,17 @@ public class BookCategoryController implements Initializable {
                         });
                     }
 
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty)
+                            setGraphic(null);
+                        else
+                            setGraphic(delete);
+                    }
+
                 };
+
                 return cell;
             }
 

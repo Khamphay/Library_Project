@@ -46,6 +46,15 @@
                            <contextMenu>
                               <ContextMenu>
                                 <items>
+                                    <MenuItem fx:id="menuPrintCard" mnemonicParsing="false" text="ພີມບັດສະມາຊິດ">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@Icon/print_card.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </MenuItem>
                                   <MenuItem fx:id="menuEdit" mnemonicParsing="false" text="ແກ້ໄຂ">
                                        <graphic>
                                           <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
@@ -53,7 +62,8 @@
                                                 <Image url="@Icon/icons8_edit_50px.png" />
                                              </image>
                                           </ImageView>
-                                       </graphic></MenuItem>
+                                       </graphic>
+                                    </MenuItem>
                                     <MenuItem fx:id="menuDelete" mnemonicParsing="false" text="ລົບ">
                                        <graphic>
                                           <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
@@ -61,7 +71,8 @@
                                                 <Image url="@Icon/delete.png" />
                                              </image>
                                           </ImageView>
-                                       </graphic></MenuItem>
+                                       </graphic>
+                                    </MenuItem>
                                 </items>
                               </ContextMenu>
                            </contextMenu>

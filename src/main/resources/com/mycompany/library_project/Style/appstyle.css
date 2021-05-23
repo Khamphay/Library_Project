@@ -389,12 +389,17 @@
     -fx-font-family: 'BoonBaan';
     -fx-font-size: 14;
 }
-.tree-table-cell:selected {
+/* .tree-table-cell:selected {
     -fx-background-color: rgb(151, 151, 151);
+    -fx-background-color: derive(#25448E, 95%);
+} */
+.tree-table-row-cell:selected  {
+   -fx-background-color: derive(#25448E, 95%);
+   -fx-font-weight:bold;
 }
-.tree-table-row-cell:selected .text {
+/* .tree-table-row-cell:selected .text {
     -fx-fill: rgb(40, 11, 119);
-}
+} */
 /* The increment and decrement button CSS class of scrollbar */
 .tree-table-view>.virtual-flow>.scroll-bar{
     -fx-font-size:6pt;

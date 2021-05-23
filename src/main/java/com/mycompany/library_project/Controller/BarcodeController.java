@@ -4,12 +4,15 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
+import com.mycompany.library_project.Report.CreateReport;
 import com.mycompany.library_project.config.CreateLogFile;
 
 import javafx.collections.*;
@@ -27,16 +30,17 @@ public class BarcodeController implements Initializable {
 
     private BookDetailModel addBarcode = null;
     private ResultSet rs = null;
-    private ObservableList<BookDetailModel> data = null;
+    private TableLogModel table = null;
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = null;
+    private CreateLogFile logfile = new CreateLogFile();
+    private ObservableList<BookDetailModel> data = null;
+    private ObservableList<String> items = null;
     private ArrayList<String> book = null;
     private ObservableList<String> status = FXCollections.observableArrayList("ຫວ່າງ", "ກຳລົງຢືມ", "ເສຍ");
     private String barcode = "", bookid = "";
     private Double x, y;
-    private ObservableList<String> items = null;
-    private TableLogModel table = null;
-    private CreateLogFile logfile = new CreateLogFile();
+
 
     @FXML
     private StackPane stackPane;
@@ -128,8 +132,9 @@ public class BarcodeController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                // TODO Auto-generated method stub
-
+                CreateReport printBarcode = new CreateReport();
+                Map<String, Object> map = new HashMap<String, Object>();
+                printBarcode.showReport(map, "printBarodes.jrxml", "Print Barcode Error");
             }
 
         });
@@ -215,7 +220,7 @@ public class BarcodeController implements Initializable {
             }
             tableBarcode.setItems(data);
         } catch (Exception e) {
-
+            alertMessage.showErrorMessage("Load data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 

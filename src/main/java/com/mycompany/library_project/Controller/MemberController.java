@@ -3,6 +3,8 @@ package com.mycompany.library_project.Controller;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
@@ -10,6 +12,7 @@ import com.mycompany.library_project.App;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.MemberModel;
+import com.mycompany.library_project.Report.CreateReport;
 import com.mycompany.library_project.config.CreateLogFile;
 
 import javafx.collections.*;
@@ -48,7 +51,7 @@ public class MemberController implements Initializable {
     private JFXButton btAddUser;
 
     @FXML
-    private MenuItem menuEdit, menuDelete;
+    private MenuItem menuEdit, menuDelete, menuPrintCard;
 
     @FXML
     private TableView<MemberModel> tableMember;
@@ -157,6 +160,16 @@ public class MemberController implements Initializable {
             }
         });
 
+        menuPrintCard.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                CreateReport printCard = new CreateReport();
+                Map<String, Object> map = new HashMap<String, Object>();
+                printCard.showReport(map, "printMemberCards.jrxml", "Print Member Card Error");
+            }
+
+        });
         menuEdit.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override

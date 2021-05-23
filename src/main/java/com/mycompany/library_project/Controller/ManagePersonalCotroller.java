@@ -37,7 +37,7 @@ public class ManagePersonalCotroller implements Initializable {
             bpManagePerson.setCenter(subForm);
         } catch (Exception e) {
             alertMessage.showErrorMessage(bpManagePerson, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນສ່ວນບຸກຄົນມີບັນຫາ: "+form, e);
+            logfile.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນສ່ວນບຸກຄົນມີບັນຫາ: " + form, e);
         }
     }
 

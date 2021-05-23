@@ -27,7 +27,7 @@ public class CreateReport {
     public JasperViewer viewer;
     public JasperPrint print;
     public Connection con = MyConnection.getConnect();
-    private String url_report = "bin/";
+    private String url_report = "/bin/";
 
     public CreateReport() {
 

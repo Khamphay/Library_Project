@@ -1,0 +1,427 @@
+
+/*-------------------FontStyle -----------------*/
+.Phetsarath_OT-size-12-Regular{
+    -fx-font-family: 'Phetsarath OT';
+    -fx-font-size: 12;
+}
+
+.Phetsarath_OT-size-12{
+    -fx-font-family: 'Phetsarath OT';
+    -fx-font-weight: bold;
+    -fx-font-size: 12;
+}
+.Phetsarath_OT-size-14{
+    -fx-font-family: 'Phetsarath OT';
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+}
+
+.Phetsarath_OT-size-16{
+    -fx-font-family: 'Phetsarath OT';
+    -fx-font-weight: bold;
+    -fx-font-size: 16;
+}
+
+.Phetsarath_OT-size-20{
+    -fx-font-family: 'Phetsarath OT';
+    -fx-font-weight: bold;
+    -fx-font-size: 20;
+}
+
+/*-------------------FontStyle -----------------*/
+.BoonBaan-size-12-Regular{
+    -fx-font-family: 'BoonBaan';
+    -fx-font-size: 12;
+}
+
+.BoonBaan-size-12{
+    -fx-font-family: 'BoonBaan';
+    -fx-font-weight: bold;
+    -fx-font-size: 12;
+}
+.BoonBaan-size-14{
+    -fx-font-family: 'BoonBaan';
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+}
+.BoonBaan-size-14-Regular{
+    -fx-font-family: 'BoonBaan';
+    -fx-font-size: 14;
+}
+.BoonBaan-size-16{
+    -fx-font-family: 'BoonBaan';
+    -fx-font-weight: bold;
+    -fx-font-size: 16;
+}
+
+.BoonBaan-size-20{
+    -fx-font-family: 'BoonBaan';
+    -fx-font-weight: bold;
+    -fx-font-size: 20;
+}
+
+/*-------------------Text-----------------*/
+/* .text{
+    -fx-font-family: 'BoonBaan';
+    -fx-font-size: 14;
+} */
+
+
+/*-------------------VBox-----------------*/
+.vbox:hover{
+    -fx-background-color:#D6DFF5;
+}
+.vbox:pressed{
+    -fx-background-color:#9395EB;
+}
+
+.text{
+    -fx-font-smoothing-type:gray;
+}
+/*-------------------TextField -----------------*/
+.text-field{
+    -fx-font-family: 'BoonBaan';
+    -fx-font-size: 14;
+    /* -fx-background-color: #fff; */
+    /* -fx-background-color: transparent; */
+    -fx-background-radius:0.5em;
+    -fx-border-radius: 0.5em;
+    -fx-border-color:  #101D3D;
+    -fx-text-fill: #0a1eff;
+}
+
+.text-field:focus{
+    -fx-border-color:#026b02;
+}
+
+.text-area{
+    -fx-font-family: 'BoonBaan';
+    -fx-font-size: 14;
+    /* -fx-background-color: transparent; */
+    -fx-background-radius:0.5em;
+    -fx-border-radius: 0.5em;
+    -fx-border-color:  #101D3D;
+}
+
+
+#text-user{
+    -fx-background-radius:2em;
+    -fx-border-radius: 2em;
+}
+#text-password{
+    -fx-background-radius:2em;
+    -fx-border-radius: 2em;
+}
+
+/*-------------------Button -----------------*/
+/* #btClick{
+    -fx-background-color: #101D3D;
+    -fx-background-radius:15px 15px 15px 15px;
+    -fx-font-family:'Phetsarath OT';
+} */
+/* .button{
+    -fx-font-family: 'BoonHome';
+    -fx-font-size: 12;
+} */
+
+ .context-menu{
+    -fx-background-radius:0.5em;
+    -fx-font-size: 16;
+}
+
+.menu-item{
+    /* -fx-background-color: #fff;
+    -fx-margin-bottom: 2px;
+    -fx-border-color: transparent; */
+    -fx-background-radius:0.5em;
+}
+
+.menu-item:hover{
+    -fx-background-radius:0.5em;
+    /* -fx-background-color: derive(#101D3D, 98%); */
+    -fx-font-weight: bold;
+} 
+
+#btnAction{
+    -fx-background-radius:15px 15px 15px 15px;
+    -fx-background-color: #2b2d8d;
+    -fx-text-fill:#fff;
+}
+
+.button:hover{
+    -fx-font-weight: bold;
+}
+
+.button:pressed{
+    -fx-rippler-fill:width;
+}
+
+/*-------------------Button Hamburger -----------------*/
+.jfx-hamburger {
+    -fx-spacing: 5;
+    -fx-cursor: hand;
+}
+
+.jfx-hamburger:hover {
+    -fx-background-color: rgba(66, 109, 211, 0.5);
+    -fx-background-radius: 0.2em;
+}
+
+.jfx-hamburger StackPane {
+    /* -fx-pref-width: 30px;
+    -fx-pref-height: 5px; */
+    -fx-background-color: #fff;
+    -fx-background-radius: 4px;
+}
+
+/*-------------------DateTime -----------------*/
+/* .date-picker{
+    -fx-font-family: 'BoonBaan';
+    -fx-font-size: 14;
+    -fx-text-fill:#fff;
+    -fx-font-weight: bold;
+    -fx-background-radius:0.5em;
+    -fx-border-radius: 0.5em;
+    -fx-border-color: #2b2d8d;
+}
+.date-picker-popup>*>.date-picker-view>.virtual-flow>.clipped-container>.sheet>.data-picker-list-cell>.jfx-rippler{
+    -jfx-rippler-fill:#fff;
+    -fx-text-fill:#fff;
+    background-color: transparent;
+    -fx-display: flex;
+    
+} */
+
+.date-picker:editable > .arrow-button > * {
+    -fx-opacity: 0; /* Set the node in the button to be visible */
+}
+
+.date-picker > .arrow-button {
+    -fx-background-image: url("../Icon/calendar.png"); /* Url of the icon */
+    -fx-background-size: 60% 60%; /* Can be `cover` or `100% 100%` ect. */
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center; /* Put the icon in the center */
+}
+
+/*-------------------contex menu -----------------*/
+.contex-menu:hover{
+    -fx-background-color: #22274E;
+    -fx-text-fill:#fff;
+}
+
+/*-------------------HBox -----------------*/
+.hbox{
+    -fx-border-width: 0px 0px 0px 0px;
+    -fx-border-color: #F0F0F5;
+}
+
+.hbox:hover{
+    -fx-border-width: 0px 0px 0px 2px;
+    -fx-border-color:#027D00;
+    -fx-background-color: #a3bde7;
+}
+
+.hbox:passed{
+    -fx-border-width: 0px 0px 0px 2px;
+    -fx-border-color:#027D00;
+    -fx-background-color: #5354bd;
+}
+
+/*-------------------Combobox -----------------*/
+.combo-box{
+    -fx-font-family: 'BoonBaan';
+    -fx-font-size: 14;
+    /* -fx-font-weight: bold; */
+    -fx-background-radius:0.5em;
+    -fx-border-radius: 0.5em;
+    -fx-border-color: #101D3D;
+    -fx-text-fill: #0a1eff;
+    -fx-background-color: #fff;
+}
+
+/*-------------------Label -----------------*/
+.label{
+    /* -fx-font-family: 'Phetsarath OT';
+     */
+     -fx-font-family: 'BoonBaan';
+}
+.label-size-12-Regular{
+    -fx-font-size: 12;
+}
+.label-size-12{
+    -fx-font-weight: bold;
+    -fx-font-size: 12;
+}
+.label-size-14{
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+}
+.label-size-16{
+    -fx-font-weight: bold;
+    -fx-font-size: 16;
+}
+.label-size-20{
+    -fx-font-weight: bold;
+    -fx-font-size: 20;
+}
+
+/*-------------------Scroll Pane -----------------*/
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 5em;
+}
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #3545f1;
+    -fx-background-radius: 5em;
+}
+.scroll-pane > .corner {
+    -fx-background-color: transparent;
+    /* background-color: #00000000; */
+}
+
+.notification-pane .text {
+    -fx-font-family: 'BoonBaan';
+}
+
+.table-view {
+    -fx-border-color:  #101D3D;
+    -fx-background-color:  #f3f3f3;
+    -fx-font-family: 'BoonBaan';
+    -fx-font-size: 14px;
+    -fx-bodor-width:0px;
+    -fx-border-radius: 5px 5px 5px 5px;
+}
+
+.table-view .column-header,
+.table-view .column-header-background .filler {
+    -fx-cell-size: 30;
+    -fx-background-color:  #c9cacf;
+    -fx-bodor-width:0px;
+    /* -fx-background-radius:5px 5px 0px 0px; */
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: rgb(0, 0, 0);
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-view .cell {
+    -fx-cell-size: 30;
+    -fx-alignment: center-left;
+    -fx-text-fill: #000000;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: derive(#25448E, 95%);
+}
+
+.table-row-cell:selected .text {
+    /* -fx-fill: #111B27; */
+    -fx-font-weight:bold;
+
+}
+
+
+/*-------------------Table ScallBar Style -----------------*/
+/* The increment and decrement button CSS class of scrollbar */
+
+.table-view> .virtual-flow> .scroll-bar{
+    -fx-font-size:6pt;
+}
+.table-view .increment-button, .table-view .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 2em;
+}
+/* The main scrollbar **track** CSS class  */
+.table-view .scroll-bar:horizontal .track,
+.table-view .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color: derive(#3545f1, 80%);
+    -fx-background-radius: 2em;
+    -fx-border-radius: 2em;
+}
+
+/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
+.table-view .scroll-bar:horizontal .thumb,
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: derive(#3545f1, 90%);
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
+}
+
+.tree-table-view {
+    -fx-border-color:  #101D3D;
+    -fx-background-color:  #f3f3f3;
+    -fx-background-radius:0.5em;
+    -fx-border-radius:0.5em;
+}
+.tree-table-view .column-header,
+.tree-table-view .column-header-background .filler {
+    -fx-cell-size: 30;
+    -fx-background-color:  #c9cacf;
+    -fx-bodor-width:0px;
+}
+.tree-table-view .column-header .label {
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+}
+.tree-table-view .cell {
+    -fx-cell-size: 30;
+    -fx-alignment: center-left;
+    -fx-text-fill: #000000;
+    -fx-alignment: CENTER_LEFT;
+    -fx-font-family: 'BoonBaan';
+    -fx-font-size: 14;
+}
+/* .tree-table-cell:selected {
+    -fx-background-color: rgb(151, 151, 151);
+    -fx-background-color: derive(#25448E, 95%);
+} */
+.tree-table-row-cell:selected  {
+   -fx-background-color: derive(#25448E, 95%);
+   -fx-font-weight:bold;
+}
+/* .tree-table-row-cell:selected .text {
+    -fx-fill: rgb(40, 11, 119);
+} */
+/* The increment and decrement button CSS class of scrollbar */
+.tree-table-view>.virtual-flow>.scroll-bar{
+    -fx-font-size:6pt;
+}
+.tree-table-view .increment-button, .table-view .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 2em;
+
+}
+/* The main scrollbar **track** CSS class  */
+.tree-table-view .scroll-bar:horizontal .track,
+.tree-table-view .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color: derive(#2D75E8, 80%);
+    -fx-background-radius: 2em;
+    -fx-border-radius: 2em;
+}
+/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
+.tree-table-view .scroll-bar:horizontal .thumb,
+.tree-table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: derive(#2D75E8, 90%);
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
+
+}

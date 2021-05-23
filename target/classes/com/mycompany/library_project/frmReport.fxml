@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="bpReport" prefHeight="513.0" prefWidth="794.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.ReportController">
+   <center>
+      <AnchorPane fx:id="acMenu" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton buttonType="RAISED" layoutX="184.0" layoutY="148.0" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ລາຍງານຂໍ້ມູນປຶ້ມ" textAlignment="CENTER" textFill="#ffeded" wrapText="true" />
+            <JFXButton buttonType="RAISED" layoutX="338.0" layoutY="148.0" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ລາຍງານຂໍ້ມູນປຶ້ມເສຍ" textAlignment="CENTER" textFill="#ffeded" wrapText="true" />
+            <JFXButton buttonType="RAISED" layoutX="489.0" layoutY="148.0" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ລາຍງານຂໍ້ມູນຢືມປຶ້ມ-ສົ່ງປຶ້ມ" textAlignment="CENTER" textFill="#ffeded" wrapText="true" />
+            <JFXButton buttonType="RAISED" layoutX="184.0" layoutY="286.0" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ລາຍງານຂໍ້ມູນນຳປຶ້ມເຂົ້າ" textAlignment="CENTER" textFill="#ffeded" wrapText="true" />
+            <JFXButton buttonType="RAISED" layoutX="338.0" layoutY="286.0" prefHeight="79.0" prefWidth="122.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ລາຍງານຂໍ້ມູນສະມາຊິກ" textAlignment="CENTER" textFill="#ffeded" wrapText="true" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

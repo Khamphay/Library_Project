@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXBadge?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="662.0" prefWidth="1267.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.SendBookController">
+   <center>
+      <StackPane fx:id="stackPane">
+         <children>
+            <ScrollPane fitToHeight="true" fitToWidth="true">
+               <content>
+                  <JFXBadge prefHeight="628.0" prefWidth="189.0">
+                     <children>
+                        <AnchorPane maxWidth="-Infinity" prefHeight="626.0" prefWidth="1249.0">
+                           <children>
+                              <TableView fx:id="tableSendBooks" layoutX="12.0" layoutY="249.0" prefHeight="367.0" prefWidth="1222.0" style="-fx-background-color: #f3f3f3;" styleClass="table" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="249.0">
+                                <columns>
+                                  <TableColumn fx:id="colBarcode" prefWidth="109.0" styleClass="tablecolumn" text="ລະຫັດປຶ້ມ" />
+                                  <TableColumn fx:id="colBookName" prefWidth="189.0" styleClass="tablecolumn" text="ຊື່ປຶ້ມ" />
+                                    <TableColumn fx:id="colCatg" prefWidth="164.0" styleClass="tablecolumn" text="ໝວດປຶ້ມ" />
+                                    <TableColumn fx:id="colType" prefWidth="136.0" styleClass="tablecolumn" text="ປະເພດປຶ້ມ" />
+                                    <TableColumn fx:id="colMemberName" prefWidth="162.0" styleClass="tablecolumn" text="ຊື່ ແລະ ນາມສະກຸນ ສະມາຊີກ" />
+                                    <TableColumn fx:id="colDateSend" prefWidth="120.0" styleClass="tablecolumn" text="ວັນທີຢືມ" />
+                                    <TableColumn fx:id="colDateRent" prefWidth="109.0" styleClass="tablecolumn" text="ວັນທີສົ່ງ" />
+                                </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                              <JFXButton id="btClick" fx:id="btSave" alignment="CENTER" buttonType="RAISED" layoutX="276.0" layoutY="194.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/checked.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="-2.0" />
+                                 </padding>
+                              </JFXButton>
+                              <JFXButton id="btClick" fx:id="btBookLost" alignment="CENTER" buttonType="RAISED" layoutX="416.0" layoutY="194.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ປຶ້ມເສຍ" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/edit.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="-2.0" />
+                                 </padding>
+                              </JFXButton>
+                              <JFXButton id="btClick" fx:id="btCancel" alignment="CENTER" buttonType="RAISED" layoutX="552.0" layoutY="194.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/cancel.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets left="-2.0" />
+                                 </padding>
+                              </JFXButton>
+                              <DatePicker fx:id="dateSend" layoutX="991.0" layoutY="134.0" prefHeight="33.0" prefWidth="206.0" promptText="ວັນທີສົ່ງ" showWeekNumbers="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </DatePicker>
+                              <TextField fx:id="txtBookName" layoutX="259.0" layoutY="57.0" prefHeight="27.0" prefWidth="220.0" promptText="ຊື່ປຶ້ມ" styleClass="textfield" viewOrder="1.0" />
+                              <TextField fx:id="txtBarcode" layoutX="21.0" layoutY="56.0" prefHeight="27.0" prefWidth="220.0" promptText="ລະຫັດປຶ້ມ" viewOrder="1.0" />
+                              <TextField fx:id="txtType" layoutX="745.0" layoutY="57.0" prefHeight="31.0" prefWidth="220.0" promptText="ປະເພດປຶ້ມ" styleClass="textfield" viewOrder="1.0" />
+                              <TextField fx:id="txtCatg" layoutX="500.0" layoutY="57.0" prefHeight="31.0" prefWidth="220.0" promptText="ໝວດປຶ້ມ" styleClass="textfield" viewOrder="1.0" />
+                              <DatePicker fx:id="dateRent" layoutX="991.0" layoutY="56.0" prefHeight="33.0" prefWidth="207.0" promptText="ວັນທີຢືມ" showWeekNumbers="true">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </DatePicker>
+                              <TextField fx:id="txtPrice" layoutX="499.0" layoutY="134.0" prefHeight="27.0" prefWidth="220.0" promptText="ຄ່າປັບໃໝ/ມື້" styleClass="textfield" viewOrder="1.0" />
+                              <TextField fx:id="txtAllPrice" layoutX="740.0" layoutY="134.0" prefHeight="27.0" prefWidth="220.0" promptText="ຄ່າປັບໃໝທັງໝົດ" styleClass="textfield" viewOrder="1.0" />
+                              <TextField fx:id="txtOutDate" layoutX="261.0" layoutY="134.0" prefHeight="27.0" prefWidth="220.0" promptText="ຈຳນວນມື້ທີ່ຢືມກາຍ" styleClass="textfield" viewOrder="1.0" />
+                              <Label layoutX="21.0" layoutY="36.0" styleClass="BoonBaan-size-14" text="ລະຫັດປຶ້ມ" />
+                              <Label layoutX="259.0" layoutY="37.0" styleClass="BoonBaan-size-14" text="ຊື່ປຶ້ມ" />
+                              <Label layoutX="500.0" layoutY="37.0" styleClass="BoonBaan-size-14" text="ໝວດປຶ້ມ" />
+                              <Label layoutX="745.0" layoutY="37.0" styleClass="BoonBaan-size-14" text="ປະເພດປຶ້ມ" />
+                              <Label layoutX="991.0" layoutY="36.0" styleClass="BoonBaan-size-14" text="ວັນທີຢືມປຶ້ມ" />
+                              <Label layoutX="261.0" layoutY="114.0" styleClass="BoonBaan-size-14" text="ຈຳນວນມື້ທີ່ຢືມກາຍ" />
+                              <Label layoutX="499.0" layoutY="114.0" styleClass="BoonBaan-size-14" text="ຄ່າປັບໃໝ/ມື້" />
+                              <Label layoutX="740.0" layoutY="114.0" styleClass="BoonBaan-size-14" text="ຄ່າປັບໃໝທັງໝົດ" />
+                              <Label layoutX="992.0" layoutY="114.0" styleClass="BoonBaan-size-14" text="ວັນທີສົ່ງປຶ້ມ" />
+                              <TextField fx:id="txtMemberName" layoutX="21.0" layoutY="134.0" prefHeight="27.0" prefWidth="220.0" promptText="ຊື່ ແລະ ນາມສະກຸນ ສະມາຊີກ" viewOrder="1.0" />
+                              <Label layoutX="21.0" layoutY="114.0" styleClass="BoonBaan-size-14" text="ຊື່ ແລະ ນາມສະກຸນ ສະມາຊີກ" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </JFXBadge>
+               </content>
+            </ScrollPane>
+         </children>
+      </StackPane>
+   </center>
+   <top>
+      <AnchorPane prefHeight="34.0" prefWidth="1158.0" style="-fx-background-color: #101D3D;" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="1127.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="23.0" prefWidth="24.0" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
+               <graphic>
+                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Icon/no_50px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="1.0" />
+               </font>
+            </JFXButton>
+            <Label graphicTextGap="10.0" layoutX="14.0" layoutY="10.0" prefHeight="32.0" prefWidth="161.0" styleClass="label-size-16" text="ສົ່ງປື້ມ" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="1.0" AnchorPane.topAnchor="2.0">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@Icon/send_job_list_50px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>

@@ -34,10 +34,10 @@ public class DepartmentController implements Initializable {
     private StackPane stackPane;
 
     @FXML
-    private JFXButton btSave, btEdit, btCancel, txtSearch;
+    private JFXButton btSave, btEdit, btCancel;
 
     @FXML
-    private TextField txtId, txtName;
+    private TextField txtId, txtName, txtSearch;
 
     @FXML
     private TableView<DepartmentModel> tableDepartment;
@@ -127,7 +127,7 @@ public class DepartmentController implements Initializable {
             // bellow:
 
             // Todo: Search data
-            FilteredList<DepartmentModel> filterDep = new FilteredList<DepartmentModel>(data, dep -> true);
+            FilteredList<DepartmentModel> filterDep = new FilteredList<>(data, dep -> true);
             txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
                 filterDep.setPredicate(searchDep -> {
                     if (newValue.isEmpty())
@@ -139,10 +139,10 @@ public class DepartmentController implements Initializable {
                         return false;
                 });
 
-                SortedList<DepartmentModel> sorted = new SortedList<DepartmentModel>(filterDep);
-                sorted.comparatorProperty().bind(tableDepartment.comparatorProperty());
-                tableDepartment.setItems(sorted);
             });
+            SortedList<DepartmentModel> sorted = new SortedList<DepartmentModel>(filterDep);
+            sorted.comparatorProperty().bind(tableDepartment.comparatorProperty());
+            tableDepartment.setItems(sorted);
 
         } catch (Exception e) {
             alertMessage.showErrorMessage("ໂຫຼດຂໍ້ມູນ", e.getMessage(), 3, Pos.BOTTOM_RIGHT);

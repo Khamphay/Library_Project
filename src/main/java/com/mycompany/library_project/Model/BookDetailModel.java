@@ -30,10 +30,10 @@ public class BookDetailModel implements DataAccessObject {
     public BookDetailModel() {
     }
 
-    public BookDetailModel(String bookId, String tableLogId, String barcode) {
-        this.bookId = bookId;
-        this.barcode = (barcode);
+    public BookDetailModel(String barcode, String tableLogId, String status) {
+        this.barcode = barcode;
         this.tableLogId = tableLogId;
+        this.status = status;
     }
 
     public BookDetailModel(String bookId, String bookName, String ISBN, Integer page, Integer qty, String catgId,

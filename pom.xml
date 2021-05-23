@@ -65,6 +65,21 @@
             <artifactId>json-simple</artifactId>
             <version>3.1.1</version>
         </dependency>
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>6.17.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.barcode4j</groupId>
+            <artifactId>barcode4j</artifactId>
+            <version>2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-bridge</artifactId>
+            <version>1.14</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -77,8 +92,8 @@
                 </configuration>
             </plugin>
 
-            <!--Add My Code -->
-<!--            <plugin> -->
+ <!--Add My Code -->
+<!--            <plugin>-->
 <!--                &lt;!&ndash; Building an executable jar &ndash;&gt;-->
 <!--                <groupId>org.apache.maven.plugins</groupId>-->
 <!--                <artifactId>maven-jar-plugin</artifactId>-->
@@ -92,7 +107,33 @@
 <!--                  </archive>-->
 <!--                </configuration>-->
 <!--            </plugin>-->
-            <!-- End -->
+<!--End-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
+                <executions>
+                    <execution></execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <minimizeJar>true</minimizeJar>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <groupId>org.openjfx</groupId>

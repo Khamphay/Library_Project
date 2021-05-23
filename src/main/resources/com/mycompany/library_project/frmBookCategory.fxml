@@ -95,6 +95,8 @@
                                        </image>
                                     </ImageView>
                                     <Separator layoutX="381.0" layoutY="115.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="3.0" />
+                                    <Label layoutX="14.0" layoutY="37.0" styleClass="BoonBaan-size-14" text="ລະຫັດໝວດ" />
+                                    <Label layoutX="254.0" layoutY="37.0" styleClass="BoonBaan-size-14" text="ໝວດປຶ້ມ" />
                                  </children>
                               </AnchorPane>
                            </children>

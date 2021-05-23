@@ -29,12 +29,6 @@ public class TableLogModel implements DataAccessObject {
         this.tableLog = tableLog;
     }
 
-    public TableLogModel(String tableId, int logQty, JFXButton action) {
-        this.tableId = tableId;
-        this.logQty = logQty;
-        this.action = action;
-    }
-
     public TableLogModel(String tableId, String tableLog) {
         this.tableId = tableId;
         this.tableLog = tableLog;
@@ -43,6 +37,12 @@ public class TableLogModel implements DataAccessObject {
     public TableLogModel(String tableId, int qty) {
         this.tableId = tableId;
         this.logQty = qty;
+    }
+
+    public TableLogModel(String tableId, int logQty, JFXButton action) {
+        this.tableId = tableId;
+        this.logQty = logQty;
+        this.action = action;
     }
 
     public TableLogModel(String tableId, String tableLog, String newLog) {

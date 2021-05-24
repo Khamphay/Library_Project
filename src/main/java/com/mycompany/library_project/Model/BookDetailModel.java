@@ -5,12 +5,15 @@ import java.text.ParseException;
 
 import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
+import com.mycompany.library_project.config.CreateLogFile;
 
 public class BookDetailModel implements DataAccessObject {
 
     private Connection con = MyConnection.getConnect();
     private ResultSet rs = null;
     private PreparedStatement ps = null;
+    private CreateLogFile logfile = new CreateLogFile();
+
     private String sql = null;
     private String bookId;
     private String bookName;
@@ -273,12 +276,13 @@ public class BookDetailModel implements DataAccessObject {
 
     public ResultSet showBarcode(String book_id) {
         try {
-            sql = "call  book_ShowByBookId(?);";
+            sql = "call book_ShowByBookId(?);";
             ps = con.prepareStatement(sql);
             ps.setString(1, book_id);
             rs = ps.executeQuery();
             return rs;
         } catch (Exception e) {
+            logfile.createLogFile("Load data of barcode", e);
             return null;
         }
     }

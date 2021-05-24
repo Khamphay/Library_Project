@@ -24,6 +24,7 @@ import com.jfoenix.controls.*;
 import com.mycompany.library_project.*;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.BookDetailModel;
+import com.mycompany.library_project.config.CreateLogFile;
 
 public class BookController implements Initializable {
 
@@ -34,6 +35,7 @@ public class BookController implements Initializable {
     private BookDetailModel bookDetail = null;
     private ObservableList<BookDetailModel> data = null;
     private AlertMessage alertMessage = new AlertMessage();
+    private CreateLogFile logfile = new CreateLogFile();
     private DialogMessage dialog = null;
     public static Stage addNewBook = null;
     public static Stage addBarcode = null;
@@ -108,6 +110,7 @@ public class BookController implements Initializable {
                     } catch (Exception e) {
                         alertMessage.showErrorMessage(stackPane, "Open New Form", "Error: " + e.getMessage(), 4,
                                 Pos.BOTTOM_RIGHT);
+                        logfile.createLogFile("Open Form Edit Book Error", e);
                     }
 
                 } else {
@@ -189,6 +192,7 @@ public class BookController implements Initializable {
         bppktype.setCellValueFactory(new PropertyValueFactory<>("typeId"));
         tableid.setCellValueFactory(new PropertyValueFactory<>("tableId"));
         bookdetail.setCellValueFactory(new PropertyValueFactory<>("detail"));
+        bookid.setVisible(false);
     }
 
     @Override

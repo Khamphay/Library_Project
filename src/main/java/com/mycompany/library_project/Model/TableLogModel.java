@@ -111,6 +111,16 @@ public class TableLogModel implements DataAccessObject {
         return rs;
     }
 
+    public String findTableId(String tableLogId) throws SQLException {
+        query = "Select tableid From tbtablelog Where tablelog='" + tableLogId + "'";
+        rs = con.createStatement().executeQuery(query);
+        if (rs.next()) {
+            return rs.getString("tableid");
+        } else {
+            return "";
+        }
+    }
+
     @Override
     public ResultSet findByName(String name) throws SQLException {
         // TODO Auto-generated method stub

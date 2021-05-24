@@ -121,16 +121,16 @@ public class HomeController implements Initializable {
 
     private void show_menu() {
         try {
-            if (fragMenu == true) {
+            if (fragMenu == false) {
                 rootMenu = FXMLLoader.load(App.class.getResource("menu_1.fxml"));
                 node = rootMenu;
                 bpDisplay.setLeft(node);
-                fragMenu = false;
+                fragMenu = true;
             } else {
                 rootMenu = FXMLLoader.load(App.class.getResource("menu_2.fxml"));
                 node = rootMenu;
                 bpDisplay.setLeft(node);
-                fragMenu = true;
+                fragMenu = false;
             }
 
             // Todo!: Set event to menu

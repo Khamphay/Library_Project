@@ -189,7 +189,6 @@ public class RegisterController implements Initializable {
         cmbYears.getSelectionModel().clearSelection();
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -267,6 +266,7 @@ public class RegisterController implements Initializable {
             index = cmbDept.getSelectionModel().getSelectedIndex();
             cmbYears.getSelectionModel().select(memberModel.getStudy_year());
             // cmbYears.getSelectionModel().select(memberModel.getYears());
+            localDateExit = memberModel.getDateExit().toLocalDate();
 
             // TODO: Show Image
             if (memberModel.getByimg() != null) {

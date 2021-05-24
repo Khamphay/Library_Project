@@ -30,7 +30,7 @@ public class BarcodeController implements Initializable {
 
     private BookDetailModel addBarcode = null;
     private ResultSet rs = null;
-    private TableLogModel table = null;
+    private TableLogModel table = new TableLogModel();
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = null;
     private CreateLogFile logfile = new CreateLogFile();
@@ -38,9 +38,8 @@ public class BarcodeController implements Initializable {
     private ObservableList<String> items = null;
     private ArrayList<String> book = null;
     private ObservableList<String> status = FXCollections.observableArrayList("ຫວ່າງ", "ກຳລົງຢືມ", "ເສຍ");
-    private String barcode = "", bookid = "";
+    private String barcode = "", bookid = "", tableid = "";
     private Double x, y;
-
 
     @FXML
     private StackPane stackPane;
@@ -134,7 +133,13 @@ public class BarcodeController implements Initializable {
             public void handle(ActionEvent event) {
                 CreateReport printBarcode = new CreateReport();
                 Map<String, Object> map = new HashMap<String, Object>();
-                printBarcode.showReport(map, "printBarodes.jrxml", "Print Barcode Error");
+                if (!txtBarcode.getText().equals("")) {
+                    map.put("bar_code", txtBarcode.getText());
+                    map.put("bookid", "");
+                } else
+                    map.put("bookid", bookid);
+
+                printBarcode.showReport(map, "printBarcodeByBookId.jrxml", "Print Barcode Error");
             }
 
         });
@@ -158,7 +163,12 @@ public class BarcodeController implements Initializable {
 
         tableBarcode.setOnMouseClicked(event -> {
             if (event.getClickCount() >= 2 && tableBarcode.getSelectionModel().getSelectedItem() != null) {
-
+                try {
+                    tableid = table.findTableId(tableBarcode.getSelectionModel().getSelectedItem().getTableLogId());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                cmbTable.getSelectionModel().select(tableid);
                 barcode = tableBarcode.getSelectionModel().getSelectedItem().getBarcode();
                 txtBarcode.setText(tableBarcode.getSelectionModel().getSelectedItem().getBarcode());
                 cmbTabLog_id.getSelectionModel()
@@ -273,7 +283,7 @@ public class BarcodeController implements Initializable {
                             }
                         });
                     }
-                    
+
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);

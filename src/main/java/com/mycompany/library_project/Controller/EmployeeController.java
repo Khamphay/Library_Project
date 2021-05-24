@@ -61,6 +61,7 @@ public class EmployeeController implements Initializable {
         colGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
         colTel.setCellValueFactory(new PropertyValueFactory<>("tel"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colId.setVisible(false);
     }
 
     private void clearText() {

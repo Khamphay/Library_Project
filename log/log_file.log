@@ -1,0 +1,30 @@
+
+=======23/05/2021 21:37:44 (ການເຂົ້າອອກລະບົບມິບັນຫາ)===============================
+Summary: 
+/D:/Information4cs2_1/Final_Project/Library_Project/target/classes/com/mycompany/library_project/frmConfig.fxml
+
+javafx.fxml.LoadException: 
+/D:/Information4cs2_1/Final_Project/Library_Project/target/classes/com/mycompany/library_project/frmConfig.fxml
+
+	at javafx.fxml/javafx.fxml.FXMLLoader.constructLoadException(FXMLLoader.java:2707)
+	at javafx.fxml/javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2685)
+	at javafx.fxml/javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2548)
+	at javafx.fxml/javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3323)
+	at javafx.fxml/javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3280)
+	at javafx.fxml/javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3249)
+	at javafx.fxml/javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3222)
+	at javafx.fxml/javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3199)
+	at javafx.fxml/javafx.fxml.FXMLLoader.load(FXMLLoader.java:3192)
+	at com.mycompany.library_project.Controller.LoginController.openConfigForm(LoginController.java:177)
+	at com.mycompany.library_project.Controller.LoginController$1.run(LoginController.java:147)
+	at javafx.graphics/com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:447)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:391)
+	at javafx.graphics/com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:446)
+	at javafx.graphics/com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:96)
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:174)
+	at java.base/java.lang.Thread.run(Thread.java:832)
+Caused by: java.lang.NullPointerException: Cannot load from object array because "server_infor" is null
+	at com.mycompany.library_project.Controller.ConfigServerController.initialize(ConfigServerController.java:169)
+	at javafx.fxml/javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2655)
+	... 16 more

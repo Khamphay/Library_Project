@@ -33,7 +33,7 @@ public class CreateReport {
 
     }
 
-    public void showReport(Map<String, Object> map, String reportName, String nameError) {
+    public void showReport(Map<String, Object> map, String reportName, String errorName) {
         try {
             design = JRXmlLoader.load(url_report + reportName);
             report = JasperCompileManager.compileReport(design);
@@ -42,7 +42,7 @@ public class CreateReport {
             viewer.setVisible(true);
         } catch (JRException e) {
             alertMessage.showErrorMessage("Report Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile(nameError, e);
+            logfile.createLogFile(errorName, e);
         }
     }
 }

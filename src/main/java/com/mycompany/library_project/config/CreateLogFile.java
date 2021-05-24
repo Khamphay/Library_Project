@@ -11,6 +11,8 @@ import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import javafx.geometry.Pos;
 
 public class CreateLogFile {
+    private String path_log = "log/";
+    private String path_config = "config/";
     private String fileConfig = "Server_infor.json";
     private AlertMessage alertMessage = new AlertMessage();
 
@@ -18,14 +20,14 @@ public class CreateLogFile {
     }
 
     public boolean chackFileConfig() {
-        File jsonFile = new File(Paths.get(fileConfig).toAbsolutePath().toString());
+        File jsonFile = new File(Paths.get(path_config + fileConfig).toAbsolutePath().toString());
         return jsonFile.exists();
     }
 
     public boolean createFileConfig(String host, String port, String userName, String password) {
         try {
             // FileWriter fileWriter = new FileWriter();
-            BufferedWriter writer = Files.newBufferedWriter(Paths.get(fileConfig));
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(path_config + fileConfig));
             JsonObject server = new JsonObject();
             server.put("host", host);
             server.put("port", port);
@@ -45,7 +47,7 @@ public class CreateLogFile {
         try {
             String server[] = new String[4];
             // FileReader fileReader = new FileReader(path + fileConfig);
-            BufferedReader reader = Files.newBufferedReader(Paths.get(fileConfig));
+            BufferedReader reader = Files.newBufferedReader(Paths.get(path_config+fileConfig));
             JsonObject parser = (JsonObject) Jsoner.deserialize(reader);
             server[0] = (String) parser.get("host");
             server[1] = (String) parser.get("port");
@@ -64,7 +66,7 @@ public class CreateLogFile {
     public boolean createLogFile(String title, Exception ex) {
         try {
             DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-            File file = new File("log_file.log");
+            File file = new File(path_log + "log_file.log");
             // Todo: PrintWriter
             FileWriter fw = new FileWriter(file, true);
             PrintWriter pw = new PrintWriter(fw);

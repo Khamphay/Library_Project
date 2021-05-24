@@ -1,5 +1,6 @@
 package com.mycompany.library_project.Controller;
 
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
@@ -128,6 +129,7 @@ public class MemberController implements Initializable {
         depertment.setCellValueFactory(new PropertyValueFactory<>("detp"));
         date_register.setCellValueFactory(new PropertyValueFactory<>("dateRegister"));
         date_exist.setCellValueFactory(new PropertyValueFactory<>("dateRegisterEnd"));
+        id.setVisible(false);
 
         tableMember.setOnMouseClicked(mevt -> {
             if (mevt.getClickCount() > 0 && tableMember.getSelectionModel().getSelectedItem() != null) {
@@ -164,12 +166,16 @@ public class MemberController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
+                InputStream imgInputStream = this.getClass().getResourceAsStream("bin/Logo_FNS.png");
                 CreateReport printCard = new CreateReport();
                 Map<String, Object> map = new HashMap<String, Object>();
-                printCard.showReport(map, "printMemberCards.jrxml", "Print Member Card Error");
+                map.put("memberid", memberModel.getMemberId());
+                map.put("logo", imgInputStream);
+                printCard.showReport(map, "printCardById.jrxml", "Print Member Card Error");
             }
 
         });
+
         menuEdit.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override

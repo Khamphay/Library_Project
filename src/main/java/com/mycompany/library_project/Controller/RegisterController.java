@@ -34,23 +34,23 @@ import java.awt.image.BufferedImage;
 
 public class RegisterController implements Initializable {
 
-    private LocalDate localDateExit;
     private CreateLogFile logfile = new CreateLogFile();
     public static MemberModel memberModel = null;
     private DepartmentModel depertment = new DepartmentModel();
+    private AlertMessage alertMessage = new AlertMessage();
+    private BufferedImage resizeImg = null;
+    private ByteArrayOutputStream byteStrem = null;
+    private OutputStream outStrem = null;
+    private FileChooser chooser = null;
+    private File lastPath = null;
     private ObservableList<String> items = null;
     private ObservableList<String> years = FXCollections.observableArrayList("ປີ 1", "ປີ 1 ຕໍ່ເນື່ອງ", "ປີ 2",
             "ປີ 2 ຕໍ່ເນື່ອງ", "ປີ 3", "ປີ 4");
     private ArrayList<String> depIdList = null;
+    private LocalDate localDateExit;
     private int index = -1;
-    private FileChooser chooser = null;
-    private AlertMessage alertMessage = new AlertMessage();
     private String memberid_edit = "", gender = "";
     private byte[] byimg = null;
-    private BufferedImage resizeImg = null;
-    private ByteArrayOutputStream byteStrem = null;
-    private OutputStream outStrem = null;
-    private File lastPath = null;
     private Double x, y;
 
     @FXML

@@ -209,7 +209,6 @@ public class MemberController implements Initializable {
                 }
             }
         });
-
         menuDelete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

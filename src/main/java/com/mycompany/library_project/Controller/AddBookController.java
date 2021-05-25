@@ -254,26 +254,26 @@ public class AddBookController implements Initializable {
                     index++;
                 }
 
-                if (author_name[1] != null)
+                if (author_name[0] != null)
                     cmbAuthor1.getSelectionModel().select(author_name[0]);
+                cmbAuthor2.setVisible(true);
                 if (author_name[1] != null) {
-                    cmbAuthor2.setVisible(true);
+                    cmbAuthor3.setVisible(true);
                     cmbAuthor2.getSelectionModel().select(author_name[1]);
                 }
                 if (author_name[2] != null) {
-                    cmbAuthor3.setVisible(true);
+                    cmbAuthor4.setVisible(true);
                     cmbAuthor3.getSelectionModel().select(author_name[2]);
                 }
                 if (author_name[3] != null) {
-                    cmbAuthor4.setVisible(true);
+                    cmbAuthor5.setVisible(true);
                     cmbAuthor4.getSelectionModel().select(author_name[3]);
                 }
                 if (author_name[4] != null) {
-                    cmbAuthor5.setVisible(true);
+                    cmbAuthor6.setVisible(true);
                     cmbAuthor5.getSelectionModel().select(author_name[4]);
                 }
                 if (author_name[5] != null) {
-                    cmbAuthor2.setVisible(true);
                     cmbAuthor6.getSelectionModel().select(author_name[5]);
                 }
 
@@ -481,20 +481,37 @@ public class AddBookController implements Initializable {
                 } else {
                     if (addBook.updateData() > 0) {
                         int old_id = 0;
-                        for (String val : arr_author) {
-                            if (val != null) {
-                                try {
-                                    // Todo: Update if have
-                                    if (addBook.updateWrite(bookid, val, oldarr_author[old_id],
-                                            txtYear.getText()) > 0) {
-                                        msg = "Edit data successfully.";
+                        if (oldarr_author[0] != null) {
+                            for (String val : arr_author) {
+                                if (val != null) {
+                                    try {
+                                        // Todo: Update if have
+                                        if (addBook.updateWrite(bookid, val, oldarr_author[old_id],
+                                                txtYear.getText()) > 0) {
+                                            msg = "Edit data successfully.";
+                                        }
+                                    } catch (Exception e) {
+                                        alertMessage.showErrorMessage("Edit Write Error", "Error: " + e.getMessage(), 4,
+                                                Pos.BOTTOM_RIGHT);
+                                        return;
                                     }
-                                } catch (Exception e) {
-                                    alertMessage.showErrorMessage("Edit Write Error", "Error: " + e.getMessage(), 4,
-                                            Pos.BOTTOM_RIGHT);
-                                    return;
+                                    old_id++;
                                 }
-                                old_id++;
+                            }
+                        } else {
+                            // Todo: Save Write
+                            for (String val : arr_author) {
+                                if (val != null) {
+                                    try {
+                                        if (addBook.saveWrite(txtId.getText(), val, txtYear.getText()) > 0) {
+                                            msg = "Save data successfully.";
+                                        }
+                                    } catch (Exception e) {
+                                        alertMessage.showWarningMessage("Save Write Error", "Can not save writer.", 4,
+                                                Pos.BOTTOM_RIGHT);
+                                        return;
+                                    }
+                                }
                             }
                         }
                         msg = "Edit data successfully.";
@@ -527,6 +544,7 @@ public class AddBookController implements Initializable {
             final Stage stage = (Stage) borderPane.getScene().getWindow();
             stage.close();
         }
+
     }
 
     @Override

@@ -22,6 +22,7 @@ import com.mycompany.library_project.config.CreateLogFile;
 
 public class AddBookController implements Initializable {
 
+    private BookController bookcontroller;
     private ResultSet rs = null;
     private AlertMessage alertMessage = new AlertMessage();
     private TypeModel type = null;
@@ -43,6 +44,14 @@ public class AddBookController implements Initializable {
     private int index_type, index_category;
     private String bookid = "";
     private double x, y;
+
+    /*
+     * Todo: Use from class BookController for both form can communicate or use for
+     * Refresh table after add and delete
+     */
+    public void initConstructor(BookController bookcontroller) {
+        this.bookcontroller = bookcontroller;
+    }
 
     @FXML
     private BorderPane borderPane;
@@ -520,6 +529,8 @@ public class AddBookController implements Initializable {
 
                 if (msg != null) {
                     alertMessage.showCompletedMessage("Saved", msg, 4, Pos.BOTTOM_RIGHT);
+                    if (bookcontroller != null)
+                        bookcontroller.showData();
                 } else {
                     alertMessage.showWarningMessage("Saved Warning", "Can not save data.", 4, Pos.BOTTOM_RIGHT);
                 }

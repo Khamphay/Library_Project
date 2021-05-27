@@ -92,7 +92,7 @@
                                  </cursor>
                               </DatePicker>
                               <TextField fx:id="txtBookName" layoutX="259.0" layoutY="57.0" prefHeight="27.0" prefWidth="220.0" promptText="ຊື່ປຶ້ມ" styleClass="textfield" viewOrder="1.0" />
-                              <TextField fx:id="txtBarcode" layoutX="21.0" layoutY="56.0" prefHeight="27.0" prefWidth="220.0" promptText="ລະຫັດປຶ້ມ" viewOrder="1.0" />
+                              <TextField fx:id="txtBarcode" layoutX="21.0" layoutY="56.0" prefHeight="27.0" prefWidth="220.0" promptText="ລະຫັດ Barcode" viewOrder="1.0" />
                               <TextField fx:id="txtType" layoutX="745.0" layoutY="57.0" prefHeight="31.0" prefWidth="220.0" promptText="ປະເພດປຶ້ມ" styleClass="textfield" viewOrder="1.0" />
                               <TextField fx:id="txtCatg" layoutX="500.0" layoutY="57.0" prefHeight="31.0" prefWidth="220.0" promptText="ໝວດປຶ້ມ" styleClass="textfield" viewOrder="1.0" />
                               <DatePicker fx:id="dateRent" layoutX="991.0" layoutY="56.0" prefHeight="33.0" prefWidth="207.0" promptText="ວັນທີຢືມ" showWeekNumbers="true">
@@ -103,7 +103,7 @@
                               <TextField fx:id="txtPrice" layoutX="499.0" layoutY="134.0" prefHeight="27.0" prefWidth="220.0" promptText="ຄ່າປັບໃໝ/ມື້" styleClass="textfield" viewOrder="1.0" />
                               <TextField fx:id="txtAllPrice" layoutX="740.0" layoutY="134.0" prefHeight="27.0" prefWidth="220.0" promptText="ຄ່າປັບໃໝທັງໝົດ" styleClass="textfield" viewOrder="1.0" />
                               <TextField fx:id="txtOutDate" layoutX="261.0" layoutY="134.0" prefHeight="27.0" prefWidth="220.0" promptText="ຈຳນວນມື້ທີ່ຢືມກາຍ" styleClass="textfield" viewOrder="1.0" />
-                              <Label layoutX="21.0" layoutY="36.0" styleClass="BoonBaan-size-14" text="ລະຫັດປຶ້ມ" />
+                              <Label layoutX="21.0" layoutY="36.0" styleClass="BoonBaan-size-14" text="ລະຫັດ Barcode" />
                               <Label layoutX="259.0" layoutY="37.0" styleClass="BoonBaan-size-14" text="ຊື່ປຶ້ມ" />
                               <Label layoutX="500.0" layoutY="37.0" styleClass="BoonBaan-size-14" text="ໝວດປຶ້ມ" />
                               <Label layoutX="745.0" layoutY="37.0" styleClass="BoonBaan-size-14" text="ປະເພດປຶ້ມ" />

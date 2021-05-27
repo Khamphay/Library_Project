@@ -8,7 +8,6 @@ import javafx.scene.image.*;
 import javafx.util.Duration;
 
 public class AlertMessage {
-    private Image img = null;
     private Notifications notificationsBuilder = null;
     private ImageView imgView = null;
 
@@ -16,11 +15,10 @@ public class AlertMessage {
     }
 
     public void showCompletedMessage(String title, String message, int time, Pos pos) {
-        img = new Image("/com/mycompany/library_project/Icon/completed.png");
         imgView = new ImageView();
         imgView.setFitWidth(70);
         imgView.setFitHeight(70);
-        imgView.setImage(img);
+        imgView.setImage(new Image("/com/mycompany/library_project/Icon/completed.png"));
 
         notificationsBuilder = Notifications.create().title(title).text(message).graphic(imgView)
                 .hideAfter(Duration.seconds(time)).position(pos).onAction(null);
@@ -28,11 +26,10 @@ public class AlertMessage {
     }
 
     public void showWarningMessage(String title, String message, int time, Pos pos) {
-        img = new Image("/com/mycompany/library_project/Icon/warning.png");
         imgView = new ImageView();
         imgView.setFitWidth(70);
         imgView.setFitHeight(70);
-        imgView.setImage(img);
+        imgView.setImage(new Image("/com/mycompany/library_project/Icon/warning.png"));
 
         notificationsBuilder = Notifications.create().title(title).text(message).graphic(imgView)
                 .hideAfter(Duration.seconds(time)).position(pos).onAction(null);
@@ -40,11 +37,10 @@ public class AlertMessage {
     }
 
     public void showErrorMessage(String title, String message, int time, Pos pos) {
-        img = new Image("/com/mycompany/library_project/Icon/error.png");
         imgView = new ImageView();
         imgView.setFitWidth(70);
         imgView.setFitHeight(70);
-        imgView.setImage(img);
+        imgView.setImage(new Image("/com/mycompany/library_project/Icon/error.png"));
 
         notificationsBuilder = Notifications.create().title(title).text(message).graphic(imgView)
                 .hideAfter(Duration.seconds(time)).position(pos).onAction(null);
@@ -71,11 +67,10 @@ public class AlertMessage {
 
     // Todo: ===========================Node==========================
     public void showCompletedMessage(Node node, String title, String message, int time, Pos pos) {
-        img = new Image("/com/mycompany/library_project/Icon/completed.png");
         imgView = new ImageView();
         imgView.setFitWidth(70);
         imgView.setFitHeight(70);
-        imgView.setImage(img);
+        imgView.setImage(new Image("/com/mycompany/library_project/Icon/completed.png"));
 
         notificationsBuilder = Notifications.create().owner(node).title(title).text(message).graphic(imgView)
                 .hideAfter(Duration.seconds(time)).position(pos).onAction(null);
@@ -83,11 +78,10 @@ public class AlertMessage {
     }
 
     public void showWarningMessage(Node node, String title, String message, int time, Pos pos) {
-        img = new Image("/com/mycompany/library_project/Icon/warning.png");
         imgView = new ImageView();
         imgView.setFitWidth(70);
         imgView.setFitHeight(70);
-        imgView.setImage(img);
+        imgView.setImage(new Image("/com/mycompany/library_project/Icon/warning.png"));
 
         notificationsBuilder = Notifications.create().owner(node).title(title).text(message).graphic(imgView)
                 .hideAfter(Duration.seconds(time)).position(pos).onAction(null);
@@ -95,11 +89,10 @@ public class AlertMessage {
     }
 
     public void showErrorMessage(Node node, String title, String message, int time, Pos pos) {
-        img = new Image("/com/mycompany/library_project/Icon/error.png");
         imgView = new ImageView();
         imgView.setFitWidth(70);
         imgView.setFitHeight(70);
-        imgView.setImage(img);
+        imgView.setImage(new Image("/com/mycompany/library_project/Icon/error.png"));
 
         notificationsBuilder = Notifications.create().owner(node).title(title).text(message).graphic(imgView)
                 .hideAfter(Duration.seconds(time)).position(pos).onAction(null);

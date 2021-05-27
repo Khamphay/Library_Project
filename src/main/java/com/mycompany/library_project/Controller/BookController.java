@@ -31,6 +31,7 @@ public class BookController implements Initializable {
     String[] values = { "001", "Data Analyst", "07-646712-21", "200", "20", "ຄອມພິວເຕີ", "ແບບຮຽນ", "ພາສາອັງກິດ" };
     Node node[] = new Node[1000];
 
+
     private ResultSet rs = null;
     private BookDetailModel bookDetail = null;
     private ObservableList<BookDetailModel> data = null;
@@ -41,6 +42,9 @@ public class BookController implements Initializable {
     public static Stage addBarcode = null;
     public static String _book_id = "";
     public static boolean add = false;
+
+    @FXML
+    private AddBookController addBookController;
 
     @FXML
     private BorderPane borderPane;
@@ -131,8 +135,13 @@ public class BookController implements Initializable {
     private void showAddBook() {
         try {
             add = true;
-            final Parent root = FXMLLoader.load(App.class.getResource("frmAddBooks.fxml"));
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("frmAddBooks.fxml"));
+            final Parent root = loader.load();
             final Scene scene = new Scene(root);
+
+            addBookController = loader.getController();
+            addBookController.initConstructor(this);
+
             addNewBook = new Stage();
             addNewBook.initStyle(StageStyle.UNDECORATED);
             addNewBook.setScene(scene);
@@ -141,7 +150,8 @@ public class BookController implements Initializable {
             alertMessage.showErrorMessage(borderPane, "Open New Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
-    private void showData() {
+
+    public void showData() {
         try {
             data = FXCollections.observableArrayList();
             bookDetail = new BookDetailModel();

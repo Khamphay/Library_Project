@@ -34,10 +34,13 @@ import java.awt.image.BufferedImage;
 
 public class RegisterController implements Initializable {
 
+    private MemberController memberController;
     private CreateLogFile logfile = new CreateLogFile();
-    public static MemberModel memberModel = null;
+    public MemberModel memberModel = null;
     private DepartmentModel depertment = new DepartmentModel();
     private AlertMessage alertMessage = new AlertMessage();
+    private DateFormat dateFormat = new DateFormat();
+
     private BufferedImage resizeImg = null;
     private ByteArrayOutputStream byteStrem = null;
     private OutputStream outStrem = null;
@@ -47,11 +50,75 @@ public class RegisterController implements Initializable {
     private ObservableList<String> years = FXCollections.observableArrayList("ປີ 1", "ປີ 1 ຕໍ່ເນື່ອງ", "ປີ 2",
             "ປີ 2 ຕໍ່ເນື່ອງ", "ປີ 3", "ປີ 4");
     private ArrayList<String> depIdList = null;
+
     private LocalDate localDateExit;
     private int index = -1;
     private String memberid_edit = "", gender = "";
     private byte[] byimg = null;
     private Double x, y;
+    private LocalDate minDate = LocalDate.now().plusYears(-30), maxDate = LocalDate.now();
+
+    /*
+     * Todo: Use from class MemberController for both form can communicate or use
+     * for Refresh table after add and delete
+     */
+    public void initConstructor(MemberController memberController) {
+        this.memberController = memberController;
+
+        if (MemberController.add || memberModel != null) {
+            moveForm();
+            btClose.setVisible(true);
+            btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    MemberController.addMemberStage.close();
+                    MemberController.add = false;
+                }
+            });
+        }
+
+        if (memberModel != null) {
+
+            // Todo: if by edit from 'Form Member'
+            memberid_edit = memberModel.getMemberId();
+            txtId.setText(memberModel.getMemberId());
+            txtFName.setText(memberModel.getFirstName());
+            txtLName.setText(memberModel.getSureName());
+
+            if (memberModel.getGender().equals("ຊາຍ")) {
+                rdbMale.setSelected(true);
+            } else {
+                rdbFemale.setSelected(true);
+            }
+            txtTel.setText(memberModel.getTel());
+            txtVill.setText(memberModel.getVillage());
+            txtDist.setText(memberModel.getDistrict());
+            txtProv.setText(memberModel.getProvince());
+            birtDate.setValue(memberModel.getBirdate().toLocalDate());
+            cmbDept.getSelectionModel().select(memberModel.getDetp());
+            index = cmbDept.getSelectionModel().getSelectedIndex();
+            cmbYears.getSelectionModel().select(memberModel.getStudy_year());
+            // cmbYears.getSelectionModel().select(memberModel.getYears());
+            localDateExit = memberModel.getDateExit().toLocalDate();
+
+            // TODO: Show Image
+            if (memberModel.getByimg() != null) {
+                try {
+                    outStrem = new FileOutputStream(new File("img.png"));
+                    try {
+                        outStrem.write(memberModel.getByimg());
+                        imgPic.setImage(new Image("file:img.png"));
+                    } catch (IOException e) {
+                        alertMessage.showErrorMessage("Read Image", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                    }
+                } catch (FileNotFoundException e) {
+                    alertMessage.showErrorMessage("Write Image", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                }
+            }
+            memberModel = null;
+        }
+    }
 
     @FXML
     private BorderPane borderPane;
@@ -110,10 +177,11 @@ public class RegisterController implements Initializable {
                 imgPic.setImage(new Image(file.toURI().toASCIIString()));
 
                 // TODO: Resize image
-                resizeImg = Scalr.resize(ImageIO.read(new File(file.getAbsolutePath())),
-                        Scalr.Method.AUTOMATIC, /*
-                                                 * Scalr. Mode. AUTOMATIC,
-                                                 */
+                resizeImg = Scalr.resize(ImageIO.read(new File(file.getAbsolutePath())), Scalr.Method.AUTOMATIC, /*
+                                                                                                                  * Scalr.
+                                                                                                                  * Mode.
+                                                                                                                  * AUTOMATIC,
+                                                                                                                  */
                         200, Scalr.OP_BRIGHTER);
 
                 // TODO: Convert after resize image to byte[]
@@ -125,6 +193,48 @@ public class RegisterController implements Initializable {
             alertMessage.showErrorMessage("Choose Image", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             logfile.createLogFile("ເກີດບັນຫາໃນການເລືອກຮູບພາບ", e);
         }
+    }
+
+    private void initEvents() {
+        txtTel.textProperty().addListener(new ChangeListener<String>() {
+            // Todo: set properties type only numeric
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    txtTel.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+        imgPic.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                loadImager();
+            }
+        });
+
+        cmbDept.setOnAction(event -> {
+            index = cmbDept.getSelectionModel().getSelectedIndex();
+        });
+
+        cmbYears.setOnAction(evt -> {
+            if (cmbYears.getSelectionModel().getSelectedItem() == "ປີ 1 ຕໍ່ເນື່ອງ") {
+                localDateExit = LocalDate.now().plusYears(1);
+            } else if (cmbYears.getSelectionModel().getSelectedItem() == "ປີ 2 ຕໍ່ເນື່ອງ") {
+                localDateExit = LocalDate.now().plusYears(0);
+            } else {
+                localDateExit = LocalDate.now().plusYears((4 - (cmbYears.getSelectionModel().getSelectedIndex() - 2)));
+            }
+        });
+
+        birtDate.setDayCellFactory(d -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                setDisable(item.isAfter(maxDate) || item.isBefore(minDate));
+            }
+        });
+
     }
 
     @FXML
@@ -152,13 +262,15 @@ public class RegisterController implements Initializable {
                     // Todo: Insert (if save memberid_edit if null)
                     if (memberModel.saveData() > 0) {
                         alertMessage.showCompletedMessage("Saved", "Saved data successfully.", 4, Pos.BOTTOM_RIGHT);
-                                            }
+                        if (memberController != null)
+                            memberController.showData();
+                    }
                 } else {
                     if (memberModel.updateData() > 0) {
                         alertMessage.showCompletedMessage("Edited", "Edited data successfully.", 4, Pos.BOTTOM_RIGHT);
+                        memberController.showData();
                     }
                 }
-                
 
             } else {
                 alertMessage.showWarningMessage("Save Warning", "Please chack your information and try again.", 4,
@@ -192,98 +304,16 @@ public class RegisterController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        birtDate = dateFormat.formateDatePicker(birtDate);
+
         // Todo: Groud RadioButton
         ToggleGroup group = new ToggleGroup();
         rdbMale.setToggleGroup(group);
         rdbFemale.setToggleGroup(group);
         rdbMale.setSelected(true);
-
-        txtTel.textProperty().addListener(new ChangeListener<String>() {
-            // Todo: set properties type only numeric
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    txtTel.setText(newValue.replaceAll("[^\\d]", ""));
-                }
-            }
-        });
-
-
         cmbYears.setItems(years);
         fillDep();
-       
-        imgPic.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                loadImager();
-            }
-        });
-
-        cmbDept.setOnAction(event -> {
-            index = cmbDept.getSelectionModel().getSelectedIndex();
-        });
-
-        cmbYears.setOnAction(evt -> {
-            if (cmbYears.getSelectionModel().getSelectedItem() == "ປີ 1 ຕໍ່ເນື່ອງ") {
-                localDateExit = LocalDate.now().plusYears(1);
-            } else if (cmbYears.getSelectionModel().getSelectedItem() == "ປີ 2 ຕໍ່ເນື່ອງ") {
-                localDateExit = LocalDate.now().plusYears(0);
-            } else {
-                localDateExit = LocalDate.now().plusYears((4 - (cmbYears.getSelectionModel().getSelectedIndex() - 2)));
-            }
-        });
-
-        if (memberModel != null) {
-
-            moveForm();
-            btClose.setVisible(true);
-            btClose.setOnAction(new EventHandler<ActionEvent>() {
-
-                @Override
-                public void handle(ActionEvent event) {
-                    MemberController.addMemberStage.close();
-                }
-            });
-
-            // Todo: if by edit from 'Form Member'
-            memberid_edit = memberModel.getMemberId();
-            txtId.setText(memberModel.getMemberId());
-            txtFName.setText(memberModel.getFirstName());
-            txtLName.setText(memberModel.getSureName());
-
-            if (memberModel.getGender().equals("ຊາຍ")) {
-                rdbMale.setSelected(true);
-            } else {
-                rdbFemale.setSelected(true);
-            }
-            txtTel.setText(memberModel.getTel());
-            txtVill.setText(memberModel.getVillage());
-            txtDist.setText(memberModel.getDistrict());
-            txtProv.setText(memberModel.getProvince());
-            birtDate.setValue(memberModel.getBirdate().toLocalDate());
-            cmbDept.getSelectionModel().select(memberModel.getDetp());
-            index = cmbDept.getSelectionModel().getSelectedIndex();
-            cmbYears.getSelectionModel().select(memberModel.getStudy_year());
-            // cmbYears.getSelectionModel().select(memberModel.getYears());
-            localDateExit = memberModel.getDateExit().toLocalDate();
-
-            // TODO: Show Image
-            if (memberModel.getByimg() != null) {
-                try {
-                    outStrem = new FileOutputStream(new File("img.png"));
-                    try {
-                        outStrem.write(memberModel.getByimg());
-                        imgPic.setImage(new Image("file:img.png"));
-                    } catch (IOException e) {
-                        alertMessage.showErrorMessage("Read Image", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-                    }
-                } catch (FileNotFoundException e) {
-                    alertMessage.showErrorMessage("Write Image", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-                }
-            }
-            memberModel = null;
-        }
+        initEvents();
     }
 
     private void moveForm() {

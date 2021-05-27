@@ -279,6 +279,7 @@ public class TableLogController implements Initializable {
             // Todo: Delete Data
             tableLogModel = new TableLogModel();
             try {
+                
                 rs = tableLogModel.findById(tablelogid);
                 if (tableLogModel.deleteData(tablelogid) > 0) {
                     if (rs.next()) {

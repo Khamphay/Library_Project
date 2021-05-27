@@ -60,6 +60,37 @@
     -fx-font-size: 20;
 }
 
+/*-------------------Notifications-----------------*/
+/* .notification-bar>.pane {
+    -fx-background-color: red, yellow, blue;
+    -fx-padding: 5 5 5 5;
+    -fx-background-insets: 0, 1, 2;
+} */
+
+.notification-bar>.pane .title {
+    -fx-font-family: 'BoonBaan';
+    -fx-font-size: 1.333em; /*16px;*/
+    -fx-font-weight: bold;
+    /* -fx-text-fill: rgb(241, 10, 10); */
+}
+
+.notification-bar>.pane .label {
+    -fx-font-size: 1em; /*12px;*/
+     -fx-font-family: 'BoonBaan';
+    /* -fx-text-fill: rgb(252, 113, 0); */
+    /* -fx-alignment: top-left; */
+}
+
+/*-------------------Dialog-----------------*/
+.dialog-pane:header *.header-panel *.label{
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+.dialog-pane > .content.label {
+   -fx-padding: 0.5em 0.5em 0.5em 0.5em;
+   -fx-font-size:14.0px;
+}
+
 /*-------------------Text-----------------*/
 /* .text{
     -fx-font-family: 'BoonBaan';

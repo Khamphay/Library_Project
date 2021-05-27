@@ -30,6 +30,7 @@ public class SendBookController implements Initializable {
     private RentBookModel sendBook = new RentBookModel();
     private AlertMessage alertMessage = new AlertMessage();
     private BookDetailModel book = new BookDetailModel();
+    private DateFormat dateFormater = new DateFormat();
     private ResultSet rs = null;
     private DialogMessage dialog = null;
     private JFXButton[] buttons = { buttonOK() };
@@ -169,6 +170,9 @@ public class SendBookController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        dateRent = dateFormater.formateDatePicker(dateRent);
+        dateSend = dateFormater.formateDatePicker(dateSend);
+
         initTable();
         addButtonToTable();
         initEvents();

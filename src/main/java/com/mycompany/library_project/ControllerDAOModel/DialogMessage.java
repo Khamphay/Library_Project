@@ -40,6 +40,7 @@ public class DialogMessage {
     }
 
     public void showDialog() {
+        
         dialog = new JFXDialog(stackPane, content, dialogStyle, topOnly);
         dialog.setStyle(
                 "-fx-border-radius:0.5em;   -fx-background-radius: 0.5em; -fx-font-family: 'BoonBaan'; -fx-font-size: 14;");

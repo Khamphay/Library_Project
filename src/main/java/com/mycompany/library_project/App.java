@@ -31,7 +31,7 @@ public class App extends Application implements Initializable {
         primaryStage.setScene(scene);
         //DesktopController.desktopStage = primaryStage;//Todo: set object
         // Resizehelper.addResizeListener(DesktopController.desktopStage);//Todo: Set to windows form able Resize 
-
+        
         LoginController.loginSatge = primaryStage;
         primaryStage.show();
     }

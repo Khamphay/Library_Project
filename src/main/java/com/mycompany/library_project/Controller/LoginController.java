@@ -13,6 +13,7 @@ import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -111,9 +112,18 @@ public class LoginController implements Initializable {
         // System.exit(0);
         final JFXButton[] buttons = { buttonYes(), buttonNo() };
 
-        dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ", "ຕ້ອງການອອກຈາກໂປຣແກຣມບໍ?", JFXDialog.DialogTransition.CENTER,
-                buttons, false);
+        dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ", "ຕ້ອງການອອກຈາກໂປຣແກຣມບໍ?",
+        JFXDialog.DialogTransition.CENTER,
+        buttons, false);
         dialog.showDialog();
+
+        // Alert alert = new Alert(AlertType.CONFIRMATION);
+        // DialogPane dialog = alert.getDialogPane();
+        // dialog.getStylesheets().add(getClass().getResource("../Style/appstyle.css").toExternalForm());
+        // alert.setTitle("Confirmation Dialog");
+        // alert.setHeaderText("ຄຳເຕືອນ");
+        // alert.setContentText("ຕ້ອງການອອກຈາກໂປຣແກຣມບໍ?");
+        // alert.show();
     }
 
     // private void MyProgress(){

@@ -7,6 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 
@@ -29,12 +31,16 @@ public class RentBookController implements Initializable {
     private MemberModel member = new MemberModel();
     private BookDetailModel book = new BookDetailModel();
     private RentBookModel rentBook = new RentBookModel();
+    private DateFormat formatDate = new DateFormat();
     private ResultSet rs = null;
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = null;
     private JFXButton[] buttons = { buttonOK() };
     private String rent_id = "", status = "";
     private int qty_can_rent = 0;
+
+    @FXML
+    private BorderPane borderPane;
 
     @FXML
     private StackPane stackPane;
@@ -75,41 +81,62 @@ public class RentBookController implements Initializable {
     }
 
     private void addToRentBook() {
-        try {
-            if (tableRentBook.getItems().size() < qty_can_rent) {
-                if (rentDate.getValue() == null || sendDate.getValue() == null) {
-                    alertMessage.showWarningMessage("Warning",
-                            "Please chack 'rent date' and 'send date' and try again.", 4, Pos.TOP_CENTER);
-                    return;
-                }
-                if (!txtBookId.getText().equals("") && !txtBookName.getText().equals("")
-                        && !txtMemberId.getText().equals("") && !txtMemberName.getText().equals("")) {
-                    int index = 0;
-                    if (tableRentBook.getItems().size() > 0) {
-                        for (RentBookModel row : tableRentBook.getItems()) {
-                            if (row.getBarcode().equals(txtBookId.getText())) {
-                                tableRentBook.getItems().remove(index);
-                                break;
-                            }
-                            index++;
+        if (!txtMemberId.getText().equals("") && !txtMemberName.getText().equals("") && !txtSurName.getText().equals("")
+                && !txtBookId.getText().equals("") && !txtBookName.getText().equals("") && !txtCatg.getText().equals("")
+                && !txtType.getText().equals("")) {
+            try {
+                if (status.equals("ຫວ່າງ")) {
+                    if (tableRentBook.getItems().size() < qty_can_rent) {
+                        if (rentDate.getValue() == null || sendDate.getValue() == null) {
+                            alertMessage.showWarningMessage("Warning",
+                                    "Please chack 'rent date' and 'send date' and try again.", 4, Pos.TOP_CENTER);
+                            return;
                         }
+                        if (!txtBookId.getText().equals("") && !txtBookName.getText().equals("")
+                                && !txtMemberId.getText().equals("") && !txtMemberName.getText().equals("")) {
+                            int index = 0;
+                            if (tableRentBook.getItems().size() > 0) {
+                                for (RentBookModel row : tableRentBook.getItems()) {
+                                    if (row.getBarcode().equals(txtBookId.getText())) {
+                                        tableRentBook.getItems().remove(index);
+                                        break;
+                                    }
+                                    index++;
+                                }
+                            }
+                            tableRentBook.getItems()
+                                    .add(new RentBookModel(txtBookId.getText(), txtBookName.getText(),
+                                            txtCatg.getText(), txtType.getText(), Date.valueOf(rentDate.getValue()),
+                                            Date.valueOf(sendDate.getValue())));
+                            txtBookId.clear();
+                            txtBookName.clear();
+                            txtCatg.clear();
+                            txtType.clear();
+                        } else {
+                            alertMessage.showWarningMessage("Warning", "Please chack your data and try again.", 4,
+                                    Pos.TOP_CENTER);
+                        }
+                    } else {
+                        alertMessage.showWarningMessage("Warning", "Can not rent more than " + qty_can_rent + " books.",
+                                4, Pos.TOP_CENTER);
                     }
-                    tableRentBook.getItems()
-                            .add(new RentBookModel(txtBookId.getText(), txtBookName.getText(), txtCatg.getText(),
-                                    txtType.getText(), Date.valueOf(rentDate.getValue()),
-                                    Date.valueOf(sendDate.getValue())));
-                } else {
-                    alertMessage.showWarningMessage("Warning", "Please chack your data and try again.", 4,
-                            Pos.TOP_CENTER);
-                }
-            } else {
-                alertMessage.showWarningMessage("Warning", "Can not rent more than " + qty_can_rent + " books.", 4,
-                        Pos.TOP_CENTER);
-            }
 
-        } catch (Exception e) {
-            alertMessage.showErrorMessage("Add Book Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-        }
+                } else {
+                    if (dialog != null) {
+                        dialog.closeDialog();
+                    }
+                    dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ປື້ມນີ້ຖືກຢືມແລ້ວ", DialogTransition.CENTER,
+                            buttons, false);
+                    dialog.showDialog();
+
+                }
+
+            } catch (Exception e) {
+                alertMessage.showErrorMessage("Add Book Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            }
+        } else
+            alertMessage.showWarningMessage(borderPane, "ແບບຮຽນ", "Please chack your information and try again.", 4,
+                    Pos.TOP_CENTER);
     }
 
     private void initTable() {
@@ -122,65 +149,81 @@ public class RentBookController implements Initializable {
     }
 
     private void initEvents() {
-        txtMemberId.setOnKeyTyped(keytype -> {
-            try {
+        txtMemberId.setOnKeyPressed(keytype -> {
+            if (keytype.getCode() == KeyCode.ENTER) {
 
-                rs = rentBook.chackMemberRentBook(txtMemberId.getText(), "ຍັງບໍ່ໄດ້ສົ່ງ", "ກຳລັງຢືມ");
-                if (rs.next() && rs.getDate("date_send") != null) {
-                    // TODO: exite end of send
-                    if (Date.valueOf(LocalDate.now()).compareTo(rs.getDate("date_send")) > 0) {
-                        dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                                "ບັດນີ້ບໍ່ສາມາດຢືມປຶ້ມໄດ້ເນື່ອງຈາກຍັງມີປຶ້ມທີ່ຢືມກ່າຍກຳນົດແຕ່ບໍ່ໄດ້ສົ່ງ.",
-                                DialogTransition.CENTER, buttons, false);
-                        dialog.showDialog();
-                        return;
+                try {
+                    rs = rentBook.chackMemberRentBook(txtMemberId.getText(), "ຍັງບໍ່ໄດ້ສົ່ງ", "ກຳລັງຢືມ");
+                    if (rs.next() && rs.getDate("date_send") != null) {
+                        // TODO: exite end of send
+                        if (Date.valueOf(LocalDate.now()).compareTo(rs.getDate("date_send")) > 0) {
+                            if (dialog != null) {
+                                dialog.closeDialog();
+                            }
+                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
+                                    "ບັດນີ້ບໍ່ສາມາດຢືມປຶ້ມໄດ້ເນື່ອງຈາກຍັງມີປຶ້ມທີ່ຢືມກ່າຍກຳນົດແຕ່ບໍ່ໄດ້ສົ່ງ.",
+                                    DialogTransition.CENTER, buttons, false);
+                            dialog.showDialog();
+                            return;
+                        }
+
+                        if (rs.getInt("count_book") >= 3) {
+                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
+                                    "ບໍ່ສາມາດຢືມໄດ້ເນື່ອງຈາກບັດນີ້ໃຊ້ຢືມປຶ້ມຄົບຕາມຈຳນວນທີ່ກຳນົດແລ້ວ, ຖ້າຫາກຕ້ອງການຢືມໃຫມ່ຕ້ອງໄດ້ສົ່ງປຶ້ມທີ່ໄດ້ຢືມກ່ອນໜ້າ.",
+                                    DialogTransition.CENTER, buttons, false);
+                            dialog.showDialog();
+                            return; // Todo: exit this 'method' or 'event'
+                        } else if (rs.getInt("count_book") > 0 && rs.getInt("count_book") <= 2) {
+                            qty_can_rent = 3 - rs.getInt("count_book");
+                            if (dialog != null) {
+                                dialog.closeDialog();
+                            }
+                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
+                                    "ບັດນີ້ສາມາດຢືມປຶ້ມໄດ້ຫຼາຍສຸດ " + qty_can_rent
+                                            + " ຫົວເທົ່ານັ້ນ ເນື່ອງຈາກບັດນີ້ໃຊ້ຢືມປຶ້ມໄປແລ້ວ " + rs.getInt("count_book")
+                                            + " ຫົວ.",
+                                    DialogTransition.CENTER, buttons, false);
+                            dialog.showDialog();
+                        }
+                    } else {
+                        qty_can_rent = 3;
                     }
 
-                    if (rs.getInt("count_book") >= 3) {
+                    rs = member.findById(txtMemberId.getText());
+                    if (rs.next()) {
+                        txtMemberName.setText(rs.getString("full_name"));
+                        txtSurName.setText(rs.getString("sur_name"));
+                        txtDep.setText(rs.getString("dep_name"));
+                        Date dateMemberCarEnd = rs.getDate("date_end");
+                        if (dateMemberCarEnd.compareTo(Date.valueOf(LocalDate.now())) < 0) {
+                            if (dialog != null) {
+                                dialog.closeDialog();
+                            }
+                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
+                                    "ບັດນີ້ໝົດອາຍຸແລ້ວບໍ່ສາມາດຢືມປຶ້ມ, ກະລຸນາຕໍ່ໃໝ່.", DialogTransition.CENTER, buttons,
+                                    false);
+                            dialog.showDialog();
+                        }
+                    } else {
+                        if (dialog != null) {
+                            dialog.closeDialog();
+                        }
                         dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                                "ບໍ່ສາມາດຢືມໄດ້ເນື່ອງຈາກບັດນີ້ໃຊ້ຢືມປຶ້ມຄອບຕາມຈຳນວນທີ່ກຳນົດແລ້ວ, ຖ້າຫາກຕ້ອງການຢືມໃຫມ່ຕ້ອງໄດ້ສົ່ງປຶ້ມທີ່ໄດ້ຢືມກ່ອນໜ້າ.",
-                                DialogTransition.CENTER, buttons, false);
-                        dialog.showDialog();
-                        return; // Todo: exit this 'method' or 'event'
-                    } else if (rs.getInt("count_book") > 0 && rs.getInt("count_book") <= 2) {
-                        qty_can_rent = 3 - rs.getInt("count_book");
-                        dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ບັດນີ້ສາມາດຢືມປຶ້ມໄດ້ຫຼາຍສຸດ " + qty_can_rent
-                                + " ຫົວເທົ່ານັ້ນ ເນື່ອງຈາກບັດນີ້ໃຊ້ຢືມປຶ້ມໄປແລ້ວ " + rs.getInt("count_book") + " ຫົວ.",
-                                DialogTransition.CENTER, buttons, false);
+                                "ໍບໍ່ມີຂໍ້ມູນບັດໃນລະບົບ, ກະລຸນາກວດສອບແລ້ວລອງໃຫມ່່ອິກຄັ້ງ", DialogTransition.CENTER,
+                                buttons, false);
                         dialog.showDialog();
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    alertMessage.showErrorMessage("Load Member Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
                 }
-
-                rs = member.findById(txtMemberId.getText());
-                if (rs.next()) {
-                    txtMemberName.setText(rs.getString("full_name"));
-                    txtSurName.setText(rs.getString("sur_name"));
-                    txtDep.setText(rs.getString("dep_name"));
-                    Date dateMemberCarEnd = rs.getDate("date_end");
-                    if (dateMemberCarEnd.compareTo(Date.valueOf(LocalDate.now())) < 0) {
-                        dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                                "ບັດນີ້ໝົດອາຍຸແລ້ວບໍ່ສາມາດຢືມປຶ້ມ, ກະລຸນາຕໍ່ໃໝ່.", DialogTransition.CENTER, buttons,
-                                false);
-                        dialog.showDialog();
-                    }
-                } else {
-                    dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                            "ໍບໍ່ມີຂໍ້ມູນບັດໃນລະບົບ, ກະລຸນາກວດສອບແລ້ວລອງໃຫມ່່ອິກຄັ້ງ", DialogTransition.CENTER, buttons,
-                            false);
-                    dialog.showDialog();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                alertMessage.showErrorMessage("Load Member Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             }
         });
 
         txtBookId.setOnKeyPressed(keyEnter -> {
             if (keyEnter.getCode() == KeyCode.ENTER) {
-                if (status.equals("ຫວ່າງ")) {
-                    addToRentBook();
-                }
-            } else {
+
+                addToRentBook();
 
             }
         });
@@ -194,10 +237,14 @@ public class RentBookController implements Initializable {
                     txtType.setText(rs.getString("type_name"));
                     status = rs.getString("status");
                 } else {
-                    dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                            "ບໍ່ມີຂໍ້ມູນບັດໃນລະບົບ, ກະລຸນາກວດສອບແລ້ວລອງໃຫມ່່ອິກຄັ້ງ", DialogTransition.CENTER, buttons,
-                            false);
-                    dialog.showDialog();
+                    txtBookName.clear();
+                    txtCatg.clear();
+                    txtType.clear();
+                    // dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
+                    // "ບໍ່ມີຂໍ້ມູນບັດໃນລະບົບ, ກະລຸນາກວດສອບແລ້ວລອງໃຫມ່່ອິກຄັ້ງ",
+                    // DialogTransition.CENTER, buttons,
+                    // false);
+                    // dialog.showDialog();
                 }
             } catch (Exception e) {
                 alertMessage.showErrorMessage("Load Member Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
@@ -273,6 +320,10 @@ public class RentBookController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        rentDate = formatDate.formateDatePicker(rentDate);
+        sendDate = formatDate.formateDatePicker(sendDate);
+
         initEvents();
         initTable();
         addButtonToTable();
@@ -356,7 +407,7 @@ public class RentBookController implements Initializable {
         try {
             String id = rentBook.getMaxID(), new_id = "";
             if (id != null) {
-                int max_id = Integer.parseInt(id.substring(id.indexOf("T"), id.indexOf("/")));
+                int max_id = Integer.parseInt(id.substring(id.indexOf("T") + 1, id.indexOf("/")));
                 max_id = max_id + 1;
                 new_id = "RT" + max_id + "/" + LocalDate.now().format(DateTimeFormatter.ofPattern("dMyy"));
             } else {

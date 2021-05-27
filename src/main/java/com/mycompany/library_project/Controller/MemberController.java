@@ -43,6 +43,9 @@ public class MemberController implements Initializable {
     private CreateLogFile logfile = new CreateLogFile();
 
     @FXML
+    private RegisterController registerController;
+
+    @FXML
     private BorderPane boderPane;
 
     @FXML
@@ -67,6 +70,54 @@ public class MemberController implements Initializable {
     @FXML
     private TextField txtSearch;
 
+    private void showAddRegister() {
+        try {
+            add = true;
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("frmRegister.fxml"));
+            final Parent root = loader.load();
+            final Scene scene = new Scene(root);
+
+            registerController = loader.getController();
+            registerController.initConstructor(this);
+
+            addMemberStage = new Stage();
+            addMemberStage.setScene(scene);
+            addMemberStage.initStyle(StageStyle.UNDECORATED);
+            // addMemberStage.setAlwaysOnTop(true);
+            addMemberStage.show();
+
+        } catch (Exception e) {
+            alertMessage.showErrorMessage(stackPane, "Open New Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("ເກີດບັນຫາໃນການເປືດຟອມລົງທະບຽນ", e);
+        }
+    }
+
+    private void showEditeMembers() {
+        try {
+            if (addMemberStage != null) {
+                addMemberStage.close();
+            }
+
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmRegister.fxml"));
+            final Parent root = loader.load();
+            final Scene scene = new Scene(root);
+
+            registerController = loader.getController();
+            registerController.memberModel = tableMember.getSelectionModel().getSelectedItem();
+            registerController.memberModel.setByimg(byimg.get(tableMember.getSelectionModel().getSelectedIndex()));
+            registerController.initConstructor(this);
+
+            addMemberStage = new Stage();
+            addMemberStage.setScene(scene);
+            addMemberStage.initStyle(StageStyle.TRANSPARENT);
+            // addMemberStage.setAlwaysOnTop(true);
+            addMemberStage.show();
+
+        } catch (Exception e) {
+            alertMessage.showErrorMessage(stackPane, "Open New Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("ເກີດບັນຫາໃນການເປືດຟອມແກ້ໂຂຂໍ້ມູນ", e);
+        }
+    }
     public void showData() {
         try {
             data = FXCollections.observableArrayList();
@@ -144,21 +195,7 @@ public class MemberController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                try {
-                    add = true;
-                    final Parent root = FXMLLoader.load(App.class.getResource("frmRegister.fxml"));
-                    final Scene scene = new Scene(root);
-                    addMemberStage = new Stage();
-                    addMemberStage.setScene(scene);
-                    addMemberStage.initStyle(StageStyle.UNDECORATED);
-                    // addMemberStage.setAlwaysOnTop(true);
-                    addMemberStage.show();
-
-                } catch (Exception e) {
-                    alertMessage.showErrorMessage(stackPane, "Open New Form", "Error: " + e.getMessage(), 4,
-                            Pos.BOTTOM_RIGHT);
-                    logfile.createLogFile("ເກີດບັນຫາໃນການເປືດຟອມລົງທະບຽນ", e);
-                }
+                showAddRegister();
             }
         });
 
@@ -181,28 +218,7 @@ public class MemberController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 if (tableMember.getSelectionModel().getSelectedItem() != null) {
-
-                    RegisterController.memberModel = tableMember.getSelectionModel().getSelectedItem();
-                    RegisterController.memberModel
-                            .setByimg(byimg.get(tableMember.getSelectionModel().getSelectedIndex()));
-                    try {
-                        if (addMemberStage != null) {
-                            addMemberStage.close();
-                        }
-
-                        final Parent root = FXMLLoader.load(App.class.getResource("frmRegister.fxml"));
-                        final Scene scene = new Scene(root);
-                        addMemberStage = new Stage();
-                        addMemberStage.setScene(scene);
-                        addMemberStage.initStyle(StageStyle.TRANSPARENT);
-                        // addMemberStage.setAlwaysOnTop(true);
-                        addMemberStage.show();
-
-                    } catch (Exception e) {
-                        alertMessage.showErrorMessage(stackPane, "Open New Form", "Error: " + e.getMessage(), 4,
-                                Pos.BOTTOM_RIGHT);
-                        logfile.createLogFile("ເກີດບັນຫາໃນການເປືດຟອມແກ້ໂຂຂໍ້ມູນ", e);
-                    }
+                    showEditeMembers();
                 } else {
                     alertMessage.showWarningMessage(stackPane, "Edit", "Please selecte the data and try again", 4,
                             Pos.BOTTOM_RIGHT);
@@ -213,7 +229,8 @@ public class MemberController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 if (tableMember.getSelectionModel().getSelectedItem() != null) {
-                    JFXButton[] buttons = { buttonYes(tableMember.getSelectionModel().getSelectedItem().getMemberId()),
+                    JFXButton[] buttons = { buttonYes(tableMember.getSelectionModel().getSelectedItem().getMemberId(),
+                            tableMember.getSelectionModel().getSelectedItem()),
                             buttonNo(), buttonCancel() };
                     dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
                             JFXDialog.DialogTransition.CENTER, buttons, false);
@@ -252,7 +269,9 @@ public class MemberController implements Initializable {
                         delete.setGraphic(imgView);
                         delete.setStyle(Style.buttonStyle);
                         delete.setOnAction(e -> {
-                            JFXButton[] buttons = { buttonYes(tableMember.getItems().get(getIndex()).getMemberId()),
+                            JFXButton[] buttons = {
+                                    buttonYes(tableMember.getItems().get(getIndex()).getMemberId(),
+                                            tableMember.getSelectionModel().getSelectedItem()),
                                     buttonNo(), buttonCancel() };
                             dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
                                     JFXDialog.DialogTransition.CENTER, buttons, false);
@@ -278,7 +297,7 @@ public class MemberController implements Initializable {
 
     }
 
-    private JFXButton buttonYes(String memberid) {
+    private JFXButton buttonYes(String memberid, MemberModel rowReomove) {
         JFXButton btyes = new JFXButton("ຕົກລົງ");
         btyes.setStyle(Style.buttonDialogStyle);
         btyes.setOnAction(e -> {

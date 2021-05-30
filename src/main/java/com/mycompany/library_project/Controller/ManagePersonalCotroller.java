@@ -29,36 +29,65 @@ public class ManagePersonalCotroller implements Initializable {
 
     @FXML
     private ScrollPane scrollMenu;
-    
-    private void show_subForm(String form) {
-        try {
-            subForm = null;
-            subForm = FXMLLoader.load(App.class.getResource(form));
-            bpManagePerson.setCenter(subForm);
-        } catch (Exception e) {
-            alertMessage.showErrorMessage(bpManagePerson, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນສ່ວນບຸກຄົນມີບັນຫາ: " + form, e);
-        }
+
+    public void showMainMenuPerson() {
+        bpManagePerson.setCenter(scrollMenu);
     }
 
     @FXML
     private void btEmployee_Click(ActionEvent event) {
-        show_subForm("frmEmployee.fxml");
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmEmployee.fxml"));
+            subForm = loader.load();
+            EmployeeController employeeController = loader.getController();
+            employeeController.initConstructor(this);
+            bpManagePerson.setCenter(subForm);
+        } catch (Exception e) {
+            alertMessage.showErrorMessage(bpManagePerson, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນສ່ວນບຸກຄົນມີບັນຫາ: " + "Form Employee", e);
+        }
     }
 
     @FXML
     private void btMember_Click(ActionEvent event) {
-        show_subForm("frmMember.fxml");
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmMember.fxml"));
+            subForm = loader.load();
+            MemberController memberController = loader.getController();
+            memberController.initConstructor(this);
+            bpManagePerson.setCenter(subForm);
+        } catch (Exception e) {
+            alertMessage.showErrorMessage(bpManagePerson, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນສ່ວນບຸກຄົນມີບັນຫາ: " + "Form Member", e);
+        }
     }
 
     @FXML
     private void btAncthor_Click(ActionEvent event) {
-        show_subForm("frmAuthor.fxml");
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmAuthor.fxml"));
+            subForm = loader.load();
+            AuthorController authorController = loader.getController();
+            authorController.initConstructor(this);
+            bpManagePerson.setCenter(subForm);
+        } catch (Exception e) {
+            alertMessage.showErrorMessage(bpManagePerson, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນສ່ວນບຸກຄົນມີບັນຫາ: " + "Form Author", e);
+        }
     }
 
     @FXML
     private void btDepartment_Click(ActionEvent event) {
-        show_subForm("frmDepartment.fxml");
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmDepartment.fxml"));
+            subForm = loader.load();
+            DepartmentController departmentController = loader.getController();
+            departmentController.initConstructor(this);
+            bpManagePerson.setCenter(subForm);
+        } catch (Exception e) {
+            alertMessage.showErrorMessage(bpManagePerson, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນສ່ວນບຸກຄົນມີບັນຫາ: " + "Form Department", e);
+        }
     }
 
     @Override

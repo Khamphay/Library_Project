@@ -16,6 +16,7 @@ import com.mycompany.library_project.Model.MemberModel;
 import com.mycompany.library_project.Report.CreateReport;
 import com.mycompany.library_project.config.CreateLogFile;
 
+import javafx.application.Platform;
 import javafx.collections.*;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -32,6 +33,7 @@ import javafx.util.Callback;
 
 public class MemberController implements Initializable {
 
+    private ManagePersonalCotroller personalCotroller = null;
     private ObservableList<MemberModel> data = null;
     private AlertMessage alertMessage = new AlertMessage();
     private MemberModel memberModel = new MemberModel();
@@ -41,6 +43,10 @@ public class MemberController implements Initializable {
     public static Stage addMemberStage = null;
     public static boolean add = false;
     private CreateLogFile logfile = new CreateLogFile();
+
+    public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
+        this.personalCotroller = managePersonalCotroller;
+    }
 
     @FXML
     private RegisterController registerController;
@@ -52,7 +58,7 @@ public class MemberController implements Initializable {
     private StackPane stackPane;
 
     @FXML
-    private JFXButton btAddUser;
+    private JFXButton btAddUser, btClose;
 
     @FXML
     private MenuItem menuEdit, menuDelete, menuPrintCard;
@@ -78,7 +84,7 @@ public class MemberController implements Initializable {
             final Scene scene = new Scene(root);
 
             registerController = loader.getController();
-            registerController.initConstructor(this);
+            registerController.initConstructor2(this);
 
             addMemberStage = new Stage();
             addMemberStage.setScene(scene);
@@ -105,7 +111,7 @@ public class MemberController implements Initializable {
             registerController = loader.getController();
             registerController.memberModel = tableMember.getSelectionModel().getSelectedItem();
             registerController.memberModel.setByimg(byimg.get(tableMember.getSelectionModel().getSelectedIndex()));
-            registerController.initConstructor(this);
+            registerController.initConstructor2(this);
 
             addMemberStage = new Stage();
             addMemberStage.setScene(scene);
@@ -119,51 +125,59 @@ public class MemberController implements Initializable {
         }
     }
     public void showData() {
-        try {
-            data = FXCollections.observableArrayList();
-            rs = memberModel.findAll();
-            byimg = new ArrayList<>();
-            while (rs.next()) {
-                data.add(new MemberModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
-                        rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),
-                        Date.valueOf(rs.getString(10)), rs.getString(11), rs.getString(9),
-                        Date.valueOf(rs.getString(12)), Date.valueOf(rs.getString(13)),
-                        Date.valueOf(rs.getString(14))));
-                byimg.add(rs.getBytes(15));
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    data = FXCollections.observableArrayList();
+                    rs = memberModel.findAll();
+                    byimg = new ArrayList<>();
+                    while (rs.next()) {
+                        data.add(new MemberModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
+                                rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),
+                                Date.valueOf(rs.getString(10)), rs.getString(11), rs.getString(9),
+                                Date.valueOf(rs.getString(12)), Date.valueOf(rs.getString(13)),
+                                Date.valueOf(rs.getString(14))));
+                        byimg.add(rs.getBytes(15));
+                    }
+
+                    /*
+                     * tableMember.setItems(data); //Todo: if you don't filter to Search data
+                     * bellow:
+                     */
+                    // Todo: Search data
+                    FilteredList<MemberModel> filterMembers = new FilteredList<MemberModel>(data, mb -> true);
+                    txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                        filterMembers.setPredicate(member -> {
+                            if (newValue.isEmpty())
+                                return true;
+                            if (member.getMemberId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || member.getFirstName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || member.getSureName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || member.getGender().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || member.getTel().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || member.getVillage().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || member.getDistrict().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || member.getProvince().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || member.getStudy_year().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || member.getDetp().toLowerCase().indexOf(newValue.toLowerCase()) != -1)
+                                return true;
+                            else
+                                return false;
+                        });
+                    });
+
+                    SortedList<MemberModel> sorted = new SortedList<>(filterMembers);
+                    sorted.comparatorProperty().bind(tableMember.comparatorProperty());
+                    tableMember.setItems(sorted);
+
+                } catch (Exception e) {
+                    alertMessage.showErrorMessage(boderPane, "Show Data Error", "Error: " + e.getMessage(), 4,
+                            Pos.BOTTOM_RIGHT);
+                }
             }
-            // tableMember.setItems(data); //Todo: if you don't filter to Search data
-            // bellow:
-
-            // Todo: Search data
-            FilteredList<MemberModel> filterMembers = new FilteredList<MemberModel>(data, mb -> true);
-            txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-                filterMembers.setPredicate(member -> {
-                    if (newValue.isEmpty())
-                        return true;
-                    if (member.getMemberId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || member.getFirstName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || member.getSureName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || member.getGender().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || member.getTel().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || member.getVillage().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || member.getDistrict().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || member.getProvince().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || member.getStudy_year().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || member.getDetp().toLowerCase().indexOf(newValue.toLowerCase()) != -1)
-                        return true;
-                    else
-                        return false;
-                });
-            });
-
-            SortedList<MemberModel> sorted = new SortedList<>(filterMembers);
-            sorted.comparatorProperty().bind(tableMember.comparatorProperty());
-            tableMember.setItems(sorted);
-
-        } catch (Exception e) {
-            alertMessage.showErrorMessage(boderPane, "Show Data Error", "Error: " + e.getMessage(), 4,
-                    Pos.BOTTOM_RIGHT);
-        }
+        });
     }
 
     private void initTable() {
@@ -229,8 +243,7 @@ public class MemberController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 if (tableMember.getSelectionModel().getSelectedItem() != null) {
-                    JFXButton[] buttons = { buttonYes(tableMember.getSelectionModel().getSelectedItem().getMemberId(),
-                            tableMember.getSelectionModel().getSelectedItem()),
+                    JFXButton[] buttons = { buttonYes(tableMember.getSelectionModel().getSelectedItem().getMemberId()),
                             buttonNo(), buttonCancel() };
                     dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
                             JFXDialog.DialogTransition.CENTER, buttons, false);
@@ -240,6 +253,15 @@ public class MemberController implements Initializable {
                             Pos.BOTTOM_RIGHT);
                 }
             }
+        });
+
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                personalCotroller.showMainMenuPerson();
+            }
+
         });
     }
 
@@ -270,8 +292,7 @@ public class MemberController implements Initializable {
                         delete.setStyle(Style.buttonStyle);
                         delete.setOnAction(e -> {
                             JFXButton[] buttons = {
-                                    buttonYes(tableMember.getItems().get(getIndex()).getMemberId(),
-                                            tableMember.getSelectionModel().getSelectedItem()),
+                                    buttonYes(tableMember.getItems().get(getIndex()).getMemberId()),
                                     buttonNo(), buttonCancel() };
                             dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
                                     JFXDialog.DialogTransition.CENTER, buttons, false);
@@ -297,7 +318,7 @@ public class MemberController implements Initializable {
 
     }
 
-    private JFXButton buttonYes(String memberid, MemberModel rowReomove) {
+    private JFXButton buttonYes(String memberid) {
         JFXButton btyes = new JFXButton("ຕົກລົງ");
         btyes.setStyle(Style.buttonDialogStyle);
         btyes.setOnAction(e -> {
@@ -305,6 +326,7 @@ public class MemberController implements Initializable {
             try {
                 if (memberModel.deleteData(memberid) > 0) {
                     showData();
+                    // tableMember.getItems().remove(index);
                     dialog.closeDialog();
                     alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4, Pos.BOTTOM_RIGHT);
                 }
@@ -333,4 +355,5 @@ public class MemberController implements Initializable {
         });
         return btcancel;
     }
+
 }

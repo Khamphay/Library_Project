@@ -22,6 +22,7 @@ import com.mycompany.library_project.config.CreateLogFile;
 
 public class AddBookController implements Initializable {
 
+    private HomeController homeController = null;
     private BookController bookcontroller;
     private ResultSet rs = null;
     private AlertMessage alertMessage = new AlertMessage();
@@ -49,7 +50,11 @@ public class AddBookController implements Initializable {
      * Todo: Use from class BookController for both form can communicate or use for
      * Refresh table after add and delete
      */
-    public void initConstructor(BookController bookcontroller) {
+    public void initConstructor1(HomeController homeController) {
+        this.homeController = homeController;
+    }
+
+    public void initConstructor2(BookController bookcontroller) {
         this.bookcontroller = bookcontroller;
     }
 
@@ -116,6 +121,15 @@ public class AddBookController implements Initializable {
     }
 
     private void initEvents() {
+
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                homeController.showMainMenuHome();
+            }
+        });
+
         txtPage.textProperty().addListener(new ChangeListener<String>() {
 
             @Override

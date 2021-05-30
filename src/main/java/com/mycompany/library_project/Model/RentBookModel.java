@@ -25,6 +25,7 @@ public class RentBookModel implements DataAccessObject {
     private Date sendDate;
     private String rent_status;
 
+
     public RentBookModel() {
     }
 

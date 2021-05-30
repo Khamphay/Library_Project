@@ -1,5 +1,6 @@
 package com.mycompany.library_project.Controller;
 
+import javafx.application.Platform;
 import javafx.beans.value.*;
 import javafx.collections.*;
 import javafx.event.ActionEvent;
@@ -23,6 +24,7 @@ import com.mycompany.library_project.config.CreateLogFile;
 
 public class TableLogController implements Initializable {
 
+    private ManageBookController manageBookController = null;
     private TableLogModel tableLogModel = null;
     private ResultSet rs = null;
     private TreeItem<TableLogModel> subItem, root, node;
@@ -31,6 +33,10 @@ public class TableLogController implements Initializable {
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = null;
     private CreateLogFile logfile = new CreateLogFile();
+
+    public void initConstructor(ManageBookController manageBookController) {
+        this.manageBookController = manageBookController;
+    }
 
     @FXML
     private StackPane stackPane;
@@ -57,31 +63,38 @@ public class TableLogController implements Initializable {
     }
 
     private void showData() {
-        try {
-            tableLogModel = new TableLogModel();
-            rs = tableLogModel.findAll();
-            node = new TreeItem<>();
-            while (rs.next()) {
+        Platform.runLater(new Runnable() {
 
-                root = new TreeItem<>(new TableLogModel(rs.getString(1), Integer.parseInt(rs.getString(2)),
-                        getRootAction(rs.getString(1))));
-                final ResultSet sublog = tableLogModel.findById(rs.getString(1));
+            @Override
+            public void run() {
+                try {
+                    tableLogModel = new TableLogModel();
+                    rs = tableLogModel.findAll();
+                    node = new TreeItem<>();
+                    while (rs.next()) {
 
-                while (sublog.next()) {
-                    subItem = new TreeItem<>(
-                            new TableLogModel(sublog.getString(2), 1, getSubRootAction(sublog.getString(2))));
-                    root.getChildren().add(subItem);
+                        root = new TreeItem<>(new TableLogModel(rs.getString(1), Integer.parseInt(rs.getString(2)),
+                                getRootAction(rs.getString(1))));
+                        final ResultSet sublog = tableLogModel.findById(rs.getString(1));
+
+                        while (sublog.next()) {
+                            subItem = new TreeItem<>(
+                                    new TableLogModel(sublog.getString(2), 1, getSubRootAction(sublog.getString(2))));
+                            root.getChildren().add(subItem);
+                        }
+
+                        node.getChildren().add(root);
+
+                    }
+                    tableLog.setShowRoot(false);
+                    tableLog.setRoot(node);
+
+                } catch (Exception e) {
+                    alertMessage.showErrorMessage(stackPane, "Load Data", "Error: " + e.getMessage(), 4,
+                            Pos.BOTTOM_RIGHT);
                 }
-
-                node.getChildren().add(root);
-
             }
-            tableLog.setShowRoot(false);
-            tableLog.setRoot(node);
-
-        } catch (Exception e) {
-            alertMessage.showErrorMessage(stackPane, "Load Data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-        }
+        });
     }
 
     private void initEvents() {
@@ -126,6 +139,11 @@ public class TableLogController implements Initializable {
         txtId.clear();
         txtLog.clear();
         txtQty.clear();
+    }
+
+    @FXML
+    private void closeForm() {
+        manageBookController.showMainMenuBooks();
     }
 
     @FXML
@@ -320,4 +338,5 @@ public class TableLogController implements Initializable {
         });
         return btcancel;
     }
+
 }

@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
@@ -28,6 +27,7 @@ import com.mycompany.library_project.Model.*;
 
 public class RentBookController implements Initializable {
 
+    private HomeController homeController = null;
     private MemberModel member = new MemberModel();
     private BookDetailModel book = new BookDetailModel();
     private RentBookModel rentBook = new RentBookModel();
@@ -39,6 +39,10 @@ public class RentBookController implements Initializable {
     private String rent_id = "", status = "";
     private int qty_can_rent = 0;
 
+    public void initConstructor(HomeController homeController) {
+        this.homeController = homeController;
+    }
+
     @FXML
     private BorderPane borderPane;
 
@@ -49,7 +53,7 @@ public class RentBookController implements Initializable {
     private DatePicker rentDate, sendDate;
 
     @FXML
-    private JFXButton btAdd, btSave, btCancel;
+    private JFXButton btAdd, btSave, btCancel, btClose;
 
     @FXML
     private TextField txtMemberId, txtMemberName, txtSurName, txtDep;
@@ -64,10 +68,6 @@ public class RentBookController implements Initializable {
     private TableColumn<RentBookModel, String> colId, colName, colCatg, colType;
     @FXML
     private TableColumn<RentBookModel, Date> colDateRent, colDateSend;
-
-    @FXML
-    private void ShowDate(ActionEvent event) {
-    }
 
     private void clearText() {
         txtMemberId.clear();
@@ -316,6 +316,14 @@ public class RentBookController implements Initializable {
             }
 
         });
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                homeController.showMainMenuHome();
+            }
+
+        });
     }
 
     @Override
@@ -419,4 +427,5 @@ public class RentBookController implements Initializable {
             return "";
         }
     }
+
 }

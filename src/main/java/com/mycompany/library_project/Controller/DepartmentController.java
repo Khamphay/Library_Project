@@ -10,9 +10,12 @@ import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.DepartmentModel;
 import com.mycompany.library_project.config.CreateLogFile;
 
+import javafx.application.Platform;
 import javafx.collections.*;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -23,6 +26,7 @@ import javafx.util.Callback;
 
 public class DepartmentController implements Initializable {
 
+    private ManagePersonalCotroller personalCotroller = null;
     private DepartmentModel depertment = null;
     private ResultSet rs = null;
     private ObservableList<DepartmentModel> data = null;
@@ -30,11 +34,15 @@ public class DepartmentController implements Initializable {
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile logfile = new CreateLogFile();
 
+    public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
+        this.personalCotroller = managePersonalCotroller;
+    }
+
     @FXML
     private StackPane stackPane;
 
     @FXML
-    private JFXButton btSave, btEdit, btCancel;
+    private JFXButton btSave, btEdit, btCancel, btClose;
 
     @FXML
     private TextField txtId, txtName, txtSearch;
@@ -49,7 +57,7 @@ public class DepartmentController implements Initializable {
         colId.setCellValueFactory(new PropertyValueFactory<>("depId"));
         colName.setCellValueFactory(new PropertyValueFactory<>("depName"));
         tableDepartment.setOnMouseClicked(e -> {
-            if (e.getClickCount() >=2 && tableDepartment.getSelectionModel().getSelectedItem() != null) {
+            if (e.getClickCount() >= 2 && tableDepartment.getSelectionModel().getSelectedItem() != null) {
                 depertment = tableDepartment.getSelectionModel().getSelectedItem();
                 txtId.setText(depertment.getDepId());
                 txtName.setText(depertment.getDepName());
@@ -108,6 +116,15 @@ public class DepartmentController implements Initializable {
         btCancel.setOnAction(event -> {
             ClearText();
         });
+
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                personalCotroller.showMainMenuPerson();
+            }
+
+        });
     }
 
     private void ClearText() {
@@ -116,37 +133,46 @@ public class DepartmentController implements Initializable {
     }
 
     private void showData() {
-        try {
-            depertment = new DepartmentModel();
-            data = FXCollections.observableArrayList();
-            rs = depertment.findAll();
-            while (rs.next()) {
-                data.add(new DepartmentModel(rs.getString(1), rs.getString(2)));
+
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    depertment = new DepartmentModel();
+                    data = FXCollections.observableArrayList();
+                    rs = depertment.findAll();
+                    while (rs.next()) {
+                        data.add(new DepartmentModel(rs.getString(1), rs.getString(2)));
+                    }
+                    // tableDepartment.setItems(data); //Todo: if you don't filter to Search data
+                    // bellow:
+
+                    // Todo: Search data
+                    FilteredList<DepartmentModel> filterDep = new FilteredList<>(data, dep -> true);
+                    txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                        filterDep.setPredicate(searchDep -> {
+                            if (newValue.isEmpty())
+                                return true;
+
+                            if (searchDep.getDepName().toLowerCase().indexOf(newValue.toLowerCase()) != -1)
+                                return true;
+                            else
+                                return false;
+                        });
+
+                    });
+                    SortedList<DepartmentModel> sorted = new SortedList<DepartmentModel>(filterDep);
+                    sorted.comparatorProperty().bind(tableDepartment.comparatorProperty());
+                    tableDepartment.setItems(sorted);
+
+                } catch (Exception e) {
+                    alertMessage.showErrorMessage("ໂຫຼດຂໍ້ມູນ", e.getMessage(), 3, Pos.BOTTOM_RIGHT);
+                }
+
             }
-            // tableDepartment.setItems(data); //Todo: if you don't filter to Search data
-            // bellow:
+        });
 
-            // Todo: Search data
-            FilteredList<DepartmentModel> filterDep = new FilteredList<>(data, dep -> true);
-            txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-                filterDep.setPredicate(searchDep -> {
-                    if (newValue.isEmpty())
-                        return true;
-
-                    if (searchDep.getDepName().toLowerCase().indexOf(newValue.toLowerCase()) != -1)
-                        return true;
-                    else
-                        return false;
-                });
-
-            });
-            SortedList<DepartmentModel> sorted = new SortedList<DepartmentModel>(filterDep);
-            sorted.comparatorProperty().bind(tableDepartment.comparatorProperty());
-            tableDepartment.setItems(sorted);
-
-        } catch (Exception e) {
-            alertMessage.showErrorMessage("ໂຫຼດຂໍ້ມູນ", e.getMessage(), 3, Pos.BOTTOM_RIGHT);
-        }
     }
 
     @Override

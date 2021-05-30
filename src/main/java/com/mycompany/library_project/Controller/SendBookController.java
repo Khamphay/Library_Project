@@ -27,6 +27,8 @@ import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 
 public class SendBookController implements Initializable {
+
+    private HomeController homeController = null;
     private RentBookModel sendBook = new RentBookModel();
     private AlertMessage alertMessage = new AlertMessage();
     private BookDetailModel book = new BookDetailModel();
@@ -35,6 +37,10 @@ public class SendBookController implements Initializable {
     private DialogMessage dialog = null;
     private JFXButton[] buttons = { buttonOK() };
     String rent_id = "";
+
+    public void initConstructor(HomeController homeController) {
+        this.homeController = homeController;
+    }
 
     @FXML
     private StackPane stackPane;
@@ -45,7 +51,7 @@ public class SendBookController implements Initializable {
     private DatePicker dateRent, dateSend;
 
     @FXML
-    private JFXButton btSave, btBookLost, btCancel;
+    private JFXButton btSave, btBookLost, btCancel, btClose;
 
     @FXML
     private TableView<RentBookModel> tableSendBooks;
@@ -164,6 +170,13 @@ public class SendBookController implements Initializable {
             public void handle(ActionEvent event) {
                 clearText();
             }
+        });
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                homeController.showMainMenuHome();
+            }
 
         });
     }
@@ -224,4 +237,5 @@ public class SendBookController implements Initializable {
         colAction.setCellFactory(cellFactory);
         tableSendBooks.getColumns().add(colAction);
     }
+
 }

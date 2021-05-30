@@ -1,5 +1,6 @@
 package com.mycompany.library_project.Controller;
 
+import javafx.application.Platform;
 import javafx.collections.*;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -24,12 +25,17 @@ import java.util.ResourceBundle;
 
 public class BookTypeController implements Initializable {
 
+    private ManageBookController manageBookController = null;
     private ResultSet rs;
     private TypeModel type = null;
     private ObservableList<TypeModel> data = null;
     private DialogMessage dialog = null;
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile logfile = new CreateLogFile();
+
+    public void initConstructor(ManageBookController manageBookController) {
+        this.manageBookController = manageBookController;
+    }
 
     @FXML
     private StackPane stackePane;
@@ -45,42 +51,54 @@ public class BookTypeController implements Initializable {
     private TableColumn<TypeModel, String> colName;
 
     private void ShowData() {
-        try {
-            data = FXCollections.observableArrayList();
-            type = new TypeModel();
-            rs = type.findAll();
-            while (rs.next()) {
-                data.add(new TypeModel(rs.getString(1), rs.getString(2)));
-            }
-            // tableType.setItems(data); //Todo: if you don't filter to Search data bellow:
+        Platform.runLater(new Runnable() {
 
-            // Todo: Search data
-            FilteredList<TypeModel> filterType = new FilteredList<>(data, t -> true);
-            txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-                filterType.setPredicate(searchType -> {
-                    if (newValue.isEmpty())
-                        return true;
+            @Override
+            public void run() {
+               try {
+                   data = FXCollections.observableArrayList();
+                   type = new TypeModel();
+                   rs = type.findAll();
+                   while (rs.next()) {
+                       data.add(new TypeModel(rs.getString(1), rs.getString(2)));
+                   }
+                   // tableType.setItems(data); //Todo: if you don't filter to Search data bellow:
 
-                    if (searchType.getTypeName().toLowerCase().indexOf(newValue.toLowerCase()) != -1)
-                        return true;
-                    else
-                        return false;
-                });
-            });
+                   // Todo: Search data
+                   FilteredList<TypeModel> filterType = new FilteredList<>(data, t -> true);
+                   txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                       filterType.setPredicate(searchType -> {
+                           if (newValue.isEmpty())
+                               return true;
 
-            SortedList<TypeModel> sorted = new SortedList<TypeModel>(filterType);
-            sorted.comparatorProperty().bind(tableType.comparatorProperty());
-            tableType.setItems(sorted);
+                           if (searchType.getTypeName().toLowerCase().indexOf(newValue.toLowerCase()) != -1)
+                               return true;
+                           else
+                               return false;
+                       });
+                   });
 
-        } catch (SQLException e) {
-            alertMessage.showErrorMessage(stackePane, "Load Data Error", "Error: " + e.getMessage(), 4,
-                    Pos.BOTTOM_RIGHT);
-        }
-    }
+                   SortedList<TypeModel> sorted = new SortedList<TypeModel>(filterType);
+                   sorted.comparatorProperty().bind(tableType.comparatorProperty());
+                   tableType.setItems(sorted);
+
+               } catch (SQLException e) {
+                   alertMessage.showErrorMessage(stackePane, "Load Data Error", "Error: " + e.getMessage(), 4,
+                           Pos.BOTTOM_RIGHT);
+               }
+           }
+
+       });
+   }
 
     private void ClearData() {
         txtTypeId.setText("");
         txtTypeName.setText("");
+    }
+
+    @FXML
+    private void closeForm() {
+        manageBookController.showMainMenuBooks();
     }
 
     @FXML
@@ -231,4 +249,5 @@ public class BookTypeController implements Initializable {
         });
         return btcancel;
     }
+
 }

@@ -17,7 +17,6 @@ import javafx.scene.text.Text;
 
 public class ManageBookController implements Initializable {
 
-    private Parent subForm = null;
     private AlertMessage alertMessage = new AlertMessage();
     public static BorderPane mainBorder = null;
 
@@ -30,36 +29,68 @@ public class ManageBookController implements Initializable {
     @FXML
     private ScrollPane scrollMenu;
 
-    private void show_subForm(String form) {
-        try {
-            subForm = null;
-            subForm = FXMLLoader.load(App.class.getResource(form));
-            bpManageBook.setCenter(subForm);
-        } catch (Exception e) {
-            alertMessage.showErrorMessage(bpManageBook, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            CreateLogFile config = new CreateLogFile();
-            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: " + form, e);
-        }
+    public void showMainMenuBooks() {
+        bpManageBook.setCenter(scrollMenu);
     }
 
     @FXML
     private void btBookType_Click(ActionEvent event) {
-        show_subForm("frmbookType.fxml");
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmbookType.fxml"));
+            final Parent subForm = loader.load();
+            BookTypeController bookTypeController = loader.getController();
+            bookTypeController.initConstructor(this);
+            bpManageBook.setCenter(subForm);
+        } catch (Exception e) {
+            alertMessage.showErrorMessage(bpManageBook, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            CreateLogFile config = new CreateLogFile();
+            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Book Type", e);
+        }
     }
 
     @FXML
     private void btBookCategory_Click(ActionEvent event) {
-        show_subForm("frmBookCategory.fxml");
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmBookCategory.fxml"));
+            final Parent subForm = loader.load();
+            BookCategoryController bookCategoryController = loader.getController();
+            bookCategoryController.initConstructor(this);
+            bpManageBook.setCenter(subForm);
+        } catch (Exception e) {
+            alertMessage.showErrorMessage(bpManageBook, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            CreateLogFile config = new CreateLogFile();
+            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Book Category", e);
+        }
     }
 
     @FXML
     private void btBookTableLog_Click(ActionEvent event) {
-        show_subForm("frmTableLogs.fxml");
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmTableLogs.fxml"));
+            final Parent subForm = loader.load();
+            TableLogController tableLogController = loader.getController();
+            tableLogController.initConstructor(this);
+            bpManageBook.setCenter(subForm);
+        } catch (Exception e) {
+            alertMessage.showErrorMessage(bpManageBook, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            CreateLogFile config = new CreateLogFile();
+            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Table Log", e);
+        }
     }
 
     @FXML
     private void btBooks_Click(ActionEvent event) {
-        show_subForm("frmBooks.fxml");
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmBooks.fxml"));
+            final Parent subForm = loader.load();
+            BookController bookController = loader.getController();
+            bookController.initConstructor(this);
+            bpManageBook.setCenter(subForm);
+        } catch (Exception e) {
+            alertMessage.showErrorMessage(bpManageBook, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            CreateLogFile config = new CreateLogFile();
+            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Book", e);
+        }
     }
 
     @FXML

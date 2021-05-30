@@ -11,6 +11,7 @@ import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.EmployeeModel;
 import com.mycompany.library_project.config.CreateLogFile;
 
+import javafx.application.Platform;
 import javafx.beans.value.*;
 import javafx.collections.*;
 import javafx.collections.transformation.FilteredList;
@@ -27,6 +28,7 @@ import javafx.util.Callback;
 
 public class EmployeeController implements Initializable {
 
+    private ManagePersonalCotroller personalCotroller = null;
     private EmployeeModel employee = null;
     private ResultSet rs = null;
     private String gender = "";
@@ -36,11 +38,15 @@ public class EmployeeController implements Initializable {
     private ArrayList<EmployeeModel> users = null;
     private CreateLogFile logfile = new CreateLogFile();
 
+    public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
+        this.personalCotroller = managePersonalCotroller;
+    }
+
     @FXML
     private StackPane stackPane;
 
     @FXML
-    private JFXButton btSave, btEdit, btCancel;
+    private JFXButton btSave, btEdit, btCancel, btClose;
 
     @FXML
     private TextField txtId, txtFname, txtLname, txtTel, txtEmail, txtSearch;
@@ -145,6 +151,15 @@ public class EmployeeController implements Initializable {
 
         });
 
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                personalCotroller.showMainMenuPerson();
+            }
+
+        });
+
         txtTel.textProperty().addListener(new ChangeListener<String>() {
             // Todo: set properties type only numeric
             @Override
@@ -177,44 +192,52 @@ public class EmployeeController implements Initializable {
     }
 
     private void showData() {
-        try {
-            data = FXCollections.observableArrayList();
-            users = new ArrayList<>();
-            employee = new EmployeeModel();
-            rs = employee.findAll();
-            while (rs.next()) {
-                data.add(new EmployeeModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
-                        rs.getString(5), rs.getString(6)));
-                users.add(new EmployeeModel(rs.getString(1), rs.getString(7), rs.getString(8)));
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    data = FXCollections.observableArrayList();
+                    users = new ArrayList<>();
+                    employee = new EmployeeModel();
+                    rs = employee.findAll();
+                    while (rs.next()) {
+                        data.add(new EmployeeModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
+                                rs.getString(5), rs.getString(6)));
+                        users.add(new EmployeeModel(rs.getString(1), rs.getString(7), rs.getString(8)));
+                    }
+                    // tableEmployee.setItems(data); //Todo: if you don't filter to Search data
+                    // bellow:
+
+                    // Todo: Search data
+                    FilteredList<EmployeeModel> filterEmployees = new FilteredList<EmployeeModel>(data, emp -> true);
+                    txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                        filterEmployees.setPredicate(emp -> {
+                            if (newValue.isEmpty())
+                                return true;
+                            if (emp.getEmployeeId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || emp.getFirstName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || emp.getLastName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || emp.getEmail().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || emp.getTel().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || emp.getGender().toLowerCase().indexOf(newValue.toLowerCase()) != -1)
+                                return true;
+                            else
+                                return false;
+                        });
+                    });
+
+                    SortedList<EmployeeModel> sorted = new SortedList<>(filterEmployees);
+                    sorted.comparatorProperty().bind(tableEmployee.comparatorProperty());
+                    tableEmployee.setItems(sorted);
+
+                } catch (Exception e) {
+                    alertMessage.showErrorMessage(stackPane, "Load Data", "Error" + e.getMessage(), 4,
+                            Pos.BOTTOM_RIGHT);
+                }
             }
-            // tableEmployee.setItems(data); //Todo: if you don't filter to Search data
-            // bellow:
 
-            // Todo: Search data
-            FilteredList<EmployeeModel> filterEmployees = new FilteredList<EmployeeModel>(data, emp -> true);
-            txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-                filterEmployees.setPredicate(emp -> {
-                    if (newValue.isEmpty())
-                        return true;
-                    if (emp.getEmployeeId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || emp.getFirstName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || emp.getLastName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || emp.getEmail().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || emp.getTel().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || emp.getGender().toLowerCase().indexOf(newValue.toLowerCase()) != -1)
-                        return true;
-                    else
-                        return false;
-                });
-            });
-
-            SortedList<EmployeeModel> sorted = new SortedList<>(filterEmployees);
-            sorted.comparatorProperty().bind(tableEmployee.comparatorProperty());
-            tableEmployee.setItems(sorted);
-
-        } catch (Exception e) {
-            alertMessage.showErrorMessage(stackPane, "Load Data", "Error" + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-        }
+        });
     }
 
     @Override
@@ -336,5 +359,6 @@ public class EmployeeController implements Initializable {
         });
         return btcancel;
     }
+
 
 }

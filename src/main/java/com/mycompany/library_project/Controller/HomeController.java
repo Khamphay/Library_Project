@@ -31,7 +31,6 @@ public class HomeController implements Initializable {
 
     private boolean max_min = false;
     // private double x, y;
-    private Parent subroot = null;
     private Rectangle2D bounds = null;
     private HamburgerSlideCloseTransition hamburgerTransition = null;
     private boolean fragMenu = false;
@@ -63,14 +62,12 @@ public class HomeController implements Initializable {
 
     @FXML
     public BorderPane bpDisplay;
+
     @FXML
-    private JFXButton btCloseForm;
+    private JFXButton btShowRent_Send, btRentBook, btSendBook, btRegister;
+
     @FXML
-    private JFXButton btMinimize;
-    @FXML
-    private JFXButton btMaximum;
-    @FXML
-    private JFXButton btSalieder;
+    private JFXButton btCloseForm, btMinimize, btMaximum, btSalieder;
 
     @FXML
     private JFXHamburger humberger;
@@ -107,13 +104,26 @@ public class HomeController implements Initializable {
 
     }
 
-    private void showSubFrom(String subForm) {
+    private void show_ImportBooks() {
         try {
-            subroot = null;
-            subroot = FXMLLoader.load(App.class.getResource(subForm));
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmAddBooks.fxml"));
+            final Parent subroot = loader.load();
+            AddBookController addBookController = loader.getController();
+            addBookController.initConstructor1(this);
             bpDisplay.setCenter(subroot);
         } catch (Exception e) {
-            alertMessage.showErrorMessage( "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            CreateLogFile config = new CreateLogFile();
+            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Add Book", e);
+        }
+    }
+    private void showSubFrom(String subForm) {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource(subForm));
+            final Parent subroot = loader.load();
+            bpDisplay.setCenter(subroot);
+        } catch (Exception e) {
+            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             CreateLogFile config = new CreateLogFile();
             config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: " + subForm, e);
         }
@@ -188,7 +198,7 @@ public class HomeController implements Initializable {
 
                 @Override
                 public void handle(Event event) {
-                    showSubFrom("frmAddBooks.fxml");
+                    show_ImportBooks();
                 }
             });
 
@@ -237,14 +247,13 @@ public class HomeController implements Initializable {
         }
     }
 
-    @FXML
-    private void sliderMenu(ActionEvent event) {
-        // sliderMenuHamburger();
+    public void showMainMenuHome() {
+        bpDisplay.setCenter(sclSubHome);
     }
 
     @FXML
     public void buttonHome_Action(ActionEvent event) {
-        bpDisplay.setCenter(sclSubHome);
+        showMainMenuHome();
     }
 
     @FXML
@@ -260,13 +269,48 @@ public class HomeController implements Initializable {
     }
 
     @FXML
+    private void buttonShowRent_SendBook_Action(ActionEvent event) throws Exception {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmShowRent_SendBook.fxml"));
+            final Parent subroot = loader.load();
+            ShowRentSendController showRent_SendBookController = loader.getController();
+            showRent_SendBookController.initConstructor(this);
+            bpDisplay.setCenter(subroot);
+        } catch (Exception e) {
+            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            CreateLogFile config = new CreateLogFile();
+            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Show Rent-Send Book", e);
+        }
+    }
+
+    @FXML
     private void buttonRentBook_Action(ActionEvent event) throws Exception {
-        showSubFrom("frmRentBooks.fxml");
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmRentBooks.fxml"));
+            final Parent subroot = loader.load();
+            RentBookController rentBookController = loader.getController();
+            rentBookController.initConstructor(this);
+            bpDisplay.setCenter(subroot);
+        } catch (Exception e) {
+            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            CreateLogFile config = new CreateLogFile();
+            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Show Rent-Send Book", e);
+        }
     }
 
     @FXML
     private void buttonSendBook_Action(ActionEvent event) throws Exception {
-        showSubFrom("frmSendBook.fxml");
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmSendBook.fxml"));
+            final Parent subroot = loader.load();
+            SendBookController sendBookController = loader.getController();
+            sendBookController.initConstructor(this);
+            bpDisplay.setCenter(subroot);
+        } catch (Exception e) {
+            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            CreateLogFile config = new CreateLogFile();
+            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Show Rent-Send Book", e);
+        }
     }
 
     @FXML
@@ -276,7 +320,17 @@ public class HomeController implements Initializable {
 
     @FXML
     private void buttonRegister_Action(ActionEvent event) throws Exception {
-        showSubFrom("frmRegister.fxml");
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmRegister.fxml"));
+            final Parent subroot = loader.load();
+            RegisterController registerController = loader.getController();
+            registerController.initConstructor1(this);
+            bpDisplay.setCenter(subroot);
+        } catch (Exception e) {
+            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            CreateLogFile config = new CreateLogFile();
+            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Show Rent-Send Book", e);
+        }
     }
 
     @FXML

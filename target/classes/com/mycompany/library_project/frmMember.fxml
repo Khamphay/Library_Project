@@ -129,7 +129,7 @@
    <top>
       <AnchorPane prefHeight="34.0" prefWidth="1158.0" style="-fx-background-color: #101D3D;" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="1222.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
+            <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" layoutX="1222.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
                <graphic>
                   <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                      <image>

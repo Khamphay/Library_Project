@@ -34,7 +34,8 @@ import java.awt.image.BufferedImage;
 
 public class RegisterController implements Initializable {
 
-    private MemberController memberController;
+    private HomeController homeController = null;
+    private MemberController memberController = null;
     private CreateLogFile logfile = new CreateLogFile();
     public MemberModel memberModel = null;
     private DepartmentModel depertment = new DepartmentModel();
@@ -62,12 +63,23 @@ public class RegisterController implements Initializable {
      * Todo: Use from class MemberController for both form can communicate or use
      * for Refresh table after add and delete
      */
-    public void initConstructor(MemberController memberController) {
+    public void initConstructor1(HomeController homeController) {
+        this.homeController = homeController;
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                homeController.showMainMenuHome();
+            }
+
+        });
+    }
+
+    public void initConstructor2(MemberController memberController) {
         this.memberController = memberController;
 
         if (MemberController.add || memberModel != null) {
             moveForm();
-            btClose.setVisible(true);
             btClose.setOnAction(new EventHandler<ActionEvent>() {
 
                 @Override
@@ -327,4 +339,5 @@ public class RegisterController implements Initializable {
             MemberController.addMemberStage.setY(event.getScreenY() - y);
         });
     }
+
 }

@@ -15,6 +15,7 @@ import com.mycompany.library_project.Model.*;
 import com.mycompany.library_project.Report.CreateReport;
 import com.mycompany.library_project.config.CreateLogFile;
 
+import javafx.application.Platform;
 import javafx.collections.*;
 import javafx.event.*;
 import javafx.fxml.*;
@@ -28,6 +29,7 @@ import javafx.util.Callback;
 
 public class BarcodeController implements Initializable {
 
+    private BookController bookController;
     private BookDetailModel addBarcode = null;
     private ResultSet rs = null;
     private TableLogModel table = new TableLogModel();
@@ -40,6 +42,10 @@ public class BarcodeController implements Initializable {
     private ObservableList<String> status = FXCollections.observableArrayList("ຫວ່າງ", "ກຳລົງຢືມ", "ເສຍ");
     private String barcode = "", bookid = "", tableid = "";
     private Double x, y;
+
+    public void initConstructor(BookController bookController) {
+        this.bookController = bookController;
+    }
 
     @FXML
     private StackPane stackPane;
@@ -82,6 +88,7 @@ public class BarcodeController implements Initializable {
                                 cmbStatus.getSelectionModel().getSelectedItem()) > 0) {
                             alertMessage.showCompletedMessage("Saved", "Save data completed", 4, Pos.BOTTOM_RIGHT);
                             showBarcode(bookid);
+                            bookController.showData();
                         } else {
                             alertMessage.showWarningMessage("Save Warning", "Save data fail", 4, Pos.BOTTOM_RIGHT);
                         }
@@ -217,21 +224,27 @@ public class BarcodeController implements Initializable {
     }
 
     private void showBarcode(String book_id) {
-        try {
-            bookid = book_id;
-            data = FXCollections.observableArrayList();
-            book = new ArrayList<String>();
-            addBarcode = new BookDetailModel();
-            rs = addBarcode.showBarcode(book_id);
-            while (rs.next()) {
-                data.add(new BookDetailModel(rs.getString("barcode"), rs.getString("table_log_id"),
-                        rs.getString("status")));
-                book.add(rs.getString("book_id"));
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    bookid = book_id;
+                    data = FXCollections.observableArrayList();
+                    book = new ArrayList<String>();
+                    addBarcode = new BookDetailModel();
+                    rs = addBarcode.showBarcode(book_id);
+                    while (rs.next()) {
+                        data.add(new BookDetailModel(rs.getString("barcode"), rs.getString("table_log_id"),
+                                rs.getString("status")));
+                        book.add(rs.getString("book_id"));
+                    }
+                    tableBarcode.setItems(data);
+                } catch (Exception e) {
+                    alertMessage.showErrorMessage("Load data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                }
             }
-            tableBarcode.setItems(data);
-        } catch (Exception e) {
-            alertMessage.showErrorMessage("Load data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-        }
+        });
     }
 
     private void moveForm() {
@@ -315,6 +328,7 @@ public class BarcodeController implements Initializable {
                     showBarcode(bookid);
                     if (addBarcode.updateBookQty(bookid) > 0) {
                         clearText();
+                        bookController.showData();
                     }
                 } else {
                     alertMessage.showWarningMessage("Deleted", "Can not delete data.", 4, Pos.BOTTOM_RIGHT);

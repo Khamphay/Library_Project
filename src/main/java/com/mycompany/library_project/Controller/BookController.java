@@ -1,5 +1,6 @@
 package com.mycompany.library_project.Controller;
 
+import javafx.application.Platform;
 import javafx.collections.*;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -31,7 +32,7 @@ public class BookController implements Initializable {
     String[] values = { "001", "Data Analyst", "07-646712-21", "200", "20", "ຄອມພິວເຕີ", "ແບບຮຽນ", "ພາສາອັງກິດ" };
     Node node[] = new Node[1000];
 
-
+    private ManageBookController manageBookController = null;
     private ResultSet rs = null;
     private BookDetailModel bookDetail = null;
     private ObservableList<BookDetailModel> data = null;
@@ -43,8 +44,15 @@ public class BookController implements Initializable {
     public static String _book_id = "";
     public static boolean add = false;
 
+    public void initConstructor(ManageBookController manageBookController) {
+        this.manageBookController = manageBookController;
+    }
+
     @FXML
     private AddBookController addBookController;
+
+    @FXML
+    private BarcodeController barcodeController;
 
     @FXML
     private BorderPane borderPane;
@@ -53,7 +61,7 @@ public class BookController implements Initializable {
     private StackPane stackPane;
 
     @FXML
-    private JFXButton btAddNewBook, btRefresh;
+    private JFXButton btAddNewBook, btRefresh, btClose;
 
     @FXML
     private MenuItem menuList, menuEdit;
@@ -74,6 +82,25 @@ public class BookController implements Initializable {
     @FXML
     private VBox vbListBooks;
 
+    private void showBarcode() {
+        try {
+            _book_id = tableBook.getSelectionModel().getSelectedItem().getBookId();
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmBookBarcode.fxml"));
+            final Parent root = loader.load();
+            final Scene scene = new Scene(root);
+
+            barcodeController = loader.getController();
+            barcodeController.initConstructor(this);
+
+            scene.setFill(Color.TRANSPARENT);
+            addBarcode = new Stage();
+            addBarcode.setScene(scene);
+            addBarcode.initStyle(StageStyle.TRANSPARENT);
+            addBarcode.show();
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
     private void initEvents() {
         btRefresh.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -81,24 +108,12 @@ public class BookController implements Initializable {
             public void handle(ActionEvent event) {
                 showData();
             }
-
         });
         menuList.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                try {
-                    _book_id = tableBook.getSelectionModel().getSelectedItem().getBookId();
-                    final Parent root = FXMLLoader.load(App.class.getResource("frmBookBarcode.fxml"));
-                    final Scene scene = new Scene(root);
-                    scene.setFill(Color.TRANSPARENT);
-                    addBarcode = new Stage();
-                    addBarcode.setScene(scene);
-                    addBarcode.initStyle(StageStyle.TRANSPARENT);
-                    addBarcode.show();
-                } catch (Exception e) {
-                    // TODO: handle exception
-                }
+                showBarcode();
             }
 
         });
@@ -130,6 +145,15 @@ public class BookController implements Initializable {
                 showAddBook();
             }
         });
+
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                manageBookController.showMainMenuBooks();
+            }
+
+        });
     }
 
     private void showAddBook() {
@@ -140,7 +164,7 @@ public class BookController implements Initializable {
             final Scene scene = new Scene(root);
 
             addBookController = loader.getController();
-            addBookController.initConstructor(this);
+            addBookController.initConstructor2(this);
 
             addNewBook = new Stage();
             addNewBook.initStyle(StageStyle.UNDECORATED);
@@ -152,43 +176,50 @@ public class BookController implements Initializable {
     }
 
     public void showData() {
-        try {
-            data = FXCollections.observableArrayList();
-            bookDetail = new BookDetailModel();
-            rs = bookDetail.findAll();
-            while (rs.next()) {
-                data.add(new BookDetailModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4),
-                        rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9)));
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    data = FXCollections.observableArrayList();
+                    bookDetail = new BookDetailModel();
+                    rs = bookDetail.findAll();
+                    while (rs.next()) {
+                        data.add(new BookDetailModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4),
+                                rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9)));
+                    }
+
+                    // tableBook.setItems(data); //Todo: if you don't filter to Search data bellow:
+
+                    // Todo: Search data
+                    FilteredList<BookDetailModel> filterBook = new FilteredList<BookDetailModel>(data, b -> true);
+                    txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                        filterBook.setPredicate(searchBook -> {
+                            if (newValue.isEmpty())
+                                return true;
+                            if ((searchBook.getBookId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || searchBook.getBookName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || searchBook.getISBN().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || searchBook.getCatgId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || searchBook.getTypeId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || searchBook.getTableId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || searchBook.getDetail().toLowerCase().indexOf(newValue.toLowerCase()) != -1))
+                                return true;
+                            else
+                                return false;
+                        });
+                    });
+
+                    SortedList<BookDetailModel> sorted = new SortedList<>(filterBook);
+                    sorted.comparatorProperty().bind(tableBook.comparatorProperty());
+                    tableBook.setItems(sorted);
+
+                } catch (Exception e) {
+                    alertMessage.showErrorMessage(borderPane, "Load data", "Error: " + e.getMessage(), 4,
+                            Pos.BOTTOM_RIGHT);
+                }
             }
-
-            // tableBook.setItems(data); //Todo: if you don't filter to Search data bellow:
-
-            // Todo: Search data
-            FilteredList<BookDetailModel> filterBook = new FilteredList<BookDetailModel>(data, b -> true);
-            txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-                filterBook.setPredicate(searchBook -> {
-                    if (newValue.isEmpty())
-                        return true;
-                    if ((searchBook.getBookId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || searchBook.getBookName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || searchBook.getISBN().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || searchBook.getCatgId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || searchBook.getTypeId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || searchBook.getTableId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                            || searchBook.getDetail().toLowerCase().indexOf(newValue.toLowerCase()) != -1))
-                        return true;
-                    else
-                        return false;
-                });
-            });
-
-            SortedList<BookDetailModel> sorted = new SortedList<>(filterBook);
-            sorted.comparatorProperty().bind(tableBook.comparatorProperty());
-            tableBook.setItems(sorted);
-
-        } catch (Exception e) {
-            alertMessage.showErrorMessage(borderPane, "Load data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-        }
+        });
     }
 
     private void initColumn() {
@@ -300,4 +331,5 @@ public class BookController implements Initializable {
         });
         return btcancel;
     }
+
 }

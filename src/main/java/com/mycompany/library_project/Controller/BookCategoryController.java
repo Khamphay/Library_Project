@@ -1,5 +1,6 @@
 package com.mycompany.library_project.Controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -30,12 +31,17 @@ import com.mycompany.library_project.config.CreateLogFile;
 
 public class BookCategoryController implements Initializable {
 
+    private ManageBookController manageBookController = null;
     private CategoryModel category = null;
     private ObservableList<CategoryModel> data = null;
     private ResultSet rs = null;
     private DialogMessage dialog = null;
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile logfile = new CreateLogFile();
+
+    public void initConstructor(ManageBookController manageBookController) {
+        this.manageBookController = manageBookController;
+    }
 
     @FXML
     private StackPane stakePane;
@@ -53,44 +59,56 @@ public class BookCategoryController implements Initializable {
     private TableColumn<CategoryModel, String> colCatgId, colCatgName;
 
     private void showData() {
-        try {
-            data = FXCollections.observableArrayList();
-            category = new CategoryModel();
-            rs = category.findAll();
-            while (rs.next()) {
-                data.add(new CategoryModel(rs.getString(1), rs.getString(2)));
-            }
-            // tableCategory.setItems(data); //Todo: if you don't filter to Search data
-            // bellow:
+        Platform.runLater(new Runnable() {
 
-            // Todo: Search Data
-            FilteredList<CategoryModel> filterCatg = new FilteredList<>(data, b -> true);
-            txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-                filterCatg.setPredicate(searchCategory -> {
-                    if (newValue.isEmpty()) {
-                        return true;
+            @Override
+            public void run() {
+                try {
+                    data = FXCollections.observableArrayList();
+                    category = new CategoryModel();
+                    rs = category.findAll();
+                    while (rs.next()) {
+                        data.add(new CategoryModel(rs.getString(1), rs.getString(2)));
                     }
+                    // tableCategory.setItems(data); //Todo: if you don't filter to Search data
+                    // bellow:
 
-                    if (searchCategory.getCatgName().toLowerCase().indexOf(newValue.toLowerCase()) != -1) {
-                        return true;
-                    } else
-                        return false;
+                    // Todo: Search Data
+                    FilteredList<CategoryModel> filterCatg = new FilteredList<>(data, b -> true);
+                    txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                        filterCatg.setPredicate(searchCategory -> {
+                            if (newValue.isEmpty()) {
+                                return true;
+                            }
 
-                });
-            });
+                            if (searchCategory.getCatgName().toLowerCase().indexOf(newValue.toLowerCase()) != -1) {
+                                return true;
+                            } else
+                                return false;
 
-            SortedList<CategoryModel> sorted = new SortedList<>(filterCatg);
-            sorted.comparatorProperty().bind(tableCategory.comparatorProperty());
-            tableCategory.setItems(sorted);
+                        });
+                    });
 
-        } catch (Exception e) {
-            alertMessage.showErrorMessage(stakePane, "Load data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-        }
+                    SortedList<CategoryModel> sorted = new SortedList<>(filterCatg);
+                    sorted.comparatorProperty().bind(tableCategory.comparatorProperty());
+                    tableCategory.setItems(sorted);
+
+                } catch (Exception e) {
+                    alertMessage.showErrorMessage(stakePane, "Load data", "Error: " + e.getMessage(), 4,
+                            Pos.BOTTOM_RIGHT);
+                }
+            }
+        });
     }
 
     private void ClearData() {
         txtcatgId.setText("");
         txtcatgName.setText("");
+    }
+
+    @FXML
+    private void closeForm() {
+        manageBookController.showMainMenuBooks();
     }
 
     @FXML
@@ -242,6 +260,7 @@ public class BookCategoryController implements Initializable {
         });
         return btcancel;
     }
+
 
     // private JFXButton buttonOK() {
     // JFXButton btok = new JFXButton("OK");

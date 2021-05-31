@@ -28,6 +28,9 @@
                   <AnchorPane prefHeight="563.0" prefWidth="815.0">
                      <children>
                         <TableView fx:id="tableMember" layoutX="9.0" layoutY="106.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="443.0" prefWidth="1150.0" style="-fx-background-color: transparent;" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="106.0">
+                          <placeholder>
+                              <Label text="ບໍ່ມີຂໍ້ມູນ"/>
+                           </placeholder>
                            <columns>
                               <TableColumn fx:id="id" prefWidth="97.0" text="ລະຫັົດນັກສຶກສາ" />
                               <TableColumn fx:id="name" prefWidth="191.0" text="ຊື່ສະມາຊີກ" />

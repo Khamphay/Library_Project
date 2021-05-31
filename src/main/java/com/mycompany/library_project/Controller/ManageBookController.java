@@ -1,12 +1,17 @@
 package com.mycompany.library_project.Controller;
 
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import com.mycompany.library_project.App;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
+import com.mycompany.library_project.Model.BookLostModel;
+import com.mycompany.library_project.Model.ListBookModel;
 import com.mycompany.library_project.config.*;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
@@ -19,6 +24,9 @@ public class ManageBookController implements Initializable {
 
     private AlertMessage alertMessage = new AlertMessage();
     public static BorderPane mainBorder = null;
+    private BookLostModel booklost = null;
+    private ResultSet rs = null;
+    private ListBookModel listbook = null;
 
     @FXML
     private Text txtType, txtCategory, txtBook, txtBookLost, txtTableLog;
@@ -31,6 +39,26 @@ public class ManageBookController implements Initializable {
 
     public void showMainMenuBooks() {
         bpManageBook.setCenter(scrollMenu);
+    }
+
+    private void showBookLostList() {
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    int number = 1;
+                    booklost = new BookLostModel();
+                    rs = booklost.findAll();
+                    while (rs.next()) {
+                        // listbook=new ListBookModel(number, rs.getString(), );
+                        number++;
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @FXML

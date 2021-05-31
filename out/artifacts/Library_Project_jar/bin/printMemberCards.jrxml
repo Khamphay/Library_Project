@@ -3,6 +3,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="printMemberCard" columnCount="2" pageWidth="595" pageHeight="842" columnWidth="276" columnSpacing="2" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8575e9ce-8ed0-4c73-9d46-c3dbde6cb40c">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<parameter name="logo" class="Object"/>
 	<queryString language="SQL">
 		<![CDATA[select * from tbmember]]>
 	</queryString>
@@ -89,7 +90,7 @@
 				</componentElement>
 				<image>
 					<reportElement x="1" y="2" width="39" height="40" uuid="6b84513a-87db-466e-adeb-cf2b414043a7"/>
-					<imageExpression><![CDATA["D:/Information4cs2_1/Final_Project/Library_Project/src/main/resources/com/mycompany/library_project/Icon/Logo_FNS.png"]]></imageExpression>
+					<imageExpression><![CDATA[$V{$P{logo}}.byteValue()]]></imageExpression>
 				</image>
 				<staticText>
 					<reportElement x="40" y="8" width="130" height="15" uuid="bf654e56-62ae-43f7-a7bb-9677b6553046">

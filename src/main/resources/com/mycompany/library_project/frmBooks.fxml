@@ -58,7 +58,10 @@
                                  </image>
                               </ImageView>
                               <TableView fx:id="tableBook" editable="true" layoutX="25.0" layoutY="153.0" prefHeight="472.0" prefWidth="1405.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="153.0">
-                                <columns>
+                                <placeholder>
+                                    <Label text="ບໍ່ມີຂໍ້ມູນ"/>
+                                 </placeholder>
+                                 <columns>
                                   <TableColumn fx:id="bookid" prefWidth="75.0" text="ລະຫັດປຶ້ມ" />
                                   <TableColumn fx:id="bookname" prefWidth="204.0" text="ຊື່ປຶ້ມ" />
                                     <TableColumn fx:id="bookisbn" prefWidth="171.0" text="ISBN" />

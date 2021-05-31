@@ -36,6 +36,7 @@ public class ShowRentSendController implements Initializable {
     private ObservableList<ShowRentSendModel> data = null;
     private ResultSet rs = null;
     private FilteredList<ShowRentSendModel> filterShow = null;
+    private MyDate mydate = new MyDate();
 
     public void initConstructor(HomeController homeController) {
         this.homeController = homeController;
@@ -114,7 +115,7 @@ public class ShowRentSendController implements Initializable {
         addButtonToTable();
     }
 
-    private void showAllData() {
+    private void showData() {
         Platform.runLater(new Runnable() {
 
             @Override
@@ -123,13 +124,31 @@ public class ShowRentSendController implements Initializable {
                 try {
                     showbookModel = new ShowRentSendModel();
                     data = FXCollections.observableArrayList();
-                    rs = showbookModel.findAll();
+
+                    // Todo: Check the type of data what to show
+                    if (rdbShowRent.isSelected())
+                        rs = showbookModel.findByRent("ກຳລັງຢືມ");
+                    else if (rdbSend.isSelected())
+                        rs = showbookModel.findBySend("ສົ່ງແລ້ວ");
+                    else if (rdbShowOutOfRent.isSelected())
+                        rs = showbookModel.findByRentOutOfDate(Date.valueOf(LocalDate.now()), "ກຳລັງຢືມ");
+                    else
+                        rs = showbookModel.findAll();
+
                     while (rs.next()) {
+                        String outdate = "";
+                        if (rs.getString("book_status").equals("ກຳລັງຢືມ")) {
+                            int outday = mydate.cancalarDate(rs.getDate("date_send").toLocalDate());
+                            if (outday > 0) {
+                                outdate = "ປຶ້ມຫົວນີ້ຢືມກາຍກຳນົດ " + outday + " ມື້";
+                            }
+                        }
+
                         data.add(new ShowRentSendModel(rs.getString("rent_id"), rs.getString("barcode"),
                                 rs.getString("book_name"), rs.getString("catg_name"), rs.getString("type_name"),
                                 rs.getString("table_log_id"), rs.getDate("date_rent"), rs.getDate("date_send"),
                                 rs.getString("book_status"), rs.getString("member_id"),
-                                rs.getString("full_name") + " " + rs.getString("sur_name"), ""));
+                                rs.getString("full_name") + " " + rs.getString("sur_name"), outdate));
                     }
                     /*
                      * tableShow.setItems(data); //Todo: if you don't filter to Search data bellow:
@@ -165,16 +184,16 @@ public class ShowRentSendController implements Initializable {
 
     private void initEvents() {
         rdbShowAll.setOnAction(event -> {
-
+            showData();
         });
         rdbShowOutOfRent.setOnAction(event -> {
-            searchData();
+            showData();
         });
         rdbShowRent.setOnAction(event -> {
-            searchData();
+            showData();
         });
         rdbSend.setOnAction(event -> {
-            searchData();
+            showData();
         });
 
         btClose.setOnAction(new EventHandler<ActionEvent>() {
@@ -186,54 +205,32 @@ public class ShowRentSendController implements Initializable {
         });
     }
 
-    private void searchData() {
-        try {
-            Platform.runLater(new Runnable() {
-
-                @Override
-                public void run() {
-                    String newValue = txtSearch.getText();
-                    filterShow.setPredicate(book -> {
-                        if (newValue.isEmpty())
-                            return true;
-                        if (book.getBarcode().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                                || book.getBookName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                                || book.getCatg().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                                || book.getType().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                                || book.getMemberId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                                || book.getMemberName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                                || book.getStatus().toLowerCase().indexOf(newValue.toLowerCase()) != -1)
-                            if (rdbShowAll.isSelected()) {
-                                return true;
-                            } else if (rdbShowRent.isSelected()) {
-                                if (book.getStatus().toLowerCase().equals("ກຳລັງຢືມ"))
-                                    return true;
-                                else
-                                    return false;
-                            } else if (rdbSend.isSelected()) {
-                                if (book.getStatus().toLowerCase().equals("ສົ່ງແລ້ວ"))
-                                    return true;
-                                else
-                                    return false;
-                            } else if (rdbShowOutOfRent.isSelected()) {
-                                if (LocalDate.now().compareTo(book.getSendDate().toLocalDate()) > 0
-                                        && book.getStatus().toLowerCase().equals("ກຳລັງຢືມ"))
-                                    return true;
-                                else
-                                    return false;
-                            } else
-                                return false;
-                        else
-                            return false;
-                    });
-
-                }
-
-            });
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-    }
+    /*
+     * //Todo: Use Search Data private void searchData() { try {
+     * Platform.runLater(new Runnable() {
+     * 
+     * @Override public void run() { String newValue = txtSearch.getText();
+     * filterShow.setPredicate(book -> { if (newValue.isEmpty()) return true; if
+     * (book.getBarcode().toLowerCase().indexOf(newValue.toLowerCase()) != -1 ||
+     * book.getBookName().toLowerCase().indexOf(newValue.toLowerCase()) != -1 ||
+     * book.getCatg().toLowerCase().indexOf(newValue.toLowerCase()) != -1 ||
+     * book.getType().toLowerCase().indexOf(newValue.toLowerCase()) != -1 ||
+     * book.getMemberId().toLowerCase().indexOf(newValue.toLowerCase()) != -1 ||
+     * book.getMemberName().toLowerCase().indexOf(newValue.toLowerCase()) != -1 ||
+     * book.getStatus().toLowerCase().indexOf(newValue.toLowerCase()) != -1) if
+     * (rdbShowAll.isSelected()) { return true; } else if (rdbShowRent.isSelected())
+     * { if (book.getStatus().toLowerCase().equals("ກຳລັງຢືມ")) return true; else
+     * return false; } else if (rdbSend.isSelected()) { if
+     * (book.getStatus().toLowerCase().equals("ສົ່ງແລ້ວ")) return true; else return
+     * false; } else if (rdbShowOutOfRent.isSelected()) { if
+     * (LocalDate.now().compareTo(book.getSendDate().toLocalDate()) > 0 &&
+     * book.getStatus().toLowerCase().equals("ກຳລັງຢືມ")) return true; else return
+     * false; } else return false; else return false; });
+     * 
+     * }
+     * 
+     * }); } catch (Exception e) { e.printStackTrace(); } }
+     */
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -246,7 +243,7 @@ public class ShowRentSendController implements Initializable {
         rdbShowAll.setSelected(true);
 
         initTable();
-        showAllData();
+        showData();
         initEvents();
     }
 

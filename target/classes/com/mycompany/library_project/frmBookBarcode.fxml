@@ -48,7 +48,10 @@
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
                   <TableView fx:id="tableBarcode" layoutX="29.0" layoutY="31.0" prefHeight="494.0" prefWidth="569.0" tableMenuButtonVisible="true">
-                    <columns>
+                    <placeholder>
+                        <Label text="ບໍ່ມີຂໍ້ມູນ"/>
+                     </placeholder>
+                     <columns>
                       <TableColumn fx:id="colBarcode" maxWidth="3500.0" prefWidth="141.0" text="ບາໂຄດ (Barcode)" />
                         <TableColumn fx:id="colTableLog" maxWidth="2000.0" text="ລ໋ອກຕູ້" />
                       <TableColumn fx:id="colStatus" maxWidth="6000.0" prefWidth="300.0" text="ສະຖານະ" />

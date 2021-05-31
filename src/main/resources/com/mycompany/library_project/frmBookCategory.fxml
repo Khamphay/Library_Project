@@ -76,6 +76,9 @@
                                        </padding>
                                     </JFXButton>
                                     <TableView fx:id="tableCategory" layoutX="14.0" layoutY="154.0" onMouseClicked="#selectTable" prefHeight="359.0" prefWidth="607.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="31.0" AnchorPane.topAnchor="154.0">
+                                       <placeholder>
+                                          <Label text="ບໍ່ມີຂໍ້ມູນ"/>
+                                       </placeholder>
                                        <columns>
                                           <TableColumn fx:id="colCatgId" maxWidth="3000.0" prefWidth="193.0" text="ລະຫັດໝວດ" />
                                           <TableColumn fx:id="colCatgName" prefWidth="300.0" text="ໝວດປຶ້ມ" />

@@ -13,6 +13,7 @@ public class MemberModel implements DataAccessObject {
     private ResultSet rs = null;
     private String query = "";
 
+    private int number;
     private String memberId;
     private String oldmemberId;
     private String firstName;
@@ -32,6 +33,18 @@ public class MemberModel implements DataAccessObject {
 
     public MemberModel() {
 
+    }
+
+    public MemberModel(int number, String memberId, String firstName, String sureName, String study_year, String detp,
+            Date dateRegister, Date dateRegisterEnd) {
+        this.number = number;
+        this.memberId = memberId;
+        this.firstName = firstName;
+        this.sureName = sureName;
+        this.study_year = study_year;
+        this.detp = detp;
+        this.dateRegister = dateRegister;
+        this.dateRegisterEnd = dateRegisterEnd;
     }
 
     public MemberModel(String memberId, String firstName, String sureName, String gender, String tel, String village,
@@ -75,6 +88,15 @@ public class MemberModel implements DataAccessObject {
         this.dateRegister = dateRegister;
         this.dateRegisterEnd = dateRegisterEnd;
         this.dateExit = dateExit;
+    }
+
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public String getMemberId() {
@@ -208,7 +230,7 @@ public class MemberModel implements DataAccessObject {
     @Override
     public ResultSet findAll() throws SQLException {
         try {
-            query = "call  member_Show();";
+            query = "select * from vwshowmember;";
             rs = con.createStatement().executeQuery(query);
             return rs;
         } catch (Exception e) {
@@ -220,8 +242,10 @@ public class MemberModel implements DataAccessObject {
     @Override
     public ResultSet findById(String id) throws SQLException {
         try {
-            query = "call member_ShowById('" + id + "');";
-            rs = con.createStatement().executeQuery(query);
+            query = "select * from vwshowmember where member_id=?";
+            ps = con.prepareStatement(query);
+            ps.setString(1, id);
+            rs = ps.executeQuery();
             return rs;
         } catch (Exception e) {
             return null;
@@ -242,6 +266,18 @@ public class MemberModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public ResultSet findMemberEndOfDate(Date date) {
+        try {
+            query = "select * from vwshowmember where date_end<?";
+            ps = con.prepareStatement(query);
+            ps.setDate(1, date);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
             return null;
         }
     }

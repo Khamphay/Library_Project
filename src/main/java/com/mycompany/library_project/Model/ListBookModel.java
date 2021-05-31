@@ -13,8 +13,29 @@ public class ListBookModel {
     private Date sendDate;
     private String status;
     private int dayOut;
+
+    private String category;
+    private String type;
+    private String tablelog;
+    private String logid;
+
     public ListBookModel() {
     }
+
+    public ListBookModel(int number, String barcode, String bookName, String status, String category, String type,
+            String tablelog, String logid) {
+        this.number = number;
+        this.barcode = barcode;
+        this.bookName = bookName;
+        this.status = status;
+        this.category = category;
+        this.type = type;
+        this.tablelog = tablelog;
+        this.logid = logid;
+    }
+
+
+
     public ListBookModel(int number, String rentId, String barcode, String bookName, String memberId, String memberName,
             Date rentDate, Date sendDate, String status, int dayOut) {
         this.number = number;
@@ -28,6 +49,7 @@ public class ListBookModel {
         this.status = status;
         this.dayOut = dayOut;
     }
+
     public int getNumber() {
         return number;
     }
@@ -85,9 +107,40 @@ public class ListBookModel {
     public int getDayOut() {
         return dayOut;
     }
+
     public void setDayOut(int dayOut) {
         this.dayOut = dayOut;
     }
 
-    
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getTablelog() {
+        return tablelog;
+    }
+
+    public void setTablelog(String tablelog) {
+        this.tablelog = tablelog;
+    }
+
+    public String getLogid() {
+        return logid;
+    }
+
+    public void setLogid(String logid) {
+        this.logid = logid;
+    }
 }

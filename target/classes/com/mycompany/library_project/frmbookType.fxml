@@ -68,6 +68,9 @@
                                        </image>
                                     </ImageView>
                                     <TableView fx:id="tableType" layoutX="22.0" layoutY="148.0" onMouseClicked="#selectTableType" prefHeight="335.0" prefWidth="534.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="34.0" AnchorPane.topAnchor="148.0">
+                                       <placeholder>
+                                          <Label text="ບໍ່ມີຂໍ້ມູນ"/>
+                                       </placeholder>
                                        <columns>
                                           <TableColumn fx:id="colId" maxWidth="3000.0" prefWidth="146.0" text="ລະຫັດປະເພດ" />
                                           <TableColumn fx:id="colName" prefWidth="301.0" text="ປະເພດປຶ້ມ" />

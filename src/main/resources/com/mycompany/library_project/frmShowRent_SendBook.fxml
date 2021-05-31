@@ -50,7 +50,10 @@
           <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
                   <TableView fx:id="tableShow" layoutX="26.0" layoutY="122.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="1265.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="122.0">
-                    <columns>
+                    <placeholder>
+                        <Label text="ບໍ່ມີຂໍ້ມູນ"/>
+                     </placeholder>
+                     <columns>
                       <TableColumn fx:id="colRentId" prefWidth="124.0" text="ລະຫັດຢືມປຶ້ມ" />
                       <TableColumn fx:id="colBarcode" prefWidth="127.0" text="ລະຫັດ Barcode" />
                         <TableColumn fx:id="colBookName" prefWidth="260.0" text="ຊື່ປຶ້ມ" />
@@ -73,12 +76,12 @@
                               <Color red="0.057261209934949875" green="0.09467186778783798" blue="0.6184210777282715" />
                            </selectedColor>
                         </JFXRadioButton>
-                        <JFXRadioButton fx:id="rdbShowRent" layoutX="221.0" layoutY="32.0" styleClass="BoonBaan-size-14-Regular" text="ສະແດງຂໍ້ມູນທີ່ກຳລັງຢືມ">
+                        <JFXRadioButton fx:id="rdbShowRent" layoutX="221.0" layoutY="32.0" styleClass="BoonBaan-size-14-Regular" text="ສະແດງຂໍ້ມູນປຶ້ມທີ່ກຳລັງຢືມ">
                            <selectedColor>
                               <Color red="0.057261209934949875" green="0.09467186778783798" blue="0.6184210777282715" />
                            </selectedColor>
                         </JFXRadioButton>
-                        <JFXRadioButton fx:id="rdbShowOutOfRent" layoutX="426.0" layoutY="33.0" styleClass="BoonBaan-size-14-Regular" text="ສະແດງຂໍ້ມູນການຢືມກາຍກຳນົດ">
+                        <JFXRadioButton fx:id="rdbShowOutOfRent" layoutX="426.0" layoutY="33.0" styleClass="BoonBaan-size-14-Regular" text="ສະແດງຂໍ້ມູນປຶ້ມທີ່ຢືມກາຍກຳນົດ">
                            <selectedColor>
                               <Color red="0.057261209934949875" green="0.09467186778783798" blue="0.6184210777282715" />
                            </selectedColor>
@@ -94,7 +97,7 @@
                            </image>
                         </ImageView>
                         <Separator layoutX="995.0" layoutY="30.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="0.0" AnchorPane.rightAnchor="264.0" />
-                        <JFXRadioButton fx:id="rdbSend" layoutX="663.0" layoutY="34.0" styleClass="BoonBaan-size-14-Regular" text="ສະແດງຂໍ້ມູນສົ່ງປຶ້ມ">
+                        <JFXRadioButton fx:id="rdbSend" layoutX="663.0" layoutY="34.0" styleClass="BoonBaan-size-14-Regular" text="ສະແດງຂໍ້ມູນປຶ້ມທີ່ສົ່ງແລ້ວ">
                            <selectedColor>
                               <Color red="0.057261209934949875" green="0.09467186778783798" blue="0.6184210777282715" />
                            </selectedColor>

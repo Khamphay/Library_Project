@@ -381,7 +381,7 @@ public class HomeController implements Initializable {
                                 rs.getString("book_name"), rs.getString("member_id"),
                                 rs.getString("full_name") + " " + rs.getString("sur_name"), rs.getDate("date_rent"),
                                 rs.getDate("date_send"), rs.getString("book_status"), outdate);
-                        BookItemController item = loader.getController();
+                        BookListController item = loader.getController();
                         item.initConstructor(listbook);
 
                         pnItems.getChildren().addAll(node);

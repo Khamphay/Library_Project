@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
+
+<HBox fx:id="hbox" alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="1308.0" styleClass="vbox" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.List.MemberListController">
+   <cursor>
+      <Cursor fx:constant="DEFAULT" />
+   </cursor>
+   <children>
+      <Text fx:id="number" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" text="ລຳດັບ" textAlignment="CENTER" wrappingWidth="80.79999923706055">
+         <HBox.margin>
+            <Insets left="4.0" />
+         </HBox.margin>
+      </Text>
+      <Text fx:id="memberid" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" text="ລະຫັດສະມາຊິດ" wrappingWidth="151.79999923706055">
+         <HBox.margin>
+            <Insets left="4.0" />
+         </HBox.margin>
+      </Text>
+      <Text fx:id="firstName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" text="ຊື່ສະມາຊິດ" wrappingWidth="188.79999923706055" />
+      <Text fx:id="lastName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" text="ນາມສະກຸນ" wrappingWidth="189.79999923706055" />
+      <Text fx:id="studyYear" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" text="ຮຽນປີທີ" wrappingWidth="211.79999923706055" />
+      <Text fx:id="depName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" text="ພາກວິຊາ" wrappingWidth="202.79999923706055" />
+      <Text fx:id="regisDate" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" text="ວັນທີລົງທະບຽນ" textAlignment="CENTER" wrappingWidth="126.79999923706055" />
+      <Text fx:id="endDate" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" text="ວັນທີໝົດອາຍຸ" textAlignment="CENTER" wrappingWidth="126.79999923706055" />
+   </children>
+</HBox>

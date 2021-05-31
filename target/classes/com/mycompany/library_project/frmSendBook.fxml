@@ -28,7 +28,10 @@
                         <AnchorPane maxWidth="-Infinity" prefHeight="626.0" prefWidth="1249.0">
                            <children>
                               <TableView fx:id="tableSendBooks" layoutX="12.0" layoutY="249.0" prefHeight="367.0" prefWidth="1222.0" style="-fx-background-color: #f3f3f3;" styleClass="table" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="249.0">
-                                <columns>
+                                <placeholder>
+                                    <Label text="ບໍ່ມີຂໍ້ມູນ"/>
+                                 </placeholder>
+                                 <columns>
                                   <TableColumn fx:id="colBarcode" prefWidth="109.0" styleClass="tablecolumn" text="ລະຫັດປຶ້ມ" />
                                   <TableColumn fx:id="colBookName" prefWidth="189.0" styleClass="tablecolumn" text="ຊື່ປຶ້ມ" />
                                     <TableColumn fx:id="colCatg" prefWidth="164.0" styleClass="tablecolumn" text="ໝວດປຶ້ມ" />

@@ -94,6 +94,9 @@
                                        </image>
                                     </ImageView>
                                     <TableView fx:id="tableDepartment" layoutX="13.0" layoutY="141.0" prefHeight="335.0" prefWidth="573.0" AnchorPane.bottomAnchor="25.0" AnchorPane.topAnchor="141.0">
+                                       <placeholder>
+                                          <Label text="ບໍ່ມີຂໍ້ມູນ"/>
+                                       </placeholder>
                                        <columns>
                                           <TableColumn fx:id="colId" maxWidth="2500.0" prefWidth="111.0" text="ລະຫັດ" />
                                           <TableColumn fx:id="colName" prefWidth="240.0" text="ຊື່ພາກວິຊາ" />

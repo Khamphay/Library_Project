@@ -87,6 +87,9 @@
                               <TextArea fx:id="txtLog" editable="false" layoutX="230.0" layoutY="54.0" prefHeight="97.0" prefWidth="270.0" promptText="ລ໋ອກຕູ້" />
                               <Separator layoutX="332.0" layoutY="163.0" orientation="VERTICAL" prefHeight="22.0" prefWidth="6.0" style="-fx-border-radius: 1em; -fx-background-radius: 1em;" />
                               <TreeTableView fx:id="tableLog" layoutX="17.0" layoutY="232.0" minHeight="-Infinity" prefHeight="327.0" prefWidth="482.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="35.0" AnchorPane.topAnchor="232.0">
+                                 <placeholder>
+                                    <Label text="ບໍ່ມີຂໍ້ມູນ"/>
+                                 </placeholder>
                                  <columns>
                                     <TreeTableColumn fx:id="colid" prefWidth="136.0" text="ລະຫັດຕູ້ (ເລກຕູ້)" />
                                     <TreeTableColumn fx:id="colqty" prefWidth="188.0" text="ຈຳນວນລ໋ອກຕູ້" />

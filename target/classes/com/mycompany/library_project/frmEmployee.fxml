@@ -25,6 +25,9 @@
                   <AnchorPane prefHeight="562.0" prefWidth="1068.0">
                      <children>
                         <TableView fx:id="tableEmployee" layoutX="35.0" layoutY="69.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="943.0" style="-fx-background-color: transparent;" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="325.0" AnchorPane.topAnchor="69.0">
+                           <placeholder>
+                              <Label text="ບໍ່ມີຂໍ້ມູນ"/>
+                           </placeholder>
                            <columns>
                               <TableColumn fx:id="colId" maxWidth="3000.0" text="ລະຫັດ" />
                               <TableColumn fx:id="colFname" prefWidth="223.0" text="ຊື່ພະນັກງານ" />

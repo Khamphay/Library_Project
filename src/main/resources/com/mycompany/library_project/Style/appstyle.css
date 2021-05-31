@@ -106,6 +106,25 @@
     -fx-background-color:#9395EB;
 }
 
+/*-------------------HBox -----------------*/
+.hbox{
+    -fx-border-width: 0px 0px 0px 0px;
+    -fx-border-color: #F0F0F5;
+}
+
+.hbox:hover{
+    /* -fx-border-width: 0px 0px 0px 2px; */
+    /* -fx-border-color:#027D00; */
+    -fx-background-color: #a3bde7;
+}
+
+.hbox:passed{
+    -fx-border-width: 0px 0px 0px 2px;
+    -fx-border-color:#027D00;
+    -fx-background-color: #5354bd;
+}
+
+
 .text{
     -fx-font-smoothing-type:gray;
 }
@@ -238,24 +257,6 @@
 .contex-menu:hover{
     -fx-background-color: #22274E;
     -fx-text-fill:#fff;
-}
-
-/*-------------------HBox -----------------*/
-.hbox{
-    -fx-border-width: 0px 0px 0px 0px;
-    -fx-border-color: #F0F0F5;
-}
-
-.hbox:hover{
-    -fx-border-width: 0px 0px 0px 2px;
-    -fx-border-color:#027D00;
-    -fx-background-color: #a3bde7;
-}
-
-.hbox:passed{
-    -fx-border-width: 0px 0px 0px 2px;
-    -fx-border-color:#027D00;
-    -fx-background-color: #5354bd;
 }
 
 /*-------------------Combobox -----------------*/

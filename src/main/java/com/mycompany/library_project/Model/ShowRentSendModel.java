@@ -158,7 +158,7 @@ public class ShowRentSendModel implements DataAccessObject {
     }
 
     public ResultSet findByRentOutOfDate(Date date, String status) throws SQLException {
-        sql = "select * from showRent_SendBook Where date_send=? and book_status=?;";
+        sql = "select * from showRent_SendBook Where date_send<? and book_status=?;";
         ps = con.prepareStatement(sql);
         ps.setDate(1, date);
         ps.setString(2, status);

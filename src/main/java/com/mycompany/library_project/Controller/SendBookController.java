@@ -1,10 +1,13 @@
 package com.mycompany.library_project.Controller;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
@@ -12,13 +15,7 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.format.TextStyle;
-import java.time.temporal.ChronoUnit;
-import java.util.Locale;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -32,10 +29,10 @@ public class SendBookController implements Initializable {
     private RentBookModel sendBook = new RentBookModel();
     private AlertMessage alertMessage = new AlertMessage();
     private BookDetailModel book = new BookDetailModel();
-    private DateFormat dateFormater = new DateFormat();
+    private MyDate mydate = new MyDate();
     private ResultSet rs = null;
-    private DialogMessage dialog = null;
-    private JFXButton[] buttons = { buttonOK() };
+    // private DialogMessage dialog = null;
+    // private JFXButton[] buttons = { buttonOK() };
     String rent_id = "";
 
     public void initConstructor(HomeController homeController) {
@@ -82,6 +79,45 @@ public class SendBookController implements Initializable {
         colMemberName.setCellValueFactory(new PropertyValueFactory<>("member"));
         colDateRent.setCellValueFactory(new PropertyValueFactory<>("rentDate"));
         colDateSend.setCellValueFactory(new PropertyValueFactory<>("sendDate"));
+
+        // Todo: Add column number
+        final TableColumn<RentBookModel, RentBookModel> colNumber = new TableColumn<RentBookModel, RentBookModel>();
+        colNumber.setMinWidth(50);
+        colNumber.setMaxWidth(120);
+        colNumber.setPrefWidth(60);
+        colNumber.setCellValueFactory(
+                new Callback<CellDataFeatures<RentBookModel, RentBookModel>, ObservableValue<RentBookModel>>() {
+
+                    @Override
+                    public ObservableValue<RentBookModel> call(CellDataFeatures<RentBookModel, RentBookModel> param) {
+                        return new ReadOnlyObjectWrapper<RentBookModel>(param.getValue());
+                    }
+                });
+        colNumber.setCellFactory(
+                new Callback<TableColumn<RentBookModel, RentBookModel>, TableCell<RentBookModel, RentBookModel>>() {
+
+                    @Override
+                    public TableCell<RentBookModel, RentBookModel> call(
+                            TableColumn<RentBookModel, RentBookModel> param) {
+                        return new TableCell<RentBookModel, RentBookModel>() {
+                            @Override
+                            protected void updateItem(RentBookModel item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty)
+                                    setText("");
+                                else if (this.getTableRow() != null && item != null)
+                                    setText(Integer.toString(this.getTableRow().getIndex() + 1));
+
+                            }
+                        };
+                    }
+
+                });
+        colNumber.setSortable(true);
+        tableSendBooks.getColumns().add(0, colNumber);
+
+        // Todo: Add column Button
+        addButtonToTable();
     }
 
     private void initEvents() {
@@ -89,7 +125,7 @@ public class SendBookController implements Initializable {
             if (key.getCode() == KeyCode.ENTER) {
                 try {
                     if (txtBarcode.getText().toString() != "") {
-                        int outdate = 0;
+
                         rs = sendBook.getSendBook(txtBarcode.getText(), "ກຳລັງຢືມ");
                         if (rs.next()) {
                             rent_id = rs.getString("rent_id");
@@ -99,21 +135,9 @@ public class SendBookController implements Initializable {
                             txtMemberName.setText(rs.getString("full_name") + " " + rs.getString("sur_name"));
                             dateRent.setValue(rs.getDate("date_rent").toLocalDate());
                             dateSend.setValue(rs.getDate("date_send").toLocalDate());
-                            if (LocalDate.now().compareTo(rs.getDate("date_send").toLocalDate()) > 0) {
-                                long day = ChronoUnit.DAYS.between(rs.getDate("date_send").toLocalDate(),
-                                        LocalDate.now());
-                                outdate = (int) day;
-                                DayOfWeek day_ow = rs.getDate("date_send").toLocalDate().getDayOfWeek();
 
-                                for (int i = 1; i <= day; i++) {
-                                    if (day_ow.getDisplayName(TextStyle.FULL, Locale.getDefault()).equals("Sunday")
-                                            || day_ow.getDisplayName(TextStyle.FULL, Locale.getDefault())
-                                                    .equals("Saturday")) {
-                                        outdate = outdate - 1;
-                                    }
-                                    day_ow = day_ow.plus(1);
-                                }
-                            }
+                            // Todo: Cancalar Date
+                            int outdate = mydate.cancalarDate(rs.getDate("date_send").toLocalDate());
                             txtOutDate.setText(Integer.toString(outdate) + " ມື້");
                             txtPrice.setText("0 ກີບ");
                             txtAllPrice.setText("0 ກີບ");
@@ -183,22 +207,21 @@ public class SendBookController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        dateRent = dateFormater.formateDatePicker(dateRent);
-        dateSend = dateFormater.formateDatePicker(dateSend);
+        dateRent = mydate.formateDatePicker(dateRent);
+        dateSend = mydate.formateDatePicker(dateSend);
 
         initTable();
-        addButtonToTable();
         initEvents();
     }
 
-    private JFXButton buttonOK() {
-        JFXButton btOk = new JFXButton("OK");
-        btOk.setStyle(Style.buttonDialogStyle);
-        btOk.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btOk;
-    }
+    // private JFXButton buttonOK() {
+    // JFXButton btOk = new JFXButton("OK");
+    // btOk.setStyle(Style.buttonDialogStyle);
+    // btOk.setOnAction(e -> {
+    // dialog.closeDialog();
+    // });
+    // return btOk;
+    // }
 
     private void addButtonToTable() {
         TableColumn<RentBookModel, Void> colAction = new TableColumn<>("Action");

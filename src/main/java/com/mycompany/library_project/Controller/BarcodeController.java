@@ -1,12 +1,8 @@
 package com.mycompany.library_project.Controller;
 
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.sql.*;
+import java.util.*;
 
 import com.jfoenix.controls.*;
 import com.mycompany.library_project.Style;
@@ -16,11 +12,14 @@ import com.mycompany.library_project.Report.CreateReport;
 import com.mycompany.library_project.config.CreateLogFile;
 
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
@@ -166,6 +165,46 @@ public class BarcodeController implements Initializable {
         colBarcode.setCellValueFactory(new PropertyValueFactory<>("barcode"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colTableLog.setCellValueFactory(new PropertyValueFactory<>("tableLogId"));
+
+        // Todo: Add column number
+        final TableColumn<BookDetailModel, BookDetailModel> colNumber = new TableColumn<BookDetailModel, BookDetailModel>(
+                "ລຳດັບ");
+        colNumber.setMinWidth(50);
+        colNumber.setMaxWidth(120);
+        colNumber.setPrefWidth(60);
+        colNumber.setCellValueFactory(
+                new Callback<CellDataFeatures<BookDetailModel, BookDetailModel>, ObservableValue<BookDetailModel>>() {
+
+                    @Override
+                    public ObservableValue<BookDetailModel> call(
+                            CellDataFeatures<BookDetailModel, BookDetailModel> param) {
+                        return new ReadOnlyObjectWrapper<BookDetailModel>(param.getValue());
+                    }
+
+                });
+        colNumber.setCellFactory(
+                new Callback<TableColumn<BookDetailModel, BookDetailModel>, TableCell<BookDetailModel, BookDetailModel>>() {
+
+                    @Override
+                    public TableCell<BookDetailModel, BookDetailModel> call(
+                            TableColumn<BookDetailModel, BookDetailModel> param) {
+                        return new TableCell<BookDetailModel, BookDetailModel>() {
+                            @Override
+                            protected void updateItem(BookDetailModel item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty)
+                                    setText("");
+                                else if (this.getTableRow() != null && item != null)
+                                    setText(Integer.toString(this.getTableRow().getIndex() + 1));
+                            }
+                        };
+                    }
+
+                });
+        colNumber.setSortable(false);
+        tableBarcode.getColumns().add(0, colNumber);
+
+        // Todo: Add column Button
         addButtonToTable();
 
         tableBarcode.setOnMouseClicked(event -> {

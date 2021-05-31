@@ -16,13 +16,13 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="632.0" prefWidth="1305.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.AuthorController">
+<BorderPane prefHeight="672.0" prefWidth="1320.0" style="-fx-border-color: #101D3D;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.AuthorController">
    <center>
       <StackPane fx:id="stackPane" prefHeight="614.0" prefWidth="1305.0">
          <children>
             <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="617.0" prefWidth="1305.0">
                <content>
-                  <AnchorPane prefHeight="580.0" prefWidth="1303.0">
+                  <AnchorPane prefHeight="596.0" prefWidth="1295.0">
                      <children>
                         <TableView fx:id="tableAuthor" layoutX="35.0" layoutY="69.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="943.0" style="-fx-background-color: transparent;" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="325.0" AnchorPane.topAnchor="69.0">
                            <columns>
@@ -130,7 +130,7 @@
       </StackPane>
    </center>
    <top>
-      <AnchorPane prefHeight="34.0" prefWidth="1158.0" style="-fx-background-color: #101D3D;" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="anchorPaneHeader" prefHeight="34.0" prefWidth="1158.0" style="-fx-background-color: #101D3D;" BorderPane.alignment="CENTER">
          <children>
             <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" layoutX="1127.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
                <graphic>

@@ -34,13 +34,12 @@ import java.awt.image.BufferedImage;
 
 public class RegisterController implements Initializable {
 
-    private HomeController homeController = null;
     private MemberController memberController = null;
     private CreateLogFile logfile = new CreateLogFile();
     public MemberModel memberModel = null;
     private DepartmentModel depertment = new DepartmentModel();
     private AlertMessage alertMessage = new AlertMessage();
-    private DateFormat dateFormat = new DateFormat();
+    private MyDate dateFormat = new MyDate();
 
     private BufferedImage resizeImg = null;
     private ByteArrayOutputStream byteStrem = null;
@@ -64,7 +63,6 @@ public class RegisterController implements Initializable {
      * for Refresh table after add and delete
      */
     public void initConstructor1(HomeController homeController) {
-        this.homeController = homeController;
         btClose.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override

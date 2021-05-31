@@ -1,13 +1,15 @@
 package com.mycompany.library_project.Controller;
 
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
+import javafx.collections.transformation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
@@ -46,9 +48,7 @@ public class BookTypeController implements Initializable {
     @FXML
     private TableView<TypeModel> tableType;
     @FXML
-    private TableColumn<TypeModel, String> colId;
-    @FXML
-    private TableColumn<TypeModel, String> colName;
+    private TableColumn<TypeModel, String> colId, colName;
 
     private void ShowData() {
         Platform.runLater(new Runnable() {
@@ -131,6 +131,46 @@ public class BookTypeController implements Initializable {
         }
     }
 
+    private void initTable() {
+        colId.setCellValueFactory(new PropertyValueFactory<>("typeId"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("typeName"));
+
+        // Todo: Add column number of row
+        final TableColumn<TypeModel, TypeModel> colNumber = new TableColumn<TypeModel, TypeModel>("ລຳດັບ");
+        colNumber.setMinWidth(50);
+        colNumber.setPrefWidth(60);
+        colNumber.setMaxWidth(100);
+        colNumber.setCellValueFactory(
+                new Callback<CellDataFeatures<TypeModel, TypeModel>, ObservableValue<TypeModel>>() {
+                    @Override
+                    public ObservableValue<TypeModel> call(CellDataFeatures<TypeModel, TypeModel> type) {
+                        return new ReadOnlyObjectWrapper<TypeModel>(type.getValue());
+                    }
+                });
+
+        colNumber.setCellFactory(new Callback<TableColumn<TypeModel, TypeModel>, TableCell<TypeModel, TypeModel>>() {
+            @Override
+            public TableCell<TypeModel, TypeModel> call(TableColumn<TypeModel, TypeModel> param) {
+                return new TableCell<TypeModel, TypeModel>() {
+                    @Override
+                    protected void updateItem(TypeModel item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (empty)
+                            setText("");
+                        else if (this.getTableRow() != null && item != null)
+                            setText(Integer.toString(this.getTableRow().getIndex() + 1));
+
+                    }
+                };
+            }
+        });
+        colNumber.setSortable(false);
+        tableType.getColumns().add(0, colNumber);
+
+        // Todo: Add column Button
+        addButtonToTable();
+    }
     @FXML
     private void Update(ActionEvent event) throws SQLException {
         try {
@@ -159,9 +199,7 @@ public class BookTypeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        colId.setCellValueFactory(new PropertyValueFactory<>("typeId"));
-        colName.setCellValueFactory(new PropertyValueFactory<>("typeName"));
-        addButtonToTable();
+        initTable();
         ShowData();
     }
 

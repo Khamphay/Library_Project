@@ -11,21 +11,25 @@ import com.mycompany.library_project.Model.AuthorModel;
 import com.mycompany.library_project.config.CreateLogFile;
 
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.*;
 import javafx.collections.*;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class AuthorController implements Initializable {
 
     private ManagePersonalCotroller personalCotroller = null;
+    private AddBookController addBookController = null;
     private AuthorModel author = null;
     private ResultSet rs = null;
     private String gender = "";
@@ -33,13 +37,53 @@ public class AuthorController implements Initializable {
     private DialogMessage dialog = null;
     private ObservableList<AuthorModel> data = null;
     private CreateLogFile logfile = new CreateLogFile();
+    public Stage addAuthor = null;
+    double x, y;
 
     public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
         this.personalCotroller = managePersonalCotroller;
+
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                personalCotroller.showMainMenuPerson();
+            }
+
+        });
+
+    }
+
+    public void initConstructor2(AddBookController addBookController) {
+        this.addBookController = addBookController;
+
+        anchorPaneHeader.setOnMousePressed(event -> {
+            x = event.getSceneX();
+            y = event.getSceneY();
+        });
+
+        anchorPaneHeader.setOnMouseDragged(event -> {
+            addAuthor.setX(event.getScreenX() - x);
+            addAuthor.setY(event.getScreenY() - y);
+        });
+
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                Stage stage = (Stage) stackPane.getScene().getWindow();
+                stage.close();
+            }
+
+        });
+
     }
 
     @FXML
     private StackPane stackPane;
+
+    @FXML
+    private AnchorPane anchorPaneHeader;
 
     @FXML
     private JFXButton btSave, btEdit, btCancel, btClose;
@@ -64,6 +108,45 @@ public class AuthorController implements Initializable {
         colTel.setCellValueFactory(new PropertyValueFactory<>("tel"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colId.setVisible(false);
+
+        // Todo: Add column row number
+        final TableColumn<AuthorModel, AuthorModel> colNumber = new TableColumn<AuthorModel, AuthorModel>("ລຳດັບ");
+        colNumber.setMinWidth(50);
+        colNumber.setMaxWidth(120);
+        colNumber.setPrefWidth(60);
+        colNumber.setCellValueFactory(
+                new Callback<CellDataFeatures<AuthorModel, AuthorModel>, ObservableValue<AuthorModel>>() {
+
+                    @Override
+                    public ObservableValue<AuthorModel> call(CellDataFeatures<AuthorModel, AuthorModel> param) {
+                        return new ReadOnlyObjectWrapper<AuthorModel>(param.getValue());
+                    }
+
+                });
+        colNumber.setCellFactory(
+                new Callback<TableColumn<AuthorModel, AuthorModel>, TableCell<AuthorModel, AuthorModel>>() {
+
+                    @Override
+                    public TableCell<AuthorModel, AuthorModel> call(TableColumn<AuthorModel, AuthorModel> param) {
+                        return new TableCell<AuthorModel, AuthorModel>() {
+                            @Override
+                            protected void updateItem(AuthorModel item, boolean empty) {
+                                if (empty)
+                                    setText("");
+                                else if (this.getTableRow() != null && item != null)
+                                    setText(Integer.toString(this.getTableRow().getIndex() + 1));
+                            }
+                        };
+                    }
+
+                });
+
+        colNumber.setSortable(false);
+        tableAuthor.getColumns().add(0, colNumber);
+
+        // Todo: Add column Button
+        addButtonToTable();
+
     }
 
     private void clearText() {
@@ -91,6 +174,10 @@ public class AuthorController implements Initializable {
                             clearText();
                             alertMessage.showCompletedMessage(stackPane, "Saved", "Saved data successfully.", 4,
                                     Pos.BOTTOM_RIGHT);
+
+                            // Todo: Open From Add Book
+                            if (addBookController != null)
+                                addBookController.fillAuthor();
                         } else {
                             alertMessage.showWarningMessage(stackPane, "Saved", "Cannot save data.", 4,
                                     Pos.BOTTOM_RIGHT);
@@ -122,6 +209,10 @@ public class AuthorController implements Initializable {
                             clearText();
                             alertMessage.showCompletedMessage(stackPane, "Edited", "Edit data successfully.", 4,
                                     Pos.BOTTOM_RIGHT);
+
+                            // Todo: Open From Add Book
+                            if (addBookController != null)
+                                addBookController.fillAuthor();
                         } else {
                             alertMessage.showWarningMessage(stackPane, "Edited", "Can not edit data.", 4,
                                     Pos.BOTTOM_RIGHT);
@@ -143,15 +234,6 @@ public class AuthorController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 clearText();
-            }
-
-        });
-
-        btClose.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                personalCotroller.showMainMenuPerson();
             }
 
         });
@@ -217,7 +299,6 @@ public class AuthorController implements Initializable {
         rdbMale.setSelected(true);
 
         initTable();
-        addButtonToTable();
         showData();
         initEvents();
     }
@@ -286,6 +367,10 @@ public class AuthorController implements Initializable {
                         alertMessage.showCompletedMessage(stackPane, "Deleted", "Delete data successfully.", 4,
                                 Pos.BOTTOM_RIGHT);
                         dialog.closeDialog();
+
+                        // Todo: Open From Add Book
+                        if (addBookController != null)
+                            addBookController.fillAuthor();
                     } else {
                         alertMessage.showWarningMessage(stackPane, "Deleted", "Can not delete data, Please try again.",
                                 4, Pos.BOTTOM_RIGHT);
@@ -326,6 +411,5 @@ public class AuthorController implements Initializable {
         });
         return btcancel;
     }
-
 
 }

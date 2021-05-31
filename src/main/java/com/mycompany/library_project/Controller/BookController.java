@@ -1,14 +1,16 @@
 package com.mycompany.library_project.Controller;
 
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
+import javafx.collections.transformation.*;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
@@ -101,6 +103,7 @@ public class BookController implements Initializable {
             // TODO: handle exception
         }
     }
+
     private void initEvents() {
         btRefresh.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -117,7 +120,6 @@ public class BookController implements Initializable {
             }
 
         });
-
         menuEdit.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -234,6 +236,48 @@ public class BookController implements Initializable {
         tableid.setCellValueFactory(new PropertyValueFactory<>("tableId"));
         bookdetail.setCellValueFactory(new PropertyValueFactory<>("detail"));
         bookid.setVisible(false);
+
+        // Todo: Add column number
+        final TableColumn<BookDetailModel, BookDetailModel> colNumber = new TableColumn<BookDetailModel, BookDetailModel>(
+                "ລຳດັບ");
+        colNumber.setMinWidth(50);
+        colNumber.setMaxWidth(120);
+        colNumber.setPrefWidth(60);
+        colNumber.setCellValueFactory(
+                new Callback<CellDataFeatures<BookDetailModel, BookDetailModel>, ObservableValue<BookDetailModel>>() {
+
+                    @Override
+                    public ObservableValue<BookDetailModel> call(
+                            CellDataFeatures<BookDetailModel, BookDetailModel> param) {
+                        return new ReadOnlyObjectWrapper<BookDetailModel>(param.getValue());
+                    }
+
+                });
+        colNumber.setCellFactory(
+                new Callback<TableColumn<BookDetailModel, BookDetailModel>, TableCell<BookDetailModel, BookDetailModel>>() {
+
+                    @Override
+                    public TableCell<BookDetailModel, BookDetailModel> call(
+                            TableColumn<BookDetailModel, BookDetailModel> param) {
+                        return new TableCell<BookDetailModel, BookDetailModel>() {
+                            @Override
+                            protected void updateItem(BookDetailModel item, boolean empty) {
+                                super.updateItem(item, empty);
+
+                                if (empty)
+                                    setText("");
+                                else if (this.getTableRow() != null && item != null)
+                                    setText(Integer.toString(this.getTableRow().getIndex() + 1));
+                            }
+                        };
+                    }
+
+                });
+        colNumber.setSortable(false);
+        tableBook.getColumns().add(0, colNumber);
+
+        // Todo: Add column Button
+        addButtonToTable();
     }
 
     @Override
@@ -241,7 +285,6 @@ public class BookController implements Initializable {
         // showBooks();
         initEvents();
         initColumn();
-        addButtonToTable();
         showData();
     }
 

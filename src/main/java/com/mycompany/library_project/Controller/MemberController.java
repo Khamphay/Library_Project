@@ -17,6 +17,8 @@ import com.mycompany.library_project.Report.CreateReport;
 import com.mycompany.library_project.config.CreateLogFile;
 
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -25,6 +27,7 @@ import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
@@ -196,6 +199,43 @@ public class MemberController implements Initializable {
         date_exist.setCellValueFactory(new PropertyValueFactory<>("dateRegisterEnd"));
         id.setVisible(false);
 
+        // Todo: Add column number
+        final TableColumn<MemberModel, MemberModel> colNumber = new TableColumn<MemberModel, MemberModel>();
+        colNumber.setMinWidth(50);
+        colNumber.setMaxWidth(120);
+        colNumber.setPrefWidth(60);
+        colNumber.setCellValueFactory(
+                new Callback<CellDataFeatures<MemberModel, MemberModel>, ObservableValue<MemberModel>>() {
+
+                    @Override
+                    public ObservableValue<MemberModel> call(CellDataFeatures<MemberModel, MemberModel> param) {
+                        return new ReadOnlyObjectWrapper<MemberModel>(param.getValue());
+                    }
+                });
+        colNumber.setCellFactory(
+                new Callback<TableColumn<MemberModel, MemberModel>, TableCell<MemberModel, MemberModel>>() {
+
+                    @Override
+                    public TableCell<MemberModel, MemberModel> call(TableColumn<MemberModel, MemberModel> param) {
+                        return new TableCell<MemberModel, MemberModel>() {
+                            @Override
+                            protected void updateItem(MemberModel item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty)
+                                    setText("");
+                                else if (this.getTableRow() != null && item != null)
+                                    setText(Integer.toString(this.getTableRow().getIndex() + 1));
+                            }
+                        };
+                    }
+
+                });
+        colNumber.setSortable(true);
+        tableMember.getColumns().add(0, colNumber);
+
+        // Todo: Add column Button
+        addButtonToTable();
+
         tableMember.setOnMouseClicked(mevt -> {
             if (mevt.getClickCount() > 0 && tableMember.getSelectionModel().getSelectedItem() != null) {
                 memberModel = new MemberModel();
@@ -269,7 +309,6 @@ public class MemberController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initEvents();
         initTable();
-        addButtonToTable();
         showData();
     }
 

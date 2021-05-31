@@ -11,6 +11,8 @@ import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.ShowRentSendModel;
 
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -20,6 +22,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.util.Callback;
@@ -28,7 +31,7 @@ public class ShowRentSendController implements Initializable {
 
     private HomeController homeController = null;
     private AlertMessage alertMessage = new AlertMessage();
-    private DialogMessage dialog = null;
+    // private DialogMessage dialog = null;
     private ShowRentSendModel showbookModel = null;
     private ObservableList<ShowRentSendModel> data = null;
     private ResultSet rs = null;
@@ -70,6 +73,44 @@ public class ShowRentSendController implements Initializable {
         colMemberId.setCellValueFactory(new PropertyValueFactory<>("memberId"));
         colMemberName.setCellValueFactory(new PropertyValueFactory<>("memberName"));
         colCause.setCellValueFactory(new PropertyValueFactory<>("cause"));
+
+        // Todo: Add column number
+        final TableColumn<ShowRentSendModel, ShowRentSendModel> colNumber = new TableColumn<ShowRentSendModel, ShowRentSendModel>();
+        colNumber.setMinWidth(50);
+        colNumber.setMaxWidth(120);
+        colNumber.setPrefWidth(60);
+        colNumber.setCellValueFactory(
+                new Callback<CellDataFeatures<ShowRentSendModel, ShowRentSendModel>, ObservableValue<ShowRentSendModel>>() {
+
+                    @Override
+                    public ObservableValue<ShowRentSendModel> call(
+                            CellDataFeatures<ShowRentSendModel, ShowRentSendModel> param) {
+                        return new ReadOnlyObjectWrapper<ShowRentSendModel>(param.getValue());
+                    }
+                });
+        colNumber.setCellFactory(
+                new Callback<TableColumn<ShowRentSendModel, ShowRentSendModel>, TableCell<ShowRentSendModel, ShowRentSendModel>>() {
+
+                    @Override
+                    public TableCell<ShowRentSendModel, ShowRentSendModel> call(
+                            TableColumn<ShowRentSendModel, ShowRentSendModel> param) {
+                        return new TableCell<ShowRentSendModel, ShowRentSendModel>() {
+                            @Override
+                            protected void updateItem(ShowRentSendModel item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty)
+                                    setText("");
+                                else if (this.getTableRow() != null && item != null)
+                                    setText(Integer.toString(this.getTableRow().getIndex() + 1));
+                            }
+                        };
+                    }
+
+                });
+        colNumber.setSortable(true);
+        tableShow.getColumns().add(0, colNumber);
+
+        // Todo: Add column Button
         addButtonToTable();
     }
 

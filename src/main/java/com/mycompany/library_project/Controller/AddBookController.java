@@ -5,9 +5,12 @@ import javafx.collections.*;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.net.URL;
 import java.sql.ResultSet;
@@ -16,13 +19,13 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import com.mycompany.library_project.App;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 import com.mycompany.library_project.config.CreateLogFile;
 
 public class AddBookController implements Initializable {
 
-    private HomeController homeController = null;
     private BookController bookcontroller;
     private ResultSet rs = null;
     private AlertMessage alertMessage = new AlertMessage();
@@ -51,7 +54,13 @@ public class AddBookController implements Initializable {
      * Refresh table after add and delete
      */
     public void initConstructor1(HomeController homeController) {
-        this.homeController = homeController;
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                homeController.showMainMenuHome();
+            }
+        });
     }
 
     public void initConstructor2(BookController bookcontroller) {
@@ -65,7 +74,7 @@ public class AddBookController implements Initializable {
     private AnchorPane acHeaderPane;
 
     @FXML
-    private JFXButton btClose;
+    private JFXButton btClose, btAddNewAuthor;
 
     @FXML
     private TextField txtId, txtName, txtPage, txtQty, txtISBN, txtYear;
@@ -120,14 +129,32 @@ public class AddBookController implements Initializable {
         bookid = "";
     }
 
+    private void showAddAuthor() {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmAuthor.fxml"));
+            final Parent subForm = loader.load();
+            AuthorController authorController = loader.getController();
+            authorController.initConstructor2(this);
+            final Scene scene = new Scene(subForm);
+            final Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            authorController.addAuthor = stage;
+            stage.showAndWait();
+        } catch (Exception e) {
+            alertMessage.showErrorMessage(borderPane, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນສ່ວນບຸກຄົນມີບັນຫາ: " + "Form Author", e);
+        }
+    }
     private void initEvents() {
 
-        btClose.setOnAction(new EventHandler<ActionEvent>() {
+        btAddNewAuthor.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                homeController.showMainMenuHome();
+                showAddAuthor();
             }
+
         });
 
         txtPage.textProperty().addListener(new ChangeListener<String>() {
@@ -316,7 +343,7 @@ public class AddBookController implements Initializable {
         }
     }
 
-    private void fillAuthor() {
+    public void fillAuthor() {
         try {
             author_items = FXCollections.observableArrayList();
             author_id = new ArrayList<>();

@@ -12,6 +12,7 @@ import com.mycompany.library_project.Model.EmployeeModel;
 import com.mycompany.library_project.config.CreateLogFile;
 
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.*;
 import javafx.collections.*;
 import javafx.collections.transformation.FilteredList;
@@ -20,6 +21,7 @@ import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
@@ -68,6 +70,46 @@ public class EmployeeController implements Initializable {
         colTel.setCellValueFactory(new PropertyValueFactory<>("tel"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colId.setVisible(false);
+
+        // Todo: Add column number
+        final TableColumn<EmployeeModel, EmployeeModel> colNumber = new TableColumn<EmployeeModel, EmployeeModel>(
+                "ລຳດັບ");
+        colNumber.setMinWidth(50);
+        colNumber.setMaxWidth(200);
+        colNumber.setPrefWidth(100);
+        colNumber.setCellValueFactory(
+                new Callback<CellDataFeatures<EmployeeModel, EmployeeModel>, ObservableValue<EmployeeModel>>() {
+
+                    @Override
+                    public ObservableValue<EmployeeModel> call(CellDataFeatures<EmployeeModel, EmployeeModel> param) {
+                        return new ReadOnlyObjectWrapper<EmployeeModel>(param.getValue());
+                    }
+
+                });
+        colNumber.setCellFactory(
+                new Callback<TableColumn<EmployeeModel, EmployeeModel>, TableCell<EmployeeModel, EmployeeModel>>() {
+
+                    @Override
+                    public TableCell<EmployeeModel, EmployeeModel> call(
+                            TableColumn<EmployeeModel, EmployeeModel> param) {
+                        return new TableCell<EmployeeModel, EmployeeModel>() {
+                            @Override
+                            protected void updateItem(EmployeeModel item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty)
+                                    setText("");
+                                if (this.getTableRow() != null && item != null)
+                                    setText(Integer.toString(this.getTableRow().getIndex() + 1));
+                            }
+                        };
+                    }
+                });
+
+        colNumber.setSortable(false);
+        tableEmployee.getColumns().add(0, colNumber);
+
+        // Todo: Add column Button
+        addButtonToTable();
     }
 
     private void clearText() {
@@ -249,7 +291,6 @@ public class EmployeeController implements Initializable {
         rdbMale.setSelected(true);
 
         initTable();
-        addButtonToTable();
         initEvents();
         showData();
     }

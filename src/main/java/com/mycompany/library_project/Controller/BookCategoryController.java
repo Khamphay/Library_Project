@@ -1,29 +1,26 @@
 package com.mycompany.library_project.Controller;
 
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.*;
+import javafx.collections.transformation.*;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ResourceBundle;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.*;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.CategoryModel;
@@ -168,12 +165,55 @@ public class BookCategoryController implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    private void initTable() {
         colCatgId.setCellValueFactory(new PropertyValueFactory<>("catgId"));
         colCatgName.setCellValueFactory(new PropertyValueFactory<>("catgName"));
-        showData();
+
+        // Todo: Add column number
+        final TableColumn<CategoryModel, CategoryModel> colNumber = new TableColumn<CategoryModel, CategoryModel>(
+                "ລຳດັບ");
+        colNumber.setMinWidth(50);
+        colNumber.setMaxWidth(100);
+        colNumber.setPrefWidth(60);
+        colNumber.setCellValueFactory(
+                new Callback<CellDataFeatures<CategoryModel, CategoryModel>, ObservableValue<CategoryModel>>() {
+
+                    @Override
+                    public ObservableValue<CategoryModel> call(CellDataFeatures<CategoryModel, CategoryModel> param) {
+                        return new ReadOnlyObjectWrapper<CategoryModel>(param.getValue());
+                    }
+
+                });
+        colNumber.setCellFactory(
+                new Callback<TableColumn<CategoryModel, CategoryModel>, TableCell<CategoryModel, CategoryModel>>() {
+
+                    @Override
+                    public TableCell<CategoryModel, CategoryModel> call(
+                            TableColumn<CategoryModel, CategoryModel> param) {
+                        return new TableCell<CategoryModel, CategoryModel>() {
+                            @Override
+                            protected void updateItem(CategoryModel item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty)
+                                    setText("");
+                                else if (this.getTableRow() != null && item != null)
+                                    setText(Integer.toString(this.getTableRow().getIndex() + 1));
+                            }
+                        };
+                    }
+
+                });
+        colNumber.setSortable(false);
+        tableCategory.getColumns().add(0, colNumber);
+
+        // Todo: Add column Button
         addButtonToTable();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        initTable();
+        showData();
     }
 
     private void addButtonToTable() {

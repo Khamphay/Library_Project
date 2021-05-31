@@ -11,6 +11,8 @@ import com.mycompany.library_project.Model.DepartmentModel;
 import com.mycompany.library_project.config.CreateLogFile;
 
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -19,6 +21,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.layout.StackPane;
@@ -56,6 +59,49 @@ public class DepartmentController implements Initializable {
     private void initTable() {
         colId.setCellValueFactory(new PropertyValueFactory<>("depId"));
         colName.setCellValueFactory(new PropertyValueFactory<>("depName"));
+
+        // Todo: Add column number
+        final TableColumn<DepartmentModel, DepartmentModel> colNumber = new TableColumn<DepartmentModel, DepartmentModel>(
+                "ລຳດັບ");
+        colNumber.setMinWidth(50);
+        colNumber.setMaxWidth(100);
+        colNumber.setPrefWidth(60);
+        colNumber.setCellValueFactory(
+                new Callback<CellDataFeatures<DepartmentModel, DepartmentModel>, ObservableValue<DepartmentModel>>() {
+
+                    @Override
+                    public ObservableValue<DepartmentModel> call(
+                            CellDataFeatures<DepartmentModel, DepartmentModel> param) {
+                        return new ReadOnlyObjectWrapper<DepartmentModel>(param.getValue());
+                    }
+
+                });
+
+        colNumber.setCellFactory(
+                new Callback<TableColumn<DepartmentModel, DepartmentModel>, TableCell<DepartmentModel, DepartmentModel>>() {
+
+                    @Override
+                    public TableCell<DepartmentModel, DepartmentModel> call(
+                            TableColumn<DepartmentModel, DepartmentModel> param) {
+                        return new TableCell<DepartmentModel, DepartmentModel>() {
+                            @Override
+                            protected void updateItem(DepartmentModel item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty)
+                                    setText("");
+                                else if (this.getTableRow() != null && item != null)
+                                    setText(Integer.toString(this.getTableRow().getIndex() + 1));
+                            }
+                        };
+                    }
+
+                });
+        colNumber.setSortable(false);
+        tableDepartment.getColumns().add(0, colNumber);
+
+        // Todo: Add column Button
+        addButtonToTable();
+
         tableDepartment.setOnMouseClicked(e -> {
             if (e.getClickCount() >= 2 && tableDepartment.getSelectionModel().getSelectedItem() != null) {
                 depertment = tableDepartment.getSelectionModel().getSelectedItem();
@@ -178,7 +224,6 @@ public class DepartmentController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTable();
-        addButtonToTable();
         initEvents();
         showData();
 

@@ -4,9 +4,8 @@ import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import com.mycompany.library_project.App;
 import com.mycompany.library_project.Style;
-import com.mycompany.library_project.Controller.List.ListitemController;
-import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
-import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
+import com.mycompany.library_project.ControllerDAOModel.*;
+import com.mycompany.library_project.Model.*;
 import com.mycompany.library_project.ModelShow.*;
 import com.mycompany.library_project.config.CreateLogFile;
 
@@ -22,6 +21,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.*;
 
 import java.net.URL;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
@@ -36,10 +38,12 @@ public class HomeController implements Initializable {
     private boolean fragMenu = false;
     private Node node;
     private Parent rootMenu = null;
-    private Node[] nodeItem = new Node[100];
-    private String[] data = { "Computer", "sifur", "wo9eur", "setue9t8ye5", "09", "87", "efuw" };
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = null;
+    private ResultSet rs = null;
+    private ShowRentSendModel showRentSendModel = null;
+    private ListBookModel listbook = null;
+    private MyDate mydate = new MyDate();
 
     @FXML
     private StackPane stackPane;
@@ -57,8 +61,7 @@ public class HomeController implements Initializable {
     private AnchorPane acPaneMenuList;
 
     @FXML
-    // private VBox pnItems;
-    private FlowPane pnItems;
+    private VBox pnItems;
 
     @FXML
     public BorderPane bpDisplay;
@@ -72,26 +75,18 @@ public class HomeController implements Initializable {
     @FXML
     private JFXHamburger humberger;
 
-    // TODO: Custom move form
-    // private void moveWinForm() {
-    // acHomePaneToolbar.setOnMousePressed(mouseEvent -> {
-    // x = mouseEvent.getSceneX();
-    // y = mouseEvent.getSceneY();
-    // });
-    // // TODO: Set for move form
-    // acHomePaneToolbar.setOnMouseDragged(mouseEvent -> {
-    // homeStage.setX(mouseEvent.getScreenX() - x);
-    // homeStage.setY(mouseEvent.getScreenY() - y);
-    // homeStage.setOpacity(0.4f);
-    // });
-
-    // acHomePaneToolbar.setOnDragDone(dragEvent -> {
-    // homeStage.setOpacity(1.0f);
-    // });
-    // acHomePaneToolbar.setOnMouseReleased(mouseEvent -> {
-    // homeStage.setOpacity(1.0f);
-    // });
-    // }
+    /*
+     * //TODO: Custom move form private void moveWinForm() {
+     * acHomePaneToolbar.setOnMousePressed(mouseEvent -> { x =
+     * mouseEvent.getSceneX(); y = mouseEvent.getSceneY(); }); // TODO: Set for move
+     * form acHomePaneToolbar.setOnMouseDragged(mouseEvent -> {
+     * homeStage.setX(mouseEvent.getScreenX() - x);
+     * homeStage.setY(mouseEvent.getScreenY() - y); homeStage.setOpacity(0.4f); });
+     * 
+     * acHomePaneToolbar.setOnDragDone(dragEvent -> { homeStage.setOpacity(1.0f);
+     * }); acHomePaneToolbar.setOnMouseReleased(mouseEvent -> {
+     * homeStage.setOpacity(1.0f); }); }
+     */
 
     private void sliderMenuHamburger() {
         hamburgerTransition = new HamburgerSlideCloseTransition(humberger);
@@ -117,6 +112,7 @@ public class HomeController implements Initializable {
             config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Add Book", e);
         }
     }
+
     private void showSubFrom(String subForm) {
         try {
             final FXMLLoader loader = new FXMLLoader(App.class.getResource(subForm));
@@ -314,11 +310,6 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    private void buttonReserveBook_Action(ActionEvent event) throws Exception {
-        // showSubFrom("");
-    }
-
-    @FXML
     private void buttonRegister_Action(ActionEvent event) throws Exception {
         try {
             final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmRegister.fxml"));
@@ -335,35 +326,7 @@ public class HomeController implements Initializable {
 
     @FXML
     private void buttonNotify_Action(ActionEvent event) throws Exception {
-        // showSubFrom("");
-        // showListItems();
 
-        // thItem.start();
-
-        pnItems.getChildren().clear();
-        Platform.runLater(new Runnable() {
-            int i = 0;
-
-            @Override
-            public void run() {
-                try {
-                    while (i < nodeItem.length) {
-
-                        // !Set data to "rowBooks" Layout
-                        MyArrayList list = new MyArrayList();
-                        ListitemController.book_list = list.bookDetail(data);
-                        Parent listParent = FXMLLoader.load(App.class.getResource("rowBooks.fxml"));
-                        nodeItem[i] = listParent;
-
-                        pnItems.getChildren().addAll(nodeItem[i]);
-
-                        i++;
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            };
-        });
     }
 
     @FXML
@@ -395,9 +358,46 @@ public class HomeController implements Initializable {
         System.exit(0);
     }
 
+    private void showRentBookOutOfDate() {
+
+        Platform.runLater(new Runnable() {
+
+            int number = 1;
+
+            @Override
+            public void run() {
+                try {
+                    pnItems.getChildren().clear();
+                    showRentSendModel = new ShowRentSendModel();
+                    rs = showRentSendModel.findByRentOutOfDate(Date.valueOf(LocalDate.now()), "ກຳລັງຢືມ");
+                    while (rs.next()) {
+                        final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmBookList.fxml"));
+                        final Parent listParent = loader.load();
+                        final Node node = listParent;
+
+                        // Todo: Cancalar Date
+                        int outdate = mydate.cancalarDate(rs.getDate("date_send").toLocalDate());
+                        listbook = new ListBookModel(number, rs.getString("rent_id"), rs.getString("barcode"),
+                                rs.getString("book_name"), rs.getString("member_id"),
+                                rs.getString("full_name") + " " + rs.getString("sur_name"), rs.getDate("date_rent"),
+                                rs.getDate("date_send"), rs.getString("book_status"), outdate);
+                        BookItemController item = loader.getController();
+                        item.initConstructor(listbook);
+
+                        pnItems.getChildren().addAll(node);
+                        number++;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            };
+        });
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // moveWinForm();
+        showRentBookOutOfDate();
         show_menu();
         sliderMenuHamburger();
         // thItem.start();

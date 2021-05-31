@@ -1,9 +1,12 @@
 package com.mycompany.library_project.Controller;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
@@ -31,7 +34,7 @@ public class RentBookController implements Initializable {
     private MemberModel member = new MemberModel();
     private BookDetailModel book = new BookDetailModel();
     private RentBookModel rentBook = new RentBookModel();
-    private DateFormat formatDate = new DateFormat();
+    private MyDate formatDate = new MyDate();
     private ResultSet rs = null;
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = null;
@@ -146,6 +149,45 @@ public class RentBookController implements Initializable {
         colType.setCellValueFactory(new PropertyValueFactory<>("type"));
         colDateRent.setCellValueFactory(new PropertyValueFactory<>("rentDate"));
         colDateSend.setCellValueFactory(new PropertyValueFactory<>("sendDate"));
+
+        // Todo: Add column number
+        final TableColumn<RentBookModel, RentBookModel> colNumber = new TableColumn<RentBookModel, RentBookModel>();
+        colNumber.setMinWidth(50);
+        colNumber.setMaxWidth(120);
+        colNumber.setPrefWidth(60);
+        colNumber.setCellValueFactory(
+                new Callback<CellDataFeatures<RentBookModel, RentBookModel>, ObservableValue<RentBookModel>>() {
+
+                    @Override
+                    public ObservableValue<RentBookModel> call(CellDataFeatures<RentBookModel, RentBookModel> param) {
+                        return new ReadOnlyObjectWrapper<RentBookModel>(param.getValue());
+                    }
+                });
+        colNumber.setCellFactory(
+                new Callback<TableColumn<RentBookModel, RentBookModel>, TableCell<RentBookModel, RentBookModel>>() {
+
+                    @Override
+                    public TableCell<RentBookModel, RentBookModel> call(
+                            TableColumn<RentBookModel, RentBookModel> param) {
+                        return new TableCell<RentBookModel, RentBookModel>() {
+                            @Override
+                            protected void updateItem(RentBookModel item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty)
+                                    setText("");
+                                else if (this.getTableRow() != null && item != null)
+                                    setText(Integer.toString(this.getTableRow().getIndex() + 1));
+
+                            }
+                        };
+                    }
+
+                });
+        colNumber.setSortable(true);
+        tableRentBook.getColumns().add(0, colNumber);
+
+        // Todo: Add column Button
+        addButtonToTable();
     }
 
     private void initEvents() {
@@ -191,6 +233,7 @@ public class RentBookController implements Initializable {
 
                     rs = member.findById(txtMemberId.getText());
                     if (rs.next()) {
+                        txtMemberId.setText(rs.getString("member_id"));
                         txtMemberName.setText(rs.getString("full_name"));
                         txtSurName.setText(rs.getString("sur_name"));
                         txtDep.setText(rs.getString("dep_name"));
@@ -334,7 +377,6 @@ public class RentBookController implements Initializable {
 
         initEvents();
         initTable();
-        addButtonToTable();
         // cancalarDate();
         rentDate.setValue(LocalDate.now());
         cancalarDate();

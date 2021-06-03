@@ -12,12 +12,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 
 import com.mycompany.library_project.Model.TypeModel;
 import com.mycompany.library_project.config.CreateLogFile;
+
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+
 import com.jfoenix.controls.*;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
@@ -27,7 +32,9 @@ import java.util.ResourceBundle;
 
 public class BookTypeController implements Initializable {
 
+    private ValidationSupport validRules = new ValidationSupport();
     private ManageBookController manageBookController = null;
+    private AddBookController addBookController = null;
     private ResultSet rs;
     private TypeModel type = null;
     private ObservableList<TypeModel> data = null;
@@ -39,6 +46,12 @@ public class BookTypeController implements Initializable {
         this.manageBookController = manageBookController;
     }
 
+    public void initConstructor2(AddBookController addBookController) {
+        this.addBookController = addBookController;
+        btClose.setDisable(true);
+        btClose.setVisible(false);
+    }
+
     @FXML
     private StackPane stackePane;
 
@@ -46,7 +59,11 @@ public class BookTypeController implements Initializable {
     TextField txtTypeId, txtTypeName, txtSearch;
 
     @FXML
+    private JFXButton btSave, btEdit, btCancel, btClose;
+
+    @FXML
     private TableView<TypeModel> tableType;
+
     @FXML
     private TableColumn<TypeModel, String> colId, colName;
 
@@ -91,44 +108,28 @@ public class BookTypeController implements Initializable {
        });
    }
 
-    private void ClearData() {
+   private void initRules() {
+       validRules.setErrorDecorationEnabled(false);
+       validRules.redecorate();
+       validRules.registerValidator(txtTypeId, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນລະຫັດປະເພດປຶ້ມ"));
+       validRules.registerValidator(txtTypeName, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່ປະເພດປຶ້ມ"));
+   }
+
+   private void ClearData() {
+
+       validRules.setErrorDecorationEnabled(false);
+
         txtTypeId.setText("");
         txtTypeName.setText("");
-    }
 
-    @FXML
-    private void closeForm() {
-        manageBookController.showMainMenuBooks();
-    }
+        if (txtTypeId.isDisable())
+            txtTypeId.setDisable(false);
+        if (btSave.isDisable())
+            btSave.setDisable(false);
+        if (!btEdit.isDisable())
+            btEdit.setDisable(true);
+        txtTypeId.requestFocus();
 
-    @FXML
-    private void selectTableType(MouseEvent clickEvent) {
-        if (clickEvent.getClickCount() >= 2 && tableType.getSelectionModel().getSelectedItem() != null) {
-            type = tableType.getSelectionModel().getSelectedItem();
-            txtTypeId.setText(type.getTypeId());
-            txtTypeName.setText(type.getTypeName());
-        }
-    }
-
-    @FXML
-    private void Save(ActionEvent actionEvent) throws SQLException {
-        try {
-            if (!txtTypeId.getText().equals("") && !txtTypeName.getText().equals("")) {
-                type = new TypeModel(txtTypeId.getText(), txtTypeName.getText());
-                if (type.saveData() == 1) {
-                    alertMessage.showCompletedMessage(stackePane, "Save", "Save data successfully.", 4,
-                            Pos.BOTTOM_RIGHT);
-                    ShowData();
-                    ClearData();
-                }
-            } else {
-                alertMessage.showWarningMessage(stackePane, "Save Warning",
-                        "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
-            }
-        } catch (Exception e) {
-            alertMessage.showErrorMessage(stackePane, "Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນປະເພດປຶ້ມ", e);
-        }
     }
 
     private void initTable() {
@@ -171,18 +172,78 @@ public class BookTypeController implements Initializable {
         // Todo: Add column Button
         addButtonToTable();
     }
+
+    private void initKeyEvents() {
+        txtTypeId.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtTypeName.requestFocus();
+        });
+        txtTypeName.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtTypeId.requestFocus();
+        });
+    }
+
+    @FXML
+    private void closeForm() {
+        manageBookController.showMainMenuBooks();
+    }
+
+    @FXML
+    private void selectTableType(MouseEvent clickEvent) {
+        if (clickEvent.getClickCount() >= 2 && tableType.getSelectionModel().getSelectedItem() != null) {
+
+            btEdit.setDisable(false);
+            btSave.setDisable(true);
+            txtTypeId.setDisable(true);
+
+            type = tableType.getSelectionModel().getSelectedItem();
+            txtTypeId.setText(type.getTypeId());
+            txtTypeName.setText(type.getTypeName());
+        }
+    }
+
+    @FXML
+    private void Save(ActionEvent actionEvent) throws SQLException {
+        try {
+            if (!txtTypeId.getText().equals("") && !txtTypeName.getText().equals("")) {
+                type = new TypeModel(txtTypeId.getText(), txtTypeName.getText());
+                if (type.saveData() == 1) {
+                    ShowData();
+                    ClearData();
+                    alertMessage.showCompletedMessage(stackePane, "Save", "Save data successfully.", 4,
+                            Pos.BOTTOM_RIGHT);
+                    if (addBookController != null)
+                        addBookController.fillType();
+                }
+            } else {
+                // Todo: Show warning message if text or combo box is empty
+                validRules.setErrorDecorationEnabled(true);
+                alertMessage.showWarningMessage(stackePane, "Save Warning",
+                        "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
+            }
+        } catch (Exception e) {
+            alertMessage.showErrorMessage(stackePane, "Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນປະເພດປຶ້ມ", e);
+        }
+    }
+
     @FXML
     private void Update(ActionEvent event) throws SQLException {
         try {
             if (!txtTypeId.getText().equals("") && !txtTypeName.getText().equals("")) {
                 type = new TypeModel(txtTypeId.getText(), txtTypeName.getText());
                 if (type.updateData() == 1) {
-                    alertMessage.showCompletedMessage(stackePane, "Edited", "Edit data successfully.", 4,
-                            Pos.BOTTOM_RIGHT);
                     ShowData();
                     ClearData();
+                    alertMessage.showCompletedMessage(stackePane, "Edited", "Edit data successfully.", 4,
+                            Pos.BOTTOM_RIGHT);
+                    if (addBookController != null)
+                        addBookController.fillType();
                 }
             } else {
+                // Todo: Show warning message if text or combo box is empty
+                validRules.setErrorDecorationEnabled(true);
                 alertMessage.showWarningMessage(stackePane, "Edit Warning",
                         "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
             }
@@ -200,7 +261,10 @@ public class BookTypeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initTable();
+        initRules();
+        initKeyEvents();
         ShowData();
+        btEdit.setDisable(true);
     }
 
     private void addButtonToTable() {
@@ -260,6 +324,8 @@ public class BookTypeController implements Initializable {
                     dialog.closeDialog();
                     alertMessage.showCompletedMessage(stackePane, "Delete", "Delete data successfully.", 4,
                             Pos.BOTTOM_RIGHT);
+                    if (addBookController != null)
+                        addBookController.fillType();
                 }
             } catch (SQLException ex) {
                 alertMessage.showErrorMessage(stackePane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);

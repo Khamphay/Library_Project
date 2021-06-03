@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 
 import java.net.URL;
@@ -22,9 +23,12 @@ import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.TableLogModel;
 import com.mycompany.library_project.config.CreateLogFile;
 
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+
 public class TableLogController implements Initializable {
 
-    private ManageBookController manageBookController = null;
+    private ValidationSupport validRules = new ValidationSupport();
     private TableLogModel tableLogModel = null;
     private ResultSet rs = null;
     private TreeItem<TableLogModel> subItem, root, node;
@@ -33,9 +37,17 @@ public class TableLogController implements Initializable {
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = null;
     private CreateLogFile logfile = new CreateLogFile();
+    private ManageBookController manageBookController = null;
+    private AddBookController addBookController = null;
 
     public void initConstructor(ManageBookController manageBookController) {
         this.manageBookController = manageBookController;
+    }
+
+    public void initConstructor2(AddBookController addBookController) {
+        this.addBookController = addBookController;
+        btClose.setDisable(true);
+        btClose.setVisible(false);
     }
 
     @FXML
@@ -43,6 +55,9 @@ public class TableLogController implements Initializable {
 
     @FXML
     private TextField txtId, txtQty;
+
+    @FXML
+    private JFXButton btSave, btEdit, btCancel, btClose;
 
     @FXML
     private TextArea txtLog;
@@ -97,9 +112,24 @@ public class TableLogController implements Initializable {
         });
     }
 
+    private void initKeyEvents() {
+        txtId.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtQty.requestFocus();
+        });
+        txtQty.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtId.requestFocus();
+        });
+    }
+
     private void initEvents() {
         tableLog.setOnMouseClicked(e -> {
             if (e.getClickCount() >= 2 && tableLog.getSelectionModel().getSelectedItem() != null) {
+
+                btEdit.setDisable(false);
+                btSave.setDisable(true);
+
                 data = tableLog.getSelectionModel().getSelectedItems();
                 txtId.setText(data.get(0).getValue().getTableId());
                 txtQty.setText("" + data.get(0).getValue().getLogQty());
@@ -136,9 +166,16 @@ public class TableLogController implements Initializable {
     }
 
     private void clearText() {
+        validRules.setErrorDecorationEnabled(false);
         txtId.clear();
         txtLog.clear();
         txtQty.clear();
+
+        if (btSave.isDisable())
+            btSave.setDisable(false);
+        if (!btEdit.isDisable())
+            btEdit.setDisable(true);
+        txtId.requestFocus();
     }
 
     @FXML
@@ -151,9 +188,23 @@ public class TableLogController implements Initializable {
         clearText();
     }
 
+    private void initRules() {
+        validRules.setErrorDecorationEnabled(false);
+        validRules.registerValidator(txtId, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນເລກຕູ້"));
+        validRules.registerValidator(txtQty, false,
+                Validator.createEmptyValidator("ກະລຸນາປ້ອນຈຳນວນລ໋ອກຕູ້ ແລະ ຈຳນວນລ໋ອກຕູ້ຕ້ອງຫຼາຍກວ່າ 0 ລ໋ອກ"));
+        validRules.registerValidator(txtLog, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່ເລກລ໋ອກຕູ້"));
+    }
+
     @FXML
     private void tbSaveData(ActionEvent event) {
         String result = null;
+        if (!txtQty.getText().equals(""))
+            if (Integer.parseInt(txtQty.getText()) <= 0) {
+                validRules.setErrorDecorationEnabled(true);
+                return;
+            }
+
         try {
             if (!txtId.getText().equals("") && !txtId.getText().equals("") && !txtQty.getText().equals("")) {
                 tableLogModel = new TableLogModel();
@@ -179,8 +230,11 @@ public class TableLogController implements Initializable {
                     showData();
                     clearText();
                     alertMessage.showCompletedMessage("Saved", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
+                    if (addBookController != null)
+                        addBookController.fillTable();
                 }
             } else {
+                validRules.setErrorDecorationEnabled(true);
                 alertMessage.showWarningMessage(stackPane, "Save Warning",
                         "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
             }
@@ -198,7 +252,10 @@ public class TableLogController implements Initializable {
             tableLogModel = new TableLogModel(txtId.getText(), Integer.parseInt(txtQty.getText()));
             if (tableLogModel.updateData() > 0) {
                 alertMessage.showCompletedMessage(stackPane, "Edited", "Edit data successfully.", 4, Pos.BOTTOM_RIGHT);
+                clearText();
                 showData();
+                if (addBookController != null)
+                    addBookController.fillTable();
             } else {
                 alertMessage.showWarningMessage(stackPane, "Edit Warning", "Can not edit data", 4, Pos.BOTTOM_RIGHT);
             }
@@ -215,7 +272,11 @@ public class TableLogController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initTable();
+        initRules();
         initEvents();
+        initKeyEvents();
+        txtQty.setText("1");
+        btEdit.setDisable(true);
         showData();
     }
 
@@ -278,6 +339,8 @@ public class TableLogController implements Initializable {
                     showData();
                     dialog.closeDialog();
                     alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4, Pos.BOTTOM_RIGHT);
+                    if (addBookController != null)
+                        addBookController.fillTable();
                 } else {
                     alertMessage.showWarningMessage("Delete", "Can not delete data.", 4, Pos.BOTTOM_RIGHT);
 

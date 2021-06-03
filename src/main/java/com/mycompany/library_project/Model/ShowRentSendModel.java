@@ -29,6 +29,12 @@ public class ShowRentSendModel implements DataAccessObject {
     public ShowRentSendModel() {
     }
 
+    public ShowRentSendModel(String rentId, String barcode, String status) {
+        this.rentId = rentId;
+        this.barcode = barcode;
+        this.status = status;
+    }
+
     public ShowRentSendModel(String rentId, String barcode, String bookName, String catg, String type,
             String tableLogId,  Date rentDate, Date sendDate, String status, String memberId, String memberName,
             String cause) {
@@ -206,8 +212,12 @@ public class ShowRentSendModel implements DataAccessObject {
 
     @Override
     public int deleteData(String id) throws SQLException {
-        // TODO Auto-generated method stub
-        return 0;
+        sql = "call rentbook_Delete(?, ?, ?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, getRentId());
+        ps.setString(2, getBarcode());
+        ps.setString(3, getStatus());
+        return ps.executeUpdate();
     }
 
 }

@@ -16,6 +16,7 @@ import com.mycompany.library_project.Model.MemberModel;
 import com.mycompany.library_project.Report.CreateReport;
 import com.mycompany.library_project.config.CreateLogFile;
 
+
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
@@ -70,7 +71,8 @@ public class MemberController implements Initializable {
     private TableView<MemberModel> tableMember;
 
     @FXML
-    private TableColumn<MemberModel, String> id, name, surname, gender, tel, village, district, province, depertment,
+    private TableColumn<MemberModel, String> memberId, studentId, name, surname, gender, tel, village, district,
+            province, depertment,
             studyYear;
 
     @FXML
@@ -127,6 +129,7 @@ public class MemberController implements Initializable {
             logfile.createLogFile("ເກີດບັນຫາໃນການເປືດຟອມແກ້ໂຂຂໍ້ມູນ", e);
         }
     }
+
     public void showData() {
         Platform.runLater(new Runnable() {
 
@@ -137,12 +140,14 @@ public class MemberController implements Initializable {
                     rs = memberModel.findAll();
                     byimg = new ArrayList<>();
                     while (rs.next()) {
-                        data.add(new MemberModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
-                                rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),
-                                Date.valueOf(rs.getString(10)), rs.getString(11), rs.getString(9),
-                                Date.valueOf(rs.getString(12)), Date.valueOf(rs.getString(13)),
-                                Date.valueOf(rs.getString(14))));
-                        byimg.add(rs.getBytes(15));
+                        data.add(new MemberModel(rs.getString("member_id"), rs.getString("student_id"),
+                                rs.getString("full_name"), rs.getString("sur_name"), rs.getString("gender"),
+                                rs.getString("tel"), rs.getString("village"), rs.getString("district"),
+                                rs.getString("province"), Date.valueOf(rs.getString("birthdate")),
+                                rs.getString("study_year"), rs.getString("dep_name"),
+                                Date.valueOf(rs.getString("date_register")), Date.valueOf(rs.getString("date_end")),
+                                Date.valueOf(rs.getString("date_exit"))));
+                        byimg.add(rs.getBytes("img"));
                     }
 
                     /*
@@ -156,6 +161,7 @@ public class MemberController implements Initializable {
                             if (newValue.isEmpty())
                                 return true;
                             if (member.getMemberId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || member.getStudentId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
                                     || member.getFirstName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
                                     || member.getSureName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
                                     || member.getGender().toLowerCase().indexOf(newValue.toLowerCase()) != -1
@@ -184,7 +190,8 @@ public class MemberController implements Initializable {
     }
 
     private void initTable() {
-        id.setCellValueFactory(new PropertyValueFactory<>("memberId"));
+        memberId.setCellValueFactory(new PropertyValueFactory<>("memberId"));
+        studentId.setCellValueFactory(new PropertyValueFactory<>("studentId"));
         name.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         surname.setCellValueFactory(new PropertyValueFactory<>("sureName"));
         gender.setCellValueFactory(new PropertyValueFactory<>("gender"));
@@ -197,10 +204,10 @@ public class MemberController implements Initializable {
         depertment.setCellValueFactory(new PropertyValueFactory<>("detp"));
         date_register.setCellValueFactory(new PropertyValueFactory<>("dateRegister"));
         date_exist.setCellValueFactory(new PropertyValueFactory<>("dateRegisterEnd"));
-        id.setVisible(false);
+        memberId.setVisible(false);
 
         // Todo: Add column number
-        final TableColumn<MemberModel, MemberModel> colNumber = new TableColumn<MemberModel, MemberModel>();
+        final TableColumn<MemberModel, MemberModel> colNumber = new TableColumn<MemberModel, MemberModel>("ລຳດັບ");
         colNumber.setMinWidth(50);
         colNumber.setMaxWidth(120);
         colNumber.setPrefWidth(60);

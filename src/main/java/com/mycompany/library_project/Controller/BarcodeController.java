@@ -11,6 +11,9 @@ import com.mycompany.library_project.Model.*;
 import com.mycompany.library_project.Report.CreateReport;
 import com.mycompany.library_project.config.CreateLogFile;
 
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
@@ -28,6 +31,7 @@ import javafx.util.Callback;
 
 public class BarcodeController implements Initializable {
 
+    private ValidationSupport validRules = new ValidationSupport();
     private BookController bookController;
     private BookDetailModel addBarcode = null;
     private ResultSet rs = null;
@@ -38,7 +42,7 @@ public class BarcodeController implements Initializable {
     private ObservableList<BookDetailModel> data = null;
     private ObservableList<String> items = null;
     private ArrayList<String> book = null;
-    private ObservableList<String> status = FXCollections.observableArrayList("ຫວ່າງ", "ກຳລົງຢືມ", "ເສຍ");
+    private ObservableList<String> status = FXCollections.observableArrayList("ຫວ່າງ", "ກຳລັງຢືມ", "ເສຍ");
     private String barcode = "", bookid = "", tableid = "";
     private Double x, y;
 
@@ -70,6 +74,15 @@ public class BarcodeController implements Initializable {
     @FXML
     private TableColumn<BookDetailModel, JFXButton> colAction;
 
+    private void initRules() {
+        validRules.setErrorDecorationEnabled(false);
+        validRules.redecorate();
+        validRules.registerValidator(txtBarcode, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນລະຫັດ Barcode ປຶ້ມ"));
+        validRules.registerValidator(cmbTable, false, Validator.createEmptyValidator("ກະລຸນາເລືອກເລກຕູ້"));
+        validRules.registerValidator(cmbTabLog_id, false, Validator.createEmptyValidator("ກະລຸນາເລືອກລ໋ອກຕູ້"));
+        validRules.registerValidator(cmbStatus, false, Validator.createEmptyValidator("ກະລຸນາເລືອກສະຖານະຂອງປຶ້ມ"));
+    }
+
     private void initEvents() {
 
         cmbStatus.setItems(status);
@@ -86,12 +99,15 @@ public class BarcodeController implements Initializable {
                                 cmbTabLog_id.getSelectionModel().getSelectedItem(),
                                 cmbStatus.getSelectionModel().getSelectedItem()) > 0) {
                             alertMessage.showCompletedMessage("Saved", "Save data completed", 4, Pos.BOTTOM_RIGHT);
+                            clearText();
                             showBarcode(bookid);
                             bookController.showData();
                         } else {
                             alertMessage.showWarningMessage("Save Warning", "Save data fail", 4, Pos.BOTTOM_RIGHT);
                         }
                     } else {
+                        // Todo: Show warning message if text or combo box is empty
+                        validRules.setErrorDecorationEnabled(true);
                         alertMessage.showWarningMessage("Save Warning", "Please chack your information and try again.",
                                 4, Pos.BOTTOM_RIGHT);
                     }
@@ -108,14 +124,23 @@ public class BarcodeController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    addBarcode = new BookDetailModel();
-                    if (addBarcode.updateData(bookid, txtBarcode.getText(), barcode,
-                            cmbTabLog_id.getSelectionModel().getSelectedItem(),
-                            cmbStatus.getSelectionModel().getSelectedItem()) > 0) {
-                        alertMessage.showCompletedMessage("Edited", "Edit data completed", 4, Pos.BOTTOM_RIGHT);
-                        showBarcode(bookid);
+                    if (!txtBarcode.getText().equals("")
+                            && !cmbStatus.getSelectionModel().getSelectedItem().equals(null) && bookid != "") {
+                        addBarcode = new BookDetailModel();
+                        if (addBarcode.updateData(bookid, txtBarcode.getText(), barcode,
+                                cmbTabLog_id.getSelectionModel().getSelectedItem(),
+                                cmbStatus.getSelectionModel().getSelectedItem()) > 0) {
+                            alertMessage.showCompletedMessage("Edited", "Edit data completed", 4, Pos.BOTTOM_RIGHT);
+                            clearText();
+                            showBarcode(bookid);
+                        } else {
+                            alertMessage.showWarningMessage("Edited", "Edit data fail", 4, Pos.BOTTOM_RIGHT);
+                        }
                     } else {
-                        alertMessage.showWarningMessage("Edited", "Edit data fail", 4, Pos.BOTTOM_RIGHT);
+                        // Todo: Show warning message if text or combo box is empty
+                        validRules.setErrorDecorationEnabled(true);
+                        alertMessage.showWarningMessage("Save Warning", "Please chack your information and try again.",
+                                4, Pos.BOTTOM_RIGHT);
                     }
                 } catch (Exception e) {
                     alertMessage.showErrorMessage("Edited", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
@@ -124,6 +149,7 @@ public class BarcodeController implements Initializable {
             }
 
         });
+
         btCancel.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -210,25 +236,38 @@ public class BarcodeController implements Initializable {
         tableBarcode.setOnMouseClicked(event -> {
             if (event.getClickCount() >= 2 && tableBarcode.getSelectionModel().getSelectedItem() != null) {
                 try {
+                    btEdit.setDisable(false);
+                    btSave.setDisable(true);
+
                     tableid = table.findTableId(tableBarcode.getSelectionModel().getSelectedItem().getTableLogId());
+                    cmbTable.getSelectionModel().select(tableid);
+                    barcode = tableBarcode.getSelectionModel().getSelectedItem().getBarcode();
+                    txtBarcode.setText(tableBarcode.getSelectionModel().getSelectedItem().getBarcode());
+                    cmbTabLog_id.getSelectionModel()
+                            .select(tableBarcode.getSelectionModel().getSelectedItem().getTableLogId());
+                    cmbStatus.getSelectionModel()
+                            .select(tableBarcode.getSelectionModel().getSelectedItem().getStatus());
+                    bookid = book.get(tableBarcode.getSelectionModel().getSelectedIndex());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                cmbTable.getSelectionModel().select(tableid);
-                barcode = tableBarcode.getSelectionModel().getSelectedItem().getBarcode();
-                txtBarcode.setText(tableBarcode.getSelectionModel().getSelectedItem().getBarcode());
-                cmbTabLog_id.getSelectionModel()
-                        .select(tableBarcode.getSelectionModel().getSelectedItem().getTableLogId());
-                cmbStatus.getSelectionModel().select(tableBarcode.getSelectionModel().getSelectedItem().getStatus());
-                bookid = book.get(tableBarcode.getSelectionModel().getSelectedIndex());
             }
         });
     }
 
     private void clearText() {
+        validRules.setErrorDecorationEnabled(false);
+
         txtBarcode.clear();
-        cmbStatus.getSelectionModel().select("");
+        cmbStatus.getSelectionModel().clearSelection();
+        cmbStatus.getSelectionModel().clearSelection();
+        cmbTabLog_id.getSelectionModel().clearSelection();
         barcode = "";
+
+        if (btSave.isDisable())
+            btSave.setDisable(false);
+        if (!btEdit.isDisable())
+            btEdit.setDisable(true);
     }
 
     private void fillTable() {
@@ -302,8 +341,10 @@ public class BarcodeController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         moveForm();
         fillTable();
-        initEvents();
         initTable();
+        initRules();
+        initEvents();
+        btEdit.setDisable(true);
         showBarcode(BookController._book_id);
     }
 

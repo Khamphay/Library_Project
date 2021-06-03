@@ -10,6 +10,9 @@ import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.DepartmentModel;
 import com.mycompany.library_project.config.CreateLogFile;
 
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
@@ -24,11 +27,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 
 public class DepartmentController implements Initializable {
 
+    private ValidationSupport validRules = new ValidationSupport();
     private ManagePersonalCotroller personalCotroller = null;
     private DepartmentModel depertment = null;
     private ResultSet rs = null;
@@ -36,9 +41,16 @@ public class DepartmentController implements Initializable {
     private DialogMessage dialog = null;
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile logfile = new CreateLogFile();
+    private RegisterController registerController = null;
 
     public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
         this.personalCotroller = managePersonalCotroller;
+    }
+
+    public void initConstructor2(RegisterController registerController) {
+        this.registerController = registerController;
+        btClose.setDisable(true);
+        btClose.setVisible(false);
     }
 
     @FXML
@@ -55,6 +67,12 @@ public class DepartmentController implements Initializable {
 
     @FXML
     private TableColumn<DepartmentModel, String> colId, colName;
+
+    private void initRules() {
+        validRules.setErrorDecorationEnabled(false);
+        validRules.registerValidator(txtId, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນລະຫັດ ພາກວີຊາ"));
+        validRules.registerValidator(txtName, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່ ພາກວີຊາ"));
+    }
 
     private void initTable() {
         colId.setCellValueFactory(new PropertyValueFactory<>("depId"));
@@ -104,6 +122,11 @@ public class DepartmentController implements Initializable {
 
         tableDepartment.setOnMouseClicked(e -> {
             if (e.getClickCount() >= 2 && tableDepartment.getSelectionModel().getSelectedItem() != null) {
+
+                btEdit.setDisable(false);
+                txtId.setDisable(true);
+                btSave.setDisable(true);
+
                 depertment = tableDepartment.getSelectionModel().getSelectedItem();
                 txtId.setText(depertment.getDepId());
                 txtName.setText(depertment.getDepName());
@@ -114,18 +137,21 @@ public class DepartmentController implements Initializable {
     private void initEvents() {
         btSave.setOnAction(event -> {
             try {
-                if (txtId.getText().equals("") && txtName.getText().equals("")) {
+                if (!txtId.getText().equals("") && !txtName.getText().equals("")) {
                     depertment = new DepartmentModel(txtId.getText(), txtName.getText());
                     if (depertment.saveData() > 0) {
                         showData();
                         ClearText();
                         alertMessage.showCompletedMessage(stackPane, "Saved", "Save data successfully.", 3,
                                 Pos.BOTTOM_RIGHT);
+                        if (registerController != null)
+                            registerController.fillDep();
                     } else {
                         alertMessage.showWarningMessage(stackPane, "Save Warning", "Can not save data.", 4,
                                 Pos.BOTTOM_RIGHT);
                     }
                 } else {
+                    validRules.setErrorDecorationEnabled(true);
                     alertMessage.showWarningMessage(stackPane, "Save Warning",
                             "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                 }
@@ -138,18 +164,21 @@ public class DepartmentController implements Initializable {
 
         btEdit.setOnAction(event -> {
             try {
-                if (txtId.getText().equals("") && txtName.getText().equals("")) {
+                if (!txtId.getText().equals("") && !txtName.getText().equals("")) {
                     depertment = new DepartmentModel(txtId.getText(), txtName.getText());
                     if (depertment.updateData() > 0) {
                         showData();
                         ClearText();
                         alertMessage.showCompletedMessage(stackPane, "Edited", "Edit data successfully.", 4,
                                 Pos.BOTTOM_RIGHT);
+                        if (registerController != null)
+                            registerController.fillDep();
                     } else {
                         alertMessage.showWarningMessage(stackPane, "Edit Warning", "Can not edit data.", 4,
                                 Pos.BOTTOM_RIGHT);
                     }
                 } else {
+                    validRules.setErrorDecorationEnabled(true);
                     alertMessage.showWarningMessage(stackPane, "Edit Warning",
                             "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                 }
@@ -173,9 +202,28 @@ public class DepartmentController implements Initializable {
         });
     }
 
+    private void initKeyEvents() {
+        txtId.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtName.requestFocus();
+        });
+        txtName.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtId.requestFocus();
+        });
+    }
+
     private void ClearText() {
+        validRules.setErrorDecorationEnabled(false);
         txtId.clear();
         txtName.clear();
+        if (txtId.isDisable())
+            txtId.setDisable(false);
+        if (btSave.isDisable())
+            btSave.setDisable(false);
+        if (!btEdit.isDisable())
+            btEdit.setDisable(true);
+        txtId.requestFocus();
     }
 
     private void showData() {
@@ -224,7 +272,10 @@ public class DepartmentController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTable();
+        initRules();
         initEvents();
+        initKeyEvents();
+        btEdit.setDisable(true);
         showData();
 
     }
@@ -286,6 +337,8 @@ public class DepartmentController implements Initializable {
                     dialog.closeDialog();
                     alertMessage.showCompletedMessage(stackPane, "Delete", "Delete data successfully.", 4,
                             Pos.BOTTOM_RIGHT);
+                    if (registerController != null)
+                        registerController.fillDep();
                 } else {
                     alertMessage.showWarningMessage(stackPane, "Delete", "Can not delete data.", 4, Pos.BOTTOM_RIGHT);
                 }

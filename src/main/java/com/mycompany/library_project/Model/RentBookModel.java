@@ -17,13 +17,18 @@ public class RentBookModel implements DataAccessObject {
     private String member;
     private String barcode;
     private String bookName;
+    private String page;
     private Integer qty;
     private String status;
     private String catg;
     private String type;
+    private String table;
+    private String tableLog;
     private Date rentDate;
     private Date sendDate;
     private String rent_status;
+    private String outDate;
+    private String pricePerBook;
 
 
     public RentBookModel() {
@@ -35,6 +40,7 @@ public class RentBookModel implements DataAccessObject {
         this.status = status;
     }
 
+    // Todo: Call by save rent books
     public RentBookModel(String rentId, String member, String barcode, Integer qty, Date rentDate, Date sendDate,
             String rent_status) {
         this.rentId = rentId;
@@ -46,24 +52,38 @@ public class RentBookModel implements DataAccessObject {
         this.rent_status = rent_status;
     }
 
-    public RentBookModel(String barcode, String bookName, String catg, String type, Date rentDate, Date sendDate) {
+    // Todo: Call by rent books
+    public RentBookModel(String barcode, String bookName, String page, String catg, String type, String table,
+            String tableLog, Date rentDate, Date sendDate) {
         this.barcode = barcode;
         this.bookName = bookName;
+        this.page = page;
         this.catg = catg;
         this.type = type;
+        this.table = table;
+        this.tableLog = tableLog;
         this.rentDate = rentDate;
         this.sendDate = sendDate;
+
     }
 
-    public RentBookModel(String barcode, String bookName, String catg, String type, String member, Date rentDate,
-            Date sendDate) {
+    // Todo: Call by send books
+    public RentBookModel(String rentId, String barcode, String bookName, String page, String catg, String type,
+            String table, String tableLog, String member, Date rentDate, Date sendDate, String outDate,
+            String pricePerBook) {
+        this.rentId = rentId;
         this.barcode = barcode;
         this.bookName = bookName;
+        this.page = page;
         this.catg = catg;
         this.type = type;
+        this.table = table;
+        this.tableLog = tableLog;
         this.member = member;
         this.rentDate = rentDate;
         this.sendDate = sendDate;
+        this.outDate = outDate;
+        this.pricePerBook = pricePerBook;
     }
 
     public String getRentId() {
@@ -98,6 +118,14 @@ public class RentBookModel implements DataAccessObject {
         this.bookName = bookName;
     }
 
+    public String getPage() {
+        return page;
+    }
+
+    public void setPage(String page) {
+        this.page = page;
+    }
+
     public Integer getQty() {
         return qty;
     }
@@ -130,6 +158,22 @@ public class RentBookModel implements DataAccessObject {
         this.type = type;
     }
 
+    public String getTable() {
+        return table;
+    }
+
+    public void setTable(String table) {
+        this.table = table;
+    }
+
+    public String getTableLog() {
+        return tableLog;
+    }
+
+    public void setTableLog(String tableLog) {
+        this.tableLog = tableLog;
+    }
+
     public Date getRentDate() {
         return rentDate;
     }
@@ -152,6 +196,22 @@ public class RentBookModel implements DataAccessObject {
 
     public void setRent_status(String rent_status) {
         this.rent_status = rent_status;
+    }
+
+    public String getOutDate() {
+        return outDate;
+    }
+
+    public void setOutDate(String outDate) {
+        this.outDate = outDate;
+    }
+
+    public String getPricePerBook() {
+        return pricePerBook;
+    }
+
+    public void setPricePerBook(String pricePerBook) {
+        this.pricePerBook = pricePerBook;
     }
 
     public ResultSet findAll() throws SQLException {
@@ -249,7 +309,7 @@ public class RentBookModel implements DataAccessObject {
     }
 
     public ResultSet getSendBook(String book_barcode, String book_status) throws SQLException {
-        sql = "call sendBook_Show(?,?)";
+        sql = "call sendBook_ShowByBarcode(?,?)";
         ps = con.prepareStatement(sql);
         ps.setString(1, book_barcode);
         ps.setString(2, book_status);

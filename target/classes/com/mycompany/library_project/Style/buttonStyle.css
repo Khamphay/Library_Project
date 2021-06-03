@@ -4,13 +4,21 @@
     -fx-font-family:'Phetsarath OT';
 }
 
-.button{
+.jfx-button{
     -fx-border-width: 0px 0px 0px 2px;
     /* -fx-border-color: #ffffff; */
     /* -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #ffffff, #101D3D); */
+    /* -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent; */
 }
 
-.button:hover{
+.jfx-button:hover{
+    -fx-font-weight: bold;
     -fx-border-color: #ffffff;
     -fx-background-color: derive(#0b2e80, 10%);
+}
+
+
+.jfx-button:pressed {
+  -fx-rippler-fill: width;
 }

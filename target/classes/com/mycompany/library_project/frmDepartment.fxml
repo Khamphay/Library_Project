@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="553.0" prefWidth="811.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.DepartmentController">
+<AnchorPane prefHeight="643.0" prefWidth="875.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.DepartmentController">
    <children>
       <BorderPane layoutX="152.0" layoutY="86.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -26,76 +26,11 @@
                      <content>
                         <JFXBadge>
                            <children>
-                              <AnchorPane maxWidth="-Infinity" prefHeight="501.0" prefWidth="595.0">
+                              <AnchorPane maxWidth="-Infinity" prefHeight="517.0" prefWidth="627.0">
                                  <children>
-                                    <TextField fx:id="txtId" layoutX="14.0" layoutY="52.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="215.0" promptText="ລະຫັດ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
-                                       <font>
-                                          <Font name="Phetsarath OT" size="12.0" />
-                                       </font>
-                                    </TextField>
-                                    <TextField fx:id="txtName" layoutX="253.0" layoutY="48.0" prefHeight="31.0" prefWidth="328.0" promptText="ຊື່ພາກວິຊາ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0">
-                                       <font>
-                                          <Font name="Phetsarath OT" size="12.0" />
-                                       </font>
-                                    </TextField>
-                                    <JFXButton id="btClick" fx:id="btSave" layoutX="12.0" layoutY="95.0" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                       <graphic>
-                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@Icon/checked.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <padding>
-                                          <Insets left="-4.0" />
-                                       </padding>
-                                    </JFXButton>
-                                    <JFXButton id="btClick" fx:id="btEdit" layoutX="111.0" layoutY="95.0" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ແກັໄຂ້" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                       <graphic>
-                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@Icon/edit.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <padding>
-                                          <Insets left="-4.0" />
-                                       </padding>
-                                    </JFXButton>
-                                    <JFXButton id="btClick" fx:id="btCancel" layoutX="210.0" layoutY="95.0" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                       <graphic>
-                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@Icon/cancel.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <padding>
-                                          <Insets left="-4.0" />
-                                       </padding>
-                                    </JFXButton>
-                                    <TextField fx:id="txtSearch" layoutX="315.0" layoutY="96.0" prefHeight="30.0" prefWidth="268.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-14-Regular">
-                                       <padding>
-                                          <Insets left="40.0" />
-                                       </padding>
-                                    </TextField>
-                                    <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="322.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@Icon/search_50px.png" />
-                                       </image>
-                                    </ImageView>
-                                    <TableView fx:id="tableDepartment" layoutX="13.0" layoutY="141.0" prefHeight="335.0" prefWidth="573.0" AnchorPane.bottomAnchor="25.0" AnchorPane.topAnchor="141.0">
+                                    <TableView fx:id="tableDepartment" layoutX="13.0" layoutY="197.0" prefHeight="292.0" prefWidth="628.0" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="197.0">
                                        <placeholder>
-                                          <Label text="ບໍ່ມີຂໍ້ມູນ"/>
+                                          <Label text="ບໍ່ມີຂໍ້ມູນ" />
                                        </placeholder>
                                        <columns>
                                           <TableColumn fx:id="colId" maxWidth="2500.0" prefWidth="111.0" text="ລະຫັດ" />
@@ -105,7 +40,78 @@
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                        </columnResizePolicy>
                                     </TableView>
-                                    <Separator layoutX="348.0" layoutY="99.0" orientation="VERTICAL" prefHeight="23.0" />
+                                    <AnchorPane layoutX="12.0" layoutY="136.0" prefHeight="157.0" prefWidth="607.0" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" AnchorPane.topAnchor="28.0">
+                                       <children>
+                                          <TextField fx:id="txtId" layoutX="20.0" layoutY="54.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="215.0" promptText="ລະຫັດ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.topAnchor="49.0">
+                                             <font>
+                                                <Font name="Phetsarath OT" size="12.0" />
+                                             </font>
+                                          </TextField>
+                                          <TextField fx:id="txtName" layoutX="259.0" layoutY="50.0" prefHeight="31.0" prefWidth="328.0" promptText="ຊື່ພາກວິຊາ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.topAnchor="49.0">
+                                             <font>
+                                                <Font name="Phetsarath OT" size="12.0" />
+                                             </font>
+                                          </TextField>
+                                          <JFXButton id="btClick" fx:id="btSave" layoutX="18.0" layoutY="105.0" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                             <graphic>
+                                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@Icon/checked.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                             <padding>
+                                                <Insets left="-4.0" />
+                                             </padding>
+                                          </JFXButton>
+                                          <JFXButton id="btClick" fx:id="btEdit" layoutX="117.0" layoutY="105.0" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ແກັໄຂ້" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                             <graphic>
+                                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@Icon/edit.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                             <padding>
+                                                <Insets left="-4.0" />
+                                             </padding>
+                                          </JFXButton>
+                                          <JFXButton id="btClick" fx:id="btCancel" layoutX="216.0" layoutY="105.0" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                             <graphic>
+                                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@Icon/cancel.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                             <padding>
+                                                <Insets left="-4.0" />
+                                             </padding>
+                                          </JFXButton>
+                                          <TextField fx:id="txtSearch" layoutX="321.0" layoutY="106.0" prefHeight="30.0" prefWidth="268.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-14-Regular">
+                                             <padding>
+                                                <Insets left="40.0" />
+                                             </padding>
+                                          </TextField>
+                                          <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="328.0" layoutY="111.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@Icon/search_50px.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Separator layoutX="354.0" layoutY="109.0" orientation="VERTICAL" prefHeight="23.0" />
+                                          <Label layoutX="259.0" layoutY="29.0" prefHeight="16.0" prefWidth="75.0" styleClass="BoonBaan-size-14" text="ຊື່ພາກວິຊາ" AnchorPane.topAnchor="28.0" />
+                                          <Label layoutX="23.0" layoutY="30.0" prefHeight="19.0" prefWidth="94.0" styleClass="BoonBaan-size-14" text="ລະຫັດພາກວິຊາ" AnchorPane.topAnchor="29.0" />
+                                       </children>
+                                    </AnchorPane>
                                  </children>
                               </AnchorPane>
                            </children>

@@ -47,9 +47,9 @@
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <TableView fx:id="tableBarcode" layoutX="29.0" layoutY="31.0" prefHeight="494.0" prefWidth="569.0" tableMenuButtonVisible="true">
+                  <TableView fx:id="tableBarcode" layoutX="29.0" layoutY="31.0" prefHeight="493.0" prefWidth="587.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="346.0" AnchorPane.topAnchor="28.0">
                     <placeholder>
-                        <Label text="ບໍ່ມີຂໍ້ມູນ"/>
+                        <Label text="ບໍ່ມີຂໍ້ມູນ" />
                      </placeholder>
                      <columns>
                       <TableColumn fx:id="colBarcode" maxWidth="3500.0" prefWidth="141.0" text="ບາໂຄດ (Barcode)" />
@@ -60,7 +60,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <AnchorPane layoutX="628.0" layoutY="31.0" minHeight="-Infinity" prefHeight="493.0" prefWidth="303.0" style="-fx-border-color: #101D3D; -fx-border-radius: 0.5em;">
+                  <AnchorPane layoutX="628.0" layoutY="31.0" minHeight="-Infinity" prefHeight="493.0" prefWidth="303.0" style="-fx-border-color: #101D3D; -fx-border-radius: 0.5em;" AnchorPane.bottomAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="28.0">
                      <children>
                         <JFXButton id="btClick" fx:id="btSave" alignment="CENTER" layoutX="16.0" layoutY="309.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE" AnchorPane.topAnchor="309.0">
                            <font>

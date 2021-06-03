@@ -45,6 +45,11 @@ public class MyDate {
         return datePicker;
     }
 
+    /*
+     * The method cancalarDate is return int: if LocalDate.now() < argument 'date'
+     * is reutun zero; if LocalDate.now() > argument 'date' is reutun the value more
+     * than zero
+     */
     public int cancalarDate(LocalDate date) {
         int outdate = 0;
         if (LocalDate.now().compareTo(date) > 0) {

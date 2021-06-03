@@ -14,6 +14,7 @@ import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -22,12 +23,12 @@ import org.controlsfx.validation.Validator;
 
 public class ConfigServerController implements Initializable {
 
+    private ValidationSupport validRules = new ValidationSupport();
     public static Stage configStage = null;
     public static boolean chack = false;
     private Double x, y;
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile config = new CreateLogFile();
-    private ValidationSupport validate = null;
 
     @FXML
     private StackPane stackPane;
@@ -47,20 +48,19 @@ public class ConfigServerController implements Initializable {
     @FXML
     private JFXButton btSave, btCancel, btTest, btClose;
 
+    private void initRules() {
+        validRules.setErrorDecorationEnabled(false);
+        validRules.registerValidator(txtHost, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນ Host Name"));
+        validRules.registerValidator(txtPort, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນ Port"));
+
+    }
+
     private void initEvents() {
-
-        validate = new ValidationSupport();
-        // validate.setErrorDecorationEnabled(true);
-        validate.registerValidator(txtHost, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນ Host Name"));
-
-        validate = new ValidationSupport();
-        validate.registerValidator(txtHost, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນ Port"));
-
         btSave.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                if (txtHost.getText() != "" && txtPort.getText() != "") {
+                if (!txtHost.getText().equals("") && !txtPort.getText().equals("")) {
                     if (config.createFileConfig(txtHost.getText(), txtPort.getText(), txtUserName.getText(),
                             txtPassword.getText()) == true) {
                         MyConnection.server = txtHost.getText() + ":" + txtPort.getText();
@@ -68,6 +68,7 @@ public class ConfigServerController implements Initializable {
                         MyConnection.password = txtPassword.getText();
                         textResualt.setText("ບັນທືກຂໍ້ມູນສຳເລ້ດແລ້ວ");
                     } else {
+                        validRules.setErrorDecorationEnabled(true);
                         textResualt.setText("ບັນທືກຂໍ້ມູນບໍ່ສຳເລ້ດ, ກະລຸນາກວດສອບຂໍ້ມຸນແລ້ວ ລອງໃຫມ່ອີກຄັ້ງ.");
                     }
                 } else {
@@ -81,6 +82,7 @@ public class ConfigServerController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
+                validRules.setErrorDecorationEnabled(true);
                 MyConnection.server = txtHost.getText() + ":" + txtPort.getText();
                 MyConnection.userName = txtUserName.getText();
                 MyConnection.password = txtPassword.getText();
@@ -98,6 +100,7 @@ public class ConfigServerController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
+                validRules.setErrorDecorationEnabled(false);
                 txtHost.clear();
                 txtPort.clear();
                 txtUserName.clear();
@@ -123,15 +126,13 @@ public class ConfigServerController implements Initializable {
                     txtUserName.setEditable(true);
                     txtPassword.setEditable(true);
 
-                    validate = new ValidationSupport();
-                    // validate.setErrorDecorationEnabled(true);
-                    validate.registerValidator(txtUserName, false,
+                    validRules.registerValidator(txtUserName, false,
                             Validator.createEmptyValidator("ກະລຸນາປ້ອນ User Name"));
-
-                    validate = new ValidationSupport();
-                    validate.registerValidator(txtPassword, false,
+                    validRules.registerValidator(txtPassword, false,
                             Validator.createEmptyValidator("ກະລຸນາປ້ອນລະຫັດຜ່ານ"));
                 } else {
+                    validRules.revalidate(txtUserName);
+                    validRules.revalidate(txtPassword);
                     txtUserName.setEditable(false);
                     txtPassword.setEditable(false);
                 }
@@ -140,10 +141,31 @@ public class ConfigServerController implements Initializable {
         });
     }
 
+    private void initKeyEvents() {
+        txtHost.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtPort.requestFocus();
+        });
+        txtPort.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtUserName.requestFocus();
+        });
+        txtUserName.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtPassword.requestFocus();
+        });
+        txtPassword.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtHost.requestFocus();
+
+        });
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initEvents();
-
+        initRules();
+        initKeyEvents();
         // Todo: Move From
         acTopBar.setOnMousePressed(mouseEvent -> {
             x = mouseEvent.getSceneX();

@@ -11,7 +11,7 @@
 
 <AnchorPane fx:id="acPaneMenu" accessibleRole="DATE_PICKER" prefHeight="571.0" prefWidth="197.0" style="-fx-background-color: #101D3D;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.MenuController1">
    <children>
-      <JFXButton id="btHome" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutY="33.0" lineSpacing="2.0" prefHeight="40.0" styleClass="BoonBaan-size-14-Regular" text="ໜ້າຫຼັກ" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="37.0">
+      <JFXButton id="btHome" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutY="33.0" lineSpacing="2.0" prefHeight="40.0" styleClass="BoonBaan-size-14-Regular" text="ໜ້າຫຼັກ" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

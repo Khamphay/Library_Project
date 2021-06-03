@@ -10,6 +10,10 @@ import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.AuthorModel;
 import com.mycompany.library_project.config.CreateLogFile;
 
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.*;
@@ -21,6 +25,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -28,6 +33,7 @@ import javafx.util.Callback;
 
 public class AuthorController implements Initializable {
 
+    private ValidationSupport validRules = new ValidationSupport();
     private ManagePersonalCotroller personalCotroller = null;
     private AddBookController addBookController = null;
     private AuthorModel author = null;
@@ -37,7 +43,6 @@ public class AuthorController implements Initializable {
     private DialogMessage dialog = null;
     private ObservableList<AuthorModel> data = null;
     private CreateLogFile logfile = new CreateLogFile();
-    public Stage addAuthor = null;
     double x, y;
 
     public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
@@ -57,25 +62,27 @@ public class AuthorController implements Initializable {
     public void initConstructor2(AddBookController addBookController) {
         this.addBookController = addBookController;
 
-        anchorPaneHeader.setOnMousePressed(event -> {
-            x = event.getSceneX();
-            y = event.getSceneY();
-        });
+        btClose.setDisable(true);
+        btClose.setVisible(false);
+        // anchorPaneHeader.setOnMousePressed(event -> {
+        // x = event.getSceneX();
+        // y = event.getSceneY();
+        // });
 
-        anchorPaneHeader.setOnMouseDragged(event -> {
-            addAuthor.setX(event.getScreenX() - x);
-            addAuthor.setY(event.getScreenY() - y);
-        });
+        // anchorPaneHeader.setOnMouseDragged(event -> {
+        // addAuthor.setX(event.getScreenX() - x);
+        // addAuthor.setY(event.getScreenY() - y);
+        // });
 
-        btClose.setOnAction(new EventHandler<ActionEvent>() {
+        // btClose.setOnAction(new EventHandler<ActionEvent>() {
 
-            @Override
-            public void handle(ActionEvent event) {
-                Stage stage = (Stage) stackPane.getScene().getWindow();
-                stage.close();
-            }
+        // @Override
+        // public void handle(ActionEvent event) {
+        // Stage stage = (Stage) stackPane.getScene().getWindow();
+        // stage.close();
+        // }
 
-        });
+        // });
 
     }
 
@@ -99,6 +106,17 @@ public class AuthorController implements Initializable {
 
     @FXML
     private TableColumn<AuthorModel, String> colId, colFname, colSname, colGender, colTel, colEmail;
+
+    private void initRules() {
+        validRules.setErrorDecorationEnabled(false);
+        validRules.redecorate();
+        validRules.registerValidator(txtId, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນລະຫັດນັກແຕ່ງປຶ້ມ"));
+        validRules.registerValidator(txtFname, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່ນັກແຕ່ງປຶ້ມ"));
+        validRules.registerValidator(txtLname, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນນາມສະກຸນນັກແຕ່ງປຶ້ມ"));
+        validRules.registerValidator(txtTel, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນເບີໂທ"));
+        validRules.registerValidator(txtEmail, false,
+                Validator.createEmptyValidator("ກະລຸນາປ້ອນ Email (ຖ້າມີ)", Severity.WARNING));
+    }
 
     private void initTable() {
         colId.setCellValueFactory(new PropertyValueFactory<>("author_id"));
@@ -150,12 +168,44 @@ public class AuthorController implements Initializable {
     }
 
     private void clearText() {
+
+        validRules.setErrorDecorationEnabled(false);
+
         txtId.clear();
         txtFname.clear();
         txtLname.clear();
         txtTel.clear();
         txtEmail.clear();
         gender = "";
+
+        if (btSave.isDisable())
+            btSave.setDisable(false);
+        if (!btEdit.isDisable())
+            btEdit.setDisable(true);
+        txtId.requestFocus();
+    }
+
+    private void initKeyEvents() {
+        txtId.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtFname.requestFocus();
+        });
+        txtFname.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtLname.requestFocus();
+        });
+        txtLname.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtTel.requestFocus();
+        });
+        txtTel.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtEmail.requestFocus();
+        });
+        txtEmail.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtId.requestFocus();
+        });
     }
 
     private void initEvents() {
@@ -164,8 +214,8 @@ public class AuthorController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    if (txtId.getText() != "" && txtFname.getText() != "" && txtLname.getText() != ""
-                            && txtTel.getText() != "") {
+                    if (!txtId.getText().equals("") && !txtFname.getText().equals("") && !txtLname.getText().equals("")
+                            && !txtTel.getText().equals("")) {
                         gender = (rdbMale.isSelected() ? rdbMale.getText() : rdbFemale.getText());
                         author = new AuthorModel(txtId.getText(), txtFname.getText(), txtLname.getText(), gender,
                                 txtTel.getText(), txtEmail.getText());
@@ -183,6 +233,8 @@ public class AuthorController implements Initializable {
                                     Pos.BOTTOM_RIGHT);
                         }
                     } else {
+                        // Todo: Show warning message if text or combo box is empty
+                        validRules.setErrorDecorationEnabled(true);
                         alertMessage.showWarningMessage(stackPane, "Save Warning",
                                 "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                     }
@@ -199,8 +251,8 @@ public class AuthorController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    if (txtId.getText() != "" && txtFname.getText() != "" && txtLname.getText() != ""
-                            && txtTel.getText() != "") {
+                    if (!txtId.getText().equals("") && !txtFname.getText().equals("") && !txtLname.getText().equals("")
+                            && !txtTel.getText().equals("")) {
                         gender = (rdbMale.isSelected() ? rdbMale.getText() : rdbFemale.getText());
                         author = new AuthorModel(txtId.getText(), txtFname.getText(), txtLname.getText(), gender,
                                 txtTel.getText(), txtEmail.getText());
@@ -218,6 +270,8 @@ public class AuthorController implements Initializable {
                                     Pos.BOTTOM_RIGHT);
                         }
                     } else {
+                        // Todo: Show warning message
+                        validRules.setErrorDecorationEnabled(true);
                         alertMessage.showWarningMessage(stackPane, "Edit Warning",
                                 "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                     }
@@ -253,6 +307,10 @@ public class AuthorController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 if (event.getClickCount() >= 2 && tableAuthor.getSelectionModel().getSelectedItem() != null) {
+
+                    btEdit.setDisable(false);
+                    btSave.setDisable(true);
+
                     txtId.setText(tableAuthor.getSelectionModel().getSelectedItem().getAuthor_id());
                     txtFname.setText(tableAuthor.getSelectionModel().getSelectedItem().getFull_name());
                     txtLname.setText(tableAuthor.getSelectionModel().getSelectedItem().getSur_name());
@@ -297,10 +355,13 @@ public class AuthorController implements Initializable {
         rdbMale.setToggleGroup(group);
         rdbFemale.setToggleGroup(group);
         rdbMale.setSelected(true);
-
+        btEdit.setDisable(true);
         initTable();
-        showData();
+        initRules();
         initEvents();
+        initKeyEvents();
+        showData();
+
     }
 
     private void addButtonToTable() {

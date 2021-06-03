@@ -64,7 +64,7 @@ public class ManageBookController implements Initializable {
     @FXML
     private void btBookType_Click(ActionEvent event) {
         try {
-            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmbookType.fxml"));
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmBookType.fxml"));
             final Parent subForm = loader.load();
             BookTypeController bookTypeController = loader.getController();
             bookTypeController.initConstructor(this);
@@ -123,7 +123,17 @@ public class ManageBookController implements Initializable {
 
     @FXML
     private void btBookLost_Click(ActionEvent event) {
-        // show_subForm("frmBooks.fxml");
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmBookLost.fxml"));
+            final Parent subForm = loader.load();
+            BookLostController booklostController = loader.getController();
+            booklostController.initConstructor(this);
+            bpManageBook.setCenter(subForm);
+        } catch (Exception e) {
+            alertMessage.showErrorMessage(bpManageBook, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            CreateLogFile config = new CreateLogFile();
+            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Book Lost", e);
+        }
     }
 
     @Override

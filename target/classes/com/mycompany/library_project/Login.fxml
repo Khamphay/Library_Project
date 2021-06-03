@@ -13,6 +13,8 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
+<!-- <?import com.jfoenix.controls.JFXSpinner?> -->
+
 <StackPane fx:id="stakePane" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.LoginController">
    <children>
       <AnchorPane fx:id="acPaneLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="663.0" style="-fx-background-color: transparent;" stylesheets="@Style/appstyle.css">
@@ -122,6 +124,7 @@
                   </JFXButton>
                </children>
             </AnchorPane>
+            <!-- <JFXSpinner layoutX="262.0" layoutY="64.0" prefHeight="103.0" prefWidth="104.0" style="-fx-background-color: #0000;" /> -->
          </children>
       </AnchorPane>
    </children>

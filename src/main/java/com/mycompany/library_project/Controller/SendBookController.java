@@ -16,6 +16,7 @@ import javafx.util.Callback;
 
 import java.net.URL;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -23,17 +24,22 @@ import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+
 public class SendBookController implements Initializable {
 
+    private ValidationSupport validRules = new ValidationSupport();
+    private DecimalFormat dcFormat = new DecimalFormat("#,##0.00 ກີບ");
     private HomeController homeController = null;
     private RentBookModel sendBook = new RentBookModel();
     private AlertMessage alertMessage = new AlertMessage();
     private BookDetailModel book = new BookDetailModel();
     private MyDate mydate = new MyDate();
     private ResultSet rs = null;
-    // private DialogMessage dialog = null;
-    // private JFXButton[] buttons = { buttonOK() };
-    String rent_id = "";
+    String rent_id = "", table = "", tableLog = "";
+    int page = 0;
+    double price = 1000.00, allPrice = 0;
 
     public void initConstructor(HomeController homeController) {
         this.homeController = homeController;
@@ -54,12 +60,26 @@ public class SendBookController implements Initializable {
     private TableView<RentBookModel> tableSendBooks;
 
     @FXML
-    private TableColumn<RentBookModel, String> colBarcode, colBookName, colCatg, colType, colMemberName;
+    private TableColumn<RentBookModel, String> colRentId, colBarcode, colBookName, colPage, colCatg, colType, colTable,
+            colTableLog, colMemberName, colPrice, colOutDate;
 
     @FXML
     private TableColumn<RentBookModel, Date> colDateSend, colDateRent;
 
+    private void initRules() {
+        validRules.setErrorDecorationEnabled(false);
+        // validRules.registerValidator(, false,
+        // Validator.createEmptyValidator("ກະລຸນາປ້ອນລະຫັດສະມາຊິດ"));
+        validRules.registerValidator(txtBarcode, false, Validator.createEmptyValidator("ກະລຸນາລະຫັດ Barcode"));
+        validRules.registerValidator(txtBarcode, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່ປຶ້ມ"));
+        validRules.registerValidator(txtCatg, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນໝວດປຶ້ມ"));
+        validRules.registerValidator(txtType, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນປະເພດປຶ້ມ"));
+        validRules.registerValidator(txtMemberName, false,
+                Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່ ແລະ ນາມສະກຸນສະມາຊິດ"));
+    }
+
     private void clearText() {
+        validRules.setErrorDecorationEnabled(false);
         txtBarcode.clear();
         txtBookName.clear();
         txtCatg.clear();
@@ -69,19 +89,31 @@ public class SendBookController implements Initializable {
         txtPrice.clear();
         txtOutDate.clear();
         rent_id = "";
+        page = 0;
+        table = "";
+        tableLog = "";
+        allPrice = 0.0;
     }
 
     private void initTable() {
+        colRentId.setCellValueFactory(new PropertyValueFactory<>("rentId"));
         colBarcode.setCellValueFactory(new PropertyValueFactory<>("barcode"));
         colBookName.setCellValueFactory(new PropertyValueFactory<>("bookName"));
+        colPage.setCellValueFactory(new PropertyValueFactory<>("page"));
         colCatg.setCellValueFactory(new PropertyValueFactory<>("catg"));
         colType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        colTable.setCellValueFactory(new PropertyValueFactory<>("table"));
+        colTableLog.setCellValueFactory(new PropertyValueFactory<>("tableLog"));
         colMemberName.setCellValueFactory(new PropertyValueFactory<>("member"));
         colDateRent.setCellValueFactory(new PropertyValueFactory<>("rentDate"));
         colDateSend.setCellValueFactory(new PropertyValueFactory<>("sendDate"));
+        colOutDate.setCellValueFactory(new PropertyValueFactory<>("outDate"));
+        colPrice.setCellValueFactory(new PropertyValueFactory<>("pricePerBook"));
+        colRentId.setVisible(true);
 
         // Todo: Add column number
-        final TableColumn<RentBookModel, RentBookModel> colNumber = new TableColumn<RentBookModel, RentBookModel>();
+        final TableColumn<RentBookModel, RentBookModel> colNumber = new TableColumn<RentBookModel, RentBookModel>(
+                "ລຳດັບ");
         colNumber.setMinWidth(50);
         colNumber.setMaxWidth(120);
         colNumber.setPrefWidth(60);
@@ -124,29 +156,35 @@ public class SendBookController implements Initializable {
         txtBarcode.setOnKeyPressed(key -> {
             if (key.getCode() == KeyCode.ENTER) {
                 try {
-                    if (txtBarcode.getText().toString() != "") {
+                    if (!txtBarcode.getText().equals("")) {
 
                         rs = sendBook.getSendBook(txtBarcode.getText(), "ກຳລັງຢືມ");
                         if (rs.next()) {
                             rent_id = rs.getString("rent_id");
                             txtBookName.setText(rs.getString("book_name"));
+                            page = rs.getInt("page");
                             txtCatg.setText(rs.getString("catg_name"));
                             txtType.setText(rs.getString("type_name"));
+                            table = rs.getString("tableid");
+                            tableLog = rs.getString("table_log_id");
                             txtMemberName.setText(rs.getString("full_name") + " " + rs.getString("sur_name"));
                             dateRent.setValue(rs.getDate("date_rent").toLocalDate());
                             dateSend.setValue(rs.getDate("date_send").toLocalDate());
 
                             // Todo: Cancalar Date
-                            int outdate = mydate.cancalarDate(rs.getDate("date_send").toLocalDate());
-                            txtOutDate.setText(Integer.toString(outdate) + " ມື້");
-                            txtPrice.setText("0 ກີບ");
-                            txtAllPrice.setText("0 ກີບ");
+                            int dateout = mydate.cancalarDate(rs.getDate("date_send").toLocalDate());
+                            txtOutDate.setText(Integer.toString(dateout) + " ມື້");
+                            allPrice += (price * dateout);
+                            txtAllPrice.setText(dcFormat.format(allPrice));
                             tableSendBooks.getItems()
-                                    .add(new RentBookModel(txtBarcode.getText(), txtBookName.getText(),
-                                            txtCatg.getText(), txtType.getText(), txtMemberName.getText(),
-                                            Date.valueOf(dateRent.getValue()), Date.valueOf(dateSend.getValue())));
+                                    .add(new RentBookModel(rent_id, txtBarcode.getText(), txtBookName.getText(),
+                                            (page + " ໜ້າ"), txtCatg.getText(), txtType.getText(), table, tableLog,
+                                            txtMemberName.getText(), Date.valueOf(dateRent.getValue()),
+                                            Date.valueOf(dateSend.getValue()), txtOutDate.getText(),
+                                            dcFormat.format(price * dateout)));
                         }
                     } else {
+                        validRules.setErrorDecorationEnabled(true);
                         alertMessage.showWarningMessage(stackPane, "Warning",
                                 "Please chack your information and try again", 4, Pos.TOP_CENTER);
                     }
@@ -165,7 +203,7 @@ public class SendBookController implements Initializable {
                 String result = null;
                 for (RentBookModel row : tableSendBooks.getItems()) {
                     try {
-                        if (sendBook.sendBook(rent_id, row.getBarcode(), "ສົ່ງແລ້ວ") > 0) {
+                        if (sendBook.sendBook(row.getRentId(), row.getBarcode(), "ສົ່ງແລ້ວ") > 0) {
                             result = ((book.updateStatus(row.getBarcode(), "ຫວ່າງ") > 0) ? "Send books successfully"
                                     : null);
                         }
@@ -209,9 +247,10 @@ public class SendBookController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         dateRent = mydate.formateDatePicker(dateRent);
         dateSend = mydate.formateDatePicker(dateSend);
-
         initTable();
         initEvents();
+        initRules();
+        txtPrice.setText(dcFormat.format(price));
     }
 
     // private JFXButton buttonOK() {
@@ -225,6 +264,7 @@ public class SendBookController implements Initializable {
 
     private void addButtonToTable() {
         TableColumn<RentBookModel, Void> colAction = new TableColumn<>("Action");
+        colAction.setPrefWidth(100);
         Callback<TableColumn<RentBookModel, Void>, TableCell<RentBookModel, Void>> cellFactory = new Callback<TableColumn<RentBookModel, Void>, TableCell<RentBookModel, Void>>() {
 
             @Override

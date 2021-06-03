@@ -8,9 +8,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.net.URL;
 import java.sql.ResultSet;
@@ -74,7 +74,7 @@ public class AddBookController implements Initializable {
     private AnchorPane acHeaderPane;
 
     @FXML
-    private JFXButton btClose, btAddNewAuthor;
+    private JFXButton btClose, btAddNewAuthor, btAddCategory, btAddType, btAddTableLog;
 
     @FXML
     private TextField txtId, txtName, txtPage, txtQty, txtISBN, txtYear;
@@ -87,6 +87,57 @@ public class AddBookController implements Initializable {
 
     @FXML
     private ComboBox<String> cmbAuthor1, cmbAuthor2, cmbAuthor3, cmbAuthor4, cmbAuthor5, cmbAuthor6;
+
+    private void showAddCategory() {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmBookCategory.fxml"));
+            final Parent catgroot = loader.load();
+            final BookCategoryController categoryController = loader.getController();
+            categoryController.initConstructor2(this);
+            final Scene scene = new Scene(catgroot);
+            Stage stage = new Stage();
+            stage.setTitle("Add New Book Category");
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            alertMessage.showErrorMessage("Warning Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Open Form Category", e);
+        }
+    }
+
+    private void showAddType() {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmBookType.fxml"));
+            final Parent typeroot = loader.load();
+            final BookTypeController typeController = loader.getController();
+            typeController.initConstructor2(this);
+            final Scene scene = new Scene(typeroot);
+            Stage stage = new Stage();
+            stage.setTitle("Add New Book Type");
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            alertMessage.showErrorMessage("Warning Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Open Form Category", e);
+        }
+    }
+
+    private void showAddTablesLog() {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmTableLogs.fxml"));
+            final Parent tableroot = loader.load();
+            final TableLogController tableLogController = loader.getController();
+            tableLogController.initConstructor2(this);
+            final Scene scene = new Scene(tableroot);
+            Stage stage = new Stage();
+            stage.setTitle("Add New Table Log");
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            alertMessage.showErrorMessage("Warning Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Open Form Category", e);
+        }
+    }
 
     private void moveForm() {
         acHeaderPane.setOnMousePressed(mouseEvent -> {
@@ -138,14 +189,63 @@ public class AddBookController implements Initializable {
             final Scene scene = new Scene(subForm);
             final Stage stage = new Stage();
             stage.setScene(scene);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            authorController.addAuthor = stage;
+            stage.setTitle("Add New Author");
             stage.showAndWait();
+            ;
         } catch (Exception e) {
             alertMessage.showErrorMessage(borderPane, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             logfile.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນສ່ວນບຸກຄົນມີບັນຫາ: " + "Form Author", e);
         }
     }
+
+    private void initKeyEvents() {
+        txtId.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtName.requestFocus();
+        });
+        txtName.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtISBN.requestFocus();
+        });
+        txtISBN.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtYear.requestFocus();
+        });
+        txtYear.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtPage.requestFocus();
+        });
+        txtPage.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtQty.requestFocus();
+        });
+        txtQty.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                cmbCagtegory.requestFocus();
+        });
+        cmbCagtegory.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                cmbType.requestFocus();
+        });
+        cmbType.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                cmbStatus.requestFocus();
+        });
+        cmbStatus.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                cmbTable.requestFocus();
+        });
+        cmbTable.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                cmbtableLog.requestFocus();
+        });
+        cmbtableLog.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtDetail.requestFocus();
+        });
+
+    }
+
     private void initEvents() {
 
         btAddNewAuthor.setOnAction(new EventHandler<ActionEvent>() {
@@ -157,6 +257,29 @@ public class AddBookController implements Initializable {
 
         });
 
+        btAddCategory.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                showAddCategory();
+            }
+
+        });
+        btAddType.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                showAddType();
+            }
+
+        });
+        btAddTableLog.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                showAddTablesLog();
+            }
+        });
         txtPage.textProperty().addListener(new ChangeListener<String>() {
 
             @Override
@@ -188,7 +311,7 @@ public class AddBookController implements Initializable {
 
     }
 
-    private void fillType() {
+    public void fillType() {
 
         // Todo: set event to combo box
         cmbType.setOnAction(e -> {
@@ -211,7 +334,7 @@ public class AddBookController implements Initializable {
         }
     }
 
-    private void fillCategory() {
+    public void fillCategory() {
         // Todo: set event to combo box
         cmbCagtegory.setOnAction(e -> {
             index_category = cmbCagtegory.getSelectionModel().getSelectedIndex();
@@ -233,7 +356,7 @@ public class AddBookController implements Initializable {
         }
     }
 
-    private void fillTable() {
+    public void fillTable() {
         try {
             items = FXCollections.observableArrayList();
             table = new TableLogModel();
@@ -264,7 +387,7 @@ public class AddBookController implements Initializable {
         });
     }
 
-    private void fillValue() {
+    public void fillValue() {
 
         if (addBook != null) {
             txtQty.setEditable(false);
@@ -623,6 +746,7 @@ public class AddBookController implements Initializable {
             });
         }
         initEvents();
+        initKeyEvents();
         fillType();
         fillCategory();
         fillTable();

@@ -27,14 +27,15 @@
                <content>
                   <AnchorPane prefHeight="563.0" prefWidth="815.0">
                      <children>
-                        <TableView fx:id="tableMember" layoutX="9.0" layoutY="106.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="443.0" prefWidth="1150.0" style="-fx-background-color: transparent;" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="106.0">
+                        <TableView fx:id="tableMember" layoutX="9.0" layoutY="114.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="437.0" prefWidth="1190.0" style="-fx-background-color: transparent;" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="114.0">
                           <placeholder>
-                              <Label text="ບໍ່ມີຂໍ້ມູນ"/>
+                              <Label text="ບໍ່ມີຂໍ້ມູນ" />
                            </placeholder>
                            <columns>
-                              <TableColumn fx:id="id" prefWidth="97.0" text="ລະຫັົດນັກສຶກສາ" />
-                              <TableColumn fx:id="name" prefWidth="191.0" text="ຊື່ສະມາຊີກ" />
-                              <TableColumn fx:id="surname" prefWidth="183.0" text="ນາມສະກຸນ" />
+                              <TableColumn fx:id="memberId" prefWidth="97.0" text="ລະຫັດສະມາຊິດ" />
+                              <TableColumn fx:id="studentId" prefWidth="113.0" text="ລະຫັົດນັກສຶກສາ" />
+                              <TableColumn fx:id="name" prefWidth="180.0" text="ຊື່ສະມາຊີກ" />
+                              <TableColumn fx:id="surname" prefWidth="178.0" text="ນາມສະກຸນ" />
                               <TableColumn fx:id="gender" prefWidth="70.0" style="-fx-text-alignment: center;" text="ເພດ" />
                               <TableColumn fx:id="tel" minWidth="8.0" prefWidth="118.0" text="ເບີໂທ" />
                               <TableColumn fx:id="village" prefWidth="121.0" text="ບ້ານຢູ່ປັດຈຸບັນ" />
@@ -80,7 +81,7 @@
                               </ContextMenu>
                            </contextMenu>
                         </TableView>
-                        <JFXButton id="btClick" fx:id="btAddUser" alignment="CENTER" buttonType="RAISED" layoutX="822.0" layoutY="58.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE" AnchorPane.rightAnchor="344.0">
+                        <JFXButton id="btClick" fx:id="btAddUser" alignment="CENTER" buttonType="RAISED" layoutX="808.0" layoutY="69.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE" AnchorPane.rightAnchor="358.0">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -95,24 +96,24 @@
                               <Insets left="-6.0" />
                            </padding>
                         </JFXButton>
-                        <TextField fx:id="txtSearch" layoutX="941.0" layoutY="59.0" prefHeight="30.0" prefWidth="291.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular" AnchorPane.rightAnchor="14.0">
+                        <TextField fx:id="txtSearch" layoutX="927.0" layoutY="70.0" prefHeight="30.0" prefWidth="291.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular" AnchorPane.rightAnchor="28.0">
                            <padding>
                               <Insets left="40.0" />
                            </padding>
                         </TextField>
-                        <ImageView fitHeight="23.0" fitWidth="27.0" layoutX="951.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="274.0">
+                        <ImageView fitHeight="23.0" fitWidth="27.0" layoutX="935.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="288.0">
                            <image>
                               <Image url="@Icon/search_50px.png" />
                            </image>
                         </ImageView>
-                        <Pane layoutX="14.0" layoutY="21.0" prefHeight="73.0" prefWidth="252.0" style="-fx-background-color: #D4D4F7; -fx-background-radius: 0.5em; -fx-border-color: #101D3D; -fx-border-width: 0px 0px 2px 0px;">
+                        <Pane layoutX="14.0" layoutY="21.0" prefHeight="73.0" prefWidth="252.0" style="-fx-background-color: #D4D4F7; -fx-background-radius: 0.5em; -fx-border-color: #101D3D; -fx-border-width: 0px 0px 2px 0px;" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="28.0">
                            <children>
                               <Text layoutX="15.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ສະມາຊິກທັງໝົດມີ 259 ຄົນ" wrappingWidth="231.13671875" />
                               <Text layoutX="14.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ສະມາຊິກທີ່ຍັງບໍ່ໄດ້ຕໍ່ບັດມີ 24 ຄົນ" wrappingWidth="233.13671875" />
                               <Text layoutX="14.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ໝົດສິດເປັນສະມາຊິກມີ 24 ຄົນ" wrappingWidth="233.13671875" />
                            </children>
                         </Pane>
-                        <Pane layoutX="282.0" layoutY="21.0" prefHeight="73.0" prefWidth="383.0" style="-fx-background-color: #D4D4F7; -fx-background-radius: 0.5em; -fx-border-color: #101D3D; -fx-border-width: 0px 0px 2px 0px;">
+                        <Pane layoutX="329.0" layoutY="28.0" prefHeight="73.0" prefWidth="383.0" style="-fx-background-color: #D4D4F7; -fx-background-radius: 0.5em; -fx-border-color: #101D3D; -fx-border-width: 0px 0px 2px 0px;" AnchorPane.topAnchor="28.0">
                            <children>
                               <Text layoutX="8.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ວິທະຍາສາດຄອມພິວເຕີມີ 120 ຄົນ " wrappingWidth="200.13671875" />
                               <Text layoutX="8.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ເຄມີສາດມີ 120 ຄົນ " wrappingWidth="222.13671875" />
@@ -121,7 +122,7 @@
                               <Text layoutX="231.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊິວະສາດມີ 120 ຄົນ " wrappingWidth="144.13671875" />
                            </children>
                         </Pane>
-                        <Separator layoutX="975.0" layoutY="63.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="0.0" AnchorPane.rightAnchor="265.0" />
+                        <Separator layoutX="961.0" layoutY="74.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="0.0" AnchorPane.rightAnchor="279.0" />
                      </children>
                   </AnchorPane>
                </content>

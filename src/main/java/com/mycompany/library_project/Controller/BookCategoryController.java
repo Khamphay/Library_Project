@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
@@ -26,9 +27,14 @@ import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.CategoryModel;
 import com.mycompany.library_project.config.CreateLogFile;
 
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+
 public class BookCategoryController implements Initializable {
 
+    private ValidationSupport validRules = new ValidationSupport();
     private ManageBookController manageBookController = null;
+    private AddBookController addBookController = null;
     private CategoryModel category = null;
     private ObservableList<CategoryModel> data = null;
     private ResultSet rs = null;
@@ -40,6 +46,12 @@ public class BookCategoryController implements Initializable {
         this.manageBookController = manageBookController;
     }
 
+    public void initConstructor2(AddBookController addBookController) {
+        this.addBookController = addBookController;
+        btClose.setDisable(true);
+        btClose.setVisible(false);
+    }
+
     @FXML
     private StackPane stakePane;
 
@@ -47,13 +59,20 @@ public class BookCategoryController implements Initializable {
     private TextField txtcatgId, txtcatgName, txtSearch;
 
     @FXML
-    private JFXButton btSave, btEdite, btCancel;
+    private JFXButton btSave, btEdite, btCancel, btClose;
 
     @FXML
     private TableView<CategoryModel> tableCategory;
 
     @FXML
     private TableColumn<CategoryModel, String> colCatgId, colCatgName;
+
+    private void initRules() {
+        validRules.setErrorDecorationEnabled(false);
+        validRules.redecorate();
+        validRules.registerValidator(txtcatgId, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນລະຫັດໝວດປຶ້ມ"));
+        validRules.registerValidator(txtcatgName, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່ໝວດປຶ້ມ"));
+    }
 
     private void showData() {
         Platform.runLater(new Runnable() {
@@ -99,8 +118,17 @@ public class BookCategoryController implements Initializable {
     }
 
     private void ClearData() {
+        validRules.setErrorDecorationEnabled(false);
+
         txtcatgId.setText("");
         txtcatgName.setText("");
+        if (txtcatgId.isDisable())
+            txtcatgId.setDisable(false);
+        if (btSave.isDisable())
+            btSave.setDisable(false);
+        if (!btEdite.isDisable())
+            btEdite.setDisable(true);
+        txtcatgId.requestFocus();
     }
 
     @FXML
@@ -111,6 +139,11 @@ public class BookCategoryController implements Initializable {
     @FXML
     private void selectTable(MouseEvent clickEvent) {
         if (clickEvent.getClickCount() >= 2 && tableCategory.getSelectionModel().getSelectedItem() != null) {
+
+            btEdite.setDisable(false);
+            btSave.setDisable(true);
+            txtcatgId.setDisable(true);
+
             CategoryModel selectCatg = tableCategory.getSelectionModel().getSelectedItem();
             txtcatgId.setText(selectCatg.getCatgId());
             txtcatgName.setText(selectCatg.getCatgName());
@@ -132,8 +165,12 @@ public class BookCategoryController implements Initializable {
                     ClearData();
                     alertMessage.showCompletedMessage(stakePane, "Save", "Save data successfully.", 4,
                             Pos.BOTTOM_RIGHT);
+                    if (addBookController != null)
+                        addBookController.fillCategory();
                 }
             } else {
+                // Todo: Show warning message if text or combo box is empty
+                validRules.setErrorDecorationEnabled(true);
                 alertMessage.showWarningMessage(stakePane, "Save Warning",
                         "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
             }
@@ -154,8 +191,12 @@ public class BookCategoryController implements Initializable {
                     ClearData();
                     alertMessage.showCompletedMessage(stakePane, "Edit", "Edit data successfully.", 4,
                             Pos.BOTTOM_RIGHT);
+                    if (addBookController != null)
+                        addBookController.fillCategory();
                 }
             } else {
+                // Todo: Show warning message if text or combo box is empty
+                validRules.setErrorDecorationEnabled(true);
                 alertMessage.showWarningMessage(stakePane, "Edit Warning",
                         "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
             }
@@ -210,10 +251,24 @@ public class BookCategoryController implements Initializable {
         addButtonToTable();
     }
 
+    private void initKeyEvents() {
+        txtcatgId.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtcatgName.requestFocus();
+        });
+        txtcatgName.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtcatgId.requestFocus();
+        });
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initTable();
+        initRules();
+        initKeyEvents();
         showData();
+        btEdite.setDisable(true);
     }
 
     private void addButtonToTable() {
@@ -274,6 +329,8 @@ public class BookCategoryController implements Initializable {
                     dialog.closeDialog();
                     alertMessage.showCompletedMessage(stakePane, "Delete", "Delete data successfully.", 4,
                             Pos.BOTTOM_RIGHT);
+                    if (addBookController != null)
+                        addBookController.fillCategory();
                 }
             } catch (SQLException ex) {
                 alertMessage.showErrorMessage(stakePane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);

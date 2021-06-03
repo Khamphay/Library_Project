@@ -13,6 +13,7 @@ import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -26,7 +27,7 @@ public class LoginController implements Initializable {
 
     private double x, y;
     public static Stage loginSatge = null;// Seted object when open form 'Login' in class 'DesktopController.java'
-    private ValidationSupport validRules;
+    private ValidationSupport validRules = new ValidationSupport();;
     private DialogMessage dialog = null;
     private Connection con = null;
     private CreateLogFile server = null;
@@ -68,15 +69,15 @@ public class LoginController implements Initializable {
     }
 
     private void textRules() {
-        validRules = new ValidationSupport();
+        validRules.setErrorDecorationEnabled(false);
+        validRules.redecorate();
         validRules.registerValidator(txtUsername, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່ຜູ້ໃຊ້"));
-
-        validRules = new ValidationSupport();
         validRules.registerValidator(txtPassword, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນລະຫັດຜ່ານ"));
     }
 
     @FXML
     private void Login(ActionEvent event) throws Exception {
+        validRules.setErrorDecorationEnabled(true);
         // spinner.setVisible(true);
         Parent root = FXMLLoader.load(App.class.getResource("frmHome.fxml"));
         Scene scene = new Scene(root);
@@ -92,12 +93,16 @@ public class LoginController implements Initializable {
         // Todo: Or use
         // Stage loginStg = (Stage) acPaneLogin.getScene().getWindow();
         // loginStg.close();
+
     }
 
     @FXML
     private void Cancel(ActionEvent event) {
+        validRules.setErrorDecorationEnabled(false);
         txtUsername.setText("");
         // spinner.setVisible(true);
+        txtPassword.setText("");
+
     }
 
     @FXML
@@ -135,6 +140,14 @@ public class LoginController implements Initializable {
         opacityFromMove();
         // MyProgress();
         textRules();
+        txtUsername.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER)
+                txtPassword.requestFocus();
+        });
+        txtPassword.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER)
+                btLogin.requestFocus();
+        });
 
         Platform.runLater(new Runnable() {
 

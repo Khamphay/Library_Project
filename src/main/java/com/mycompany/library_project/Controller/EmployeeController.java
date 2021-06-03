@@ -11,6 +11,10 @@ import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.EmployeeModel;
 import com.mycompany.library_project.config.CreateLogFile;
 
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.*;
@@ -24,12 +28,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.Callback;
 
 public class EmployeeController implements Initializable {
 
+    private ValidationSupport validRules = new ValidationSupport();
     private ManagePersonalCotroller personalCotroller = null;
     private EmployeeModel employee = null;
     private ResultSet rs = null;
@@ -61,6 +67,16 @@ public class EmployeeController implements Initializable {
 
     @FXML
     private TableColumn<EmployeeModel, String> colId, colFname, colSname, colGender, colTel, colEmail;
+
+    private void initRules() {
+        validRules.setErrorDecorationEnabled(false);
+        validRules.registerValidator(txtId, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນລະຫັດພະນັກງານ"));
+        validRules.registerValidator(txtFname, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່"));
+        validRules.registerValidator(txtLname, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນນາມສະກຸນ"));
+        validRules.registerValidator(txtTel, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນເບີໂທລະສັບ"));
+        validRules.registerValidator(txtEmail, false,
+                Validator.createEmptyValidator("ກະລຸນາປ້ອນ Email (ຖ້າມີ)", Severity.WARNING));
+    }
 
     private void initTable() {
         colId.setCellValueFactory(new PropertyValueFactory<>("employeeId"));
@@ -113,12 +129,22 @@ public class EmployeeController implements Initializable {
     }
 
     private void clearText() {
+        validRules.setErrorDecorationEnabled(false);
         txtId.clear();
         txtFname.clear();
         txtLname.clear();
         txtTel.clear();
         txtEmail.clear();
         gender = "";
+
+        if (txtId.isDisable())
+            txtId.setDisable(false);
+        if (btSave.isDisable())
+            btSave.setDisable(false);
+        if (!btSave.isDisable())
+            btEdit.setDisable(true);
+
+        txtId.requestFocus();
     }
 
     private void initEvents() {
@@ -127,8 +153,8 @@ public class EmployeeController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    if (txtId.getText() != "" && txtFname.getText() != "" && txtLname.getText() != ""
-                            && txtTel.getText() != "") {
+                    if (!txtId.getText().equals("") && !txtFname.getText().equals("") && !txtLname.getText().equals("")
+                            && !txtTel.getText().equals("")) {
                         gender = (rdbMale.isSelected() ? rdbMale.getText() : rdbFemale.getText());
                         employee = new EmployeeModel(txtId.getText(), txtFname.getText(), txtLname.getText(), gender,
                                 txtTel.getText(), txtEmail.getText());
@@ -142,6 +168,7 @@ public class EmployeeController implements Initializable {
                                     Pos.BOTTOM_RIGHT);
                         }
                     } else {
+                        validRules.setErrorDecorationEnabled(true);
                         alertMessage.showWarningMessage(stackPane, "Save Warning",
                                 "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                     }
@@ -158,8 +185,8 @@ public class EmployeeController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    if (txtId.getText() != "" && txtFname.getText() != "" && txtLname.getText() != ""
-                            && txtTel.getText() != "") {
+                    if (!txtId.getText().equals("") && !txtFname.getText().equals("") && !txtLname.getText().equals("")
+                            && !txtTel.getText().equals("")) {
                         gender = (rdbMale.isSelected() ? rdbMale.getText() : rdbFemale.getText());
                         employee = new EmployeeModel(txtId.getText(), txtFname.getText(), txtLname.getText(), gender,
                                 txtTel.getText(), txtEmail.getText());
@@ -173,6 +200,7 @@ public class EmployeeController implements Initializable {
                                     Pos.BOTTOM_RIGHT);
                         }
                     } else {
+                        validRules.setErrorDecorationEnabled(true);
                         alertMessage.showWarningMessage(stackPane, "Edit Warning",
                                 "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                     }
@@ -217,6 +245,11 @@ public class EmployeeController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 if (event.getClickCount() >= 2 && tableEmployee.getSelectionModel().getSelectedItem() != null) {
+
+                    btEdit.setDisable(false);
+                    btSave.setDisable(true);
+                    txtId.setDisable(true);
+
                     txtId.setText(tableEmployee.getSelectionModel().getSelectedItem().getEmployeeId());
                     txtFname.setText(tableEmployee.getSelectionModel().getSelectedItem().getFirstName());
                     txtLname.setText(tableEmployee.getSelectionModel().getSelectedItem().getLastName());
@@ -230,6 +263,29 @@ public class EmployeeController implements Initializable {
                 }
             }
 
+        });
+    }
+
+    private void initKeyEvents() {
+        txtId.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtFname.requestFocus();
+        });
+        txtFname.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtLname.requestFocus();
+        });
+        txtLname.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtTel.requestFocus();
+        });
+        txtTel.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtEmail.requestFocus();
+        });
+        txtEmail.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER)
+                txtId.requestFocus();
         });
     }
 
@@ -289,9 +345,11 @@ public class EmployeeController implements Initializable {
         rdbMale.setToggleGroup(group);
         rdbFemale.setToggleGroup(group);
         rdbMale.setSelected(true);
-
+        btEdit.setDisable(true);
         initTable();
+        initRules();
         initEvents();
+        initKeyEvents();
         showData();
     }
 

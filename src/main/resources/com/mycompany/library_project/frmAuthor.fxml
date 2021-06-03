@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="672.0" prefWidth="1320.0" style="-fx-border-color: #101D3D;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.AuthorController">
+<BorderPane prefHeight="672.0" prefWidth="1333.0" style="-fx-border-color: #101D3D;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.AuthorController">
    <center>
       <StackPane fx:id="stackPane" prefHeight="614.0" prefWidth="1305.0">
          <children>
@@ -24,9 +24,9 @@
                <content>
                   <AnchorPane prefHeight="596.0" prefWidth="1295.0">
                      <children>
-                        <TableView fx:id="tableAuthor" layoutX="35.0" layoutY="69.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="943.0" style="-fx-background-color: transparent;" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="325.0" AnchorPane.topAnchor="69.0">
+                        <TableView fx:id="tableAuthor" layoutX="35.0" layoutY="69.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="537.0" prefWidth="968.0" style="-fx-background-color: transparent;" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="333.0" AnchorPane.topAnchor="69.0">
                            <placeholder>
-                              <Label text="ບໍ່ມີຂໍ້ມູນ"/>
+                              <Label text="ບໍ່ມີຂໍ້ມູນ" />
                            </placeholder>
                            <columns>
                               <TableColumn fx:id="colId" maxWidth="3000.0" text="ລະຫັດ" />
@@ -40,17 +40,17 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <TextField layoutX="677.0" layoutY="32.0" prefHeight="30.0" prefWidth="301.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular" AnchorPane.rightAnchor="325.0">
+                        <TextField layoutX="695.0" layoutY="32.0" prefHeight="30.0" prefWidth="301.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular" AnchorPane.rightAnchor="333.0">
                            <padding>
                               <Insets left="40.0" />
                            </padding>
                         </TextField>
-                        <ImageView fitHeight="24.0" fitWidth="22.0" layoutX="684.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="597.0">
+                        <ImageView fitHeight="24.0" fitWidth="22.0" layoutX="702.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="605.0">
                            <image>
                               <Image url="@Icon/search_50px.png" />
                            </image>
                         </ImageView>
-                        <AnchorPane layoutX="998.0" layoutY="69.0" minHeight="-Infinity" prefHeight="505.0" prefWidth="295.0" style="-fx-border-color: #101D3D; -fx-border-radius: 0.5em;" AnchorPane.bottomAnchor="22.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="69.0">
+                        <AnchorPane layoutX="998.0" layoutY="69.0" minHeight="-Infinity" prefHeight="505.0" prefWidth="295.0" style="-fx-border-color: #101D3D; -fx-border-radius: 0.5em;" AnchorPane.bottomAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="69.0">
                            <children>
                               <JFXButton id="btClick" fx:id="btSave" alignment="CENTER" layoutX="13.0" layoutY="454.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE" AnchorPane.topAnchor="454.0">
                                  <font>
@@ -124,7 +124,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <Separator layoutX="711.0" layoutY="35.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="4.0" AnchorPane.rightAnchor="586.0" />
+                        <Separator layoutX="729.0" layoutY="35.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="4.0" AnchorPane.rightAnchor="594.0" />
                      </children>
                   </AnchorPane>
                </content>

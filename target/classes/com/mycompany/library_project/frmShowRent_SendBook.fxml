@@ -13,100 +13,106 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="701.0" prefWidth="1330.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.ShowRentSendController">
-   <top>
-      <AnchorPane prefHeight="34.0" prefWidth="999.0" style="-fx-background-color: #101D3D;" BorderPane.alignment="CENTER">
-         <children>
-            <Label graphicTextGap="10.0" prefHeight="32.0" prefWidth="161.0" styleClass="BoonBaan-size-16" text="ຂໍ້ມູນຢືມ-ສົ່ງປຶ້ມ" textAlignment="CENTER" textFill="WHITE">
-               <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0">
-                     <image>
-                        <Image url="@Icon/book_50px.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Label>
-            <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
-               <graphic>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Icon/no_50px.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font size="1.0" />
-               </font>
-            </JFXButton>
-         </children>
-      </AnchorPane>
-   </top>
-   <center>
-      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <content>
-          <AnchorPane prefHeight="200.0" prefWidth="200.0">
+
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.ShowRentSendController">
+   <children>
+      <BorderPane prefHeight="701.0" prefWidth="1330.0" stylesheets="@Style/appstyle.css">
+         <top>
+            <AnchorPane prefHeight="34.0" prefWidth="999.0" style="-fx-background-color: #101D3D;" BorderPane.alignment="CENTER">
                <children>
-                  <TableView fx:id="tableShow" layoutX="26.0" layoutY="122.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="1265.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="122.0">
-                    <placeholder>
-                        <Label text="ບໍ່ມີຂໍ້ມູນ"/>
-                     </placeholder>
-                     <columns>
-                      <TableColumn fx:id="colRentId" prefWidth="124.0" text="ລະຫັດຢືມປຶ້ມ" />
-                      <TableColumn fx:id="colBarcode" prefWidth="127.0" text="ລະຫັດ Barcode" />
-                        <TableColumn fx:id="colBookName" prefWidth="260.0" text="ຊື່ປຶ້ມ" />
-                        <TableColumn fx:id="colCatg" prefWidth="166.0" text="ໝວດປຶ້ມ" />
-                        <TableColumn fx:id="colType" prefWidth="162.0" text="ປະເພດປຶ້ມ" />
-                        <TableColumn fx:id="colTableLog" prefWidth="74.0" text="ເລກລ໋ອກຕູ້" />
-                        <TableColumn fx:id="colDateRent" prefWidth="125.0" text="ວັນທີຢືມ" />
-                        <TableColumn fx:id="colDateSend" prefWidth="125.0" text="ວັນທີສົ່ງ" />
-                        <TableColumn fx:id="colStatus" prefWidth="125.0" text="ສະຖານະ" />
-                        <TableColumn fx:id="colMemberId" prefWidth="138.0" text="ລະຫັດສະມາຊິກ" />
-                        <TableColumn fx:id="colMemberName" prefWidth="196.0" text="ຊື່ສະມາຊິດ" />
-                        <TableColumn fx:id="colCause" prefWidth="112.0" text="ໝາຍເຫດ" />
-                    </columns>
-                  </TableView>
-                  <AnchorPane layoutX="26.0" layoutY="25.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="1149.0" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="25.0">
-                     <children>
-                        <Label alignment="CENTER" layoutX="14.0" layoutY="-12.0" prefHeight="23.0" prefWidth="134.0" style="-fx-background-color: #F4F4F4;" styleClass="BoonBaan-size-16" text="ເລືອກການສະແດງຂໍ້ມູນ" />
-                        <JFXRadioButton fx:id="rdbShowAll" layoutX="48.0" layoutY="32.0" styleClass="BoonBaan-size-14-Regular" text="ສະແດງຂໍ້ມູນທັງໝົດ">
-                           <selectedColor>
-                              <Color red="0.057261209934949875" green="0.09467186778783798" blue="0.6184210777282715" />
-                           </selectedColor>
-                        </JFXRadioButton>
-                        <JFXRadioButton fx:id="rdbShowRent" layoutX="221.0" layoutY="32.0" styleClass="BoonBaan-size-14-Regular" text="ສະແດງຂໍ້ມູນປຶ້ມທີ່ກຳລັງຢືມ">
-                           <selectedColor>
-                              <Color red="0.057261209934949875" green="0.09467186778783798" blue="0.6184210777282715" />
-                           </selectedColor>
-                        </JFXRadioButton>
-                        <JFXRadioButton fx:id="rdbShowOutOfRent" layoutX="426.0" layoutY="33.0" styleClass="BoonBaan-size-14-Regular" text="ສະແດງຂໍ້ມູນປຶ້ມທີ່ຢືມກາຍກຳນົດ">
-                           <selectedColor>
-                              <Color red="0.057261209934949875" green="0.09467186778783798" blue="0.6184210777282715" />
-                           </selectedColor>
-                        </JFXRadioButton>
-                        <TextField fx:id="txtSearch" layoutX="960.0" layoutY="27.0" prefHeight="30.0" prefWidth="291.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular" AnchorPane.rightAnchor="14.0">
-                           <padding>
-                              <Insets left="40.0" />
-                           </padding>
-                        </TextField>
-                        <ImageView fitHeight="23.0" fitWidth="27.0" layoutX="969.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="273.0">
+                  <Label graphicTextGap="10.0" prefHeight="32.0" prefWidth="161.0" styleClass="BoonBaan-size-16" text="ຂໍ້ມູນຢືມ-ສົ່ງປຶ້ມ" textAlignment="CENTER" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0">
                            <image>
-                              <Image url="@Icon/search_50px.png" />
+                              <Image url="@Icon/book_50px.png" />
                            </image>
                         </ImageView>
-                        <Separator layoutX="995.0" layoutY="30.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="0.0" AnchorPane.rightAnchor="264.0" />
-                        <JFXRadioButton fx:id="rdbSend" layoutX="663.0" layoutY="34.0" styleClass="BoonBaan-size-14-Regular" text="ສະແດງຂໍ້ມູນປຶ້ມທີ່ສົ່ງແລ້ວ">
-                           <selectedColor>
-                              <Color red="0.057261209934949875" green="0.09467186778783798" blue="0.6184210777282715" />
-                           </selectedColor>
-                        </JFXRadioButton>
-                     </children>
-                  </AnchorPane>
+                     </graphic>
+                  </Label>
+                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icon/no_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="1.0" />
+                     </font>
+                  </JFXButton>
                </children>
             </AnchorPane>
-        </content>
-      </ScrollPane>
-   </center>
-</BorderPane>
+         </top>
+         <center>
+            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <content>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tableShow" layoutX="26.0" layoutY="122.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="435.0" prefWidth="1265.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="122.0">
+                          <placeholder>
+                              <Label text="ບໍ່ມີຂໍ້ມູນ" />
+                           </placeholder>
+                           <columns>
+                            <TableColumn fx:id="colRentId" prefWidth="124.0" text="ລະຫັດຢືມປຶ້ມ" />
+                            <TableColumn fx:id="colBarcode" prefWidth="127.0" text="ລະຫັດ Barcode" />
+                              <TableColumn fx:id="colBookName" prefWidth="260.0" text="ຊື່ປຶ້ມ" />
+                              <TableColumn fx:id="colCatg" prefWidth="166.0" text="ໝວດປຶ້ມ" />
+                              <TableColumn fx:id="colType" prefWidth="162.0" text="ປະເພດປຶ້ມ" />
+                              <TableColumn fx:id="colTableLog" prefWidth="74.0" text="ເລກລ໋ອກຕູ້" />
+                              <TableColumn fx:id="colDateRent" prefWidth="125.0" text="ວັນທີຢືມ" />
+                              <TableColumn fx:id="colDateSend" prefWidth="125.0" text="ວັນທີສົ່ງ" />
+                              <TableColumn fx:id="colStatus" prefWidth="125.0" text="ສະຖານະ" />
+                              <TableColumn fx:id="colMemberId" prefWidth="138.0" text="ລະຫັດສະມາຊິກ" />
+                              <TableColumn fx:id="colMemberName" prefWidth="196.0" text="ຊື່ສະມາຊິດ" />
+                              <TableColumn fx:id="colCause" prefWidth="112.0" text="ໝາຍເຫດ" />
+                          </columns>
+                        </TableView>
+                        <AnchorPane layoutX="26.0" layoutY="25.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="1149.0" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="28.0">
+                           <children>
+                              <Label alignment="CENTER" layoutX="14.0" layoutY="-12.0" prefHeight="23.0" prefWidth="134.0" style="-fx-background-color: #F4F4F4;" styleClass="BoonBaan-size-16" text="ເລືອກການສະແດງຂໍ້ມູນ" />
+                              <JFXRadioButton fx:id="rdbShowAll" layoutX="48.0" layoutY="32.0" styleClass="BoonBaan-size-14-Regular" text="ສະແດງຂໍ້ມູນທັງໝົດ">
+                                 <selectedColor>
+                                    <Color red="0.057261209934949875" green="0.09467186778783798" blue="0.6184210777282715" />
+                                 </selectedColor>
+                              </JFXRadioButton>
+                              <JFXRadioButton fx:id="rdbShowRent" layoutX="221.0" layoutY="32.0" styleClass="BoonBaan-size-14-Regular" text="ສະແດງຂໍ້ມູນປຶ້ມທີ່ກຳລັງຢືມ">
+                                 <selectedColor>
+                                    <Color red="0.057261209934949875" green="0.09467186778783798" blue="0.6184210777282715" />
+                                 </selectedColor>
+                              </JFXRadioButton>
+                              <JFXRadioButton fx:id="rdbShowOutOfRent" layoutX="426.0" layoutY="33.0" styleClass="BoonBaan-size-14-Regular" text="ສະແດງຂໍ້ມູນປຶ້ມທີ່ຢືມກາຍກຳນົດ">
+                                 <selectedColor>
+                                    <Color red="0.057261209934949875" green="0.09467186778783798" blue="0.6184210777282715" />
+                                 </selectedColor>
+                              </JFXRadioButton>
+                              <TextField fx:id="txtSearch" layoutX="960.0" layoutY="27.0" prefHeight="30.0" prefWidth="291.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular" AnchorPane.rightAnchor="14.0">
+                                 <padding>
+                                    <Insets left="40.0" />
+                                 </padding>
+                              </TextField>
+                              <ImageView fitHeight="23.0" fitWidth="27.0" layoutX="969.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="273.0">
+                                 <image>
+                                    <Image url="@Icon/search_50px.png" />
+                                 </image>
+                              </ImageView>
+                              <Separator layoutX="995.0" layoutY="30.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="0.0" AnchorPane.rightAnchor="264.0" />
+                              <JFXRadioButton fx:id="rdbSend" layoutX="663.0" layoutY="34.0" styleClass="BoonBaan-size-14-Regular" text="ສະແດງຂໍ້ມູນປຶ້ມທີ່ສົ່ງແລ້ວ">
+                                 <selectedColor>
+                                    <Color red="0.057261209934949875" green="0.09467186778783798" blue="0.6184210777282715" />
+                                 </selectedColor>
+                              </JFXRadioButton>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
+         </center>
+      </BorderPane>
+   </children>
+</StackPane>

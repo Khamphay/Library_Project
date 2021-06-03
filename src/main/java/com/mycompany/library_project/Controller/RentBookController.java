@@ -28,8 +28,14 @@ import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 
+import org.controlsfx.validation.ValidationResult;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+
 public class RentBookController implements Initializable {
 
+    private ValidationSupport validRules = new ValidationSupport();
+    private ValidationSupport dateRules = new ValidationSupport();
     private HomeController homeController = null;
     private MemberModel member = new MemberModel();
     private BookDetailModel book = new BookDetailModel();
@@ -39,7 +45,7 @@ public class RentBookController implements Initializable {
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = null;
     private JFXButton[] buttons = { buttonOK() };
-    private String rent_id = "", status = "";
+    private String rent_id = "", status = "", page = "", table = "", tableLog = "";
     private int qty_can_rent = 0;
 
     public void initConstructor(HomeController homeController) {
@@ -68,11 +74,29 @@ public class RentBookController implements Initializable {
     private TableView<RentBookModel> tableRentBook;
 
     @FXML
-    private TableColumn<RentBookModel, String> colId, colName, colCatg, colType;
+    private TableColumn<RentBookModel, String> colId, colName, colPage, colTable, colTableLog, colCatg, colType;
     @FXML
     private TableColumn<RentBookModel, Date> colDateRent, colDateSend;
 
+    private void initRules() {
+        validRules.setErrorDecorationEnabled(false);
+        validRules.registerValidator(txtMemberId, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນລະຫັດສະມາຊິດ"));
+        validRules.registerValidator(txtMemberName, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່ສະມາຊິດ"));
+        validRules.registerValidator(txtSurName, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນນາມສະກຸນ"));
+        validRules.registerValidator(txtDep, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່ພາກວີຊາ"));
+        validRules.registerValidator(txtBookId, false, Validator.createEmptyValidator("ກະລຸນາລະຫັດ Barcode"));
+        validRules.registerValidator(txtBookName, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່ປຶ້ມ"));
+        validRules.registerValidator(txtCatg, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນໝວດປຶ້ມ"));
+        validRules.registerValidator(txtType, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນປະເພດປຶ້ມ"));
+        validRules.registerValidator(rentDate, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນວັນທີຢືມປຶ້ມ"));
+        validRules.registerValidator(sendDate, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນວັນທີສົ່ງປຶ້ມ"));
+
+        dateRules.registerValidator(rentDate, false, (Control c, LocalDate newValue) -> ValidationResult
+                .fromWarningIf(c, "ວັນທີຢືມປຶ້ມຄວນທີ່ຈະເປັນວັນທີປັດຈຸບັນ", !LocalDate.now().equals(newValue)));
+    }
+
     private void clearText() {
+        validRules.setErrorDecorationEnabled(false);
         txtMemberId.clear();
         txtMemberName.clear();
         txtSurName.clear();
@@ -81,6 +105,8 @@ public class RentBookController implements Initializable {
         txtBookName.clear();
         txtCatg.clear();
         txtType.clear();
+
+        txtMemberId.requestFocus();
     }
 
     private void addToRentBook() {
@@ -88,37 +114,54 @@ public class RentBookController implements Initializable {
                 && !txtBookId.getText().equals("") && !txtBookName.getText().equals("") && !txtCatg.getText().equals("")
                 && !txtType.getText().equals("")) {
             try {
-                if (status.equals("ຫວ່າງ")) {
+                if (rentDate.getValue() == null || sendDate.getValue() == null) {
+                    if (dialog != null)
+                        dialog.closeDialog();
+                    dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ປື້ມຫົວນີ້ເສຍແລ້ວ, ດັັ່ງນັ້ນບໍ່ສາມາດຢືມໄດ້",
+                            DialogTransition.CENTER, buttons, false);
+                    dialog.showDialog();
+                    return;
+                }
+
+                if (status.equals("ກຳລັງຢືມ")) {
+                    if (dialog != null)
+                        dialog.closeDialog();
+                    dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ປື້ມຫົວນີ້ເສຍແລ້ວ, ດັັ່ງນັ້ນບໍ່ສາມາດຢືມໄດ້",
+                            DialogTransition.CENTER, buttons, false);
+                    dialog.showDialog();
+                    return;
+                } else if (status.equals("ເສຍ")) {
+                    if (dialog != null)
+                        dialog.closeDialog();
+                    dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ປື້ມຫົວນີ້ເສຍແລ້ວ, ດັັ່ງນັ້ນບໍ່ສາມາດຢືມໄດ້",
+                            DialogTransition.CENTER, buttons, false);
+                    dialog.showDialog();
+                    return;
+                } else if (status.equals("ຫວ່າງ")) {
                     if (tableRentBook.getItems().size() < qty_can_rent) {
-                        if (rentDate.getValue() == null || sendDate.getValue() == null) {
-                            alertMessage.showWarningMessage("Warning",
-                                    "Please chack 'rent date' and 'send date' and try again.", 4, Pos.TOP_CENTER);
-                            return;
-                        }
-                        if (!txtBookId.getText().equals("") && !txtBookName.getText().equals("")
-                                && !txtMemberId.getText().equals("") && !txtMemberName.getText().equals("")) {
-                            int index = 0;
-                            if (tableRentBook.getItems().size() > 0) {
-                                for (RentBookModel row : tableRentBook.getItems()) {
-                                    if (row.getBarcode().equals(txtBookId.getText())) {
-                                        tableRentBook.getItems().remove(index);
-                                        break;
-                                    }
-                                    index++;
+
+                        int index = 0;
+                        if (tableRentBook.getItems().size() > 0) {
+                            for (RentBookModel row : tableRentBook.getItems()) {
+                                if (row.getBarcode().equals(txtBookId.getText())) {
+                                    tableRentBook.getItems().remove(index);
+                                    break;
                                 }
+                                index++;
                             }
-                            tableRentBook.getItems()
-                                    .add(new RentBookModel(txtBookId.getText(), txtBookName.getText(),
-                                            txtCatg.getText(), txtType.getText(), Date.valueOf(rentDate.getValue()),
-                                            Date.valueOf(sendDate.getValue())));
-                            txtBookId.clear();
-                            txtBookName.clear();
-                            txtCatg.clear();
-                            txtType.clear();
-                        } else {
-                            alertMessage.showWarningMessage("Warning", "Please chack your data and try again.", 4,
-                                    Pos.TOP_CENTER);
                         }
+                        tableRentBook.getItems()
+                                .add(new RentBookModel(txtBookId.getText(), txtBookName.getText(), page,
+                                        txtCatg.getText(), txtType.getText(), table, tableLog,
+                                        Date.valueOf(rentDate.getValue()), Date.valueOf(sendDate.getValue())));
+                        txtBookId.clear();
+                        txtBookName.clear();
+                        txtCatg.clear();
+                        txtType.clear();
+                        page = "";
+                        table = "";
+                        tableLog = "";
+
                     } else {
                         alertMessage.showWarningMessage("Warning", "Can not rent more than " + qty_can_rent + " books.",
                                 4, Pos.TOP_CENTER);
@@ -128,7 +171,8 @@ public class RentBookController implements Initializable {
                     if (dialog != null) {
                         dialog.closeDialog();
                     }
-                    dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ປື້ມນີ້ຖືກຢືມແລ້ວ", DialogTransition.CENTER,
+                    dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ປື້ມຫົວນີ້ບໍ່ອານຸຍາດໃຫ້ໄດ້",
+                            DialogTransition.CENTER,
                             buttons, false);
                     dialog.showDialog();
 
@@ -136,22 +180,29 @@ public class RentBookController implements Initializable {
 
             } catch (Exception e) {
                 alertMessage.showErrorMessage("Add Book Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                e.printStackTrace();
             }
-        } else
-            alertMessage.showWarningMessage(borderPane, "ແບບຮຽນ", "Please chack your information and try again.", 4,
+        } else {
+            validRules.setErrorDecorationEnabled(true);
+            alertMessage.showWarningMessage(borderPane, "Warning", "Please chack your information and try again.", 4,
                     Pos.TOP_CENTER);
+        }
     }
 
     private void initTable() {
         colId.setCellValueFactory(new PropertyValueFactory<>("barcode"));
         colName.setCellValueFactory(new PropertyValueFactory<>("bookName"));
+        colPage.setCellValueFactory(new PropertyValueFactory<>("page"));
         colCatg.setCellValueFactory(new PropertyValueFactory<>("catg"));
         colType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        colTable.setCellValueFactory(new PropertyValueFactory<>("table"));
+        colTableLog.setCellValueFactory(new PropertyValueFactory<>("tableLog"));
         colDateRent.setCellValueFactory(new PropertyValueFactory<>("rentDate"));
         colDateSend.setCellValueFactory(new PropertyValueFactory<>("sendDate"));
 
         // Todo: Add column number
-        final TableColumn<RentBookModel, RentBookModel> colNumber = new TableColumn<RentBookModel, RentBookModel>();
+        final TableColumn<RentBookModel, RentBookModel> colNumber = new TableColumn<RentBookModel, RentBookModel>(
+                "ລຳດັບ");
         colNumber.setMinWidth(50);
         colNumber.setMaxWidth(120);
         colNumber.setPrefWidth(60);
@@ -193,7 +244,6 @@ public class RentBookController implements Initializable {
     private void initEvents() {
         txtMemberId.setOnKeyPressed(keytype -> {
             if (keytype.getCode() == KeyCode.ENTER) {
-
                 try {
                     rs = rentBook.chackMemberRentBook(txtMemberId.getText(), "ຍັງບໍ່ໄດ້ສົ່ງ", "ກຳລັງຢືມ");
                     if (rs.next() && rs.getDate("date_send") != null) {
@@ -246,7 +296,9 @@ public class RentBookController implements Initializable {
                                     "ບັດນີ້ໝົດອາຍຸແລ້ວບໍ່ສາມາດຢືມປຶ້ມ, ກະລຸນາຕໍ່ໃໝ່.", DialogTransition.CENTER, buttons,
                                     false);
                             dialog.showDialog();
+                            return;
                         }
+                        txtBookId.requestFocus();
                     } else {
                         if (dialog != null) {
                             dialog.closeDialog();
@@ -263,21 +315,16 @@ public class RentBookController implements Initializable {
             }
         });
 
-        txtBookId.setOnKeyPressed(keyEnter -> {
-            if (keyEnter.getCode() == KeyCode.ENTER) {
-
-                addToRentBook();
-
-            }
-        });
-
         txtBookId.setOnKeyTyped(keytype -> {
             try {
                 rs = book.findBookByBarcode(txtBookId.getText());
                 if (rs.next()) {
                     txtBookName.setText(rs.getString("book_name"));
+                    page = rs.getInt("page") + " ໜ້າ";
                     txtCatg.setText(rs.getString("catg_name"));
                     txtType.setText(rs.getString("type_name"));
+                    table = rs.getString("tableid");
+                    tableLog = rs.getString("table_log_id");
                     status = rs.getString("status");
                 } else {
                     txtBookName.clear();
@@ -294,6 +341,12 @@ public class RentBookController implements Initializable {
             }
         });
 
+        txtBookId.setOnKeyPressed(keyEnter -> {
+            if (keyEnter.getCode() == KeyCode.ENTER) {
+                addToRentBook();
+
+            }
+        });
         rentDate.setOnAction(e -> cancalarDate());
 
         btAdd.setOnAction(new EventHandler<ActionEvent>() {
@@ -374,9 +427,10 @@ public class RentBookController implements Initializable {
 
         rentDate = formatDate.formateDatePicker(rentDate);
         sendDate = formatDate.formateDatePicker(sendDate);
-
-        initEvents();
+        // sendDate.setDisable(true);
         initTable();
+        initRules();
+        initEvents();
         // cancalarDate();
         rentDate.setValue(LocalDate.now());
         cancalarDate();
@@ -393,6 +447,7 @@ public class RentBookController implements Initializable {
 
     private void addButtonToTable() {
         TableColumn<RentBookModel, Void> colAction = new TableColumn<>("Action");
+        colAction.setPrefWidth(100);
         Callback<TableColumn<RentBookModel, Void>, TableCell<RentBookModel, Void>> cellFactory = new Callback<TableColumn<RentBookModel, Void>, TableCell<RentBookModel, Void>>() {
 
             @Override
@@ -433,6 +488,12 @@ public class RentBookController implements Initializable {
         LocalDate dateRent = rentDate.getValue();
         DayOfWeek days = dateRent.getDayOfWeek();
         LocalDate dateSend = dateRent;
+
+        if (formatDate.cancalarDate(rentDate.getValue()) > 0) {
+            rentDate.setValue(LocalDate.now());
+            alertMessage.showWarningMessage(borderPane, "Warning", "Can not select the date after today. ເຮໂຣ", 4,
+                    Pos.TOP_CENTER);
+        }
 
         if (!days.getDisplayName(TextStyle.FULL, Locale.getDefault()).equals("Sunday")
                 && !days.getDisplayName(TextStyle.FULL, Locale.getDefault()).equals("Saturday")) {

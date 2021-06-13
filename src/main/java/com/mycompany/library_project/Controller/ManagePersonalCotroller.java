@@ -40,7 +40,11 @@ public class ManagePersonalCotroller implements Initializable {
     @FXML
     private VBox pnItems;
 
+    @FXML
+    private Text textTotalList;
+
     private void showMemberEnd() {
+        pnItems.getChildren().clear();
         Platform.runLater(new Runnable() {
 
             @Override
@@ -64,6 +68,7 @@ public class ManagePersonalCotroller implements Initializable {
                         pnItems.getChildren().add(node);
                         number++;
                     }
+                    textTotalList.setText(pnItems.getChildren().size() + " ລາຍການ");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

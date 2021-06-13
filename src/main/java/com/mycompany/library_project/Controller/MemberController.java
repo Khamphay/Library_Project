@@ -65,7 +65,7 @@ public class MemberController implements Initializable {
     private JFXButton btAddUser, btClose;
 
     @FXML
-    private MenuItem menuEdit, menuDelete, menuPrintCard;
+    private MenuItem menuEdit, menuReport, menuDelete, menuPrintCard;
 
     @FXML
     private TableView<MemberModel> tableMember;
@@ -95,6 +95,8 @@ public class MemberController implements Initializable {
             addMemberStage.setScene(scene);
             addMemberStage.initStyle(StageStyle.UNDECORATED);
             // addMemberStage.setAlwaysOnTop(true);
+            addMemberStage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
+            addMemberStage.initModality(Modality.APPLICATION_MODAL);
             addMemberStage.show();
 
         } catch (Exception e) {
@@ -122,6 +124,7 @@ public class MemberController implements Initializable {
             addMemberStage.setScene(scene);
             addMemberStage.initStyle(StageStyle.TRANSPARENT);
             // addMemberStage.setAlwaysOnTop(true);
+            addMemberStage.initModality(Modality.APPLICATION_MODAL);
             addMemberStage.show();
 
         } catch (Exception e) {
@@ -228,10 +231,21 @@ public class MemberController implements Initializable {
                             @Override
                             protected void updateItem(MemberModel item, boolean empty) {
                                 super.updateItem(item, empty);
+
+                                // Todo: Set row numder
                                 if (empty)
                                     setText("");
                                 else if (this.getTableRow() != null && item != null)
                                     setText(Integer.toString(this.getTableRow().getIndex() + 1));
+
+                                /*
+                                 * // Todo: Set color to row that rent out date TableRow<MemberModel> currentRow
+                                 * = getTableRow(); if (!empty) { if
+                                 * (mydate.cancalarDate(item.getDateRegisterEnd().toLocalDate()) > 0)
+                                 * currentRow.setStyle("-fx-background-color:#DFC840"); if
+                                 * (mydate.cancalarDate(item.getDateExit().toLocalDate()) > 0)
+                                 * currentRow.setStyle("-fx-background-color:lightcoral"); }
+                                 */
                             }
                         };
                     }
@@ -270,6 +284,18 @@ public class MemberController implements Initializable {
                 map.put("memberid", memberModel.getMemberId());
                 map.put("logo", imgInputStream);
                 printCard.showReport(map, "printCardById.jrxml", "Print Member Card Error");
+            }
+
+        });
+
+        menuReport.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                CreateReport createReport = new CreateReport();
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("memberId", tableMember.getSelectionModel().getSelectedItem().getMemberId());
+                createReport.showReport(map, "reportMaemberById.jrxml", "Report Member By ID Error");
             }
 
         });

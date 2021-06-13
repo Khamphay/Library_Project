@@ -3,6 +3,7 @@ package com.mycompany.library_project.Model;
 import java.sql.*;
 import java.text.ParseException;
 
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 import com.mycompany.library_project.config.CreateLogFile;
@@ -29,6 +30,7 @@ public class BookDetailModel implements DataAccessObject {
     private String tableId;
     private String detail;
     private String status;
+    private String write_year;
 
     public BookDetailModel() {
     }
@@ -54,21 +56,21 @@ public class BookDetailModel implements DataAccessObject {
 
     }
 
-    public BookDetailModel(String bookId, String bookName, String ISBN, Integer page, Integer qty, Integer rentQty,
-            Integer reserQty, String barcode, String catgId, String typeId, String tableId, String detail) {
+    public BookDetailModel(String bookId, String bookName, String ISBN, Integer page, Integer qty, String catgId,
+            String typeId, String tableId, String write_year, String detail) {
         this.bookId = bookId;
         this.bookName = bookName;
-        this.page = page;
         this.ISBN = ISBN;
+        this.page = page;
         this.qty = qty;
-        this.rentQty = rentQty;
-        this.reserQty = reserQty;
-        this.barcode = barcode;
         this.catgId = catgId;
         this.typeId = typeId;
         this.tableId = tableId;
+        this.write_year = write_year;
         this.detail = detail;
+
     }
+
 
     public String getBookId() {
         return bookId;
@@ -166,6 +168,14 @@ public class BookDetailModel implements DataAccessObject {
         this.tableId = tableId;
     }
 
+    public String getWrite_year() {
+        return write_year;
+    }
+
+    public void setWrite_year(String write_year) {
+        this.write_year = write_year;
+    }
+
     public String getDetail() {
         return detail;
     }
@@ -186,7 +196,7 @@ public class BookDetailModel implements DataAccessObject {
     @Override
     public ResultSet findAll() throws SQLException {
         try {
-            sql = "call book_detail_ShowAll();";
+            sql = "select * from showbooks;";
             rs = con.createStatement().executeQuery(sql);
             return rs;
         } catch (Exception e) {
@@ -209,8 +219,16 @@ public class BookDetailModel implements DataAccessObject {
 
     @Override
     public ResultSet searchData(String values) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+        try {
+            sql = "select * from showbooks Where book_id like concat('" + values + "','%') or book_name like concat('"
+                    + values + "','%') or catg_name like concat('" + values + "','%') or type_name like concat('"
+                    + values + "','%');";
+            rs = con.createStatement().executeQuery(sql);
+            return rs;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

@@ -65,7 +65,7 @@ public class RegisterController implements Initializable {
     private int index = -1;
     private String memberid_edit = "", gender = "";
     private byte[] byimg = null;
-    private Double x, y, costPrice = 17000.0;
+    private Double x, y, costPrice = 0.0;
 
     /*
      * Todo: Use from class MemberController for both form can communicate or use
@@ -225,7 +225,9 @@ public class RegisterController implements Initializable {
             final Stage stage = new Stage();
             stage.setTitle("Add New Department");
             stage.setScene(scene);
-            stage.showAndWait();
+            stage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -450,6 +452,7 @@ public class RegisterController implements Initializable {
         initRules();
         initEvents();
         initKeyEvents();
+        costPrice = StaticCostPrice.RegisterCost;
         txtCostRegister.setText(dcFormat.format(costPrice));
     }
 

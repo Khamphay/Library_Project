@@ -5,7 +5,7 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
 	<parameter name="logos" class="Object"/>
 	<queryString language="SQL">
-		<![CDATA[select * from showbooks]]>
+		<![CDATA[select * from showbooks ]]>
 	</queryString>
 	<field name="book_id" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="book_id"/>
@@ -313,12 +313,36 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="60" splitType="Stretch"/>
+		<band height="84" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="630" y="54" width="154" height="30" uuid="099f4c25-865e-4dda-98f1-9cd84bfa5d81"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[......................................]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="630" y="24" width="154" height="30" uuid="a0f7d07c-b00a-47df-9bbc-51ea61ed0483"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ລາຍເຊັນພະນັກງານ]]></text>
+			</staticText>
+		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="12" width="799" height="30" uuid="b2793c8d-264c-4501-bc7b-f17ca2ffd329"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="39" splitType="Stretch"/>
 	</summary>
 </jasperReport>

@@ -13,6 +13,7 @@ import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -87,6 +88,7 @@ public class LoginController implements Initializable {
         HomeController.homeStage.setScene(scene);
         // Resizehelper.addResizeListener(HomeController.homeStage);//! Todo: Set to
         // windows form able Resize
+        HomeController.homeStage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
         HomeController.homeStage.show();
 
         loginSatge.close();

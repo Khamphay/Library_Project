@@ -8,8 +8,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -24,8 +26,14 @@ import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 import com.mycompany.library_project.config.CreateLogFile;
 
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationResult;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
+
 public class AddBookController implements Initializable {
 
+    private ValidationSupport validRules = new ValidationSupport();
     private BookController bookcontroller;
     private ResultSet rs = null;
     private AlertMessage alertMessage = new AlertMessage();
@@ -33,9 +41,8 @@ public class AddBookController implements Initializable {
     private CategoryModel category = null;
     private TableLogModel table = null;
     private AuthorModel author = null;
-    public static BookDetailModel addBook = null;
     private CreateLogFile logfile = new CreateLogFile();
-
+    private BookDetailModel addBook = null;
     private ArrayList<AuthorModel> author_id = null;
     private ArrayList<String> arr_type, arr_category;
 
@@ -63,8 +70,86 @@ public class AddBookController implements Initializable {
         });
     }
 
-    public void initConstructor2(BookController bookcontroller) {
+    public void initConstructor2(BookController bookcontroller, BookDetailModel book) {
         this.bookcontroller = bookcontroller;
+
+        moveForm();
+        btClose.setVisible(true);
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                BookController.addNewBook.close();
+            }
+
+        });
+
+        if (book != null) {
+            txtQty.setEditable(false);
+            cmbStatus.setDisable(true);
+
+            bookid = book.getBookId();
+            txtId.setText(book.getBookId());
+            txtName.setText(book.getBookName());
+            txtISBN.setText(book.getISBN());
+            txtPage.setText(book.getPage().toString());
+            txtQty.setText(book.getQty().toString());
+            txtYear.setText(book.getWrite_year());
+            txtDetail.setText(book.getDetail());
+            cmbType.getSelectionModel().select(book.getTypeId());
+            index_type = cmbType.getSelectionModel().getSelectedIndex();
+
+            cmbCagtegory.getSelectionModel().select(book.getCatgId());
+            index_category = cmbCagtegory.getSelectionModel().getSelectedIndex();
+
+            cmbTable.getSelectionModel().select(book.getTableId());
+
+            try {
+                rs = book.showBarcode(bookid);
+                while (rs.next()) {
+                    txtBarcode.appendText(rs.getString("barcode") + "\n");
+                }
+            } catch (SQLException e) {
+                alertMessage.showErrorMessage("Load Barcode Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            }
+
+            try {
+                rs = book.showWrite(bookid);
+                int index = 0;
+                String[] author_name = new String[6];
+                while (rs.next()) {
+                    oldarr_author[index] = rs.getString("author_id");
+                    author_name[index] = rs.getString("full_name") + " " + rs.getString("sur_name");
+                    index++;
+                }
+
+                if (author_name[0] != null)
+                    cmbAuthor1.getSelectionModel().select(author_name[0]);
+                cmbAuthor2.setVisible(true);
+                if (author_name[1] != null) {
+                    cmbAuthor3.setVisible(true);
+                    cmbAuthor2.getSelectionModel().select(author_name[1]);
+                }
+                if (author_name[2] != null) {
+                    cmbAuthor4.setVisible(true);
+                    cmbAuthor3.getSelectionModel().select(author_name[2]);
+                }
+                if (author_name[3] != null) {
+                    cmbAuthor5.setVisible(true);
+                    cmbAuthor4.getSelectionModel().select(author_name[3]);
+                }
+                if (author_name[4] != null) {
+                    cmbAuthor6.setVisible(true);
+                    cmbAuthor5.getSelectionModel().select(author_name[4]);
+                }
+                if (author_name[5] != null) {
+                    cmbAuthor6.getSelectionModel().select(author_name[5]);
+                }
+
+            } catch (Exception e) {
+                alertMessage.showErrorMessage("Load Write Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            }
+        }
     }
 
     @FXML
@@ -88,6 +173,39 @@ public class AddBookController implements Initializable {
     @FXML
     private ComboBox<String> cmbAuthor1, cmbAuthor2, cmbAuthor3, cmbAuthor4, cmbAuthor5, cmbAuthor6;
 
+    private void initRules() {
+        validRules.setErrorDecorationEnabled(false);
+        validRules.registerValidator(txtId, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນລະຫັດປຶ້ມ"));
+        validRules.registerValidator(txtName, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່ປຶ້ມ"));
+        validRules.registerValidator(txtPage, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຈຳນວນໜ້າ"));
+        validRules.registerValidator(txtQty, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຈຳປື້ມ"));
+
+        validRules.registerValidator(txtISBN, false, (Control c, String newValue) -> ValidationResult.fromWarningIf(c,
+                "ກະລຸນາປ້ອນເລກ ISBN (ຖ້າມີ)", newValue.equals("")));
+        validRules.registerValidator(txtYear, false, (Control c, String newValue) -> ValidationResult.fromWarningIf(c,
+                "ກະລຸນາລະບຸປີແຕ່ງ (ຖ້າມີ)", newValue.equals("")));
+
+        validRules.registerValidator(txtBarcode, false, Validator.createEmptyValidator("ລະຫັດ Barcode ຕ້ອງບໍ່ຫວ່າງ"));
+        validRules.registerValidator(cmbType, false, Validator.createEmptyValidator("ກະລຸນາເລືອກປະເພດປຶ້ມ"));
+        validRules.registerValidator(cmbCagtegory, false, Validator.createEmptyValidator("ກະລຸນາເລືອກໝວດປຶ້ມ"));
+        validRules.registerValidator(cmbTable, false, Validator.createEmptyValidator("ກະລຸນາເລືອກເລກຕູ້"));
+        validRules.registerValidator(cmbtableLog, false, Validator.createEmptyValidator("ກະລຸນາເລືອກເລກລ໋ອກຕູ້"));
+        validRules.registerValidator(cmbStatus, false, Validator.createEmptyValidator("ກະລຸນາກຳນົດສະຖານະຂອງປຶ້ມ"));
+
+        validRules.registerValidator(cmbAuthor1, false,
+                Validator.createEmptyValidator("ກະລຸນາລະບຸຊື່ຜູ້ແຕ່ງປຶ້ມ (ຖ້າມີ)", Severity.WARNING));
+        validRules.registerValidator(cmbAuthor2, false,
+                Validator.createEmptyValidator("ກະລຸນາລະບຸຊື່ຜູ້ແຕ່ງປຶ້ມ (ຖ້າມີ)", Severity.WARNING));
+        validRules.registerValidator(cmbAuthor3, false,
+                Validator.createEmptyValidator("ກະລຸນາລະບຸຊື່ຜູ້ແຕ່ງປຶ້ມ (ຖ້າມີ)", Severity.WARNING));
+        validRules.registerValidator(cmbAuthor4, false,
+                Validator.createEmptyValidator("ກະລຸນາລະບຸຊື່ຜູ້ແຕ່ງປຶ້ມ (ຖ້າມີ)", Severity.WARNING));
+        validRules.registerValidator(cmbAuthor5, false,
+                Validator.createEmptyValidator("ກະລຸນາລະບຸຊື່ຜູ້ແຕ່ງປຶ້ມ (ຖ້າມີ)", Severity.WARNING));
+        validRules.registerValidator(cmbAuthor6, false,
+                Validator.createEmptyValidator("ກະລຸນາລະບຸຊື່ຜູ້ແຕ່ງປຶ້ມ (ຖ້າມີ)", Severity.WARNING));
+    }
+
     private void showAddCategory() {
         try {
             final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmBookCategory.fxml"));
@@ -98,6 +216,8 @@ public class AddBookController implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Add New Book Category");
             stage.setScene(scene);
+            stage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
             alertMessage.showErrorMessage("Warning Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
@@ -115,6 +235,8 @@ public class AddBookController implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Add New Book Type");
             stage.setScene(scene);
+            stage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
             alertMessage.showErrorMessage("Warning Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
@@ -132,6 +254,8 @@ public class AddBookController implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Add New Table Log");
             stage.setScene(scene);
+            stage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
             alertMessage.showErrorMessage("Warning Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
@@ -166,6 +290,7 @@ public class AddBookController implements Initializable {
     }
 
     private void clearText() {
+        validRules.setErrorDecorationEnabled(false);
         txtId.clear();
         txtName.clear();
         txtISBN.clear();
@@ -173,11 +298,28 @@ public class AddBookController implements Initializable {
         txtQty.clear();
         txtBarcode.clear();
         txtDetail.clear();
-        cmbCagtegory.getSelectionModel().select("");
-        cmbType.getSelectionModel().select("");
-        cmbTable.getSelectionModel().select("");
-        cmbtableLog.getSelectionModel().select("");
+        cmbCagtegory.getSelectionModel().clearSelection();
+        cmbType.getSelectionModel().clearSelection();
+        cmbTable.getSelectionModel().clearSelection();
+        cmbtableLog.getSelectionModel().clearSelection();
+
+        cmbAuthor1.getSelectionModel().clearSelection();
+        cmbAuthor2.getSelectionModel().clearSelection();
+        cmbAuthor3.getSelectionModel().clearSelection();
+        cmbAuthor4.getSelectionModel().clearSelection();
+        cmbAuthor5.getSelectionModel().clearSelection();
+        cmbAuthor6.getSelectionModel().clearSelection();
+
+        cmbAuthor2.setVisible(false);
+        cmbAuthor3.setVisible(false);
+        cmbAuthor4.setVisible(false);
+        cmbAuthor5.setVisible(false);
+        cmbAuthor6.setVisible(false);
+
         bookid = "";
+        arr_author = new String[6];
+        oldarr_author = new String[6];
+
     }
 
     private void showAddAuthor() {
@@ -190,7 +332,9 @@ public class AddBookController implements Initializable {
             final Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Add New Author");
-            stage.showAndWait();
+            stage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
             ;
         } catch (Exception e) {
             alertMessage.showErrorMessage(borderPane, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
@@ -256,7 +400,6 @@ public class AddBookController implements Initializable {
             }
 
         });
-
         btAddCategory.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -385,76 +528,6 @@ public class AddBookController implements Initializable {
                 alertMessage.showErrorMessage("Load Table Log", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
             }
         });
-    }
-
-    public void fillValue() {
-
-        if (addBook != null) {
-            txtQty.setEditable(false);
-            cmbStatus.setDisable(true);
-
-            bookid = addBook.getBookId();
-            txtId.setText(addBook.getBookId());
-            txtName.setText(addBook.getBookName());
-            txtISBN.setText(addBook.getISBN());
-            txtPage.setText(addBook.getPage().toString());
-            txtQty.setText(addBook.getQty().toString());
-            txtDetail.setText(addBook.getDetail());
-            cmbType.getSelectionModel().select(addBook.getTypeId());
-            index_type = cmbType.getSelectionModel().getSelectedIndex();
-
-            cmbCagtegory.getSelectionModel().select(addBook.getCatgId());
-            index_category = cmbCagtegory.getSelectionModel().getSelectedIndex();
-
-            cmbTable.getSelectionModel().select(addBook.getTableId());
-
-            try {
-                rs = addBook.showBarcode(bookid);
-                while (rs.next()) {
-                    txtBarcode.appendText(rs.getString("barcode") + "\n");
-                }
-            } catch (SQLException e) {
-                alertMessage.showErrorMessage("Load Barcode Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            }
-
-            try {
-                rs = addBook.showWrite(bookid);
-                int index = 0;
-                String[] author_name = new String[6];
-                while (rs.next()) {
-                    oldarr_author[index] = rs.getString("author_id");
-                    author_name[index] = rs.getString("full_name") + " " + rs.getString("sur_name");
-                    index++;
-                }
-
-                if (author_name[0] != null)
-                    cmbAuthor1.getSelectionModel().select(author_name[0]);
-                cmbAuthor2.setVisible(true);
-                if (author_name[1] != null) {
-                    cmbAuthor3.setVisible(true);
-                    cmbAuthor2.getSelectionModel().select(author_name[1]);
-                }
-                if (author_name[2] != null) {
-                    cmbAuthor4.setVisible(true);
-                    cmbAuthor3.getSelectionModel().select(author_name[2]);
-                }
-                if (author_name[3] != null) {
-                    cmbAuthor5.setVisible(true);
-                    cmbAuthor4.getSelectionModel().select(author_name[3]);
-                }
-                if (author_name[4] != null) {
-                    cmbAuthor6.setVisible(true);
-                    cmbAuthor5.getSelectionModel().select(author_name[4]);
-                }
-                if (author_name[5] != null) {
-                    cmbAuthor6.getSelectionModel().select(author_name[5]);
-                }
-
-            } catch (Exception e) {
-                alertMessage.showErrorMessage("Load Write Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            }
-        }
-        addBook = null;
     }
 
     private void setAuthoID(int index, String authName) {
@@ -699,6 +772,7 @@ public class AddBookController implements Initializable {
                     alertMessage.showWarningMessage("Saved Warning", "Can not save data.", 4, Pos.BOTTOM_RIGHT);
                 }
             } else {
+                validRules.setErrorDecorationEnabled(true);
                 alertMessage.showWarningMessage("Save Warning", "Please chack your information and try again.", 4,
                         Pos.BOTTOM_RIGHT);
             }
@@ -725,33 +799,19 @@ public class AddBookController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cmbStatus.setItems(status);
-
+        initRules();
         cmbAuthor2.setVisible(false);
         cmbAuthor3.setVisible(false);
         cmbAuthor4.setVisible(false);
         cmbAuthor5.setVisible(false);
         cmbAuthor6.setVisible(false);
 
-        if (BookController.add) {
-            moveForm();
-            btClose.setVisible(true);
-            btClose.setOnAction(new EventHandler<ActionEvent>() {
-
-                @Override
-                public void handle(ActionEvent event) {
-                    BookController.addNewBook.close();
-                    BookController.add = false;
-                }
-
-            });
-        }
         initEvents();
         initKeyEvents();
         fillType();
         fillCategory();
         fillTable();
         fillAuthor();
-        fillValue();
     }
 
 }

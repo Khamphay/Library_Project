@@ -38,6 +38,7 @@ public class BookLostController implements Initializable {
     private BookDetailModel bookDetail = new BookDetailModel();
     private BookLostModel booklostModel = new BookLostModel();
     private RentBookModel rentBook = new RentBookModel();
+    private AdjustmentModel adjustmentModel = null;
     private ObservableList<BookLostModel> data = null;
     private ValidationSupport validRules = new ValidationSupport();
     private AlertMessage alertMessage = new AlertMessage();
@@ -47,18 +48,23 @@ public class BookLostController implements Initializable {
     private DecimalFormat dcFormat = new DecimalFormat("#,##0.00 ກີບ");
     private ResultSet rs = null;
     private JFXButton[] buttons = { buttonOK() };
-    double outPrice = 1000.0, lostPrice = 1000.0, sumOutPrice = 0.0, sumLostPrice = 0.0, totalPrice = 0.0;
+    double outPrice = 0.0, lostPrice = 0.0, sumOutPrice = 0.0, sumLostPrice = 0.0, totalPrice = 0.0;
     String rent_id = "", memberId = "";
 
     // Todo: Call by ManageBookController Form
-    public void initConstructor(ManageBookController manageBookController) {
-        btClose.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
+    public void initConstructor(SendBookController sendBookController) {
 
-            @Override
-            public void handle(ActionEvent event) {
-                manageBookController.showMainMenuBooks();
-            }
-        });
+        btClose.setDisable(true);
+        btClose.setVisible(false);
+
+        // btClose.setOnAction((EventHandler<ActionEvent>) new
+        // EventHandler<ActionEvent>() {
+
+        // @Override
+        // public void handle(ActionEvent event) {
+        // manageBookController.showMainMenuBooks();
+        // }
+        // });
     }
 
     @FXML
@@ -236,7 +242,6 @@ public class BookLostController implements Initializable {
                     booklostModel = new BookLostModel(txtMemberId.getText(), tableLost.getItems().size(), totalPrice,
                             Date.valueOf(LocalDate.now()));
                     int id = booklostModel.saveData();
-                    System.out.println("Before:=========== " + id);
                     if (id > 0) {
                         int index = 0;
                         for (BookLostModel item : tableLost.getItems()) {
@@ -257,12 +262,21 @@ public class BookLostController implements Initializable {
                             }
                             index++;
                         }
-                    }
-                    if (message != null) {
-                        alertMessage.showCompletedMessage("Saved", message, 4, Pos.BOTTOM_RIGHT);
-                        clearText();
-                    } else {
-                        alertMessage.showWarningMessage("Save Warning", "Cannot save data", 4, Pos.BOTTOM_RIGHT);
+
+                        adjustmentModel = new AdjustmentModel(rent_id, tableLost.getItems().size(), totalPrice,
+                                Date.valueOf(LocalDate.now()), "ປຶ້ມເສຍ");
+                        int resualt = adjustmentModel.saveData();
+
+                        if (message != null && resualt > 0) {
+                            alertMessage.showCompletedMessage("Saved", message, 4, Pos.BOTTOM_RIGHT);
+                            clearText();
+                        } else if (resualt <= 0) {
+                            dialog = new DialogMessage(stackPane, "ບັນທຶກຂໍ້ມູນ",
+                                    "ບັນທືກຂໍ້ມູນສຳເລັດ ແຕ່ມີບັນຫາໃນການບັນທຶກຂໍ້ມູນການປັບໃຫມ", DialogTransition.CENTER,
+                                    buttons, false);
+                            dialog.showDialog();
+                        } else
+                            alertMessage.showWarningMessage("Save Warning", "Cannot save data", 4, Pos.BOTTOM_RIGHT);
                     }
                 } catch (Exception e) {
                     alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
@@ -286,6 +300,9 @@ public class BookLostController implements Initializable {
         initTable();
         initEvents();
         initRules();
+
+        outPrice = StaticCostPrice.OutOfDateCost;
+        lostPrice = StaticCostPrice.LostCost;
         txtOutPrice.setText(dcFormat.format(outPrice));
         txtSumOutPrice.setText(dcFormat.format(0));
         txtLostPrice.setText(dcFormat.format(lostPrice));

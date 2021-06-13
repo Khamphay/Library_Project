@@ -44,7 +44,6 @@ public class BookController implements Initializable {
     public static Stage addNewBook = null;
     public static Stage addBarcode = null;
     public static String _book_id = "";
-    public static boolean add = false;
 
     public void initConstructor(ManageBookController manageBookController) {
         this.manageBookController = manageBookController;
@@ -72,7 +71,7 @@ public class BookController implements Initializable {
     private TableView<BookDetailModel> tableBook;
 
     @FXML
-    private TableColumn<BookDetailModel, String> bookid, bookname, bookisbn, bppkcategory, bppktype, tableid,
+    private TableColumn<BookDetailModel, String> bookid, bookname, bookisbn, bppkcategory, bppktype, tableid, year,
             bookdetail;
 
     @FXML
@@ -98,6 +97,8 @@ public class BookController implements Initializable {
             addBarcode = new Stage();
             addBarcode.setScene(scene);
             addBarcode.initStyle(StageStyle.TRANSPARENT);
+            addBarcode.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
+            addBarcode.initModality(Modality.APPLICATION_MODAL);
             addBarcode.show();
         } catch (Exception e) {
             // TODO: handle exception
@@ -126,8 +127,7 @@ public class BookController implements Initializable {
             public void handle(ActionEvent event) {
                 if (tableBook.getSelectionModel().getSelectedItem() != null) {
                     try {
-                        AddBookController.addBook = tableBook.getSelectionModel().getSelectedItem();
-                        showAddBook();
+                        showAddBook(tableBook.getSelectionModel().getSelectedItem());
                     } catch (Exception e) {
                         alertMessage.showErrorMessage(stackPane, "Open New Form", "Error: " + e.getMessage(), 4,
                                 Pos.BOTTOM_RIGHT);
@@ -144,7 +144,7 @@ public class BookController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                showAddBook();
+                showAddBook(null);
             }
         });
 
@@ -158,19 +158,20 @@ public class BookController implements Initializable {
         });
     }
 
-    private void showAddBook() {
+    private void showAddBook(BookDetailModel book) {
         try {
-            add = true;
             FXMLLoader loader = new FXMLLoader(App.class.getResource("frmAddBooks.fxml"));
             final Parent root = loader.load();
             final Scene scene = new Scene(root);
 
             addBookController = loader.getController();
-            addBookController.initConstructor2(this);
+            addBookController.initConstructor2(this, book);
 
             addNewBook = new Stage();
             addNewBook.initStyle(StageStyle.UNDECORATED);
             addNewBook.setScene(scene);
+            addNewBook.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
+            addNewBook.initModality(Modality.APPLICATION_MODAL);
             addNewBook.show();
         } catch (IOException e) {
             alertMessage.showErrorMessage(borderPane, "Open New Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
@@ -187,12 +188,13 @@ public class BookController implements Initializable {
                     bookDetail = new BookDetailModel();
                     rs = bookDetail.findAll();
                     while (rs.next()) {
-                        data.add(new BookDetailModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4),
-                                rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9)));
+                        data.add(new BookDetailModel(rs.getString("book_id"), rs.getString("book_name"),
+                                rs.getString("ISBN"), rs.getInt("page"), rs.getInt("qty"), rs.getString("catg_name"),
+                                rs.getString("type_name"), rs.getString("table_id"), rs.getString("write_year"),
+                                rs.getString("detail")));
                     }
 
                     // tableBook.setItems(data); //Todo: if you don't filter to Search data bellow:
-
                     // Todo: Search data
                     FilteredList<BookDetailModel> filterBook = new FilteredList<BookDetailModel>(data, b -> true);
                     txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -234,6 +236,7 @@ public class BookController implements Initializable {
         bppkcategory.setCellValueFactory(new PropertyValueFactory<>("catgId"));
         bppktype.setCellValueFactory(new PropertyValueFactory<>("typeId"));
         tableid.setCellValueFactory(new PropertyValueFactory<>("tableId"));
+        year.setCellValueFactory(new PropertyValueFactory<>("write_year"));
         bookdetail.setCellValueFactory(new PropertyValueFactory<>("detail"));
         bookid.setVisible(false);
 

@@ -224,7 +224,7 @@ public class BookLostModel implements DataAccessObject {
 
         @Override
         public ResultSet findAll() throws SQLException {
-            // TODO Auto-generated method stub
+
             return null;
         }
 
@@ -232,6 +232,14 @@ public class BookLostModel implements DataAccessObject {
         public ResultSet findById(String id) throws SQLException {
             // TODO Auto-generated method stub
             return null;
+        }
+
+        public ResultSet findByDate(Date date) throws SQLException {
+            sql = "select * from vwshowbooklost where date_pay=?;";
+            ps = conn.prepareStatement(sql);
+            ps.setDate(1, date);
+            rs = ps.executeQuery();
+            return rs;
         }
 
         public ResultSet findRentBookByMemderID(String member_Id, String book_status) throws SQLException {

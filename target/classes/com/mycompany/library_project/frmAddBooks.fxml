@@ -13,7 +13,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="borderPane" prefHeight="704.0" prefWidth="1149.0" style="-fx-border-color: #101D3D;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.AddBookController">
@@ -83,42 +82,6 @@
                               <Label layoutX="474.0" layoutY="29.0" prefWidth="60.0" styleClass="BoonBaan-size-14" text="ໝວດໝູ່ປຶ້ມ" AnchorPane.leftAnchor="475.0" />
                               <Label layoutX="476.0" layoutY="177.0" styleClass="BoonBaan-size-14" text="ສະຖານະຂອງປຶ້ມ" AnchorPane.leftAnchor="475.0" AnchorPane.topAnchor="177.0" />
                               <Label layoutX="217.0" layoutY="177.0" styleClass="BoonBaan-size-14" text="ແຕ່ງຂຶ້ນໃນປີ" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="177.0" />
-                              <BorderPane layoutX="768.0" layoutY="37.0" prefHeight="422.0" prefWidth="260.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="27.0">
-                                 <center>
-                                    <VBox alignment="TOP_CENTER" prefHeight="367.0" prefWidth="260.0" spacing="13.0" BorderPane.alignment="CENTER">
-                                       <children>
-                                          <Label styleClass="BoonBaan-size-14" text="ແຕ່ງໂດຍ:" />
-                                          <ComboBox fx:id="cmbAuthor1" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
-                                          <ComboBox fx:id="cmbAuthor2" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
-                                          <ComboBox fx:id="cmbAuthor3" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
-                                          <ComboBox fx:id="cmbAuthor4" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
-                                          <ComboBox fx:id="cmbAuthor5" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
-                                          <ComboBox fx:id="cmbAuthor6" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
-                                          <JFXButton fx:id="btAddNewAuthor" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="70.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ເພີ່ມ" textFill="WHITE">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                             <graphic>
-                                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@Icon/add.png" />
-                                                   </image>
-                                                   <rotationAxis>
-                                                      <Point3D />
-                                                   </rotationAxis>
-                                                </ImageView>
-                                             </graphic>
-                                             <padding>
-                                                <Insets left="-2.0" />
-                                             </padding>
-                                          </JFXButton>
-                                       </children>
-                                       <BorderPane.margin>
-                                          <Insets />
-                                       </BorderPane.margin>
-                                    </VBox>
-                                 </center>
-                              </BorderPane>
                               <Label layoutX="216.0" layoutY="323.0" styleClass="BoonBaan-size-14" text="ລາຍລະອຽດເພີ່ມຕື່ມ" AnchorPane.leftAnchor="216.0" />
                               <TextField fx:id="txtYear" layoutX="217.0" layoutY="197.0" prefHeight="31.0" prefWidth="235.0" promptText="ແຕ່ງຂຶ້ນໃນປີ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="198.0" />
                               <JFXButton fx:id="btAddTableLog" buttonType="RAISED" layoutX="680.0" layoutY="274.0" prefHeight="31.0" prefWidth="52.0" ripplerFill="#3d62e8" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" styleClass="BoonBaan-size-14-Regular" text="ເພີ່ມ" AnchorPane.topAnchor="274.0">
@@ -157,6 +120,35 @@
                                     <Insets left="-4.0" />
                                  </padding>
                               </JFXButton>
+                              <AnchorPane layoutX="772.0" layoutY="49.0" prefHeight="407.0" prefWidth="269.0" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" AnchorPane.topAnchor="48.0">
+                                 <children>
+                                    <ComboBox fx:id="cmbAuthor1" layoutX="11.0" layoutY="32.0" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
+                                    <ComboBox fx:id="cmbAuthor2" layoutX="11.0" layoutY="84.0" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
+                                    <ComboBox fx:id="cmbAuthor3" layoutX="11.0" layoutY="135.0" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
+                                    <ComboBox fx:id="cmbAuthor4" layoutX="11.0" layoutY="190.0" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
+                                    <ComboBox fx:id="cmbAuthor5" layoutX="11.0" layoutY="244.0" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
+                                    <ComboBox fx:id="cmbAuthor6" layoutX="11.0" layoutY="298.0" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
+                                    <JFXButton fx:id="btAddNewAuthor" alignment="CENTER" layoutX="111.0" layoutY="361.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="70.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ເພີ່ມ" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@Icon/add.png" />
+                                             </image>
+                                             <rotationAxis>
+                                                <Point3D />
+                                             </rotationAxis>
+                                          </ImageView>
+                                       </graphic>
+                                       <padding>
+                                          <Insets left="-2.0" />
+                                       </padding>
+                                    </JFXButton>
+                                 </children>
+                              </AnchorPane>
+                              <Label layoutX="882.0" layoutY="29.0" styleClass="BoonBaan-size-14" text="ແຕ່ງໂດຍ:" />
                            </children>
                         </AnchorPane>
                      </children>

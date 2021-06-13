@@ -3,6 +3,7 @@ package com.mycompany.library_project.Controller;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
@@ -12,17 +13,12 @@ import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.ShowRentSendModel;
 import com.mycompany.library_project.config.CreateLogFile;
 
-import org.controlsfx.control.action.Action;
-
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.collections.*;
+import javafx.collections.transformation.*;
+import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -45,6 +41,7 @@ public class ShowRentSendController implements Initializable {
     private MyDate mydate = new MyDate();
     private DialogMessage dialog = null;
     private JFXButton[] buttonOK = { buttonOK() };
+    private ArrayList<String> autobarcode = null;
 
     public void initConstructor(HomeController homeController) {
         this.homeController = homeController;
@@ -111,10 +108,20 @@ public class ShowRentSendController implements Initializable {
                             @Override
                             protected void updateItem(ShowRentSendModel item, boolean empty) {
                                 super.updateItem(item, empty);
+
+                                // Todo: Set row number
                                 if (empty)
                                     setText("");
                                 else if (this.getTableRow() != null && item != null)
                                     setText(Integer.toString(this.getTableRow().getIndex() + 1));
+
+                                /*
+                                 * // Todo: Set color to row that rent out date TableRow<ShowRentSendModel>
+                                 * currentRow = getTableRow(); if (!isEmpty()) { if
+                                 * (mydate.cancalarDate(item.getSendDate().toLocalDate()) > 0)
+                                 * currentRow.setStyle("-fx-background-color:lightcoral"); }
+                                 */
+
                             }
                         };
                     }
@@ -135,6 +142,7 @@ public class ShowRentSendController implements Initializable {
 
                 try {
                     showbookModel = new ShowRentSendModel();
+                    autobarcode = new ArrayList<String>();
                     data = FXCollections.observableArrayList();
 
                     // Todo: Check the type of data what to show
@@ -152,10 +160,10 @@ public class ShowRentSendController implements Initializable {
                         if (rs.getString("book_status").equals("ກຳລັງຢືມ")) {
                             int outday = mydate.cancalarDate(rs.getDate("date_send").toLocalDate());
                             if (outday > 0) {
-                                outdate = "ປຶ້ມຫົວນີ້ຢືມກາຍກຳນົດ " + outday + " ມື້";
+                                outdate = "ຢືມກາຍກຳນົດ" + outday + " ມື້";
                             }
                         }
-
+                        autobarcode.add(rs.getString("barcode"));
                         data.add(new ShowRentSendModel(rs.getString("rent_id"), rs.getString("barcode"),
                                 rs.getString("book_name"), rs.getString("catg_name"), rs.getString("type_name"),
                                 rs.getString("table_log_id"), rs.getDate("date_rent"), rs.getDate("date_send"),
@@ -186,7 +194,6 @@ public class ShowRentSendController implements Initializable {
                     SortedList<ShowRentSendModel> sorted = new SortedList<>(filterShow);
                     sorted.comparatorProperty().bind(tableShow.comparatorProperty());
                     tableShow.setItems(sorted);
-
                 } catch (Exception e) {
                     alertMessage.showErrorMessage("Load data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
                 }
@@ -255,8 +262,8 @@ public class ShowRentSendController implements Initializable {
         rdbShowAll.setSelected(true);
 
         initTable();
-        showData();
         initEvents();
+        showData();
     }
 
     private void addButtonToTable() {
@@ -297,6 +304,7 @@ public class ShowRentSendController implements Initializable {
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
+
                         if (empty)
                             setGraphic(null);
                         else
@@ -312,7 +320,7 @@ public class ShowRentSendController implements Initializable {
         tableShow.getColumns().add(colAction);
     }
 
-    protected JFXButton buttonYes(int index) {
+    private JFXButton buttonYes(int index) {
         JFXButton btyes = new JFXButton("ຕົກລົງ");
         btyes.setStyle(Style.buttonDialogStyle);
         btyes.setOnAction(new EventHandler<ActionEvent>() {
@@ -338,7 +346,7 @@ public class ShowRentSendController implements Initializable {
         return btyes;
     }
 
-    protected JFXButton buttonNo() {
+    private JFXButton buttonNo() {
         JFXButton btno = new JFXButton("  ບໍ່  ");
         btno.setStyle(Style.buttonDialogStyle);
         btno.setOnAction(new EventHandler<ActionEvent>() {
@@ -351,7 +359,7 @@ public class ShowRentSendController implements Initializable {
         return btno;
     }
 
-    protected JFXButton buttonCancel() {
+    private JFXButton buttonCancel() {
         JFXButton btcancel = new JFXButton("ຍົກເລີກ");
         btcancel.setStyle(Style.buttonDialogStyle);
         btcancel.setOnAction(new EventHandler<ActionEvent>() {

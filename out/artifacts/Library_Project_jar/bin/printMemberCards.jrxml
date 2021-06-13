@@ -13,6 +13,11 @@
 		<property name="com.jaspersoft.studio.field.tree.path" value="tbmember"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="student_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="student_id"/>
+		<property name="com.jaspersoft.studio.field.name" value="student_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbmember"/>
+	</field>
 	<field name="full_name" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="full_name"/>
 		<property name="com.jaspersoft.studio.field.label" value="full_name"/>
@@ -154,7 +159,7 @@
 					<textElement verticalAlignment="Middle">
 						<font fontName="Phetsarath OT" size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["ລະຫັດນັກ ນ/ສ: "+$F{member_id}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["ລະຫັດນັກ ນ/ສ: "+$F{student_id}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="74" y="74" width="186" height="15" uuid="463cd062-116b-45a9-b444-3fc646ff43ee"/>

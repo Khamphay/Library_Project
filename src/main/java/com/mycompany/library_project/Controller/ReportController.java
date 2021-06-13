@@ -1,10 +1,13 @@
 package com.mycompany.library_project.Controller;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.App;
+import com.mycompany.library_project.Report.CreateReport;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,6 +22,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class ReportController implements Initializable {
+
+    private CreateReport report = new CreateReport();
 
     private Parent root = null;
 
@@ -50,6 +55,16 @@ public class ReportController implements Initializable {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+
+        });
+
+        btReportMember.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                Map<String, Object> map = new HashMap<String, Object>();
+                report.showReport(map, "reportMember.jrxml", "Report All Member Error");
             }
 
         });

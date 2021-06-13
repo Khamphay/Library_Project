@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Text?>
 
-<HBox fx:id="hbox" alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="1308.0" styleClass="vbox" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.List.MemberListController">
+<HBox fx:id="hbox" alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="1308.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1px 0px;" styleClass="hbox" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.MemberListController">
    <cursor>
       <Cursor fx:constant="DEFAULT" />
    </cursor>

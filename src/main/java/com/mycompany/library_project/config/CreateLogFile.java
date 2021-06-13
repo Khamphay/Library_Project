@@ -38,7 +38,6 @@ public class CreateLogFile {
             return true;
         } catch (Exception e) {
             alertMessage.showErrorMessage("Save Configed", "Error: " + e.getMessage(), 4, Pos.TOP_CENTER);
-            e.printStackTrace();
             return false;
         }
     }

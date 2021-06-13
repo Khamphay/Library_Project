@@ -26,10 +26,8 @@ public class RentBookModel implements DataAccessObject {
     private String tableLog;
     private Date rentDate;
     private Date sendDate;
-    private String rent_status;
     private String outDate;
     private String pricePerBook;
-
 
     public RentBookModel() {
     }
@@ -41,15 +39,13 @@ public class RentBookModel implements DataAccessObject {
     }
 
     // Todo: Call by save rent books
-    public RentBookModel(String rentId, String member, String barcode, Integer qty, Date rentDate, Date sendDate,
-            String rent_status) {
+    public RentBookModel(String rentId, String member, String barcode, Integer qty, Date rentDate, Date sendDate) {
         this.rentId = rentId;
         this.member = member;
         this.barcode = barcode;
         this.qty = qty;
         this.rentDate = rentDate;
         this.sendDate = sendDate;
-        this.rent_status = rent_status;
     }
 
     // Todo: Call by rent books
@@ -189,14 +185,6 @@ public class RentBookModel implements DataAccessObject {
     public void setSendDate(Date sendDate) {
         this.sendDate = sendDate;
     }
-    
-    public String getRent_status() {
-        return rent_status;
-    }
-
-    public void setRent_status(String rent_status) {
-        this.rent_status = rent_status;
-    }
 
     public String getOutDate() {
         return outDate;
@@ -244,7 +232,7 @@ public class RentBookModel implements DataAccessObject {
         // TODO Auto-generated method stub
         return null;
     }
-    
+
     @Override
     public ResultSet searchData(String values) throws SQLException {
         // TODO Auto-generated method stub
@@ -253,14 +241,13 @@ public class RentBookModel implements DataAccessObject {
 
     @Override
     public int saveData() throws SQLException, ParseException {
-        sql = "call rentbook_detail_Insert(?, ?, ?, ?, ?, ?);";
+        sql = "call rentbook_detail_Insert(?, ?, ?, ?, ?);";
         ps = con.prepareStatement(sql);
         ps.setString(1, getRentId());
         ps.setString(2, getMember());
         ps.setInt(3, getQty());
         ps.setDate(4, getRentDate());
         ps.setDate(5, getSendDate());
-        ps.setString(6, getRent_status());
         return ps.executeUpdate();
     }
 
@@ -272,7 +259,7 @@ public class RentBookModel implements DataAccessObject {
         ps.setString(3, status);
         return ps.executeUpdate();
     }
-    
+
     @Override
     public int updateData() throws SQLException, ParseException {
         // TODO Auto-generated method stub
@@ -298,12 +285,11 @@ public class RentBookModel implements DataAccessObject {
 
     }
 
-    public ResultSet chackMemberRentBook(String memberid, String rent_status, String book_status) throws SQLException {
-        sql = "call rentBook_Check(?, ?, ?);";
+    public ResultSet chackMemberRentBook(String memberid, String book_status) throws SQLException {
+        sql = "call rentBook_Check(?, ?);";
         ps = con.prepareStatement(sql);
         ps.setString(1, memberid);
-        ps.setString(2, rent_status);
-        ps.setString(3, book_status);
+        ps.setString(2, book_status);
         rs = ps.executeQuery();
         return rs;
     }

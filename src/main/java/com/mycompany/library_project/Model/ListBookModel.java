@@ -18,20 +18,21 @@ public class ListBookModel {
     private String type;
     private String tablelog;
     private String logid;
+    private Date datePay;
 
     public ListBookModel() {
     }
 
-    public ListBookModel(int number, String barcode, String bookName, String status, String category, String type,
-            String tablelog, String logid) {
+    public ListBookModel(int number, String barcode, String bookName, String category, String type, String tablelog,
+            String logid, Date datePay) {
         this.number = number;
         this.barcode = barcode;
         this.bookName = bookName;
-        this.status = status;
         this.category = category;
         this.type = type;
         this.tablelog = tablelog;
         this.logid = logid;
+        this.datePay = datePay;
     }
 
 
@@ -143,4 +144,14 @@ public class ListBookModel {
     public void setLogid(String logid) {
         this.logid = logid;
     }
+
+    public Date getDatePay() {
+        return datePay;
+    }
+
+    public void setDatePay(Date datePay) {
+        this.datePay = datePay;
+    }
+
+    
 }

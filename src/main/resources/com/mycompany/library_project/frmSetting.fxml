@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXColorPicker?>
-<?import com.jfoenix.controls.JFXToggleButton?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="768.0" style="-fx-background-color: transparent;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.SettingController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="768.0" style="-fx-background-color: transparent;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.SettingController">
    <children>
       <BorderPane layoutY="83.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -43,7 +39,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <Label graphicTextGap="10.0" layoutX="12.0" layoutY="29.0" prefHeight="26.0" prefWidth="161.0" styleClass="label-size-16" text="ການຕັ້ງຄ່າ" textAlignment="CENTER" textFill="WHITE">
+                  <Label graphicTextGap="10.0" layoutX="12.0" layoutY="29.0" prefHeight="26.0" prefWidth="161.0" styleClass="label-size-16" text="ຈັກການຄ່າປັບໃໝ" textAlignment="CENTER" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="26.0" fitWidth="26.0">
                            <image>
@@ -56,55 +52,19 @@
             </AnchorPane>
          </top>
          <center>
-            <AnchorPane prefHeight="417.0" prefWidth="729.0" style="-fx-background-color: #f3f3f3; -fx-background-radius: 0px 0px 8px 8px; -fx-border-color: #101D3D; -fx-border-radius: 0px 0px 8px 8px; -fx-border-width: 1px 1.7px 1px 1px;" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 0px 0px 8px 8px; -fx-border-color: #101D3D; -fx-border-radius: 0px 0px 8px 8px;" BorderPane.alignment="CENTER">
                <children>
-                  <TextField  layoutX="455.0" layoutY="75.0" prefHeight="25.0" prefWidth="252.0" promptText="ຄ່າລົງທະບຽນ" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular"  viewOrder="1.0">
-                     <font>
-                        <Font name="Phetsarath OT" size="12.0" />
-                     </font></TextField>
-                  <TextField  layoutX="455.0" layoutY="142.0" prefHeight="25.0" prefWidth="252.0" promptText="ຄ່າປັບໃຫມ" style="-fx-text-fill: #0a1eff;" styleClass="BoonBaan-size-14-Regular"  viewOrder="1.0">
-                     <font>
-                        <Font name="Phetsarath OT" size="12.0" />
-                     </font></TextField>
-                  <JFXButton id="btClick" buttonType="RAISED" layoutX="637.0" layoutY="362.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="#0a1eff" stylesheets="@Style/buttonFont.css" text="ບັນທຶກ" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </JFXButton>
-                  <JFXColorPicker editable="true" layoutX="140.0" layoutY="73.0" prefHeight="25.0" prefWidth="153.0" promptText="Color" />
-                  <Label layoutX="36.0" layoutY="155.0" text="ສີພື້ນຫຼັງຂອງຟ້ອມ:">
-                     <font>
-                        <Font name="Phetsarath OT" size="14.0" />
-                     </font>
-                  </Label>
-                  <JFXColorPicker editable="true" layoutX="141.0" layoutY="112.0" prefHeight="25.0" prefWidth="152.0" promptText="Color" />
-                  <Label layoutX="38.0" layoutY="115.0" text="ສີພື້ນຫຼັງຂອງປຸ່ມ:">
-                     <font>
-                        <Font name="Phetsarath OT" size="14.0" />
-                     </font>
-                  </Label>
-                  <JFXColorPicker editable="true" layoutX="142.0" layoutY="152.0" prefHeight="25.0" prefWidth="150.0" promptText="Color" />
-                  <Label layoutX="39.0" layoutY="77.0" text="ສີຕົວອັກສອນ:">
-                     <font>
-                        <Font name="Phetsarath OT" size="14.0" />
-                     </font>
-                  </Label>
-                  <JFXToggleButton alignment="CENTER_LEFT" contentDisplay="RIGHT" graphicTextGap="35.0" layoutX="25.0" layoutY="270.0" minHeight="-Infinity" prefHeight="33.0" prefWidth="214.0" styleClass="BoonBaan-size-14-Regular" text="ສະແດງຢູ່ເທີງສຸດ" toggleColor="#0d44e8" toggleLineColor="#5678ff" />
-                  <ComboBox fx:id="cmbFont" layoutX="139.0" layoutY="190.0" prefHeight="25.0" prefWidth="153.0" />
-                  <Label layoutX="38.0" layoutY="193.0" text="ຟອນ:">
-                     <font>
-                        <Font name="Phetsarath OT" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="36.0" layoutY="234.0" text="ຂະໜາດຟອນ:">
-                     <font>
-                        <Font name="Phetsarath OT" size="14.0" />
-                     </font>
-                  </Label>
-                  <Spinner editable="true" layoutX="140.0" layoutY="231.0" prefHeight="25.0" prefWidth="57.0" />
+                  <TextField fx:id="txtCostPerDay" layoutX="233.0" layoutY="146.0" prefHeight="31.0" prefWidth="300.0" />
+                  <TextField fx:id="txtCostPerBook" layoutX="233.0" layoutY="222.0" prefHeight="31.0" prefWidth="300.0" />
+                  <Label layoutX="233.0" layoutY="125.0" styleClass="BoonBaan-size-14" text="ຄ່າປັບໃຫມ/1 ຫົວ/ມື້ (ກໍລະນີຢືມປຶ້ມກາຍກຳນົດ)" />
+                  <Label layoutX="235.0" layoutY="199.0" styleClass="BoonBaan-size-14" text="ຄ່າປັບໃຫມ/1 ໜ້າ (ກໍລະນີເຮັດປຶ້ມເສຍ)" />
+                  <JFXButton fx:id="btSave" layoutX="341.0" layoutY="326.0" prefHeight="33.0" prefWidth="84.0" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" />
+                  <TextField fx:id="txtCostRegister" layoutX="233.0" layoutY="69.0" prefHeight="31.0" prefWidth="300.0" />
+                  <Label layoutX="233.0" layoutY="48.0" styleClass="BoonBaan-size-14" text="ຄ່າລົງທະບຽນ" />
                </children>
             </AnchorPane>
          </center>
+        
       </BorderPane>
    </children>
 </AnchorPane>

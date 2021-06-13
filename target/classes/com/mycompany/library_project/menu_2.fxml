@@ -3,13 +3,16 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="acPaneMenu" accessibleRole="DATE_PICKER" prefHeight="571.0" prefWidth="60.0" style="-fx-background-color: #101D3D;" styleClass="button-color" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.MenuController2">
+<AnchorPane fx:id="acPaneMenu" accessibleRole="DATE_PICKER" prefHeight="738.0" prefWidth="57.0" style="-fx-background-color: #101D3D;" styleClass="button-color" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.MenuController2">
    <children>
       <JFXButton id="btHome" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" layoutY="33.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
          <cursor>
@@ -99,29 +102,7 @@
             </Tooltip>
          </tooltip>
       </JFXButton>
-      <JFXButton id="btReport" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" layoutY="205.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="231.0">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <graphic>
-            <ImageView fitHeight="24.0" fitWidth="24.0">
-               <image>
-                  <Image url="@Icon/pie_chart_report_script_50px.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <padding>
-            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-         </padding>
-         <tooltip>
-            <Tooltip autoHide="true" text="ລາຍງານ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
-               <font>
-                  <Font name="Phetsarath OT" size="12.0" />
-               </font>
-            </Tooltip>
-         </tooltip>
-      </JFXButton>
-      <JFXButton id="btSetting" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutY="254.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="280.0">
+      <JFXButton id="btSetting" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutY="254.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="231.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -136,14 +117,14 @@
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
          </padding>
          <tooltip>
-            <Tooltip autoHide="true" text="ການຕັ້ງຄ່າ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+            <Tooltip autoHide="true" text="ຈັດການຄ່າປັບໃຫມ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
                <font>
                   <Font name="Phetsarath OT" size="12.0" />
                </font>
             </Tooltip>
          </tooltip>
       </JFXButton>
-      <JFXButton id="btLogOut" alignment="CENTER" cache="true" cacheHint="QUALITY" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="14.0" layoutY="29.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="31.0" pickOnBounds="false" prefHeight="31.0" prefWidth="31.0" style="-fx-background-radius: 15px 15px 15px 15px; -fx-background-color: #fff;" styleClass="button-color" stylesheets="@Style/buttonFont.css" AnchorPane.bottomAnchor="20.0">
+      <JFXButton id="btLogOut" alignment="CENTER" cache="true" cacheHint="QUALITY" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="22.0" layoutY="687.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="31.0" pickOnBounds="false" prefHeight="31.0" prefWidth="31.0" style="-fx-background-radius: 15px 15px 15px 15px; -fx-background-color: #fff;" styleClass="button-color" stylesheets="@Style/buttonFont.css" AnchorPane.bottomAnchor="20.0">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -155,5 +136,184 @@
             <Tooltip anchorLocation="CONTENT_TOP_RIGHT" contentDisplay="TOP" text="ອອກຈາກລະບົບ" />
          </tooltip>
       </JFXButton>
+      <Accordion layoutX="-7.0" layoutY="280.0" prefHeight="324.0" prefWidth="81.0" AnchorPane.topAnchor="280.0">
+         <panes>
+            <TitledPane alignment="CENTER" cache="true" contentDisplay="CENTER" graphicTextGap="15.0" prefHeight="303.0" prefWidth="81.0" styleClass="BoonBaan-size-14-Regular" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0">
+                     <image>
+                        <Image url="@Icon/business_report_50px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <content>
+                  <VBox alignment="TOP_CENTER" prefHeight="256.0" prefWidth="74.0" spacing="2.0" style="-fx-background-color: #101D3D;">
+                     <children>
+                        <JFXButton id="btReport" fx:id="btReportBook" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="39.0" prefWidth="64.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0">
+                                 <image>
+                                    <Image url="@Icon/pie_chart_report_script_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="1.0" left="4.0" right="1.0" top="1.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets left="6.0" />
+                           </VBox.margin>
+                           <tooltip>
+                              <Tooltip autoHide="true" text="ລາຍງານຂໍ້ມູນປຶ້ມ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+                                 <font>
+                                    <Font name="Phetsarath OT" size="12.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip>
+                        </JFXButton>
+                        <JFXButton id="btReport" fx:id="btReportRentBook" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0">
+                                 <image>
+                                    <Image url="@Icon/pie_chart_report_script_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="1.0" left="4.0" right="1.0" top="1.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets left="6.0" />
+                           </VBox.margin>
+                           <tooltip>
+                              <Tooltip autoHide="true" text="ລາຍງານຂໍ້ມູນຢືມປຶ້ມ-ສົ່ງປຶ້ມ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+                                 <font>
+                                    <Font name="Phetsarath OT" size="12.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip>
+                        </JFXButton>
+                        <JFXButton id="btReport" fx:id="btReportImport" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0">
+                                 <image>
+                                    <Image url="@Icon/pie_chart_report_script_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="1.0" left="4.0" right="1.0" top="1.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets left="6.0" />
+                           </VBox.margin>
+                           <tooltip>
+                              <Tooltip autoHide="true" text="ລາຍງານຂໍ້ມູນນຳປຶ້ມເຂົ້າ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+                                 <font>
+                                    <Font name="Phetsarath OT" size="12.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip>
+                        </JFXButton>
+                        <JFXButton id="btReport" fx:id="btReportBookLost" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0">
+                                 <image>
+                                    <Image url="@Icon/pie_chart_report_script_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="1.0" left="4.0" right="1.0" top="1.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets left="6.0" />
+                           </VBox.margin>
+                           <tooltip>
+                              <Tooltip autoHide="true" text="ລາຍງານຂໍ້ມູນປຶ້ມເສຍ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+                                 <font>
+                                    <Font name="Phetsarath OT" size="12.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip>
+                        </JFXButton>
+                        <JFXButton id="btReport" fx:id="btReportMember" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0">
+                                 <image>
+                                    <Image url="@Icon/pie_chart_report_script_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="1.0" left="4.0" right="1.0" top="1.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets left="6.0" />
+                           </VBox.margin>
+                           <tooltip>
+                              <Tooltip autoHide="true" text="ລາຍງານຂໍ້ມູນສະມາຊິດ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+                                 <font>
+                                    <Font name="Phetsarath OT" size="12.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip>
+                        </JFXButton>
+                        <JFXButton id="btReport" fx:id="btReportAdjustment" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0">
+                                 <image>
+                                    <Image url="@Icon/pie_chart_report_script_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="1.0" left="4.0" right="1.0" top="1.0" />
+                           </padding>
+                           <tooltip>
+                              <Tooltip autoHide="true" text="ລາຍງານຂໍ້ມູນການປັບໃຫມ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+                                 <font>
+                                    <Font name="Phetsarath OT" size="12.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip>
+                           <VBox.margin>
+                              <Insets left="6.0" />
+                           </VBox.margin>
+                        </JFXButton>
+                     </children>
+                  </VBox>
+               </content>
+               <padding>
+                  <Insets left="6.0" right="-1.0" />
+               </padding>
+               <tooltip>
+                  <Tooltip autoHide="true" text="ລາຍງານ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+                     <font>
+                        <Font name="Phetsarath OT" size="12.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
+            </TitledPane>
+         </panes>
+      </Accordion>
    </children>
 </AnchorPane>

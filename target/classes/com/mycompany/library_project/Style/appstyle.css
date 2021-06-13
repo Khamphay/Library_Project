@@ -120,13 +120,14 @@
 .hbox:hover {
   /* -fx-border-width: 0px 0px 0px 2px; */
   /* -fx-border-color:#027D00; */
-  -fx-background-color: #a3bde7;
+  -fx-background-color: #d6dff5;
+  -fx-font-weight: bold;
 }
 
-.hbox:passed {
-  -fx-border-width: 0px 0px 0px 2px;
-  -fx-border-color: #027d00;
-  -fx-background-color: #5354bd;
+.hbox:pressed {
+  /* -fx-border-width: 0px 0px 0px 2px; */
+  /* -fx-border-color: #027d00; */
+  -fx-background-color: #9395eb;
 }
 
 .text {
@@ -392,6 +393,14 @@
   -fx-background-radius: 2em;
 }
 
+.table-view  .column-header#colCenter  .label {
+  -fx-alignment: CENTER;
+}
+.table-view  .cell#colCenter {
+  -fx-alignment: CENTER;
+}
+
+/*==================Tree-table============*/
 .tree-table-view {
   -fx-border-color: #101d3d;
   -fx-background-color: #f3f3f3;
@@ -411,7 +420,7 @@
 }
 .tree-table-view .cell {
   -fx-cell-size: 30;
-  -fx-alignment: center-left;
+  /* -fx-alignment: center-left; */
   -fx-text-fill: #000000;
   -fx-alignment: CENTER_LEFT;
   -fx-font-family: "BoonBaan";
@@ -451,4 +460,22 @@
   -fx-background-color: derive(#2d75e8, 90%);
   -fx-background-insets: 2, 0, 0;
   -fx-background-radius: 2em;
+}
+
+.tree-table-view  .column-header#colCenter  .label {
+  -fx-alignment: CENTER;
+}
+.tree-table-view  .cell#colCenter {
+  -fx-alignment: CENTER;
+}
+
+.accordion .titled-pane .title {
+    -fx-background-color:  #101D3D;
+    -fx-border-color: #101D3D;
+    -fx-text-fill:#FFF;
+}
+
+.accordion .titled-pane .title:hover {
+    -fx-background-color: derive(#0b2e80, 10%);
+    -fx-font-weight: bold;
 }

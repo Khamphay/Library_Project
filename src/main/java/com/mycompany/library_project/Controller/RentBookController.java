@@ -126,7 +126,7 @@ public class RentBookController implements Initializable {
                 if (status.equals("ກຳລັງຢືມ")) {
                     if (dialog != null)
                         dialog.closeDialog();
-                    dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ປື້ມຫົວນີ້ເສຍແລ້ວ, ດັັ່ງນັ້ນບໍ່ສາມາດຢືມໄດ້",
+                    dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ປື້ມຫົວນີ້ຖຶກຢືມໄປແລ້ວ, ດັັ່ງນັ້ນບໍ່ສາມາດຢືມໄດ້",
                             DialogTransition.CENTER, buttons, false);
                     dialog.showDialog();
                     return;
@@ -172,8 +172,7 @@ public class RentBookController implements Initializable {
                         dialog.closeDialog();
                     }
                     dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ປື້ມຫົວນີ້ບໍ່ອານຸຍາດໃຫ້ໄດ້",
-                            DialogTransition.CENTER,
-                            buttons, false);
+                            DialogTransition.CENTER, buttons, false);
                     dialog.showDialog();
 
                 }
@@ -245,7 +244,7 @@ public class RentBookController implements Initializable {
         txtMemberId.setOnKeyPressed(keytype -> {
             if (keytype.getCode() == KeyCode.ENTER) {
                 try {
-                    rs = rentBook.chackMemberRentBook(txtMemberId.getText(), "ຍັງບໍ່ໄດ້ສົ່ງ", "ກຳລັງຢືມ");
+                    rs = rentBook.chackMemberRentBook(txtMemberId.getText(), "ຍັງບໍ່ໄດ້ສົ່ງ");
                     if (rs.next() && rs.getDate("date_send") != null) {
                         // TODO: exite end of send
                         if (Date.valueOf(LocalDate.now()).compareTo(rs.getDate("date_send")) > 0) {
@@ -283,22 +282,24 @@ public class RentBookController implements Initializable {
 
                     rs = member.findById(txtMemberId.getText());
                     if (rs.next()) {
-                        txtMemberId.setText(rs.getString("member_id"));
-                        txtMemberName.setText(rs.getString("full_name"));
-                        txtSurName.setText(rs.getString("sur_name"));
-                        txtDep.setText(rs.getString("dep_name"));
+
                         Date dateMemberCarEnd = rs.getDate("date_end");
                         if (dateMemberCarEnd.compareTo(Date.valueOf(LocalDate.now())) < 0) {
                             if (dialog != null) {
                                 dialog.closeDialog();
                             }
                             dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                                    "ບັດນີ້ໝົດອາຍຸແລ້ວບໍ່ສາມາດຢືມປຶ້ມ, ກະລຸນາຕໍ່ໃໝ່.", DialogTransition.CENTER, buttons,
-                                    false);
+                                    "ບັດນີ້ໝົດອາຍຸແລ້ວບໍ່ສາມາດຢືມປຶ້ມໄດ້, ກະລຸນາຕໍ່ໃໝ່.", DialogTransition.CENTER,
+                                    buttons, false);
                             dialog.showDialog();
                             return;
+                        } else {
+                            txtMemberId.setText(rs.getString("member_id"));
+                            txtMemberName.setText(rs.getString("full_name"));
+                            txtSurName.setText(rs.getString("sur_name"));
+                            txtDep.setText(rs.getString("dep_name"));
+                            txtBookId.requestFocus();
                         }
-                        txtBookId.requestFocus();
                     } else {
                         if (dialog != null) {
                             dialog.closeDialog();
@@ -368,7 +369,7 @@ public class RentBookController implements Initializable {
                 try {
                     if (qty > 0) {
                         rentBook = new RentBookModel(rent_id, txtMemberId.getText(), txtBookId.getText(), qty,
-                                Date.valueOf(rentDate.getValue()), Date.valueOf(sendDate.getValue()), "ຍັງບໍ່ໄດ້ສົ່ງ");
+                                Date.valueOf(rentDate.getValue()), Date.valueOf(sendDate.getValue()));
                         if (rentBook.saveData() > 0) {
                             for (RentBookModel row : tableRentBook.getItems()) {
                                 try {

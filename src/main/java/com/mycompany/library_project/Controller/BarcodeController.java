@@ -218,10 +218,18 @@ public class BarcodeController implements Initializable {
                             @Override
                             protected void updateItem(BookDetailModel item, boolean empty) {
                                 super.updateItem(item, empty);
+
+                                // Todo: Set row number
                                 if (empty)
                                     setText("");
                                 else if (this.getTableRow() != null && item != null)
                                     setText(Integer.toString(this.getTableRow().getIndex() + 1));
+
+                                /*
+                                 * // Todo: Set color to row that rent out date TableRow<BookDetailModel>
+                                 * currentRow = getTableRow(); if (!empty) { if (item.getStatus().equals("ເສຍ"))
+                                 * currentRow.setStyle("-fx-background-color:lightcoral"); }
+                                 */
                             }
                         };
                     }

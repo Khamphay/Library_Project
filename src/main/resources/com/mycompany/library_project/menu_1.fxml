@@ -4,12 +4,15 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="acPaneMenu" accessibleRole="DATE_PICKER" prefHeight="571.0" prefWidth="197.0" style="-fx-background-color: #101D3D;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.MenuController1">
+<AnchorPane fx:id="acPaneMenu" accessibleRole="DATE_PICKER" prefHeight="689.0" prefWidth="223.0" style="-fx-background-color: #101D3D;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.MenuController1">
    <children>
       <JFXButton id="btHome" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutY="33.0" lineSpacing="2.0" prefHeight="40.0" styleClass="BoonBaan-size-14-Regular" text="ໜ້າຫຼັກ" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
          <cursor>
@@ -87,22 +90,7 @@
             <URL value="@Style/buttonStyle.css" />
          </stylesheets>
       </JFXButton>
-      <JFXButton id="btReport" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutY="205.0" lineSpacing="2.0" prefHeight="40.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" text="ລາຍງານ" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="231.0">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <graphic>
-            <ImageView fitHeight="24.0" fitWidth="24.0">
-               <image>
-                  <Image url="@Icon/pie_chart_report_script_50px.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <padding>
-            <Insets bottom="1.0" left="18.0" right="1.0" top="1.0" />
-         </padding>
-      </JFXButton>
-      <JFXButton id="btSetting" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutY="254.0" lineSpacing="2.0" prefHeight="40.0" styleClass="BoonBaan-size-14-Regular" text="ການຕັ້ງຄ່າ" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="280.0">
+      <JFXButton id="btSetting" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutY="254.0" lineSpacing="2.0" prefHeight="40.0" styleClass="BoonBaan-size-14-Regular" text="ຈັດການຄ່າປັບໃຫມ" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="231.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -136,5 +124,134 @@
             <Insets left="-4.0" />
          </padding>
       </JFXButton>
+      <Accordion layoutX="-11.0" layoutY="280.0" prefHeight="303.0" prefWidth="234.0" AnchorPane.leftAnchor="-11.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="280.0">
+        <panes>
+          <TitledPane cache="true" graphicTextGap="15.0" prefHeight="237.0" prefWidth="191.0" styleClass="BoonBaan-size-14-Regular" text="ລາຍງານ" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0">
+                     <image>
+                        <Image url="@Icon/business_report_50px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <content>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="190.0" spacing="2.0" style="-fx-background-color: #101D3D;">
+                     <children>
+                        <JFXButton id="btReport" fx:id="btReportBook" alignment="BASELINE_LEFT" graphicTextGap="15.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" text="ລາຍງານຂໍ້ມູນປຶ້ມ" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0">
+                                 <image>
+                                    <Image url="@Icon/pie_chart_report_script_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="1.0" left="4.0" right="1.0" top="1.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets left="20.0" />
+                           </VBox.margin>
+                        </JFXButton>
+                        <JFXButton id="btReport" fx:id="btReportRentBook" alignment="BASELINE_LEFT" graphicTextGap="15.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" text="ລາຍງານຂໍ້ມູນຢືມປຶ້ມ-ສົ່ງປຶ້ມ" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0">
+                                 <image>
+                                    <Image url="@Icon/pie_chart_report_script_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="1.0" left="4.0" right="1.0" top="1.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets left="20.0" />
+                           </VBox.margin>
+                        </JFXButton>
+                        <JFXButton id="btReport" fx:id="btReportImport" alignment="BASELINE_LEFT" graphicTextGap="15.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" text="ລາຍງານຂໍ້ມູນນຳປຶ້ມເຂົ້າ" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0">
+                                 <image>
+                                    <Image url="@Icon/pie_chart_report_script_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="1.0" left="4.0" right="1.0" top="1.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets left="20.0" />
+                           </VBox.margin>
+                        </JFXButton>
+                        <JFXButton id="btReport" fx:id="btReportBookLost" alignment="BASELINE_LEFT" graphicTextGap="15.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" text="ລາຍງານຂໍ້ມູນປຶ້ມເສຍ" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0">
+                                 <image>
+                                    <Image url="@Icon/pie_chart_report_script_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="1.0" left="4.0" right="1.0" top="1.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets left="20.0" />
+                           </VBox.margin>
+                        </JFXButton>
+                        <JFXButton id="btReport" fx:id="btReportMember" alignment="BASELINE_LEFT" graphicTextGap="15.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" text="ລາຍງານຂໍ້ມູນສະມາຊິດ" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0">
+                                 <image>
+                                    <Image url="@Icon/pie_chart_report_script_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="1.0" left="4.0" right="1.0" top="1.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets left="20.0" />
+                           </VBox.margin>
+                        </JFXButton>
+                        <JFXButton id="btReport" fx:id="btReportAdjustment" alignment="BASELINE_LEFT" graphicTextGap="15.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" text="ລາຍງານການປັບໃຫມ່" textFill="WHITE">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <graphic>
+                              <ImageView fitHeight="24.0" fitWidth="24.0">
+                                 <image>
+                                    <Image url="@Icon/pie_chart_report_script_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets bottom="1.0" left="4.0" right="1.0" top="1.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets left="20.0" />
+                           </VBox.margin>
+                        </JFXButton>
+                     </children></VBox>
+               </content>
+               <padding>
+                  <Insets right="-1.0" />
+               </padding>
+          </TitledPane>
+        </panes>
+      </Accordion>
    </children>
 </AnchorPane>

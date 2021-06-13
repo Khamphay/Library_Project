@@ -15,14 +15,17 @@ import javafx.fxml.*;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.*;
 
 import java.net.URL;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
@@ -74,6 +77,9 @@ public class HomeController implements Initializable {
 
     @FXML
     private JFXHamburger humberger;
+
+    @FXML
+    private Text textTotalList;
 
     /*
      * //TODO: Custom move form private void moveWinForm() {
@@ -198,14 +204,6 @@ public class HomeController implements Initializable {
                 }
             });
 
-            node.lookup("#btReport").setOnMouseClicked(new EventHandler<Event>() {
-
-                @Override
-                public void handle(Event event) {
-                    showSubFrom("frmReport.fxml");
-                }
-            });
-
             node.lookup("#btSetting").setOnMouseClicked(new EventHandler<Event>() {
 
                 @Override
@@ -260,6 +258,7 @@ public class HomeController implements Initializable {
             settingScene.setFill(Color.TRANSPARENT);
             SettingController.settingStage = new Stage(StageStyle.TRANSPARENT);
             SettingController.settingStage.setScene(settingScene);
+            SettingController.settingStage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
             SettingController.settingStage.show();
         }
     }
@@ -325,8 +324,18 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    private void buttonNotify_Action(ActionEvent event) throws Exception {
-
+    private void buttonSearch_Action(ActionEvent event) throws Exception {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmSearch.fxml"));
+            final Parent subroot = loader.load();
+            SearchController searchController = loader.getController();
+            searchController.initConstructor(this);
+            bpDisplay.setCenter(subroot);
+        } catch (Exception e) {
+            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            CreateLogFile config = new CreateLogFile();
+            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Show Search Book", e);
+        }
     }
 
     @FXML
@@ -371,9 +380,6 @@ public class HomeController implements Initializable {
                     showRentSendModel = new ShowRentSendModel();
                     rs = showRentSendModel.findByRentOutOfDate(Date.valueOf(LocalDate.now()), "ກຳລັງຢືມ");
                     while (rs.next()) {
-                        final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmBookList.fxml"));
-                        final Parent listParent = loader.load();
-                        final Node node = listParent;
 
                         // Todo: Cancalar Date
                         int outdate = mydate.cancalarDate(rs.getDate("date_send").toLocalDate());
@@ -381,16 +387,43 @@ public class HomeController implements Initializable {
                                 rs.getString("book_name"), rs.getString("member_id"),
                                 rs.getString("full_name") + " " + rs.getString("sur_name"), rs.getDate("date_rent"),
                                 rs.getDate("date_send"), rs.getString("book_status"), outdate);
+
+                        final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmBookList.fxml"));
+                        final Parent listParent = loader.load();
+                        final Node node = listParent;
                         BookListController item = loader.getController();
                         item.initConstructor(listbook);
 
                         pnItems.getChildren().addAll(node);
                         number++;
                     }
+                    textTotalList.setText(pnItems.getChildren().size() + " ລາຍການ");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             };
+        });
+    }
+
+    private void getAnyCostPrice() {
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    final CostModel cost = new CostModel();
+                    ResultSet rs = cost.findAll();
+                    if (rs.next()) {
+                        StaticCostPrice.RegisterCost = rs.getDouble("cost_register");
+                        StaticCostPrice.OutOfDateCost = rs.getDouble("cost_outofdate");
+                        StaticCostPrice.LostCost = rs.getDouble("cost_lost");
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
         });
     }
 
@@ -400,6 +433,7 @@ public class HomeController implements Initializable {
         showRentBookOutOfDate();
         show_menu();
         sliderMenuHamburger();
+        getAnyCostPrice();
         // thItem.start();
     }
 

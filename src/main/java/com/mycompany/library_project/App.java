@@ -3,6 +3,7 @@ package com.mycompany.library_project;
 import javafx.application.Application;
 import javafx.fxml.*;
 import javafx.scene.*;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.*;
 
@@ -31,7 +32,7 @@ public class App extends Application implements Initializable {
         primaryStage.setScene(scene);
         //DesktopController.desktopStage = primaryStage;//Todo: set object
         // Resizehelper.addResizeListener(DesktopController.desktopStage);//Todo: Set to windows form able Resize 
-        
+        primaryStage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
         LoginController.loginSatge = primaryStage;
         primaryStage.show();
     }

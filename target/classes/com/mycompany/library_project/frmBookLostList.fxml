@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Text?>
 
-<HBox fx:id="hbox" alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="1308.0" styleClass="vbox" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.BookLostItem">
+<HBox fx:id="hbox" alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="1291.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1px 0px;" styleClass="vbox" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.BookLostListController">
    <cursor>
       <Cursor fx:constant="DEFAULT" />
    </cursor>
@@ -17,10 +17,10 @@
       </Text>
       <Text fx:id="barcode" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" text="ລະຫັດ Barcode" wrappingWidth="144.79999923706055" />
       <Text fx:id="bookName" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" text="ຊື່ປຶ້ມ" wrappingWidth="279.79999923706055" />
-      <Text fx:id="category" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" text="ໝວດປຶ້ມ" wrappingWidth="248.79999923706055" />
-      <Text fx:id="type" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" text="ປະເພດປຶ້ມ" wrappingWidth="248.79999923706055" />
+      <Text fx:id="category" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" text="ໝວດປຶ້ມ" wrappingWidth="237.79999923706055" />
+      <Text fx:id="type" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" text="ປະເພດປຶ້ມ" wrappingWidth="236.79999923706055" />
       <Text fx:id="tableLog" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" text="ເລກຕູ້" textAlignment="CENTER" wrappingWidth="99.79999923706055" />
       <Text fx:id="logId" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" text="ລ໋ອກຕູ້" textAlignment="CENTER" wrappingWidth="99.79999923706055" />
-      <Text fx:id="status" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" text="ສະຖານະ" textAlignment="CENTER" wrappingWidth="108.79999923706055" />
+      <Text fx:id="datePay" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" text="ວັນທີ" textAlignment="CENTER" wrappingWidth="108.79999923706055" />
    </children>
 </HBox>

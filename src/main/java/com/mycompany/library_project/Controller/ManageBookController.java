@@ -1,8 +1,9 @@
 package com.mycompany.library_project.Controller;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import com.mycompany.library_project.App;
@@ -18,6 +19,7 @@ import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class ManageBookController implements Initializable {
@@ -37,11 +39,18 @@ public class ManageBookController implements Initializable {
     @FXML
     private ScrollPane scrollMenu;
 
+    @FXML
+    private Text textTotalList;
+
+    @FXML
+    private VBox pnItems;
+
     public void showMainMenuBooks() {
         bpManageBook.setCenter(scrollMenu);
     }
 
     private void showBookLostList() {
+        pnItems.getChildren().clear();
         Platform.runLater(new Runnable() {
 
             @Override
@@ -49,12 +58,24 @@ public class ManageBookController implements Initializable {
                 try {
                     int number = 1;
                     booklost = new BookLostModel();
-                    rs = booklost.findAll();
+                    rs = booklost.findByDate(Date.valueOf(LocalDate.now()));
                     while (rs.next()) {
-                        // listbook=new ListBookModel(number, rs.getString(), );
+
+                        listbook = new ListBookModel(number, rs.getString("barcode"), rs.getString("book_name"),
+                                rs.getString("catg_name"), rs.getString("type_name"), rs.getString("tableid"),
+                                rs.getString("tablelog"), rs.getDate("date_pay"));
+
+                        final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmBookLostList.fxml"));
+                        final Parent listRoot = loader.load();
+                        final BookLostListController bookLostListController = loader.getController();
+                        bookLostListController.initConstructor(listbook);
+                        final Node node = listRoot;
+                        pnItems.getChildren().add(node);
+
                         number++;
                     }
-                } catch (SQLException e) {
+                    textTotalList.setText(pnItems.getChildren().size() + " ລາຍການ");
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -123,17 +144,7 @@ public class ManageBookController implements Initializable {
 
     @FXML
     private void btBookLost_Click(ActionEvent event) {
-        try {
-            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmBookLost.fxml"));
-            final Parent subForm = loader.load();
-            BookLostController booklostController = loader.getController();
-            booklostController.initConstructor(this);
-            bpManageBook.setCenter(subForm);
-        } catch (Exception e) {
-            alertMessage.showErrorMessage(bpManageBook, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            CreateLogFile config = new CreateLogFile();
-            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Book Lost", e);
-        }
+
     }
 
     @Override
@@ -146,6 +157,8 @@ public class ManageBookController implements Initializable {
                 "ຈຳນວນ " + ((HomeController.summaryValue[3] != null) ? HomeController.summaryValue[3] : "0") + " ຫົວ");
         txtTableLog.setText("ຈຳນວນ " + HomeController.summaryValue[4] + " ຕູ້ ແລະ "
                 + ((HomeController.summaryValue[5] != null) ? HomeController.summaryValue[5] : "0") + " ລ໋ອກຕູ້");
+
+        showBookLostList();
     }
 
 }

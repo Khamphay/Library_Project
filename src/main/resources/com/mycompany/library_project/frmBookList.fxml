@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Text?>
 
-<HBox fx:id="book" alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="1350.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.BookListController">
+<HBox fx:id="book" alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="1350.0" style="-fx-border-color: #E0E0E0; -fx-border-width: 0px 0px 1px 0px;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.BookListController">
    <children>
       <Text fx:id="number" strokeType="OUTSIDE" strokeWidth="0.0" text="ລຳດັບ" textAlignment="CENTER" wrappingWidth="44.2166690826416" />
       <Text fx:id="rentId" strokeType="OUTSIDE" strokeWidth="0.0" text="ລະຫັດຢືມປຶ້ມ" wrappingWidth="111.2166690826416">

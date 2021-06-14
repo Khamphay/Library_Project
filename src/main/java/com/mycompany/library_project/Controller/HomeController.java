@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
 
-    public static Stage homeStage = null;
+    public Stage homeStage = null;
     public static String[] summaryValue = new String[10];
 
     private boolean max_min = false;
@@ -79,7 +79,7 @@ public class HomeController implements Initializable {
     private JFXHamburger humberger;
 
     @FXML
-    private Text textTotalList;
+    private Text textTotalList, txtEmplName;
 
     /*
      * //TODO: Custom move form private void moveWinForm() {
@@ -93,6 +93,9 @@ public class HomeController implements Initializable {
      * }); acHomePaneToolbar.setOnMouseReleased(mouseEvent -> {
      * homeStage.setOpacity(1.0f); }); }
      */
+    public void initConstructor(String[] userInfor) {
+        txtEmplName.setText(userInfor[0] + " " + userInfor[1]);
+    }
 
     private void sliderMenuHamburger() {
         hamburgerTransition = new HamburgerSlideCloseTransition(humberger);
@@ -468,5 +471,4 @@ public class HomeController implements Initializable {
         });
         return btno;
     }
-
 }

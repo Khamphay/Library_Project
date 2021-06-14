@@ -1,8 +1,10 @@
 package com.mycompany.library_project.Controller;
 
 import com.jfoenix.controls.*;
+import com.jfoenix.controls.JFXDialog.DialogTransition;
 import com.mycompany.library_project.*;
 import com.mycompany.library_project.ControllerDAOModel.*;
+import com.mycompany.library_project.Model.EmployeeModel;
 import com.mycompany.library_project.config.*;
 
 import org.controlsfx.validation.*;
@@ -22,6 +24,7 @@ import javafx.stage.StageStyle;
 
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -33,7 +36,8 @@ public class LoginController implements Initializable {
     private Connection con = null;
     private CreateLogFile server = null;
     private AlertMessage alertMessage = new AlertMessage();
-    
+    private EmployeeModel user = null;
+
     @FXML
     private AnchorPane acPaneLogin;
     @FXML
@@ -78,23 +82,70 @@ public class LoginController implements Initializable {
 
     @FXML
     private void Login(ActionEvent event) throws Exception {
-        validRules.setErrorDecorationEnabled(true);
-        // spinner.setVisible(true);
-        Parent root = FXMLLoader.load(App.class.getResource("frmHome.fxml"));
-        Scene scene = new Scene(root);
-        scene.setFill(Color.TRANSPARENT);
-        HomeController.homeStage = new Stage();
-        HomeController.homeStage.setTitle("FNS Library Management System");
-        HomeController.homeStage.setScene(scene);
-        // Resizehelper.addResizeListener(HomeController.homeStage);//! Todo: Set to
-        // windows form able Resize
-        HomeController.homeStage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
-        HomeController.homeStage.show();
+        try {
+            final JFXButton[] buttons = { buttonOK() };
+            if (!txtUsername.getText().equals("") && !txtPassword.getText().equals("")) {
+                user = new EmployeeModel();
+                final ResultSet rs = user.Login(txtUsername.getText());
+                if (rs.next()) {
 
-        loginSatge.close();
-        // Todo: Or use
-        // Stage loginStg = (Stage) acPaneLogin.getScene().getWindow();
-        // loginStg.close();
+                    if (txtUsername.getText().equals(rs.getString("user_name"))) {
+                        final String salt = rs.getString("salt");
+                        final String scrPassword = rs.getString("password");
+                        final String providePassword = txtPassword.getText();
+                        final boolean checkPassword = ProtectUserPassword.verifyPassword(providePassword, scrPassword,
+                                salt);
+                        if (checkPassword) {
+                            validRules.setErrorDecorationEnabled(true);
+                            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmHome.fxml"));
+                            final Parent root = loader.load();
+                            final Scene scene = new Scene(root);
+                            final HomeController homeController = loader.getController();
+
+                            scene.setFill(Color.TRANSPARENT);
+                            homeController.homeStage = new Stage();
+                            homeController.homeStage.setTitle("FNS Library Management System");
+                            homeController.homeStage.setScene(scene);
+                            final String[] userInfor = { rs.getString("full_name"), rs.getString("sur_name") };
+                            homeController.initConstructor(userInfor);
+                            homeController.homeStage.getIcons()
+                                    .add(new Image("/com/mycompany/library_project/Icon/icon.png"));
+                            homeController.homeStage.show();
+                            loginSatge.close();
+                        } else {
+                            if (dialog != null)
+                                dialog.closeDialog();
+                            dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ",
+                                    "ບໍ່ສາມາດເຂົ້າລະບົບໄດ້ ເນື່ອງຈາກລະຫັດຜ່ານບໍ່ຖຶກຕ້ອງ", DialogTransition.CENTER,
+                                    buttons, false);
+                            dialog.showDialog();
+                        }
+
+                    }
+                } else {
+                    if (dialog != null)
+                        dialog.closeDialog();
+                    dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ",
+                            "ບໍ່ສາມາດເຂົ້າລະບົບໄດ້ ເນື່ອງຊື່ຜູ້ເໃຊ້ ຫຼື ລະຫັດຜ່ານບໍ່ຖຶກຕ້ອງ", DialogTransition.CENTER,
+                            buttons, false);
+                    dialog.showDialog();
+                }
+            } else {
+                validRules.setErrorDecorationEnabled(true);
+                alertMessage.showWarningMessage("Login", "Please enter username, password and try again.", 4,
+                        Pos.BOTTOM_RIGHT);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            alertMessage.showErrorMessage("Login Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+        }
+
+        /*
+         * spinner.setVisible(true); //
+         * Resizehelper.addResizeListener(HomeController.homeStage);//! Todo: Set to //
+         * windows form able Resize // Todo: Or use // Stage loginStg = (Stage)
+         * acPaneLogin.getScene().getWindow(); // loginStg.close();
+         */
 
     }
 
@@ -118,9 +169,8 @@ public class LoginController implements Initializable {
         // System.exit(0);
         final JFXButton[] buttons = { buttonYes(), buttonNo() };
 
-        dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ", "ຕ້ອງການອອກຈາກໂປຣແກຣມບໍ?",
-        JFXDialog.DialogTransition.CENTER,
-        buttons, false);
+        dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ", "ຕ້ອງການອອກຈາກໂປຣແກຣມບໍ?", JFXDialog.DialogTransition.CENTER,
+                buttons, false);
         dialog.showDialog();
 
         // Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -209,6 +259,15 @@ public class LoginController implements Initializable {
             alertMessage.showErrorMessage("Open Config", "Error: " + e.getMessage(), 4, Pos.TOP_CENTER);
             server.createLogFile("ການເຂົ້າອອກລະບົບມິບັນຫາ", e);
         }
+    }
+
+    private JFXButton buttonOK() {
+        JFXButton btOk = new JFXButton("OK");
+        btOk.setStyle(Style.buttonDialogStyle);
+        btOk.setOnAction(e -> {
+            dialog.closeDialog();
+        });
+        return btOk;
     }
 
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
+import com.mycompany.library_project.App;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.EmployeeModel;
@@ -24,6 +25,8 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -31,6 +34,10 @@ import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
 public class EmployeeController implements Initializable {
@@ -42,8 +49,8 @@ public class EmployeeController implements Initializable {
     private String gender = "";
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = null;
+    private ArrayList<EmployeeModel> user = null;
     private ObservableList<EmployeeModel> data = null;
-    private ArrayList<EmployeeModel> users = null;
     private CreateLogFile logfile = new CreateLogFile();
 
     public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
@@ -61,6 +68,9 @@ public class EmployeeController implements Initializable {
 
     @FXML
     private RadioButton rdbMale, rdbFemale;
+
+    @FXML
+    private MenuItem menuAddUser, menuEditUser;
 
     @FXML
     private TableView<EmployeeModel> tableEmployee;
@@ -147,6 +157,34 @@ public class EmployeeController implements Initializable {
         txtId.requestFocus();
     }
 
+    private void showUser(String form) {
+        try {
+            user = new ArrayList<>();
+            final String empID = tableEmployee.getSelectionModel().getSelectedItem().getEmployeeId();
+            rs = employee.findUserByEmpId(empID);
+            if (rs.next()) {
+                user.add(new EmployeeModel(rs.getString("employee_id"), rs.getString("user_name"),
+                        rs.getString("password"), rs.getString("salt")));
+            }
+
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource(form));
+            final Parent root = loader.load();
+            final Scene scene = new Scene(root);
+            final Stage stage = new Stage(StageStyle.TRANSPARENT);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setScene(scene);
+
+            final AdduserController userController = loader.getController();
+            userController.initConstructor(empID, user, stage);
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void initEvents() {
         btSave.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -229,6 +267,14 @@ public class EmployeeController implements Initializable {
             }
 
         });
+        menuAddUser.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                showUser("frmAddUser.fxml");
+            }
+
+        });
 
         txtTel.textProperty().addListener(new ChangeListener<String>() {
             // Todo: set properties type only numeric
@@ -296,13 +342,12 @@ public class EmployeeController implements Initializable {
             public void run() {
                 try {
                     data = FXCollections.observableArrayList();
-                    users = new ArrayList<>();
                     employee = new EmployeeModel();
                     rs = employee.findAll();
                     while (rs.next()) {
-                        data.add(new EmployeeModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
-                                rs.getString(5), rs.getString(6)));
-                        users.add(new EmployeeModel(rs.getString(1), rs.getString(7), rs.getString(8)));
+                        data.add(new EmployeeModel(rs.getString("employee_id"), rs.getString("full_name"),
+                                rs.getString("sur_name"), rs.getString("gender"), rs.getString("tel"),
+                                rs.getString("email")));
                     }
                     // tableEmployee.setItems(data); //Todo: if you don't filter to Search data
                     // bellow:

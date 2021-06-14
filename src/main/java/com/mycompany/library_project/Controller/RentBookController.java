@@ -46,7 +46,12 @@ public class RentBookController implements Initializable {
     private DialogMessage dialog = null;
     private JFXButton[] buttons = { buttonOK() };
     private String rent_id = "", status = "", page = "", table = "", tableLog = "";
-    private int qty_can_rent = 0;
+
+    /*
+     * //Todo: 'qty_can_rent' is the max qty can rent; //Todo: 'bookInRent' the book
+     * has renting in db
+     */
+    private int qty_can_rent = 0, bookInRent = 0;
 
     public void initConstructor(HomeController homeController) {
         this.homeController = homeController;
@@ -105,6 +110,8 @@ public class RentBookController implements Initializable {
         txtBookName.clear();
         txtCatg.clear();
         txtType.clear();
+        qty_can_rent = 0;
+        bookInRent = 0;
 
         txtMemberId.requestFocus();
     }
@@ -139,7 +146,6 @@ public class RentBookController implements Initializable {
                     return;
                 } else if (status.equals("ຫວ່າງ")) {
                     if (tableRentBook.getItems().size() < qty_can_rent) {
-
                         int index = 0;
                         if (tableRentBook.getItems().size() > 0) {
                             for (RentBookModel row : tableRentBook.getItems()) {
@@ -163,8 +169,14 @@ public class RentBookController implements Initializable {
                         tableLog = "";
 
                     } else {
-                        alertMessage.showWarningMessage("Warning", "Can not rent more than " + qty_can_rent + " books.",
-                                4, Pos.TOP_CENTER);
+                        if (dialog != null) {
+                            dialog.closeDialog();
+                        }
+                        dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
+                                "ບັດນີ້ສາມາດຢືມປຶ້ມໄດ້ຫຼາຍສຸດ " + qty_can_rent
+                                        + " ຫົວເທົ່ານັ້ນ ເນື່ອງຈາກບັດນີ້ໃຊ້ຢືມປຶ້ມໄປແລ້ວ " + bookInRent + " ຫົວ.",
+                                DialogTransition.CENTER, buttons, false);
+                        dialog.showDialog();
                     }
 
                 } else {
@@ -244,7 +256,7 @@ public class RentBookController implements Initializable {
         txtMemberId.setOnKeyPressed(keytype -> {
             if (keytype.getCode() == KeyCode.ENTER) {
                 try {
-                    rs = rentBook.chackMemberRentBook(txtMemberId.getText(), "ຍັງບໍ່ໄດ້ສົ່ງ");
+                    rs = rentBook.chackMemberRentBook(txtMemberId.getText(), "ກຳລັງຢືມ");
                     if (rs.next() && rs.getDate("date_send") != null) {
                         // TODO: exite end of send
                         if (Date.valueOf(LocalDate.now()).compareTo(rs.getDate("date_send")) > 0) {
@@ -257,24 +269,15 @@ public class RentBookController implements Initializable {
                             dialog.showDialog();
                             return;
                         }
-
-                        if (rs.getInt("count_book") >= 3) {
+                        bookInRent = rs.getInt("count_book");
+                        if (bookInRent >= 3) {
                             dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
                                     "ບໍ່ສາມາດຢືມໄດ້ເນື່ອງຈາກບັດນີ້ໃຊ້ຢືມປຶ້ມຄົບຕາມຈຳນວນທີ່ກຳນົດແລ້ວ, ຖ້າຫາກຕ້ອງການຢືມໃຫມ່ຕ້ອງໄດ້ສົ່ງປຶ້ມທີ່ໄດ້ຢືມກ່ອນໜ້າ.",
                                     DialogTransition.CENTER, buttons, false);
                             dialog.showDialog();
                             return; // Todo: exit this 'method' or 'event'
-                        } else if (rs.getInt("count_book") > 0 && rs.getInt("count_book") <= 2) {
+                        } else if (bookInRent > 0 && bookInRent <= 2) {
                             qty_can_rent = 3 - rs.getInt("count_book");
-                            if (dialog != null) {
-                                dialog.closeDialog();
-                            }
-                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                                    "ບັດນີ້ສາມາດຢືມປຶ້ມໄດ້ຫຼາຍສຸດ " + qty_can_rent
-                                            + " ຫົວເທົ່ານັ້ນ ເນື່ອງຈາກບັດນີ້ໃຊ້ຢືມປຶ້ມໄປແລ້ວ " + rs.getInt("count_book")
-                                            + " ຫົວ.",
-                                    DialogTransition.CENTER, buttons, false);
-                            dialog.showDialog();
                         }
                     } else {
                         qty_can_rent = 3;
@@ -395,6 +398,7 @@ public class RentBookController implements Initializable {
                     if (result != "") {
                         alertMessage.showCompletedMessage("Rent Book Completed", result, 4, Pos.BOTTOM_RIGHT);
                         tableRentBook.getItems().clear();
+                        clearText();
                     } else {
                         alertMessage.showWarningMessage("Rent Book",
                                 "Can't save. Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);

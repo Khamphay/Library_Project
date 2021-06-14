@@ -21,15 +21,17 @@ public class EmployeeModel implements DataAccessObject {
     private String email;
     private String user;
     private String password;
+    private String saltKey;
 
     public EmployeeModel() {
 
     }
 
-    public EmployeeModel(String employeeId, String user, String password) {
+    public EmployeeModel(String employeeId, String user, String password, String saltKey) {
         this.employeeId = employeeId;
         this.user = user;
         this.password = password;
+        this.saltKey = saltKey;
     }
 
     public EmployeeModel(String employeeId, String firstName, String lastName, String gender, String tel,
@@ -105,6 +107,14 @@ public class EmployeeModel implements DataAccessObject {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSaltKey() {
+        return saltKey;
+    }
+
+    public void setSaltKey(String saltKey) {
+        this.saltKey = saltKey;
     }
 
     @Override
@@ -187,5 +197,51 @@ public class EmployeeModel implements DataAccessObject {
         ps = con.prepareStatement(sql);
         ps.setString(1, id);
         return ps.executeUpdate();
+    }
+
+    public int addUser() throws SQLException {
+        sql = "call addUser(?, ?, ?, ?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, getEmployeeId());
+        ps.setString(2, getUser());
+        ps.setString(3, getPassword());
+        ps.setString(4, getSaltKey());
+        return ps.executeUpdate();
+    }
+
+    public int updateUser(String empid, String oldUsername) throws SQLException {
+        sql = "call updateUser(?, ?, ?, ?, ?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, empid);
+        ps.setString(2, oldUsername);
+        ps.setString(3, getUser());
+        ps.setString(4, getPassword());
+        ps.setString(5, getSaltKey());
+        return ps.executeUpdate();
+    }
+
+    public int updateUserName(String empid, String oldUsername, String newUsername) throws SQLException {
+        sql = "update tbuser set user_name =? where employee_id = ? and user_name = ?;";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, newUsername);
+        ps.setString(2, empid);
+        ps.setString(3, oldUsername);
+        return ps.executeUpdate();
+    }
+
+    public ResultSet Login(String user) throws SQLException {
+        sql = "call Login(?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, user);
+        rs = ps.executeQuery();
+        return rs;
+    }
+
+    public ResultSet findUserByEmpId(String empId) throws SQLException {
+        sql = "call findUserByEmpId(?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, empId);
+        rs = ps.executeQuery();
+        return rs;
     }
 }

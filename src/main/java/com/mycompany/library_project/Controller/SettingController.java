@@ -181,8 +181,7 @@ public class SettingController implements Initializable {
 
     @FXML
     private void closeFormSetting(ActionEvent event) {
-        Stage stage = (Stage) acSettings.getScene().getWindow();
-        stage.close();
+        settingStage.close();
         settingStage = null;
     }
 

@@ -34,7 +34,7 @@
                               <Image url="@Icon/male_user_100px.png" />
                            </image>
                         </GNAvatarView>
-                        <Text boundsType="LOGICAL_VERTICAL_CENTER" fill="WHITE" lineSpacing="4.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-20" text="ທ.ຄຳໄຟ ເສຍລິມົວ" textOrigin="CENTER" wrappingWidth="181.2166748046875" />
+                        <Text fx:id="txtEmplName" boundsType="LOGICAL_VERTICAL_CENTER" fill="WHITE" lineSpacing="4.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-16" text="ທ.ຄຳໄຟ ເສຍລິມົວ" textOrigin="CENTER" wrappingWidth="181.2166748046875" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" layoutX="241.0" layoutY="-16.0" prefHeight="60.0" prefWidth="453.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="0.0">

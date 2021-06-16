@@ -34,13 +34,13 @@
                                  <columns>
                                     <TableColumn fx:id="colId" maxWidth="3000.0" prefWidth="123.0" styleClass="tablecolumn" text="ລະຫັດ Barcode" />
                                     <TableColumn fx:id="colName" prefWidth="256.0" styleClass="tablecolumn" text="ຊື່ປຶ້ມ" />
-                                    <TableColumn fx:id="colPage" prefWidth="76.0" styleClass="tablecolumn" text="ຈຳນວນໜ້າ" />
+                                    <TableColumn id="colCenter" fx:id="colPage" prefWidth="76.0" styleClass="tablecolumn" text="ຈຳນວນໜ້າ" />
                                     <TableColumn fx:id="colCatg" prefWidth="148.0" styleClass="tablecolumn" text="ໝວດ" />
                                     <TableColumn fx:id="colType" prefWidth="166.0" styleClass="tablecolumn" text="ປະເພດ" />
-                                    <TableColumn fx:id="colTable" prefWidth="81.0" styleClass="tablecolumn" text="ເລກຕູ້" />
-                                    <TableColumn fx:id="colTableLog" prefWidth="110.0" styleClass="tablecolumn" text="ເລກລ໋ອກຕູ້" />
-                                    <TableColumn fx:id="colDateRent" maxWidth="3000.0" prefWidth="123.0" styleClass="tablecolumn" text="ວັນທີຢືມ" />
-                                    <TableColumn fx:id="colDateSend" maxWidth="3000.0" prefWidth="123.0" styleClass="tablecolumn" text="ວັນທີສົ່ງ" />
+                                    <TableColumn id="colCenter" fx:id="colTable" prefWidth="81.0" styleClass="tablecolumn" text="ເລກຕູ້" />
+                                    <TableColumn id="colCenter" fx:id="colTableLog" prefWidth="110.0" styleClass="tablecolumn" text="ເລກລ໋ອກຕູ້" />
+                                    <TableColumn id="colCenter" fx:id="colDateRent" maxWidth="3000.0" prefWidth="123.0" styleClass="tablecolumn" text="ວັນທີຢືມ" />
+                                    <TableColumn id="colCenter" fx:id="colDateSend" maxWidth="3000.0" prefWidth="123.0" styleClass="tablecolumn" text="ວັນທີສົ່ງ" />
                                  </columns>
                               </TableView>
                               <AnchorPane layoutX="26.0" layoutY="29.0" prefHeight="251.0" prefWidth="1244.0" style="-fx-border-color: #362E6D; -fx-border-radius: 0.4em;" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="28.0">

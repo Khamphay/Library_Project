@@ -4,6 +4,7 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="memberId" class="java.lang.String"/>
+	<parameter name="logo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select * from vwshowmember where member_id=$P{memberId}]]>
 	</queryString>
@@ -163,9 +164,9 @@
 				</textElement>
 				<text><![CDATA[ວັນທີ:]]></text>
 			</staticText>
-			<image>
+			<image onErrorType="Blank">
 				<reportElement x="2" y="67" width="74" height="74" uuid="2a2a9f1e-39f3-4ca0-882f-d5f70233e029"/>
-				<imageExpression><![CDATA["D:/Information4cs2_1/Final_Project/Library_Project/bin/Logo_FNS.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="0" y="151" width="553" height="1" uuid="7b7f7857-bcec-434b-82a8-91ca8ae7cbf5"/>
@@ -230,7 +231,7 @@
 					</textElement>
 					<text><![CDATA[ລະຫັດ ນ/ສ:]]></text>
 				</staticText>
-				<image>
+				<image onErrorType="Icon">
 					<reportElement x="10" y="43" width="107" height="109" uuid="5f3e705b-b7c9-4aa8-b4e6-a2609692bfce"/>
 					<imageExpression><![CDATA[$F{img}]]></imageExpression>
 				</image>

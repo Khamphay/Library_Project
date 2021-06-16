@@ -64,8 +64,8 @@
                   <PasswordField fx:id="txtPassword" layoutX="237.0" layoutY="238.0" prefHeight="31.0" prefWidth="298.0" AnchorPane.leftAnchor="235.0" />
                   <PasswordField fx:id="txtRepassword" layoutX="237.0" layoutY="305.0" prefHeight="31.0" prefWidth="298.0" AnchorPane.leftAnchor="235.0" />
                   <Label layoutX="234.0" layoutY="121.0" styleClass="BoonBaan-size-14" text="ລະຫັດຜ່ານເກົ່າ" AnchorPane.leftAnchor="234.0" />
-                  <PasswordField fx:id="txtOldPassword" disable="true" layoutX="234.0" layoutY="143.0" prefHeight="31.0" prefWidth="298.0" AnchorPane.leftAnchor="234.0" />
-                  <Text fx:id="lbNewPass" layoutX="235.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລະຫັດຜ່ານ" AnchorPane.leftAnchor="235.0" />
+                  <PasswordField fx:id="txtOldPassword" layoutX="234.0" layoutY="143.0" prefHeight="31.0" prefWidth="298.0" AnchorPane.leftAnchor="234.0" />
+                  <Text fx:id="lbNewPass" layoutX="235.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລະຫັດຜ່ານໃຫມ່" AnchorPane.leftAnchor="235.0" />
                   <JFXCheckBox fx:id="chRenewPass" checkedColor="#2a14ee" disable="true" layoutX="236.0" layoutY="187.0" styleClass="BoonBaan-size-14-Regular" text="ປ່ຽນລະຫັດຜ່ານໃຫມ່" />
                </children>
             </AnchorPane>

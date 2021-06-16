@@ -27,7 +27,6 @@ import com.mycompany.library_project.Model.*;
 import com.mycompany.library_project.config.CreateLogFile;
 
 import org.controlsfx.validation.Severity;
-import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
@@ -45,7 +44,7 @@ public class AddBookController implements Initializable {
     private BookDetailModel addBook = null;
     private ArrayList<AuthorModel> author_id = null;
     private ArrayList<String> arr_type, arr_category;
-
+    private BookDetailModel book = null;
     private ObservableList<String> status = FXCollections.observableArrayList("ຫວ່າງ", "ກຳລົງຢືມ", "ເສຍ");;
     private ObservableList<String> items = null, author_items = null;
 
@@ -72,7 +71,7 @@ public class AddBookController implements Initializable {
 
     public void initConstructor2(BookController bookcontroller, BookDetailModel book) {
         this.bookcontroller = bookcontroller;
-
+        this.book = book;
         moveForm();
         btClose.setVisible(true);
         btClose.setOnAction(new EventHandler<ActionEvent>() {
@@ -148,6 +147,7 @@ public class AddBookController implements Initializable {
 
             } catch (Exception e) {
                 alertMessage.showErrorMessage("Load Write Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                e.printStackTrace();
             }
         }
     }
@@ -180,10 +180,10 @@ public class AddBookController implements Initializable {
         validRules.registerValidator(txtPage, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຈຳນວນໜ້າ"));
         validRules.registerValidator(txtQty, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຈຳປື້ມ"));
 
-        validRules.registerValidator(txtISBN, false, (Control c, String newValue) -> ValidationResult.fromWarningIf(c,
-                "ກະລຸນາປ້ອນເລກ ISBN (ຖ້າມີ)", newValue.equals("")));
-        validRules.registerValidator(txtYear, false, (Control c, String newValue) -> ValidationResult.fromWarningIf(c,
-                "ກະລຸນາລະບຸປີແຕ່ງ (ຖ້າມີ)", newValue.equals("")));
+        validRules.registerValidator(txtISBN, false,
+                Validator.createEmptyValidator("ກະລຸນາປ້ອນເລກ ISBN (ຖ້າມີ)", Severity.WARNING));
+        validRules.registerValidator(txtYear, false,
+                Validator.createEmptyValidator("ກະລຸນາລະບຸປີແຕ່ງ (ຖ້າມີ)", Severity.WARNING));
 
         validRules.registerValidator(txtBarcode, false, Validator.createEmptyValidator("ລະຫັດ Barcode ຕ້ອງບໍ່ຫວ່າງ"));
         validRules.registerValidator(cmbType, false, Validator.createEmptyValidator("ກະລຸນາເລືອກປະເພດປຶ້ມ"));
@@ -302,6 +302,7 @@ public class AddBookController implements Initializable {
         cmbType.getSelectionModel().clearSelection();
         cmbTable.getSelectionModel().clearSelection();
         cmbtableLog.getSelectionModel().clearSelection();
+        cmbStatus.getSelectionModel().select(0);
 
         cmbAuthor1.getSelectionModel().clearSelection();
         cmbAuthor2.getSelectionModel().clearSelection();
@@ -683,7 +684,9 @@ public class AddBookController implements Initializable {
                 addBook = new BookDetailModel(txtId.getText(), txtName.getText(), txtISBN.getText(),
                         Integer.parseInt(txtPage.getText()), Integer.parseInt(txtQty.getText()),
                         arr_category.get(index_category), arr_type.get(index_type),
-                        cmbTable.getSelectionModel().getSelectedItem().toString(), txtDetail.getText());
+                        cmbTable.getSelectionModel().getSelectedItem().toString(), txtYear.getText(),
+                        txtDetail.getText());
+
                 if (bookid == "") {
                     if (addBook.saveData() > 0) {
                         String line = txtBarcode.getText();
@@ -710,7 +713,7 @@ public class AddBookController implements Initializable {
                         for (String val : arr_author) {
                             if (val != null) {
                                 try {
-                                    if (addBook.saveWrite(txtId.getText(), val, txtYear.getText()) > 0) {
+                                    if (addBook.saveWrite(txtId.getText(), val) > 0) {
                                         msg = "Save data successfully.";
                                     }
                                 } catch (Exception e) {
@@ -732,8 +735,7 @@ public class AddBookController implements Initializable {
                                 if (val != null) {
                                     try {
                                         // Todo: Update if have
-                                        if (addBook.updateWrite(bookid, val, oldarr_author[old_id],
-                                                txtYear.getText()) > 0) {
+                                        if (addBook.updateWrite(bookid, val, oldarr_author[old_id]) > 0) {
                                             msg = "Edit data successfully.";
                                         }
                                     } catch (Exception e) {
@@ -749,7 +751,7 @@ public class AddBookController implements Initializable {
                             for (String val : arr_author) {
                                 if (val != null) {
                                     try {
-                                        if (addBook.saveWrite(txtId.getText(), val, txtYear.getText()) > 0) {
+                                        if (addBook.saveWrite(txtId.getText(), val) > 0) {
                                             msg = "Save data successfully.";
                                         }
                                     } catch (Exception e) {
@@ -766,6 +768,7 @@ public class AddBookController implements Initializable {
 
                 if (msg != null) {
                     alertMessage.showCompletedMessage("Saved", msg, 4, Pos.BOTTOM_RIGHT);
+                    clearText();
                     if (bookcontroller != null)
                         bookcontroller.showData();
                 } else {
@@ -799,13 +802,13 @@ public class AddBookController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cmbStatus.setItems(status);
+        cmbStatus.getSelectionModel().select(0);
         initRules();
         cmbAuthor2.setVisible(false);
         cmbAuthor3.setVisible(false);
         cmbAuthor4.setVisible(false);
         cmbAuthor5.setVisible(false);
         cmbAuthor6.setVisible(false);
-
         initEvents();
         initKeyEvents();
         fillType();
@@ -813,5 +816,4 @@ public class AddBookController implements Initializable {
         fillTable();
         fillAuthor();
     }
-
 }

@@ -27,6 +27,7 @@ import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.CategoryModel;
 import com.mycompany.library_project.config.CreateLogFile;
 
+import org.controlsfx.control.textfield.TextFields;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
@@ -108,7 +109,7 @@ public class BookCategoryController implements Initializable {
                     SortedList<CategoryModel> sorted = new SortedList<>(filterCatg);
                     sorted.comparatorProperty().bind(tableCategory.comparatorProperty());
                     tableCategory.setItems(sorted);
-
+                    TextFields.bindAutoCompletion(txtSearch, sorted);
                 } catch (Exception e) {
                     alertMessage.showErrorMessage(stakePane, "Load data", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
@@ -216,6 +217,7 @@ public class BookCategoryController implements Initializable {
         colNumber.setMinWidth(50);
         colNumber.setMaxWidth(100);
         colNumber.setPrefWidth(60);
+        colNumber.setId("colCenter");
         colNumber.setCellValueFactory(
                 new Callback<CellDataFeatures<CategoryModel, CategoryModel>, ObservableValue<CategoryModel>>() {
 

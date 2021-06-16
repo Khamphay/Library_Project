@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
@@ -17,8 +18,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="668.0" prefWidth="1305.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.EmployeeController">
+<BorderPane prefHeight="775.0" prefWidth="1305.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.EmployeeController">
    <center>
       <StackPane fx:id="stackPane">
          <children>
@@ -34,7 +36,7 @@
                               <TableColumn fx:id="colId" maxWidth="3000.0" text="ລະຫັດ" />
                               <TableColumn fx:id="colFname" prefWidth="223.0" text="ຊື່ພະນັກງານ" />
                               <TableColumn fx:id="colSname" prefWidth="180.0" text="ນາມສະກຸນ" />
-                              <TableColumn fx:id="colGender" maxWidth="2000.0" prefWidth="74.0" text="ເພດ" />
+                              <TableColumn id="colCenter" fx:id="colGender" maxWidth="2000.0" prefWidth="74.0" text="ເພດ" />
                               <TableColumn fx:id="colTel" maxWidth="4000.0" prefWidth="108.0" text="ເບີໂທ" />
                               <TableColumn fx:id="colEmail" prefWidth="300.0" text="ອີເມວ (Email)" />
                            </columns>
@@ -44,11 +46,11 @@
                            <contextMenu>
                               <ContextMenu>
                                 <items>
-                                  <MenuItem fx:id="menuAddUser" mnemonicParsing="false" text="ຈັດການຂໍ້ມູນຜູ້ໃຊ້ລະບົບ">
+                                  <MenuItem fx:id="menuAddUser" mnemonicParsing="false" text="ປ່ຽນລະຫັດຜ່ານ ຫຼື ຊື່ຜູ້ໃຊ້">
                                        <graphic>
                                           <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@Icon/checklist.png" />
+                                                <Image url="@Icon/edit_50px.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>
@@ -69,7 +71,7 @@
                         </ImageView>
                       <AnchorPane layoutX="998.0" layoutY="69.0" minHeight="-Infinity" prefHeight="535.0" prefWidth="295.0" style="-fx-border-color: #101D3D; -fx-border-radius: 0.5em;" AnchorPane.bottomAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="69.0">
                            <children>
-                              <JFXButton id="btClick" fx:id="btSave" alignment="CENTER" layoutX="13.0" layoutY="454.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE" AnchorPane.topAnchor="454.0">
+                              <JFXButton id="btClick" fx:id="btSave" alignment="CENTER" layoutX="13.0" layoutY="571.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE" AnchorPane.topAnchor="571.0">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -84,7 +86,7 @@
                                     <Insets left="-6.0" />
                                  </padding>
                               </JFXButton>
-                              <JFXButton id="btClick" fx:id="btEdit" alignment="CENTER" layoutX="105.0" layoutY="453.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ແກ້ໄຂ" textFill="WHITE" AnchorPane.topAnchor="453.0">
+                              <JFXButton id="btClick" fx:id="btEdit" alignment="CENTER" layoutX="105.0" layoutY="570.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ແກ້ໄຂ" textFill="WHITE" AnchorPane.topAnchor="570.0">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -122,7 +124,7 @@
                                     <Label alignment="CENTER" layoutX="3.0" layoutY="-10.0" prefHeight="19.0" prefWidth="26.0" style="-fx-background-color: #F4F4F4;" styleClass="BoonBaan-size-14" text="ເພດ" />
                                  </children>
                               </AnchorPane>
-                              <JFXButton id="btClick" fx:id="btCancel" alignment="CENTER" layoutX="199.0" layoutY="453.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE" AnchorPane.topAnchor="453.0">
+                              <JFXButton id="btClick" fx:id="btCancel" alignment="CENTER" layoutX="199.0" layoutY="570.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE" AnchorPane.topAnchor="570.0">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
@@ -139,6 +141,10 @@
                               </JFXButton>
                               <TextField fx:id="txtEmail" layoutX="26.0" layoutY="360.0" prefHeight="31.0" prefWidth="245.0" promptText="ອີເມວ (Email)" />
                               <Label layoutX="28.0" layoutY="340.0" styleClass="BoonBaan-size-14" text="ອີເມວ (Email)" />
+                              <Label layoutX="28.0" layoutY="468.0" styleClass="BoonBaan-size-14" text="ຢືນຢັນລະຫັດຜ່ານ" />
+                              <PasswordField fx:id="txtPassword" layoutX="26.0" layoutY="426.0" prefHeight="31.0" prefWidth="245.0" />
+                              <PasswordField fx:id="txtRepassword" layoutX="26.0" layoutY="489.0" prefHeight="31.0" prefWidth="245.0" />
+                              <Text layoutX="27.0" layoutY="419.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລະຫັດຜ່ານ" />
                            </children>
                         </AnchorPane>
                         <Separator layoutX="699.0" layoutY="34.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="4.0" AnchorPane.rightAnchor="598.0" />

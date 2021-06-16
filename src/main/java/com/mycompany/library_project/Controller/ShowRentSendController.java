@@ -13,11 +13,13 @@ import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.ShowRentSendModel;
 import com.mycompany.library_project.config.CreateLogFile;
 
-import javafx.application.Platform;
+import org.controlsfx.control.MaskerPane;
+
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
 import javafx.collections.transformation.*;
+import javafx.concurrent.Task;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
@@ -33,6 +35,7 @@ public class ShowRentSendController implements Initializable {
     private HomeController homeController = null;
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile logfile = new CreateLogFile();
+    private MaskerPane masker = new MaskerPane();
     // private DialogMessage dialog = null;
     private ShowRentSendModel showbookModel = null;
     private ObservableList<ShowRentSendModel> data = null;
@@ -89,6 +92,7 @@ public class ShowRentSendController implements Initializable {
         colNumber.setMinWidth(50);
         colNumber.setMaxWidth(120);
         colNumber.setPrefWidth(60);
+        colNumber.setId("colCenter");
         colNumber.setCellValueFactory(
                 new Callback<CellDataFeatures<ShowRentSendModel, ShowRentSendModel>, ObservableValue<ShowRentSendModel>>() {
 
@@ -135,10 +139,16 @@ public class ShowRentSendController implements Initializable {
     }
 
     private void showData() {
-        Platform.runLater(new Runnable() {
+        Task<Void> task = new Task<Void>() {
 
             @Override
-            public void run() {
+            protected Void call() throws Exception {
+                masker.setVisible(true);
+                masker.setProgressVisible(true);
+                // Platform.runLater(new Runnable() {
+
+                // @Override
+                // public void run() {
 
                 try {
                     showbookModel = new ShowRentSendModel();
@@ -197,8 +207,28 @@ public class ShowRentSendController implements Initializable {
                 } catch (Exception e) {
                     alertMessage.showErrorMessage("Load data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
                 }
+                // }
+                // });
+                return null;
             }
-        });
+
+            @Override
+            protected void succeeded() {
+                super.succeeded();
+                masker.setVisible(false);
+                masker.setProgressVisible(false);
+            }
+
+            @Override
+            protected void failed() {
+                super.failed();
+                masker.setProgressVisible(false);
+                masker.setVisible(false);
+                alertMessage.showErrorMessage("Load Data", "Load Data Failed", 4, Pos.BOTTOM_RIGHT);
+            }
+
+        };
+        new Thread(task).start();
     }
 
     private void initEvents() {
@@ -254,12 +284,20 @@ public class ShowRentSendController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        masker.setVisible(false);
+        masker.setPrefWidth(50.0);
+        masker.setPrefHeight(50.0);
+        masker.setText("ກຳລັງໂຫລດຂໍ້ມູນ, ກະລຸນາລໍຖ້າ...");
+        masker.setStyle("-fx-font-family: BoonBaan;");
+        stackPane.getChildren().add(masker);
+
         ToggleGroup group = new ToggleGroup();
         rdbShowAll.setToggleGroup(group);
         rdbShowRent.setToggleGroup(group);
         rdbShowOutOfRent.setToggleGroup(group);
         rdbSend.setToggleGroup(group);
         rdbShowAll.setSelected(true);
+
 
         initTable();
         initEvents();

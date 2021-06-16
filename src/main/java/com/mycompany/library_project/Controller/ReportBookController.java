@@ -2,6 +2,7 @@ package com.mycompany.library_project.Controller;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -11,6 +12,9 @@ import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Report.CreateReport;
 
+import org.controlsfx.control.MaskerPane;
+
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -24,15 +28,17 @@ public class ReportBookController implements Initializable {
     private CreateReport report = null;
     Map<String, Object> map = null;
     private JFXButton[] buttons = { buttonOK() };
+    private MaskerPane masker = new MaskerPane();
+    String logo = Paths.get("bin/Logo.png").toAbsolutePath().toString();
 
     @FXML
     private StackPane stackPane;
 
     @FXML
-    private JFXRadioButton rdbReportAll, rdbReportByBookId, rdbReportByBarcode;
+    private JFXRadioButton rdbReportAll, rdbReportByBookId;
 
     @FXML
-    private TextField txtBookId, txtBarcode;
+    private TextField txtBookId;
 
     @FXML
     private JFXButton btReport;
@@ -42,20 +48,10 @@ public class ReportBookController implements Initializable {
         rdbReportAll.setOnAction(e -> {
             txtBookId.setDisable(true);
             txtBookId.clear();
-            txtBarcode.setDisable(true);
-            txtBarcode.clear();
         });
 
         rdbReportByBookId.setOnAction(e -> {
             txtBookId.setDisable(false);
-            txtBarcode.setDisable(true);
-            txtBarcode.clear();
-        });
-
-        rdbReportByBarcode.setOnAction(e -> {
-            txtBarcode.setDisable(false);
-            txtBookId.clear();
-            txtBookId.setDisable(true);
         });
 
         btReport.setOnAction(new EventHandler<ActionEvent>() {
@@ -63,36 +59,44 @@ public class ReportBookController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
 
-                if (rdbReportByBookId.isSelected()) {
-                    if (!txtBookId.getText().equals("")) {
-                        report = new CreateReport();
-                        map = new HashMap<String, Object>();
-                        InputStream logo = this.getClass().getResourceAsStream("bin/Logo_FNS.png");
-                        map.put("logo", logo);
-                        map.put("bookid", txtBookId.getText());
-                        report.showReport(map, "reportBookById.jrxml", "Report Book By ID Error");
-                    } else {
+                if (rdbReportByBookId.isSelected())
+                    if (txtBookId.getText().equals("")) {
                         dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                                "ກະລຸນາປ້ອນລະຫັດປຶ້ມທີ່ຕ້ອງການລາຍງານແລ້ວ\nລອງໃຫມ່ອີກຄັ້ງ.",
+                                "ກະລຸນາປ້ອນລະຫັດປຶ້ມທີ່ຕ້ອງການລາຍງານແລ້ວ ລອງໃຫມ່ອີກຄັ້ງ.",
                                 JFXDialog.DialogTransition.CENTER, buttons, false);
                         dialog.showDialog();
+                        return;
                     }
-                } else if (rdbReportByBarcode.isSelected()) {
-                    if (!txtBookId.getText().equals("")) {
 
-                    } else {
-                        dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                                "ກະລຸນາປ້ອນລະຫັດ Barcode ປຶ້ມທີ່ຕ້ອງການລາຍງານແລ້ວ\nລອງໃຫມ່ອີກຄັ້ງ.",
-                                JFXDialog.DialogTransition.CENTER, buttons, false);
-                        dialog.showDialog();
+                Task<Void> task = new Task<Void>() {
+
+                    @Override
+                    protected Void call() throws Exception {
+                        masker.setVisible(true);
+                        masker.setProgressVisible(true);
+                        if (rdbReportByBookId.isSelected()) {
+                            report = new CreateReport();
+                            map = new HashMap<String, Object>();
+                            map.put("logo", logo);
+                            map.put("bookid", txtBookId.getText());
+                            report.showReport(map, "reportBookById.jrxml", "Report Book By ID Error");
+                        } else {
+                            report = new CreateReport();
+                            map = new HashMap<String, Object>();
+                            map.put("logo", logo);
+                            report.showReport(map, "reportAllBooks.jrxml", "Report All Book Error");
+                        }
+                        return null;
                     }
-                } else {
-                    InputStream logos = this.getClass().getResourceAsStream("bin/Logo_FNS.png");
-                    report = new CreateReport();
-                    map = new HashMap<String, Object>();
-                    map.put("logos", logos);
-                    report.showReport(map, "reportAllBooks.jrxml", "Report All Book Error");
-                }
+
+                    @Override
+                    protected void succeeded() {
+                        super.succeeded();
+                        masker.setProgressVisible(false);
+                        masker.setVisible(false);
+                    }
+                };
+                new Thread(task).start();
             }
 
         });
@@ -103,10 +107,16 @@ public class ReportBookController implements Initializable {
         ToggleGroup group = new ToggleGroup();
         rdbReportAll.setToggleGroup(group);
         rdbReportByBookId.setToggleGroup(group);
-        rdbReportByBarcode.setToggleGroup(group);
         rdbReportAll.setSelected(true);
         txtBookId.setDisable(true);
-        txtBarcode.setDisable(true);
+
+        masker.setVisible(false);
+        masker.setPrefWidth(50.0);
+        masker.setPrefHeight(50.0);
+        masker.setText("ກຳລັງໂຫຼດຂໍ້ມູນ, ກະລຸນາລໍຖ້າ...");
+        masker.setStyle("-fx-font-family: BoonBaan;");
+        stackPane.getChildren().add(masker);
+
         initEvents();
     }
 

@@ -17,7 +17,6 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-
 <StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.ShowRentSendController">
    <children>
       <BorderPane prefHeight="701.0" prefWidth="1330.0" stylesheets="@Style/appstyle.css">
@@ -63,13 +62,13 @@
                               <TableColumn fx:id="colBookName" prefWidth="260.0" text="ຊື່ປຶ້ມ" />
                               <TableColumn fx:id="colCatg" prefWidth="166.0" text="ໝວດປຶ້ມ" />
                               <TableColumn fx:id="colType" prefWidth="162.0" text="ປະເພດປຶ້ມ" />
-                              <TableColumn fx:id="colTableLog" prefWidth="74.0" text="ເລກລ໋ອກຕູ້" />
-                              <TableColumn fx:id="colDateRent" prefWidth="125.0" text="ວັນທີຢືມ" />
-                              <TableColumn fx:id="colDateSend" prefWidth="125.0" text="ວັນທີສົ່ງ" />
-                              <TableColumn fx:id="colStatus" prefWidth="125.0" text="ສະຖານະ" />
+                              <TableColumn id="colCenter" fx:id="colTableLog" prefWidth="74.0" text="ເລກລ໋ອກຕູ້" />
+                              <TableColumn id="colCenter" fx:id="colDateRent" prefWidth="125.0" text="ວັນທີຢືມ" />
+                              <TableColumn id="colCenter" fx:id="colDateSend" prefWidth="125.0" text="ວັນທີສົ່ງ" />
+                              <TableColumn id="colCenter" fx:id="colStatus" prefWidth="125.0" text="ສະຖານະ" />
                               <TableColumn fx:id="colMemberId" prefWidth="138.0" text="ລະຫັດສະມາຊິກ" />
                               <TableColumn fx:id="colMemberName" prefWidth="196.0" text="ຊື່ສະມາຊິດ" />
-                              <TableColumn fx:id="colCause" prefWidth="112.0" text="ໝາຍເຫດ" />
+                              <TableColumn id="colCenter" fx:id="colCause" prefWidth="112.0" text="ໝາຍເຫດ" />
                           </columns>
                         </TableView>
                         <AnchorPane layoutX="26.0" layoutY="25.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="1149.0" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="28.0">

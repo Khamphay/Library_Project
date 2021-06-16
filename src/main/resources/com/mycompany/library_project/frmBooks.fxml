@@ -64,13 +64,13 @@
                                  <columns>
                                   <TableColumn fx:id="bookid" prefWidth="75.0" text="ລະຫັດປຶ້ມ" />
                                   <TableColumn fx:id="bookname" prefWidth="204.0" text="ຊື່ປຶ້ມ" />
-                                    <TableColumn fx:id="bookisbn" prefWidth="171.0" text="ISBN" />
-                                    <TableColumn fx:id="bookpage" prefWidth="70.0" text="ຈຳນວນໜ້າ" />
-                                    <TableColumn fx:id="bookqty" prefWidth="70.0" text="ຈຳນວນປຶ້ມ" />
+                                    <TableColumn id="colCenter" fx:id="bookisbn" prefWidth="171.0" text="ISBN" />
+                                    <TableColumn id="colCenter" fx:id="bookpage" prefWidth="70.0" text="ຈຳນວນໜ້າ" />
+                                    <TableColumn id="colCenter" fx:id="bookqty" prefWidth="70.0" text="ຈຳນວນປຶ້ມ" />
                                     <TableColumn fx:id="bppkcategory" prefWidth="195.0" text="ໝວດປຶ້ມ" />
                                     <TableColumn fx:id="bppktype" prefWidth="195.0" text="ປະເພດປຶ້ມ" />
-                                    <TableColumn fx:id="tableid" prefWidth="77.0" text="ເລກຕູ້" />
-                                    <TableColumn fx:id="year" prefWidth="141.0" text="ແຕ່ງຂຶ້ນໃນປີ" />
+                                    <TableColumn id="colCenter" fx:id="tableid" prefWidth="77.0" text="ເລກຕູ້" />
+                                    <TableColumn id="colCenter" fx:id="year" prefWidth="141.0" text="ແຕ່ງຂຶ້ນໃນປີ" />
                                     <TableColumn fx:id="bookdetail" prefWidth="207.0" text="ລາຍລະອຽດ" />
                                 </columns>
                                  <contextMenu>

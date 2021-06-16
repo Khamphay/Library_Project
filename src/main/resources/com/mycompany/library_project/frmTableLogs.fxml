@@ -33,7 +33,7 @@
                                  </placeholder>
                                  <columns>
                                     <TreeTableColumn fx:id="colid" prefWidth="136.0" text="ລະຫັດຕູ້ (ເລກຕູ້)" />
-                                    <TreeTableColumn fx:id="colqty" prefWidth="188.0" text="ຈຳນວນລ໋ອກຕູ້" />
+                                    <TreeTableColumn id="colCenter" fx:id="colqty" prefWidth="188.0" text="ຈຳນວນລ໋ອກຕູ້" />
                                     <TreeTableColumn fx:id="colaction" prefWidth="188.0" text="Action" />
                                  </columns>
                                  <columnResizePolicy>

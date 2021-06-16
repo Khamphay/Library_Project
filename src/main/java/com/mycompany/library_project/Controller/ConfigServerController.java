@@ -10,14 +10,18 @@ import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.config.*;
 
+import javafx.concurrent.Task;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import org.controlsfx.control.MaskerPane;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
@@ -29,6 +33,7 @@ public class ConfigServerController implements Initializable {
     private Double x, y;
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile config = new CreateLogFile();
+    private MaskerPane masker = new MaskerPane();
 
     @FXML
     private StackPane stackPane;
@@ -55,11 +60,15 @@ public class ConfigServerController implements Initializable {
 
     }
 
-    private void initEvents() {
-        btSave.setOnAction(new EventHandler<ActionEvent>() {
+    private void saveData() {
+        masker.setText("ກຳລັງບັນທືກຂໍ້ມູນ, ກະລຸນາລໍຖ້າ...");
+        Task<Void> task = new Task<Void>() {
 
             @Override
-            public void handle(ActionEvent event) {
+            protected Void call() throws Exception {
+                masker.setVisible(true);
+                masker.setProgressVisible(true);
+
                 if (!txtHost.getText().equals("") && !txtPort.getText().equals("")) {
                     if (config.createFileConfig(txtHost.getText(), txtPort.getText(), txtUserName.getText(),
                             txtPassword.getText()) == true) {
@@ -75,6 +84,61 @@ public class ConfigServerController implements Initializable {
                     alertMessage.showWarningMessage("Save Configed", "Please input host name, port. and try again.", 4,
                             Pos.TOP_CENTER);
                 }
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                super.succeeded();
+                masker.setVisible(false);
+                masker.setProgressVisible(false);
+            }
+
+        };
+        new Thread(task).start();
+    }
+
+    private void testConnection() {
+        masker.setText("ກຳລັງທົດສອບການເຊື່ອມຕໍ່, ກະລຸນາລໍຖ້າ...");
+        Task<Void> task = new Task<Void>() {
+
+            @Override
+            protected Void call() throws Exception {
+                masker.setVisible(true);
+                masker.setProgressVisible(true);
+
+                validRules.setErrorDecorationEnabled(true);
+                MyConnection.server = txtHost.getText() + ":" + txtPort.getText();
+                MyConnection.userName = txtUserName.getText();
+                MyConnection.password = txtPassword.getText();
+                Connection con = MyConnection.getConnect();
+                if (con != null) {
+                    textResualt.setFill(Color.GREEN);
+                    textResualt.setText("ການເຊື່ອມຕໍ່ສຳເລັດແລ້ວ");
+                } else {
+                    textResualt.setFill(Color.RED);
+                    textResualt.setText("ການເຊື່ອມຕໍ່ບໍ່ສຳເລັດແລ້ວ, ກະລຸນາກວດສອບຂໍ້ມຸນແລ້ວ ລອງໃຫມ່ອີກຄັ້ງ");
+                }
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                super.succeeded();
+                masker.setVisible(false);
+                masker.setProgressVisible(false);
+            }
+
+        };
+        new Thread(task).start();
+    }
+
+    private void initEvents() {
+        btSave.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                saveData();
             }
         });
 
@@ -82,16 +146,7 @@ public class ConfigServerController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                validRules.setErrorDecorationEnabled(true);
-                MyConnection.server = txtHost.getText() + ":" + txtPort.getText();
-                MyConnection.userName = txtUserName.getText();
-                MyConnection.password = txtPassword.getText();
-                Connection con = MyConnection.getConnect();
-                if (con != null) {
-                    textResualt.setText("ການເຊື່ອມຕໍ່ສຳເລັດແລ້ວ");
-                } else {
-                    textResualt.setText("ການເຊື່ອມຕໍ່ບໍ່ສຳເລັດແລ້ວ, ກະລຸນາກວດສອບຂໍ້ມຸນແລ້ວ ລອງໃຫມ່ອີກຄັ້ງ");
-                }
+                testConnection();
             }
 
         });
@@ -197,6 +252,12 @@ public class ConfigServerController implements Initializable {
                 chEnable.setSelected(true);
             }
         }
+
+        masker.setVisible(false);
+        masker.setPrefWidth(50.0);
+        masker.setPrefHeight(50.0);
+        masker.setStyle("-fx-font-family: BoonBaan;");
+        stackPane.getChildren().add(masker);
 
     }
 

@@ -312,7 +312,7 @@ public class MemberModel implements DataAccessObject {
             ps = con.prepareStatement(query);
             ps.setBytes(17, getByimg());
         } else {
-            query = "call  member_Insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            query = "call  member_Insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             ps = con.prepareStatement(query);
         }
         ps.setString(1, getMemberId());

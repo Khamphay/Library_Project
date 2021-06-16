@@ -80,6 +80,18 @@
             <artifactId>batik-bridge</artifactId>
             <version>1.14</version>
         </dependency>
+        <!-- Todo: Use ForntAwesomeIcon -->
+        <!-- <dependency>
+            <groupId>org.kordamp.ikonli</groupId>
+            <artifactId>ikonli-javafx</artifactId>
+            <version>12.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kordamp.ikonli</groupId>
+            <artifactId>ikonli-fontawesome5-pack</artifactId>
+            <version>12.2.0</version>
+        </dependency> -->
+        <!-- Todo: End -->
     </dependencies>
     <build>
         <plugins>

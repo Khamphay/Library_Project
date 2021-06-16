@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
+import com.jfoenix.controls.JFXDialog.DialogTransition;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.AuthorModel;
@@ -18,6 +19,8 @@ import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.*;
 import javafx.collections.*;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
@@ -42,6 +45,7 @@ public class AuthorController implements Initializable {
     private DialogMessage dialog = null;
     private ObservableList<AuthorModel> data = null;
     private CreateLogFile logfile = new CreateLogFile();
+    final JFXButton[] buttons = { buttonOK() };
     double x, y;
 
     public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
@@ -95,7 +99,7 @@ public class AuthorController implements Initializable {
     private JFXButton btSave, btEdit, btCancel, btClose;
 
     @FXML
-    private TextField txtId, txtFname, txtLname, txtTel, txtEmail;
+    private TextField txtId, txtFname, txtLname, txtTel, txtEmail, txtSearch;
 
     @FXML
     private RadioButton rdbMale, rdbFemale;
@@ -175,6 +179,7 @@ public class AuthorController implements Initializable {
         txtLname.clear();
         txtTel.clear();
         txtEmail.clear();
+        txtId.setDisable(false);
         gender = "";
 
         if (btSave.isDisable())
@@ -218,6 +223,18 @@ public class AuthorController implements Initializable {
                         gender = (rdbMale.isSelected() ? rdbMale.getText() : rdbFemale.getText());
                         author = new AuthorModel(txtId.getText(), txtFname.getText(), txtLname.getText(), gender,
                                 txtTel.getText(), txtEmail.getText());
+
+                        if (txtTel.getText().length() < 7 || txtTel.getText().length() > 11) {
+                            if (dialog != null)
+                                dialog.closeDialog();
+                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
+                                    "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.", DialogTransition.CENTER,
+                                    buttons, false);
+                            dialog.showDialog();
+                            txtTel.requestFocus();
+                            return;
+                        }
+
                         if (author.saveData() > 0) {
                             showData();
                             clearText();
@@ -252,6 +269,18 @@ public class AuthorController implements Initializable {
                 try {
                     if (!txtId.getText().equals("") && !txtFname.getText().equals("") && !txtLname.getText().equals("")
                             && !txtTel.getText().equals("")) {
+
+                        if (txtTel.getText().length() < 7 || txtTel.getText().length() > 11) {
+                            if (dialog != null)
+                                dialog.closeDialog();
+                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
+                                    "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.", DialogTransition.CENTER,
+                                    buttons, false);
+                            dialog.showDialog();
+                            txtTel.requestFocus();
+                            return;
+                        }
+
                         gender = (rdbMale.isSelected() ? rdbMale.getText() : rdbFemale.getText());
                         author = new AuthorModel(txtId.getText(), txtFname.getText(), txtLname.getText(), gender,
                                 txtTel.getText(), txtEmail.getText());
@@ -309,6 +338,7 @@ public class AuthorController implements Initializable {
 
                     btEdit.setDisable(false);
                     btSave.setDisable(true);
+                    txtId.setDisable(true);
 
                     txtId.setText(tableAuthor.getSelectionModel().getSelectedItem().getAuthor_id());
                     txtFname.setText(tableAuthor.getSelectionModel().getSelectedItem().getFull_name());
@@ -338,7 +368,30 @@ public class AuthorController implements Initializable {
                         data.add(new AuthorModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
                                 rs.getString(5), rs.getString(6)));
                     }
-                    tableAuthor.setItems(data);
+                    // tableAuthor.setItems(data); //Todo: if you don't filter to Search data
+                    // bellow:
+
+                    // Todo: Search data
+                    FilteredList<AuthorModel> filterEmployees = new FilteredList<AuthorModel>(data, emp -> true);
+                    txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                        filterEmployees.setPredicate(aut -> {
+                            if (newValue.isEmpty())
+                                return true;
+                            if (aut.getAuthor_id().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || aut.getFull_name().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || aut.getSur_name().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || aut.getEmail().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || aut.getTel().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                    || aut.getGender().toLowerCase().indexOf(newValue.toLowerCase()) != -1)
+                                return true;
+                            else
+                                return false;
+                        });
+                    });
+
+                    SortedList<AuthorModel> sorted = new SortedList<>(filterEmployees);
+                    sorted.comparatorProperty().bind(tableAuthor.comparatorProperty());
+                    tableAuthor.setItems(sorted);
                 } catch (Exception e) {
                     alertMessage.showErrorMessage(stackPane, "Load Data", "Error" + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
@@ -424,6 +477,7 @@ public class AuthorController implements Initializable {
                 try {
                     if (author.deleteData(id) > 0) {
                         showData();
+                        clearText();
                         alertMessage.showCompletedMessage(stackPane, "Deleted", "Delete data successfully.", 4,
                                 Pos.BOTTOM_RIGHT);
                         dialog.closeDialog();
@@ -470,6 +524,15 @@ public class AuthorController implements Initializable {
 
         });
         return btcancel;
+    }
+
+    private JFXButton buttonOK() {
+        JFXButton btOk = new JFXButton("OK");
+        btOk.setStyle(Style.buttonDialogStyle);
+        btOk.setOnAction(e -> {
+            dialog.closeDialog();
+        });
+        return btOk;
     }
 
 }

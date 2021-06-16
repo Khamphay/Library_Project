@@ -33,8 +33,8 @@
                                           <Label text="ບໍ່ມີຂໍ້ມູນ" />
                                        </placeholder>
                                        <columns>
-                                          <TableColumn fx:id="colCatgId" maxWidth="3000.0" prefWidth="193.0" text="ລະຫັດໝວດ" />
-                                          <TableColumn fx:id="colCatgName" prefWidth="300.0" text="ໝວດປຶ້ມ" />
+                                          <TableColumn id="colCenter" fx:id="colCatgId" maxWidth="3000.0" prefWidth="154.0" text="ລະຫັດໝວດ" />
+                                          <TableColumn fx:id="colCatgName" prefWidth="449.0" text="ໝວດປຶ້ມ" />
                                        </columns>
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

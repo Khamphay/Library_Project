@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
+import com.jfoenix.controls.JFXDialog.DialogTransition;
 import com.mycompany.library_project.App;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
@@ -13,6 +14,7 @@ import com.mycompany.library_project.Model.EmployeeModel;
 import com.mycompany.library_project.config.CreateLogFile;
 
 import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
@@ -43,6 +45,7 @@ import javafx.util.Callback;
 public class EmployeeController implements Initializable {
 
     private ValidationSupport validRules = new ValidationSupport();
+    private ValidationSupport validRulePass = new ValidationSupport();
     private ManagePersonalCotroller personalCotroller = null;
     private EmployeeModel employee = null;
     private ResultSet rs = null;
@@ -52,6 +55,7 @@ public class EmployeeController implements Initializable {
     private ArrayList<EmployeeModel> user = null;
     private ObservableList<EmployeeModel> data = null;
     private CreateLogFile logfile = new CreateLogFile();
+    final JFXButton[] buttons = { buttonOK() };
 
     public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
         this.personalCotroller = managePersonalCotroller;
@@ -67,6 +71,9 @@ public class EmployeeController implements Initializable {
     private TextField txtId, txtFname, txtLname, txtTel, txtEmail, txtSearch;
 
     @FXML
+    private PasswordField txtPassword, txtRepassword;
+
+    @FXML
     private RadioButton rdbMale, rdbFemale;
 
     @FXML
@@ -78,6 +85,24 @@ public class EmployeeController implements Initializable {
     @FXML
     private TableColumn<EmployeeModel, String> colId, colFname, colSname, colGender, colTel, colEmail;
 
+    private void addNewUser() throws SQLException {
+        try {
+            // Todo: Encrytp Password
+            final String salt = ProtectUserPassword.getSalt(40);
+            final String myScrPassword = ProtectUserPassword.generateSecurePassword(txtPassword.getText(), salt);
+
+            employee = new EmployeeModel(txtId.getText(), txtFname.getText(), myScrPassword, salt);
+            if (employee.addUser() > 0) {
+                alertMessage.showCompletedMessage("Save", "Add user successfully", 4, Pos.BOTTOM_RIGHT);
+                showData();
+                clearText();
+            }
+        } catch (Exception e) {
+            alertMessage.showErrorMessage("Error Save Data", "Error" + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            employee.deleteData(txtId.getText());
+        }
+    }
+
     private void initRules() {
         validRules.setErrorDecorationEnabled(false);
         validRules.registerValidator(txtId, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນລະຫັດພະນັກງານ"));
@@ -86,6 +111,9 @@ public class EmployeeController implements Initializable {
         validRules.registerValidator(txtTel, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນເບີໂທລະສັບ"));
         validRules.registerValidator(txtEmail, false,
                 Validator.createEmptyValidator("ກະລຸນາປ້ອນ Email (ຖ້າມີ)", Severity.WARNING));
+        validRules.registerValidator(txtPassword, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່"));
+        validRulePass.registerValidator(txtRepassword, false, (Control c, String newValue) -> ValidationResult
+                .fromErrorIf(c, "ລະຫັດຜ່ານທີ່ປ້ອນບໍ່ຄືກັນ", !newValue.equals(txtPassword.getText())));
     }
 
     private void initTable() {
@@ -103,6 +131,7 @@ public class EmployeeController implements Initializable {
         colNumber.setMinWidth(50);
         colNumber.setMaxWidth(200);
         colNumber.setPrefWidth(100);
+        colNumber.setId("colCenter");
         colNumber.setCellValueFactory(
                 new Callback<CellDataFeatures<EmployeeModel, EmployeeModel>, ObservableValue<EmployeeModel>>() {
 
@@ -145,7 +174,11 @@ public class EmployeeController implements Initializable {
         txtLname.clear();
         txtTel.clear();
         txtEmail.clear();
-        gender = "";
+        txtPassword.clear();
+        txtRepassword.clear();
+        rdbMale.setSelected(true);
+        txtPassword.setDisable(false);
+        txtRepassword.setDisable(false);
 
         if (txtId.isDisable())
             txtId.setDisable(false);
@@ -154,10 +187,12 @@ public class EmployeeController implements Initializable {
         if (!btSave.isDisable())
             btEdit.setDisable(true);
 
+        gender = "";
         txtId.requestFocus();
+
     }
 
-    private void showUser(String form) {
+    private void editUser(String form) {
         try {
             user = new ArrayList<>();
             final String empID = tableEmployee.getSelectionModel().getSelectedItem().getEmployeeId();
@@ -165,21 +200,23 @@ public class EmployeeController implements Initializable {
             if (rs.next()) {
                 user.add(new EmployeeModel(rs.getString("employee_id"), rs.getString("user_name"),
                         rs.getString("password"), rs.getString("salt")));
+                final FXMLLoader loader = new FXMLLoader(App.class.getResource(form));
+                final Parent root = loader.load();
+                final Scene scene = new Scene(root);
+                final Stage stage = new Stage(StageStyle.TRANSPARENT);
+                scene.setFill(Color.TRANSPARENT);
+                stage.setScene(scene);
+
+                final AdduserController userController = loader.getController();
+                userController.initConstructor(empID, user, stage);
+
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
+                stage.show();
+            } else {
+
             }
 
-            final FXMLLoader loader = new FXMLLoader(App.class.getResource(form));
-            final Parent root = loader.load();
-            final Scene scene = new Scene(root);
-            final Stage stage = new Stage(StageStyle.TRANSPARENT);
-            scene.setFill(Color.TRANSPARENT);
-            stage.setScene(scene);
-
-            final AdduserController userController = loader.getController();
-            userController.initConstructor(empID, user, stage);
-
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
-            stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -192,19 +229,41 @@ public class EmployeeController implements Initializable {
             public void handle(ActionEvent event) {
                 try {
                     if (!txtId.getText().equals("") && !txtFname.getText().equals("") && !txtLname.getText().equals("")
-                            && !txtTel.getText().equals("")) {
+                            && !txtTel.getText().equals("") && !txtPassword.getText().equals("")
+                            && !txtRepassword.getText().equals("")) {
+
+                        if (txtTel.getText().length() < 7 || txtTel.getText().length() > 11) {
+                            if (dialog != null)
+                                dialog.closeDialog();
+                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
+                                    "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.", DialogTransition.CENTER,
+                                    buttons, false);
+                            dialog.showDialog();
+                            txtTel.requestFocus();
+                            return;
+                        }
+
+                        if (!txtPassword.getText().equals(txtRepassword.getText())) {
+                            if (dialog != null)
+                                dialog.closeDialog();
+                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
+                                    "ລະຫັດຜ່ານບໍ່ຄືກັນ ກະລຸນາກວດສອອບແລ້ວລອງໃຫມ່ອິກຄັ້ງ.", DialogTransition.CENTER,
+                                    buttons, false);
+                            dialog.showDialog();
+                            txtRepassword.requestFocus();
+                            return;
+                        }
+
                         gender = (rdbMale.isSelected() ? rdbMale.getText() : rdbFemale.getText());
                         employee = new EmployeeModel(txtId.getText(), txtFname.getText(), txtLname.getText(), gender,
                                 txtTel.getText(), txtEmail.getText());
                         if (employee.saveData() > 0) {
-                            showData();
-                            clearText();
-                            alertMessage.showCompletedMessage(stackPane, "Saved", "Saved data successfully.", 4,
-                                    Pos.BOTTOM_RIGHT);
+                            addNewUser();
                         } else {
                             alertMessage.showWarningMessage(stackPane, "Saved", "Cannot save data.", 4,
                                     Pos.BOTTOM_RIGHT);
                         }
+
                     } else {
                         validRules.setErrorDecorationEnabled(true);
                         alertMessage.showWarningMessage(stackPane, "Save Warning",
@@ -225,6 +284,18 @@ public class EmployeeController implements Initializable {
                 try {
                     if (!txtId.getText().equals("") && !txtFname.getText().equals("") && !txtLname.getText().equals("")
                             && !txtTel.getText().equals("")) {
+
+                        if (txtTel.getText().length() < 7 || txtTel.getText().length() > 11) {
+                            if (dialog != null)
+                                dialog.closeDialog();
+                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
+                                    "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.", DialogTransition.CENTER,
+                                    buttons, false);
+                            dialog.showDialog();
+                            txtTel.requestFocus();
+                            return;
+                        }
+
                         gender = (rdbMale.isSelected() ? rdbMale.getText() : rdbFemale.getText());
                         employee = new EmployeeModel(txtId.getText(), txtFname.getText(), txtLname.getText(), gender,
                                 txtTel.getText(), txtEmail.getText());
@@ -271,7 +342,7 @@ public class EmployeeController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                showUser("frmAddUser.fxml");
+                editUser("frmAddUser.fxml");
             }
 
         });
@@ -295,6 +366,8 @@ public class EmployeeController implements Initializable {
                     btEdit.setDisable(false);
                     btSave.setDisable(true);
                     txtId.setDisable(true);
+                    txtPassword.setDisable(true);
+                    txtRepassword.setDisable(true);
 
                     txtId.setText(tableEmployee.getSelectionModel().getSelectedItem().getEmployeeId());
                     txtFname.setText(tableEmployee.getSelectionModel().getSelectedItem().getFirstName());
@@ -460,6 +533,7 @@ public class EmployeeController implements Initializable {
                 try {
                     if (employee.deleteData(id) > 0) {
                         showData();
+                        clearText();
                         alertMessage.showCompletedMessage(stackPane, "Deleted", "Delete data successfully.", 4,
                                 Pos.BOTTOM_RIGHT);
                         dialog.closeDialog();
@@ -504,5 +578,13 @@ public class EmployeeController implements Initializable {
         return btcancel;
     }
 
+    private JFXButton buttonOK() {
+        JFXButton btOk = new JFXButton("OK");
+        btOk.setStyle(Style.buttonDialogStyle);
+        btOk.setOnAction(e -> {
+            dialog.closeDialog();
+        });
+        return btOk;
+    }
 
 }

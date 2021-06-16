@@ -10,7 +10,10 @@ import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.Model.BookDetailModel;
 import com.mycompany.library_project.Model.SearchModel;
 
+import org.controlsfx.control.MaskerPane;
+
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.*;
@@ -19,12 +22,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.layout.StackPane;
 
 public class SearchController implements Initializable {
 
     private TreeItem<SearchModel> subItem, root, node;
     private BookDetailModel bookDetailModel = null;
     private AlertMessage alertMessage = new AlertMessage();
+    private MaskerPane masker = new MaskerPane();
     private ResultSet rs = null;
 
     public void initConstructor(HomeController homeController) {
@@ -37,6 +42,9 @@ public class SearchController implements Initializable {
 
         });
     }
+
+    @FXML
+    private StackPane stackPane;
 
     @FXML
     private JFXButton btClose, btSearch;
@@ -65,49 +73,77 @@ public class SearchController implements Initializable {
     }
 
     private void showData(String value) {
-        Platform.runLater(new Runnable() {
+        Task<Void> task = new Task<Void>() {
 
             @Override
-            public void run() {
-                try {
-                    bookDetailModel = new BookDetailModel();
-                    if (value != null) {
-                        rs = bookDetailModel.searchData(value);
-                    } else
-                        rs = bookDetailModel.findAll();
-                    node = new TreeItem<>();
-                    while (rs.next()) {
-                        root = new TreeItem<>(new SearchModel(rs.getString("book_id"), rs.getString("book_name"),
-                                rs.getString("ISBN"), rs.getInt("page") + " ໜ້າ", rs.getString("catg_name"),
-                                rs.getString("type_name"), "", "", ""));
+            protected Void call() throws Exception {
+                masker.setVisible(true);
+                masker.setProgressVisible(true);
+                Platform.runLater(new Runnable() {
 
-                        final ResultSet sublog = bookDetailModel.showBarcode(rs.getString("book_id"));
-                        while (sublog.next()) {
-                            subItem = new TreeItem<>(new SearchModel(sublog.getString("barcode"), "", "", "", "", "",
-                                    sublog.getString("tableid"), sublog.getString("table_log_id"),
-                                    sublog.getString("status")));
-                            root.getChildren().add(subItem);
+                    @Override
+                    public void run() {
+                        try {
+                            bookDetailModel = new BookDetailModel();
+                            if (value != null) {
+                                rs = bookDetailModel.searchData(value);
+                            } else
+                                rs = bookDetailModel.findAll();
+                            node = new TreeItem<>();
+                            while (rs.next()) {
+                                root = new TreeItem<>(new SearchModel(rs.getString("book_id"),
+                                        rs.getString("book_name"), rs.getString("ISBN"), rs.getInt("page") + " ໜ້າ",
+                                        rs.getString("catg_name"), rs.getString("type_name"), "", "", ""));
+
+                                final ResultSet sublog = bookDetailModel.showBarcode(rs.getString("book_id"));
+                                while (sublog.next()) {
+                                    subItem = new TreeItem<>(new SearchModel(sublog.getString("barcode"), "", "", "",
+                                            "", "", sublog.getString("tableid"), sublog.getString("table_log_id"),
+                                            sublog.getString("status")));
+                                    root.getChildren().add(subItem);
+                                }
+                                node.getChildren().add(root);
+                            }
+                            tableSearch.setShowRoot(false);
+                            tableSearch.setRoot(node);
+                        } catch (Exception e) {
+                            alertMessage.showErrorMessage("Load Data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
                         }
-
-                        node.getChildren().add(root);
-
                     }
-
-                    tableSearch.setShowRoot(false);
-                    tableSearch.setRoot(node);
-
-                } catch (Exception e) {
-                    alertMessage.showErrorMessage("Load Data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-                    e.printStackTrace();
-                }
+                });
+                return null;
             }
-        });
+
+            @Override
+            protected void succeeded() {
+                super.succeeded();
+                masker.setVisible(false);
+                masker.setProgressVisible(false);
+            }
+
+            @Override
+            protected void failed() {
+                super.failed();
+                masker.setProgressVisible(false);
+                masker.setVisible(false);
+                alertMessage.showErrorMessage("Load", "Load Data Failed", 4, Pos.BOTTOM_RIGHT);
+            }
+
+        };
+        new Thread(task).start();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        showData(null);
+        masker.setVisible(false);
+        masker.setPrefWidth(50.0);
+        masker.setPrefHeight(50.0);
+        masker.setText("ກຳລັງໂຫລດຂໍ້ມູນ, ກະລຸນາລໍຖ້າ...");
+        masker.setStyle("-fx-font-family: BoonBaan;");
+        stackPane.getChildren().add(masker);
+
         initTable();
+        showData(null);
 
         btSearch.setOnAction(new EventHandler<ActionEvent>() {
 

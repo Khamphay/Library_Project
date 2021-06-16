@@ -5,6 +5,7 @@ import javafx.beans.value.*;
 import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
@@ -92,10 +93,13 @@ public class TableLogController implements Initializable {
                                 getRootAction(rs.getString(1))));
                         final ResultSet sublog = tableLogModel.findById(rs.getString(1));
 
+                        int row = 0;
                         while (sublog.next()) {
                             subItem = new TreeItem<>(
-                                    new TableLogModel(sublog.getString(2), 1, getSubRootAction(sublog.getString(2))));
+                                    new TableLogModel(sublog.getString(2), 1,
+                                            getSubRootAction(sublog.getString(2), row)));
                             root.getChildren().add(subItem);
+                            row++;
                         }
 
                         node.getChildren().add(root);
@@ -304,7 +308,7 @@ public class TableLogController implements Initializable {
         return actionRoot;
     }
 
-    public JFXButton getSubRootAction(String id) {
+    public JFXButton getSubRootAction(String id, int rowIndex) {
         JFXButton actionSubRoot = new JFXButton("ລົບ");
         final Image img = new Image("com/mycompany/library_project/Icon/delete_subroot.png");
         ImageView imgView = new ImageView();
@@ -314,10 +318,12 @@ public class TableLogController implements Initializable {
             imgView.setFitWidth(20);
             actionSubRoot.setId(id);
             actionSubRoot.setGraphic(imgView);
-            actionSubRoot.setStyle(Style.buttonStyle);
+            actionSubRoot.setStyle(" -fx-padding-left: 10px;    -fx-border-insets: 0px;    -fx-background-insets: 3px; "
+                    + Style.buttonStyle);
             actionSubRoot.setOnAction(e -> {
 
-                JFXButton[] buttons = { buttonYesTableLog(actionSubRoot.getId()), buttonNo(), buttonCancel() };
+                JFXButton[] buttons = { buttonYesTableLog(actionSubRoot.getId(), rowIndex), buttonNo(),
+                        buttonCancel() };
                 dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
                         JFXDialog.DialogTransition.CENTER, buttons, false);
                 dialog.showDialog();
@@ -353,7 +359,7 @@ public class TableLogController implements Initializable {
         return btyes;
     }
 
-    private JFXButton buttonYesTableLog(String tablelogid) {
+    private JFXButton buttonYesTableLog(String tablelogid, int index) {
         JFXButton btyes = new JFXButton("ຕົກລົງ");
         btyes.setStyle(Style.buttonDialogStyle);
         btyes.setOnAction(e -> {
@@ -368,11 +374,11 @@ public class TableLogController implements Initializable {
                             showData();
                             alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4,
                                     Pos.BOTTOM_RIGHT);
+                            // tableLog.getRoot().getChildren().remove(index);
                         } else {
                             alertMessage.showWarningMessage("Delete", "Can update table qty.", 4, Pos.BOTTOM_RIGHT);
                         }
                     }
-                    dialog.closeDialog();
                 } else {
                     alertMessage.showWarningMessage("Delete", "Can not delete data. ", 4, Pos.BOTTOM_RIGHT);
                 }
@@ -380,6 +386,7 @@ public class TableLogController implements Initializable {
                 alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
                 logfile.createLogFile("ມີບັນຫາໃນການລົບຂໍ້ມູນລ໋ອກຕູ້", ex);
             }
+            dialog.closeDialog();
         });
         return btyes;
     }

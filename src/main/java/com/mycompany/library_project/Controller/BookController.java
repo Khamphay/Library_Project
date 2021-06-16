@@ -1,10 +1,10 @@
 package com.mycompany.library_project.Controller;
 
-import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
 import javafx.collections.transformation.*;
+import javafx.concurrent.Task;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
@@ -29,6 +29,8 @@ import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.BookDetailModel;
 import com.mycompany.library_project.config.CreateLogFile;
 
+import org.controlsfx.control.MaskerPane;
+
 public class BookController implements Initializable {
 
     String[] values = { "001", "Data Analyst", "07-646712-21", "200", "20", "ຄອມພິວເຕີ", "ແບບຮຽນ", "ພາສາອັງກິດ" };
@@ -40,6 +42,7 @@ public class BookController implements Initializable {
     private ObservableList<BookDetailModel> data = null;
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile logfile = new CreateLogFile();
+    private MaskerPane masker = new MaskerPane();
     private DialogMessage dialog = null;
     public static Stage addNewBook = null;
     public static Stage addBarcode = null;
@@ -179,10 +182,17 @@ public class BookController implements Initializable {
     }
 
     public void showData() {
-        Platform.runLater(new Runnable() {
+
+        Task<Void> task = new Task<Void>() {
 
             @Override
-            public void run() {
+            protected Void call() throws Exception {
+                masker.setVisible(true);
+                masker.setProgressVisible(true);
+                // Platform.runLater(new Runnable() {
+
+                // @Override
+                // public void run() {
                 try {
                     data = FXCollections.observableArrayList();
                     bookDetail = new BookDetailModel();
@@ -222,8 +232,29 @@ public class BookController implements Initializable {
                     alertMessage.showErrorMessage(borderPane, "Load data", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
                 }
+                // }
+                // });
+                return null;
             }
-        });
+
+            @Override
+            protected void succeeded() {
+                super.succeeded();
+                masker.setVisible(false);
+                masker.setProgressVisible(false);
+            }
+
+            @Override
+            protected void failed() {
+                super.failed();
+                masker.setProgressVisible(false);
+                masker.setVisible(false);
+                alertMessage.showErrorMessage("Load Data", "Load Data Failed", 4, Pos.BOTTOM_RIGHT);
+            }
+
+        };
+        new Thread(task).start();
+
     }
 
     private void initColumn() {
@@ -246,6 +277,7 @@ public class BookController implements Initializable {
         colNumber.setMinWidth(50);
         colNumber.setMaxWidth(120);
         colNumber.setPrefWidth(60);
+        colNumber.setId("colCenter");
         colNumber.setCellValueFactory(
                 new Callback<CellDataFeatures<BookDetailModel, BookDetailModel>, ObservableValue<BookDetailModel>>() {
 
@@ -285,7 +317,15 @@ public class BookController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         // showBooks();
+        masker.setVisible(false);
+        masker.setPrefWidth(50.0);
+        masker.setPrefHeight(50.0);
+        masker.setText("ກຳລັງໂຫລດຂໍ້ມູນ, ກະລຸນາລໍຖ້າ...");
+        masker.setStyle("-fx-font-family: BoonBaan;");
+        stackPane.getChildren().add(masker);
+
         initEvents();
         initColumn();
         showData();

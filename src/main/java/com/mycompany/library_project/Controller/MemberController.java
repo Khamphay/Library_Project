@@ -2,6 +2,8 @@ package com.mycompany.library_project.Controller;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,13 +18,14 @@ import com.mycompany.library_project.Model.MemberModel;
 import com.mycompany.library_project.Report.CreateReport;
 import com.mycompany.library_project.config.CreateLogFile;
 
+import org.controlsfx.control.MaskerPane;
 
-import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.concurrent.Task;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
@@ -41,6 +44,7 @@ public class MemberController implements Initializable {
     private ObservableList<MemberModel> data = null;
     private AlertMessage alertMessage = new AlertMessage();
     private MemberModel memberModel = new MemberModel();
+    private MaskerPane masker = new MaskerPane();
     private ResultSet rs = null;
     private DialogMessage dialog = null;
     private ArrayList<byte[]> byimg;
@@ -72,8 +76,7 @@ public class MemberController implements Initializable {
 
     @FXML
     private TableColumn<MemberModel, String> memberId, studentId, name, surname, gender, tel, village, district,
-            province, depertment,
-            studyYear;
+            province, depertment, studyYear;
 
     @FXML
     private TableColumn<MemberModel, Date> birthdate, date_register, date_exist;
@@ -134,10 +137,16 @@ public class MemberController implements Initializable {
     }
 
     public void showData() {
-        Platform.runLater(new Runnable() {
+        Task<Void> task = new Task<Void>() {
 
             @Override
-            public void run() {
+            protected Void call() throws Exception {
+                masker.setVisible(true);
+                masker.setProgressVisible(true);
+                // Platform.runLater(new Runnable() {
+
+                // @Override
+                // public void run() {
                 try {
                     data = FXCollections.observableArrayList();
                     rs = memberModel.findAll();
@@ -188,8 +197,28 @@ public class MemberController implements Initializable {
                     alertMessage.showErrorMessage(boderPane, "Show Data Error", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
                 }
+                // }
+                // });
+                return null;
             }
-        });
+
+            @Override
+            protected void succeeded() {
+                super.succeeded();
+                masker.setVisible(false);
+                masker.setProgressVisible(false);
+            }
+
+            @Override
+            protected void failed() {
+                super.failed();
+                masker.setProgressVisible(false);
+                masker.setVisible(false);
+                alertMessage.showErrorMessage("Load Data", "Load Data Failed", 4, Pos.BOTTOM_RIGHT);
+            }
+
+        };
+        new Thread(task).start();
     }
 
     private void initTable() {
@@ -214,6 +243,7 @@ public class MemberController implements Initializable {
         colNumber.setMinWidth(50);
         colNumber.setMaxWidth(120);
         colNumber.setPrefWidth(60);
+        colNumber.setId("colCenter");
         colNumber.setCellValueFactory(
                 new Callback<CellDataFeatures<MemberModel, MemberModel>, ObservableValue<MemberModel>>() {
 
@@ -278,7 +308,7 @@ public class MemberController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                InputStream imgInputStream = this.getClass().getResourceAsStream("bin/Logo_FNS.png");
+                InputStream imgInputStream = this.getClass().getResourceAsStream("bin/Logo.png");
                 CreateReport printCard = new CreateReport();
                 Map<String, Object> map = new HashMap<String, Object>();
                 map.put("memberid", memberModel.getMemberId());
@@ -294,6 +324,7 @@ public class MemberController implements Initializable {
             public void handle(ActionEvent event) {
                 CreateReport createReport = new CreateReport();
                 Map<String, Object> map = new HashMap<String, Object>();
+                map.put("logo", Paths.get("bin/Logo.png").toAbsolutePath().toString());
                 map.put("memberId", tableMember.getSelectionModel().getSelectedItem().getMemberId());
                 createReport.showReport(map, "reportMaemberById.jrxml", "Report Member By ID Error");
             }
@@ -340,6 +371,14 @@ public class MemberController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        masker.setVisible(false);
+        masker.setPrefWidth(50.0);
+        masker.setPrefHeight(50.0);
+        masker.setText("ກຳລັງໂຫລດຂໍ້ມູນ, ກະລຸນາລໍຖ້າ...");
+        masker.setStyle("-fx-font-family: BoonBaan;");
+        stackPane.getChildren().add(masker);
+
         initEvents();
         initTable();
         showData();
@@ -363,8 +402,7 @@ public class MemberController implements Initializable {
                         delete.setGraphic(imgView);
                         delete.setStyle(Style.buttonStyle);
                         delete.setOnAction(e -> {
-                            JFXButton[] buttons = {
-                                    buttonYes(tableMember.getItems().get(getIndex()).getMemberId()),
+                            JFXButton[] buttons = { buttonYes(tableMember.getItems().get(getIndex()).getMemberId()),
                                     buttonNo(), buttonCancel() };
                             dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
                                     JFXDialog.DialogTransition.CENTER, buttons, false);

@@ -56,7 +56,7 @@
                <children>
                   <TextField fx:id="txtCostPerDay" layoutX="233.0" layoutY="146.0" prefHeight="31.0" prefWidth="300.0" />
                   <TextField fx:id="txtCostPerBook" layoutX="233.0" layoutY="222.0" prefHeight="31.0" prefWidth="300.0" />
-                  <Label layoutX="233.0" layoutY="125.0" styleClass="BoonBaan-size-14" text="ຄ່າປັບໃຫມ/1 ຫົວ/ມື້ (ກໍລະນີຢືມປຶ້ມກາຍກຳນົດ)" />
+                  <Label layoutX="233.0" layoutY="125.0" styleClass="BoonBaan-size-14" text="ຄ່າປັບໃຫມ 1 ຫົວ/ມື້ (ກໍລະນີຢືມປຶ້ມກາຍກຳນົດ)" />
                   <Label layoutX="235.0" layoutY="199.0" styleClass="BoonBaan-size-14" text="ຄ່າປັບໃຫມ/1 ໜ້າ (ກໍລະນີເຮັດປຶ້ມເສຍ)" />
                   <JFXButton fx:id="btSave" layoutX="341.0" layoutY="326.0" prefHeight="33.0" prefWidth="84.0" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" />
                   <TextField fx:id="txtCostRegister" layoutX="233.0" layoutY="69.0" prefHeight="31.0" prefWidth="300.0" />

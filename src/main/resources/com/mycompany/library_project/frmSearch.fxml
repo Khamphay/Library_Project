@@ -11,73 +11,79 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 
-<BorderPane prefHeight="710.0" prefWidth="1331.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.SearchController">
-   <top>
-       <AnchorPane prefHeight="34.0" prefWidth="1158.0" style="-fx-background-color: #101D3D;" BorderPane.alignment="CENTER">
-         <children>
-            <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" layoutX="1127.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
-               <graphic>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Icon/no_50px.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </JFXButton>
-            <Label graphicTextGap="10.0" layoutX="1.0" layoutY="2.0" prefHeight="32.0" prefWidth="161.0" styleClass="BoonBaan-size-16" text="ຂໍ້ມູນປື້ມ" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="1.0" AnchorPane.topAnchor="2.0">
-               <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0">
-                     <image>
-                        <Image url="@Icon/search_100px.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Label>
-         </children>
-      </AnchorPane>
-   </top>
-   <center>
-      <ScrollPane fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
-         <content>
-            <AnchorPane minWidth="1300.0" prefHeight="697.0" prefWidth="1331.0">
+
+<StackPane fx:id="stackPane" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.SearchController">
+   <children>
+      <BorderPane prefHeight="710.0" prefWidth="1331.0">
+         <top>
+             <AnchorPane prefHeight="34.0" prefWidth="1158.0" style="-fx-background-color: #101D3D;" BorderPane.alignment="CENTER">
                <children>
-                  <TextField fx:id="txtSearch" layoutX="984.0" layoutY="48.0" prefHeight="31.0" prefWidth="379.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-14-Regular" AnchorPane.rightAnchor="28.0">
-                     <padding>
-                        <Insets left="10.0" right="70.0" />
-                     </padding>
-                  </TextField>
-                  <JFXTreeTableView fx:id="tableSearch" layoutX="288.0" layoutY="98.0" prefHeight="550.0" prefWidth="1275.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="98.0">
-                     <placeholder>
-                          <Label text="ບໍ່ມີຂໍ້ມູນ" />
-                          </placeholder>
-                      <columns>
-                        <TreeTableColumn fx:id="colBookId" prefWidth="112.0" text="ລະຫັດ" />
-                        <TreeTableColumn fx:id="colBookName" prefWidth="194.0" text="ຊື່ປຶ້ມ" />
-                        <TreeTableColumn fx:id="colISBN" prefWidth="171.0" text="ISBN" />
-                        <TreeTableColumn id="colCenter" fx:id="colPage" prefWidth="79.0" text="ຈຳນວນໜ້າ" />
-                        <TreeTableColumn fx:id="colCatg" prefWidth="262.0" text="ໝວດປຶ້ມ" />
-                        <TreeTableColumn fx:id="colType" prefWidth="192.0" text="ປະເພດປຶ້ມ" />
-                        <TreeTableColumn id="colCenter" fx:id="collTable" prefWidth="111.0" text="ເລກຕູ້" />
-                        <TreeTableColumn id="colCenter" fx:id="colLog" prefWidth="120.0" text="ລ໋ອກຕູ້" />
-                        <TreeTableColumn id="colCenter" fx:id="colStatus" prefWidth="190.0" text="ສະຖານະ" />
-                     </columns>
-                  </JFXTreeTableView>
-                  <JFXButton fx:id="btSearch" layoutX="1235.0" layoutY="49.0" prefHeight="29.0" prefWidth="68.0" style="-fx-background-radius: 2em; -fx-background-color: #101D3D;" styleClass="BoonBaan-size-12" text="ຄົ້ນຫາ" textFill="WHITE" AnchorPane.rightAnchor="28.0">
+                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" layoutX="1127.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
                      <graphic>
-                        <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@Icon/search_30px.png" />
+                              <Image url="@Icon/no_50px.png" />
                            </image>
                         </ImageView>
                      </graphic>
-                     <padding>
-                        <Insets left="-4.0" />
-                     </padding>
                   </JFXButton>
+                  <Label graphicTextGap="10.0" layoutX="1.0" layoutY="2.0" prefHeight="32.0" prefWidth="161.0" styleClass="BoonBaan-size-16" text="ຂໍ້ມູນປື້ມ" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="1.0" AnchorPane.topAnchor="2.0">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0">
+                           <image>
+                              <Image url="@Icon/search_100px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
                </children>
             </AnchorPane>
-         </content>
-      </ScrollPane>
-   </center>
-</BorderPane>
+         </top>
+         <center>
+            <ScrollPane fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
+               <content>
+                  <AnchorPane minWidth="1300.0" prefHeight="697.0" prefWidth="1331.0">
+                     <children>
+                        <TextField fx:id="txtSearch" layoutX="984.0" layoutY="48.0" prefHeight="31.0" prefWidth="379.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-14-Regular" AnchorPane.rightAnchor="28.0">
+                           <padding>
+                              <Insets left="10.0" right="70.0" />
+                           </padding>
+                        </TextField>
+                        <JFXTreeTableView fx:id="tableSearch" layoutX="288.0" layoutY="98.0" prefHeight="550.0" prefWidth="1275.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="98.0">
+                           <placeholder>
+                                <Label text="ບໍ່ມີຂໍ້ມູນ" />
+                                </placeholder>
+                            <columns>
+                              <TreeTableColumn fx:id="colBookId" prefWidth="112.0" text="ລະຫັດ" />
+                              <TreeTableColumn fx:id="colBookName" prefWidth="194.0" text="ຊື່ປຶ້ມ" />
+                              <TreeTableColumn fx:id="colISBN" prefWidth="171.0" text="ISBN" />
+                              <TreeTableColumn id="colCenter" fx:id="colPage" prefWidth="79.0" text="ຈຳນວນໜ້າ" />
+                              <TreeTableColumn fx:id="colCatg" prefWidth="262.0" text="ໝວດປຶ້ມ" />
+                              <TreeTableColumn fx:id="colType" prefWidth="192.0" text="ປະເພດປຶ້ມ" />
+                              <TreeTableColumn id="colCenter" fx:id="collTable" prefWidth="111.0" text="ເລກຕູ້" />
+                              <TreeTableColumn id="colCenter" fx:id="colLog" prefWidth="120.0" text="ລ໋ອກຕູ້" />
+                              <TreeTableColumn id="colCenter" fx:id="colStatus" prefWidth="190.0" text="ສະຖານະ" />
+                           </columns>
+                        </JFXTreeTableView>
+                        <JFXButton fx:id="btSearch" layoutX="1235.0" layoutY="49.0" prefHeight="29.0" prefWidth="68.0" style="-fx-background-radius: 2em; -fx-background-color: #101D3D;" styleClass="BoonBaan-size-12" text="ຄົ້ນຫາ" textFill="WHITE" AnchorPane.rightAnchor="28.0">
+                           <graphic>
+                              <ImageView fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Icon/search_30px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets left="-4.0" />
+                           </padding>
+                        </JFXButton>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+         </center>
+      </BorderPane>
+   </children>
+</StackPane>

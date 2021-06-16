@@ -84,6 +84,7 @@ public class DepartmentController implements Initializable {
         colNumber.setMinWidth(50);
         colNumber.setMaxWidth(100);
         colNumber.setPrefWidth(60);
+        colNumber.setId("colCenter");
         colNumber.setCellValueFactory(
                 new Callback<CellDataFeatures<DepartmentModel, DepartmentModel>, ObservableValue<DepartmentModel>>() {
 

@@ -141,6 +141,7 @@ public class BookTypeController implements Initializable {
         colNumber.setMinWidth(50);
         colNumber.setPrefWidth(60);
         colNumber.setMaxWidth(100);
+        colNumber.setId("colCenter");
         colNumber.setCellValueFactory(
                 new Callback<CellDataFeatures<TypeModel, TypeModel>, ObservableValue<TypeModel>>() {
                     @Override

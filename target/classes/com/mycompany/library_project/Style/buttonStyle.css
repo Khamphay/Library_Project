@@ -23,3 +23,29 @@
   -fx-rippler-fill: width;
 }
 
+/* Todo: Use FontAwesomeIcon */
+/* 
+.ikonli-font-icon {
+  -fx-icon-size: 25;
+  -fx-icon-color: #ffff;
+}
+
+#btHome .ikonli-font-icon {
+  -fx-icon-code: "fas-home";
+}
+#btManageBook .ikonli-font-icon {
+  -fx-icon-code: "fas-book";
+}
+#btManagePerson .ikonli-font-icon {
+  -fx-icon-code: "fas-user";
+}
+#btImport .ikonli-font-icon {
+  -fx-icon-code: "fas-cart-plus";
+}
+#btSetting .ikonli-font-icon {
+  -fx-icon-code: "fas-donate";
+}
+#titleReport .ikonli-font-icon {
+  -fx-icon-code: "fas-file-alt";
+} */
+

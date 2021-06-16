@@ -66,12 +66,12 @@
                         <Image url="@Icon/male_user_50px.png" />
                      </image>
                   </ImageView>
-                  <JFXButton fx:id="btCancel" alignment="CENTER" cache="true" cacheHint="QUALITY" contentDisplay="CENTER" layoutX="201.0" layoutY="347.0" onAction="#Cancel" prefHeight="33.0" prefWidth="100.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 20px 20px 20px 20px;" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE" viewOrder="10.0">
+                  <JFXButton id="buttoLogin" fx:id="btLogin" cache="true" cacheHint="QUALITY" layoutX="62.0" layoutY="347.0" onAction="#Login" prefHeight="33.0" prefWidth="100.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 20px 20px 20px 20px;" stylesheets="@Style/buttonFont.css" text="ເຂົ້າລະບົບ" textFill="WHITE" viewOrder="10.0">
                      <cursor>
                         <Cursor fx:constant="DEFAULT" />
                      </cursor>
                   </JFXButton>
-                  <JFXButton fx:id="btLogin" alignment="CENTER" cache="true" cacheHint="QUALITY" contentDisplay="CENTER" layoutX="62.0" layoutY="347.0" onAction="#Login" prefHeight="33.0" prefWidth="100.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 20px 20px 20px 20px;" stylesheets="@Style/buttonFont.css" text="ເຂົ້າລະບົບ" textFill="WHITE" viewOrder="10.0">
+                  <JFXButton id="buttonCancel" fx:id="btCancel" alignment="CENTER" cache="true" cacheHint="QUALITY" contentDisplay="CENTER" layoutX="201.0" layoutY="347.0" onAction="#Cancel" prefHeight="33.0" prefWidth="100.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 20px 20px 20px 20px;" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE" viewOrder="10.0">
                      <cursor>
                         <Cursor fx:constant="DEFAULT" />
                      </cursor>

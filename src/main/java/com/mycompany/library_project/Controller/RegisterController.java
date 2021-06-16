@@ -1,6 +1,7 @@
 package com.mycompany.library_project.Controller;
 
 import com.jfoenix.controls.*;
+import com.jfoenix.controls.JFXDialog.DialogTransition;
 
 import javafx.beans.value.*;
 import javafx.collections.*;
@@ -26,6 +27,7 @@ import org.controlsfx.validation.Validator;
 import org.imgscalr.Scalr;
 
 import com.mycompany.library_project.App;
+import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 
 import java.net.URL;
@@ -47,7 +49,10 @@ public class RegisterController implements Initializable {
     public MemberModel memberModel = null;
     private DepartmentModel depertment = new DepartmentModel();
     private AlertMessage alertMessage = new AlertMessage();
+    private DialogMessage dialog = null;
+    final JFXButton[] buttons = { buttonOK() };
     private MyDate dateFormat = new MyDate();
+
 
     private BufferedImage resizeImg = null;
     private ByteArrayOutputStream byteStrem = null;
@@ -138,6 +143,9 @@ public class RegisterController implements Initializable {
             memberModel = null;
         }
     }
+
+    @FXML
+    private StackPane stackPane;
 
     @FXML
     private BorderPane borderPane;
@@ -283,7 +291,6 @@ public class RegisterController implements Initializable {
                 localDateExit = LocalDate.now().plusYears((4 - (cmbYears.getSelectionModel().getSelectedIndex() - 2)));
             }
         });
-
         birtDate.setDayCellFactory(d -> new DateCell() {
             @Override
             public void updateItem(LocalDate item, boolean empty) {
@@ -392,11 +399,21 @@ public class RegisterController implements Initializable {
     private void Save(ActionEvent event) {
         try {
             gender = (rdbMale.isSelected()) ? rdbMale.getText() : rdbFemale.getText();
-
             if (index > -1 && !txtStudentId.getText().equals("") && !txtFName.getText().equals("")
                     && !txtLName.getText().equals("") && !txtTel.getText().equals("") && !txtVill.getText().equals("")
                     && !txtDist.getText().equals("") && !txtProv.getText().equals("") && gender != ""
-                    && !birtDate.getValue().equals(null)) {
+                    && !birtDate.getValue().equals(null) && cmbYears.getSelectionModel().getSelectedItem() != null) {
+
+                if (txtTel.getText().length() < 7 || txtTel.getText().length() > 11) {
+                    if (dialog != null)
+                        dialog.closeDialog();
+                    dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
+                            "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.", DialogTransition.CENTER, buttons,
+                            false);
+                    dialog.showDialog();
+                    txtTel.requestFocus();
+                    return;
+                }
 
                 memberModel = new MemberModel(getMemberId(txtStudentId.getText()), txtStudentId.getText(),
                         txtFName.getText(), txtLName.getText(), gender, txtTel.getText(), txtVill.getText(),
@@ -468,4 +485,12 @@ public class RegisterController implements Initializable {
         });
     }
 
+    private JFXButton buttonOK() {
+        JFXButton btOk = new JFXButton("OK");
+        btOk.setStyle(Style.buttonDialogStyle);
+        btOk.setOnAction(e -> {
+            dialog.closeDialog();
+        });
+        return btOk;
+    }
 }

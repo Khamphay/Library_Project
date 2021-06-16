@@ -5,22 +5,12 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
 	<parameter name="dateStart" class="java.sql.Date"/>
 	<parameter name="dateEnd" class="java.sql.Date"/>
+	<parameter name="logo" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[select * from tbadjustment where datepay between $P{dateStart}  and  $P{dateEnd}]]>
+		<![CDATA[select sum( dblibrary.tbadjustment.qty ) as qty, sum( dblibrary.tbadjustment.adjustment_fee ) as adjustment_fee , detail 
+from tbadjustment where datepay between $P{dateStart}  and  $P{dateEnd} group by detail]]>
 	</queryString>
-	<field name="adjustment_id" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="adjustment_id"/>
-		<property name="com.jaspersoft.studio.field.label" value="adjustment_id"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="tbadjustment"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="rent_id" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="rent_id"/>
-		<property name="com.jaspersoft.studio.field.label" value="rent_id"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="tbadjustment"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="qty" class="java.lang.Integer">
+	<field name="qty" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="qty"/>
 		<property name="com.jaspersoft.studio.field.label" value="qty"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="tbadjustment"/>
@@ -29,14 +19,6 @@
 	<field name="adjustment_fee" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="adjustment_fee"/>
 		<property name="com.jaspersoft.studio.field.label" value="adjustment_fee"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="tbadjustment"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="datepay" class="java.sql.Date">
-		<property name="com.jaspersoft.studio.field.name" value="datepay"/>
-		<property name="com.jaspersoft.studio.field.label" value="datepay"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="tbadjustment"/>
-		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="detail" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="detail"/>
@@ -76,9 +58,9 @@
 				</textElement>
 				<text><![CDATA[ລາຍງານຂໍ້ມູນປັບໃຫມ]]></text>
 			</staticText>
-			<image>
+			<image onErrorType="Icon">
 				<reportElement x="2" y="80" width="74" height="74" uuid="1476e281-9567-4e2f-a86b-d472dc8e1d3f"/>
-				<imageExpression><![CDATA["D:/Information4cs2_1/Final_Project/Library_Project/bin/Logo_FNS.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="81" y="113" width="184" height="19" uuid="0ea53037-30c1-407b-82b8-9805cde40617"/>
@@ -143,7 +125,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Phetsarath OT" size="12" isBold="false"/>
 				</textElement>
-				<text><![CDATA[ລະຫັດ]]></text>
+				<text><![CDATA[ລຳດັບ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="81" y="0" width="78" height="30" uuid="21fe9d78-f7b3-4ae5-a4aa-43a20239b22e">
@@ -164,16 +146,7 @@
 				<text><![CDATA[ຄ່າປັບໃຫມ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="282" y="0" width="100" height="30" uuid="4dae9c17-fb8b-4792-a4e9-3825fedf3096">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="73f230fb-353d-4d79-ae54-33f179571ddd"/>
-				</reportElement>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Phetsarath OT" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[ວັນທີ່ປັບໃຫມ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="386" y="0" width="168" height="30" uuid="9b67a6c0-9b1a-495d-a64d-16db7cb08a69">
+				<reportElement x="301" y="0" width="253" height="30" uuid="9b67a6c0-9b1a-495d-a64d-16db7cb08a69">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="74b2038a-073e-4450-bff4-e8e8fcd02c67"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -195,7 +168,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Phetsarath OT" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{qty} +" ຫົວ"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{qty}+" ຫົວ"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###.## ກີບ" isBlankWhenNull="false">
 				<reportElement x="161" y="1" width="118" height="30" uuid="80b473e7-85a7-4f87-928d-c854b60191d0">
@@ -208,7 +181,7 @@
 				<textFieldExpression><![CDATA[$F{adjustment_fee}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="386" y="1" width="168" height="30" uuid="d56e51c3-ceba-40b4-8b7a-59eca8597db4">
+				<reportElement x="301" y="1" width="253" height="30" uuid="d56e51c3-ceba-40b4-8b7a-59eca8597db4">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="74b2038a-073e-4450-bff4-e8e8fcd02c67"/>
 				</reportElement>
 				<box padding="2"/>
@@ -216,14 +189,6 @@
 					<font fontName="Phetsarath OT" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{detail}]]></textFieldExpression>
-			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="282" y="1" width="100" height="30" uuid="9c142105-ff7c-46da-9065-f07b8dbe8738"/>
-				<box padding="2"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Phetsarath OT" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{datepay}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="1" width="78" height="30" uuid="416761c6-ec7f-4c41-ac30-ba1bb904cc69"/>

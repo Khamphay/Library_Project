@@ -22,7 +22,6 @@ import javafx.scene.control.Control;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class AdduserController implements Initializable {
@@ -41,7 +40,6 @@ public class AdduserController implements Initializable {
     public void initConstructor(String empID, ArrayList<EmployeeModel> employee, Stage stage) {
         this.stage = stage;
         employeeId = empID;
-        if (employee.size() > 0) {
             oldUser = employee.get(0).getUser();
             txtUserName.setText(oldUser);
             oldScrPassword = employee.get(0).getPassword();
@@ -49,7 +47,6 @@ public class AdduserController implements Initializable {
 
             txtOldPassword.setDisable(false);
             chRenewPass.setDisable(false);
-            lbNewPass.setText("ລະຫັດຜ່ານໃຫມ່");
             txtPassword.setDisable(true);
             txtRepassword.setDisable(true);
 
@@ -59,7 +56,6 @@ public class AdduserController implements Initializable {
                             !ProtectUserPassword.verifyPassword(newValue, oldScrPassword, oldSalt)
                                     || newValue.equals(null)));
         }
-    }
 
     @FXML
     private AnchorPane achPane, achHeader;
@@ -76,8 +72,6 @@ public class AdduserController implements Initializable {
     @FXML
     private JFXCheckBox chRenewPass;
 
-    @FXML
-    private Text lbNewPass;
 
     private void clearTextField() {
         txtUserName.clear();
@@ -100,33 +94,6 @@ public class AdduserController implements Initializable {
         // achHeader.setOnDragDone(dragEvent -> {
         // stage.setOpacity(1.0f);
         // });
-    }
-
-    private void addNewUser() {
-        try {
-            if (!txtUserName.getText().equals("") && !txtPassword.getText().equals("")
-                    && !txtRepassword.getText().equals("")) {
-                if (txtPassword.getText().equals(txtRepassword.getText())) {
-
-                    // Todo: Encrytp Password
-                    final String myScrPassword = ProtectUserPassword.generateSecurePassword(txtPassword.getText(),
-                            salt);
-
-                    user = new EmployeeModel(employeeId, txtUserName.getText(), myScrPassword, salt);
-                    if (user.addUser() > 0) {
-                        alertMessage.showCompletedMessage("Save", "Add user successfully", 4, Pos.BOTTOM_RIGHT);
-                        clearTextField();
-                    }
-                } else
-                    alertMessage.showWarningMessage("Save", "Password not match", 4, Pos.BOTTOM_RIGHT);
-            } else {
-                validRules.setErrorDecorationEnabled(true);
-                alertMessage.showWarningMessage("Save", "Please chack your information and try again.", 4,
-                        Pos.BOTTOM_RIGHT);
-            }
-        } catch (Exception e) {
-            alertMessage.showErrorMessage("Error Save Data", "Error" + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-        }
     }
 
     private void updateUser() {
@@ -195,9 +162,7 @@ public class AdduserController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                if (txtOldPassword.isDisable() && chRenewPass.isDisable()) {
-                    addNewUser();
-                } else if (!chRenewPass.isDisable() && chRenewPass.isSelected()) {
+                if (!chRenewPass.isDisable() && chRenewPass.isSelected()) {
                     updateUser();
                 } else
                     updateUserName();

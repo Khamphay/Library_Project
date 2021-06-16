@@ -13,7 +13,6 @@ import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 public class AdjustmentModel implements DataAccessObject {
 
     private Connection con = MyConnection.getConnect();
-    private ResultSet rs = null;
     private PreparedStatement ps = null;
     private String sql = null;
 

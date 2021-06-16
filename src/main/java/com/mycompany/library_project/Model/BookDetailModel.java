@@ -42,21 +42,6 @@ public class BookDetailModel implements DataAccessObject {
     }
 
     public BookDetailModel(String bookId, String bookName, String ISBN, Integer page, Integer qty, String catgId,
-            String typeId, String tableId, String detail) {
-
-        this.bookId = bookId;
-        this.bookName = bookName;
-        this.ISBN = ISBN;
-        this.page = page;
-        this.qty = qty;
-        this.catgId = catgId;
-        this.typeId = typeId;
-        this.tableId = tableId;
-        this.detail = detail;
-
-    }
-
-    public BookDetailModel(String bookId, String bookName, String ISBN, Integer page, Integer qty, String catgId,
             String typeId, String tableId, String write_year, String detail) {
         this.bookId = bookId;
         this.bookName = bookName;
@@ -234,34 +219,36 @@ public class BookDetailModel implements DataAccessObject {
     @Override
     public int saveData() throws SQLException, ParseException {
 
-        sql = "call book_detail_Insert(?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        sql = "call book_detail_Insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         ps = con.prepareStatement(sql);
         ps.setString(1, getBookId());
         ps.setString(2, getBookName());
         ps.setString(3, getISBN());
         ps.setInt(4, getPage());
         ps.setInt(5, getQty());
-        ps.setString(6, getDetail());
-        ps.setString(7, getCatgId());
-        ps.setString(8, getTypeId());
-        ps.setString(9, getTableId());
+        ps.setString(6, getWrite_year());
+        ps.setString(7, getDetail());
+        ps.setString(8, getCatgId());
+        ps.setString(9, getTypeId());
+        ps.setString(10, getTableId());
         return ps.executeUpdate();
     }
 
     @Override
     public int updateData() throws SQLException, ParseException {
 
-        sql = "call book_detail_Update(?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        sql = "call book_detail_Update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         ps = con.prepareStatement(sql);
         ps.setString(1, getBookId());
         ps.setString(2, getBookName());
         ps.setString(3, getISBN());
         ps.setInt(4, getPage());
         ps.setInt(5, getQty());
-        ps.setString(6, getDetail());
-        ps.setString(7, getCatgId());
-        ps.setString(8, getTypeId());
-        ps.setString(9, getTableId());
+        ps.setString(6, getWrite_year());
+        ps.setString(7, getDetail());
+        ps.setString(8, getCatgId());
+        ps.setString(9, getTypeId());
+        ps.setString(10, getTableId());
         return ps.executeUpdate();
     }
 
@@ -347,22 +334,20 @@ public class BookDetailModel implements DataAccessObject {
         }
     }
 
-    public int saveWrite(String book_id, String author_id, String year) throws SQLException {
-        sql = "call write_Insert(?, ?, ?);";
+    public int saveWrite(String book_id, String author_id) throws SQLException {
+        sql = "call write_Insert(?, ?);";
         ps = con.prepareStatement(sql);
         ps.setString(1, book_id);
         ps.setString(2, author_id);
-        ps.setString(3, year);
         return ps.executeUpdate();
     }
 
-    public int updateWrite(String book_id, String newauthor_id, String oldauthor_id, String year) throws SQLException {
-        sql = "call write_Update(?, ?, ?, ?);";
+    public int updateWrite(String book_id, String newauthor_id, String oldauthor_id) throws SQLException {
+        sql = "call write_Update(?, ?, ?);";
         ps = con.prepareStatement(sql);
         ps.setString(1, book_id);
         ps.setString(2, newauthor_id);
         ps.setString(3, oldauthor_id);
-        ps.setString(4, year);
         return ps.executeUpdate();
     }
 
@@ -374,10 +359,11 @@ public class BookDetailModel implements DataAccessObject {
         return ps.executeUpdate();
     }
 
-    public int deleteWrite(String book_id) throws SQLException {
-        sql = "call write_Update(?, ?, ?, ?);";
+    public int deleteWrite(String book_id, String authorId) throws SQLException {
+        sql = "call write_Delete(?, ?);";
         ps = con.prepareStatement(sql);
         ps.setString(1, book_id);
+        ps.setString(2, authorId);
         return ps.executeUpdate();
     }
 }

@@ -75,7 +75,7 @@
                                        <graphic>
                                           <ImageView fitHeight="47.0" fitWidth="47.0">
                                              <image>
-                                                <Image url="@Icon/send_job_list_50px.png" />
+                                                <Image url="@Icon/listRentBook.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>

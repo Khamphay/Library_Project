@@ -150,7 +150,7 @@
 	<parameter name="bookid" class="java.lang.String">
 		<defaultValueExpression><![CDATA["MOS"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="logo" class="Object"/>
+	<parameter name="logo" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[select * from showbooks where book_id=$P{bookid}]]>
 	</queryString>
@@ -214,14 +214,14 @@
 	<title>
 		<band height="169" splitType="Stretch">
 			<staticText>
-				<reportElement x="81" y="120" width="215" height="19" uuid="d76f7de1-c6ef-4440-9ab0-0c1d78213f82"/>
+				<reportElement x="81" y="135" width="215" height="19" uuid="d76f7de1-c6ef-4440-9ab0-0c1d78213f82"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Phetsarath OT" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[ຫໍສະໝຸດ ຄະນະວິທະຍາສາດ ທຳມະຊາດ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="81" y="100" width="184" height="19" uuid="1daab2eb-03aa-422c-91d9-aa085fcb5b0f"/>
+				<reportElement x="81" y="115" width="184" height="19" uuid="1daab2eb-03aa-422c-91d9-aa085fcb5b0f"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Phetsarath OT" size="12" isBold="false"/>
 				</textElement>
@@ -248,23 +248,9 @@
 				</textElement>
 				<text><![CDATA[ສາທາລະນະລັດ ປະຊາທິປະໄຕ ປະຊາຊົນລາວ]]></text>
 			</staticText>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="473" y="108" width="80" height="30" uuid="78d84213-4782-42bf-826b-353073c30d18"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Phetsarath OT" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="419" y="108" width="50" height="30" uuid="500721f4-28f7-4c42-86f6-4f265304f9d9"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Phetsarath OT" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[ວັນທີ:]]></text>
-			</staticText>
 			<image>
-				<reportElement x="2" y="67" width="74" height="74" uuid="bccbdf44-9f2e-4c4e-b435-00ba722d5fed"/>
-				<imageExpression><![CDATA["D:/Information4cs2_1/Final_Project/Library_Project/bin/Logo_FNS.png"]]></imageExpression>
+				<reportElement x="2" y="82" width="74" height="74" uuid="bccbdf44-9f2e-4c4e-b435-00ba722d5fed"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -277,6 +263,9 @@
 				</textElement>
 				<text><![CDATA[ຂໍ້ມູນປຶ້ມ]]></text>
 			</staticText>
+			<line>
+				<reportElement x="0" y="2" width="555" height="1" uuid="15e3bb04-2242-43f3-b3cd-296c4bee2216"/>
+			</line>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -673,6 +662,20 @@
 				</textElement>
 				<text><![CDATA[......................................]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="380" y="132" width="40" height="30" uuid="500721f4-28f7-4c42-86f6-4f265304f9d9"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ວັນທີ:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="420" y="132" width="80" height="30" uuid="78d84213-4782-42bf-826b-353073c30d18"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

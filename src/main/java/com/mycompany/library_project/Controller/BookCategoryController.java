@@ -25,7 +25,6 @@ import com.jfoenix.controls.*;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.CategoryModel;
-import com.mycompany.library_project.config.CreateLogFile;
 
 import org.controlsfx.control.textfield.TextFields;
 import org.controlsfx.validation.ValidationSupport;
@@ -36,12 +35,11 @@ public class BookCategoryController implements Initializable {
     private ValidationSupport validRules = new ValidationSupport();
     private ManageBookController manageBookController = null;
     private AddBookController addBookController = null;
-    private CategoryModel category = null;
+    private CategoryModel category = new CategoryModel();
     private ObservableList<CategoryModel> data = null;
     private ResultSet rs = null;
     private DialogMessage dialog = null;
     private AlertMessage alertMessage = new AlertMessage();
-    private CreateLogFile logfile = new CreateLogFile();
 
     public void initConstructor(ManageBookController manageBookController) {
         this.manageBookController = manageBookController;
@@ -82,7 +80,7 @@ public class BookCategoryController implements Initializable {
             public void run() {
                 try {
                     data = FXCollections.observableArrayList();
-                    category = new CategoryModel();
+                    // category = new CategoryModel();
                     rs = category.findAll();
                     while (rs.next()) {
                         data.add(new CategoryModel(rs.getString(1), rs.getString(2)));
@@ -178,7 +176,6 @@ public class BookCategoryController implements Initializable {
 
         } catch (Exception e) {
             alertMessage.showErrorMessage(stakePane, "Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນໝວດປຶ້ມ", e);
         }
     }
 
@@ -203,7 +200,6 @@ public class BookCategoryController implements Initializable {
             }
         } catch (Exception e) {
             alertMessage.showErrorMessage(stakePane, "Edit", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("ມີບັນຫາໃນການແກ້ໄຂຂໍ້ມູນໝວດປຶ້ມ", e);
         }
     }
 
@@ -324,7 +320,7 @@ public class BookCategoryController implements Initializable {
         btyes.setOnAction(e -> {
             // Todo: Delete Data
             try {
-                category = new CategoryModel();
+                // category = new CategoryModel();
                 if (category.deleteData(catgid) > 0) {
                     showData();
                     ClearData();
@@ -334,9 +330,8 @@ public class BookCategoryController implements Initializable {
                     if (addBookController != null)
                         addBookController.fillCategory();
                 }
-            } catch (SQLException ex) {
+            } catch (Exception ex) {
                 alertMessage.showErrorMessage(stakePane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
-                logfile.createLogFile("ມີບັນຫາໃນການລົບຂໍ້ມູນໝວດປຶ້ມ", ex);
             }
         });
         return btyes;

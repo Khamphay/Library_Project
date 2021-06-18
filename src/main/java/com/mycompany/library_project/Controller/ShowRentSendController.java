@@ -37,7 +37,7 @@ public class ShowRentSendController implements Initializable {
     private CreateLogFile logfile = new CreateLogFile();
     private MaskerPane masker = new MaskerPane();
     // private DialogMessage dialog = null;
-    private ShowRentSendModel showbookModel = null;
+    private ShowRentSendModel showbookModel = new ShowRentSendModel();
     private ObservableList<ShowRentSendModel> data = null;
     private ResultSet rs = null;
     private FilteredList<ShowRentSendModel> filterShow = null;
@@ -151,7 +151,7 @@ public class ShowRentSendController implements Initializable {
                 // public void run() {
 
                 try {
-                    showbookModel = new ShowRentSendModel();
+                    // showbookModel = new ShowRentSendModel();
                     autobarcode = new ArrayList<String>();
                     data = FXCollections.observableArrayList();
 

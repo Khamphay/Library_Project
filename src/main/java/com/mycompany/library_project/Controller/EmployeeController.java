@@ -11,7 +11,6 @@ import com.mycompany.library_project.App;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.EmployeeModel;
-import com.mycompany.library_project.config.CreateLogFile;
 
 import org.controlsfx.validation.Severity;
 import org.controlsfx.validation.ValidationResult;
@@ -47,14 +46,13 @@ public class EmployeeController implements Initializable {
     private ValidationSupport validRules = new ValidationSupport();
     private ValidationSupport validRulePass = new ValidationSupport();
     private ManagePersonalCotroller personalCotroller = null;
-    private EmployeeModel employee = null;
+    private EmployeeModel employee = new EmployeeModel();
     private ResultSet rs = null;
     private String gender = "";
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = null;
     private ArrayList<EmployeeModel> user = null;
     private ObservableList<EmployeeModel> data = null;
-    private CreateLogFile logfile = new CreateLogFile();
     final JFXButton[] buttons = { buttonOK() };
 
     public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
@@ -213,12 +211,10 @@ public class EmployeeController implements Initializable {
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
                 stage.show();
-            } else {
-
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
     }
 
@@ -259,9 +255,6 @@ public class EmployeeController implements Initializable {
                                 txtTel.getText(), txtEmail.getText());
                         if (employee.saveData() > 0) {
                             addNewUser();
-                        } else {
-                            alertMessage.showWarningMessage(stackPane, "Saved", "Cannot save data.", 4,
-                                    Pos.BOTTOM_RIGHT);
                         }
 
                     } else {
@@ -272,7 +265,6 @@ public class EmployeeController implements Initializable {
                 } catch (Exception e) {
                     alertMessage.showErrorMessage(stackPane, "Save Error", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
-                    logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນພະນັກງານ", e);
                 }
             }
         });
@@ -304,9 +296,6 @@ public class EmployeeController implements Initializable {
                             clearText();
                             alertMessage.showCompletedMessage(stackPane, "Edited", "Edit data successfully.", 4,
                                     Pos.BOTTOM_RIGHT);
-                        } else {
-                            alertMessage.showWarningMessage(stackPane, "Edited", "Can not edit data.", 4,
-                                    Pos.BOTTOM_RIGHT);
                         }
                     } else {
                         validRules.setErrorDecorationEnabled(true);
@@ -316,7 +305,6 @@ public class EmployeeController implements Initializable {
                 } catch (Exception e) {
                     alertMessage.showErrorMessage(stackPane, "Edit Error", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
-                    logfile.createLogFile("ມີບັນຫາໃນການແກ້ໄຂຂໍ້ມູນພະນັກງານ", e);
                 }
             }
         });
@@ -415,7 +403,7 @@ public class EmployeeController implements Initializable {
             public void run() {
                 try {
                     data = FXCollections.observableArrayList();
-                    employee = new EmployeeModel();
+                    // employee = new EmployeeModel();
                     rs = employee.findAll();
                     while (rs.next()) {
                         data.add(new EmployeeModel(rs.getString("employee_id"), rs.getString("full_name"),
@@ -529,7 +517,7 @@ public class EmployeeController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                employee = new EmployeeModel();
+                // employee = new EmployeeModel();
                 try {
                     if (employee.deleteData(id) > 0) {
                         showData();
@@ -537,14 +525,10 @@ public class EmployeeController implements Initializable {
                         alertMessage.showCompletedMessage(stackPane, "Deleted", "Delete data successfully.", 4,
                                 Pos.BOTTOM_RIGHT);
                         dialog.closeDialog();
-                    } else {
-                        alertMessage.showWarningMessage(stackPane, "Deleted", "Can not delete data, Please try again.",
-                                4, Pos.BOTTOM_RIGHT);
                     }
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     alertMessage.showErrorMessage(stackPane, "Deleted", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
-                    logfile.createLogFile("ມີບັນຫາໃນການລົບຂໍ້ມູນພະນັກງານ", e);
                 }
             }
         });

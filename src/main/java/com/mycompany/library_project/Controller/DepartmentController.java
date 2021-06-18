@@ -8,7 +8,6 @@ import com.jfoenix.controls.*;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.DepartmentModel;
-import com.mycompany.library_project.config.CreateLogFile;
 
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
@@ -40,7 +39,6 @@ public class DepartmentController implements Initializable {
     private ObservableList<DepartmentModel> data = null;
     private DialogMessage dialog = null;
     private AlertMessage alertMessage = new AlertMessage();
-    private CreateLogFile logfile = new CreateLogFile();
     private RegisterController registerController = null;
 
     public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
@@ -147,9 +145,6 @@ public class DepartmentController implements Initializable {
                                 Pos.BOTTOM_RIGHT);
                         if (registerController != null)
                             registerController.fillDep();
-                    } else {
-                        alertMessage.showWarningMessage(stackPane, "Save Warning", "Can not save data.", 4,
-                                Pos.BOTTOM_RIGHT);
                     }
                 } else {
                     validRules.setErrorDecorationEnabled(true);
@@ -157,9 +152,8 @@ public class DepartmentController implements Initializable {
                             "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                 }
             } catch (Exception ex) {
-                alertMessage.showErrorMessage(stackPane, "Save Error", "Error: " + ex.getMessage(), 4,
+                alertMessage.showErrorMessage("Save Error", "Error: " + ex.getMessage(), 4,
                         Pos.BOTTOM_RIGHT);
-                logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນພາກວິຊາ", ex);
             }
         });
 
@@ -174,9 +168,6 @@ public class DepartmentController implements Initializable {
                                 Pos.BOTTOM_RIGHT);
                         if (registerController != null)
                             registerController.fillDep();
-                    } else {
-                        alertMessage.showWarningMessage(stackPane, "Edit Warning", "Can not edit data.", 4,
-                                Pos.BOTTOM_RIGHT);
                     }
                 } else {
                     validRules.setErrorDecorationEnabled(true);
@@ -184,8 +175,7 @@ public class DepartmentController implements Initializable {
                             "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                 }
             } catch (Exception e) {
-                alertMessage.showErrorMessage(stackPane, "Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-                logfile.createLogFile("ມີບັນຫາໃນການແກ້ໄຂຂໍ້ມູນພາກວິຊາ", e);
+                alertMessage.showErrorMessage("Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             }
         });
 
@@ -262,7 +252,7 @@ public class DepartmentController implements Initializable {
                     tableDepartment.setItems(sorted);
 
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage("ໂຫຼດຂໍ້ມູນ", e.getMessage(), 3, Pos.BOTTOM_RIGHT);
+                    alertMessage.showErrorMessage("Load Data Error", e.getMessage(), 3, Pos.BOTTOM_RIGHT);
                 }
 
             }
@@ -336,16 +326,13 @@ public class DepartmentController implements Initializable {
                     showData();
                     ClearText();
                     dialog.closeDialog();
-                    alertMessage.showCompletedMessage(stackPane, "Delete", "Delete data successfully.", 4,
+                    alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4,
                             Pos.BOTTOM_RIGHT);
                     if (registerController != null)
                         registerController.fillDep();
-                } else {
-                    alertMessage.showWarningMessage(stackPane, "Delete", "Can not delete data.", 4, Pos.BOTTOM_RIGHT);
                 }
             } catch (Exception e) {
-                alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-                logfile.createLogFile("ມີບັນຫາໃນການລົບຂໍ້ມູນພາກວິຊາ", e);
+                alertMessage.showErrorMessage("Delete", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             }
         });
         return btyes;

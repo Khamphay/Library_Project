@@ -38,7 +38,7 @@ public class AuthorController implements Initializable {
     private ValidationSupport validRules = new ValidationSupport();
     private ManagePersonalCotroller personalCotroller = null;
     private AddBookController addBookController = null;
-    private AuthorModel author = null;
+    private AuthorModel author = new AuthorModel();
     private ResultSet rs = null;
     private String gender = "";
     private AlertMessage alertMessage = new AlertMessage();
@@ -244,9 +244,6 @@ public class AuthorController implements Initializable {
                             // Todo: Open From Add Book
                             if (addBookController != null)
                                 addBookController.fillAuthor();
-                        } else {
-                            alertMessage.showWarningMessage(stackPane, "Saved", "Cannot save data.", 4,
-                                    Pos.BOTTOM_RIGHT);
                         }
                     } else {
                         // Todo: Show warning message if text or combo box is empty
@@ -257,7 +254,6 @@ public class AuthorController implements Initializable {
                 } catch (Exception e) {
                     alertMessage.showErrorMessage(stackPane, "Save Error", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
-                    logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນນັກແຕ່ງປຶ້ມ", e);
                 }
             }
         });
@@ -293,9 +289,6 @@ public class AuthorController implements Initializable {
                             // Todo: Open From Add Book
                             if (addBookController != null)
                                 addBookController.fillAuthor();
-                        } else {
-                            alertMessage.showWarningMessage(stackPane, "Edited", "Can not edit data.", 4,
-                                    Pos.BOTTOM_RIGHT);
                         }
                     } else {
                         // Todo: Show warning message
@@ -306,7 +299,6 @@ public class AuthorController implements Initializable {
                 } catch (Exception e) {
                     alertMessage.showErrorMessage(stackPane, "Edit Error", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
-                    logfile.createLogFile("ມີບັນຫາໃນການແກ້ໄຂຂໍ້ມູນນັກແຕ່ງປຶ້ມ", e);
                 }
             }
         });
@@ -362,7 +354,7 @@ public class AuthorController implements Initializable {
             public void run() {
                 try {
                     data = FXCollections.observableArrayList();
-                    author = new AuthorModel();
+                    // author = new AuthorModel();
                     rs = author.findAll();
                     while (rs.next()) {
                         data.add(new AuthorModel(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
@@ -393,7 +385,7 @@ public class AuthorController implements Initializable {
                     sorted.comparatorProperty().bind(tableAuthor.comparatorProperty());
                     tableAuthor.setItems(sorted);
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage(stackPane, "Load Data", "Error" + e.getMessage(), 4,
+                    alertMessage.showErrorMessage("Load Data", "Error" + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
                 }
             }
@@ -473,7 +465,7 @@ public class AuthorController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                author = new AuthorModel();
+                // author = new AuthorModel();
                 try {
                     if (author.deleteData(id) > 0) {
                         showData();

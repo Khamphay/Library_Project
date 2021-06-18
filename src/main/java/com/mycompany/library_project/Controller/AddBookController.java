@@ -36,15 +36,14 @@ public class AddBookController implements Initializable {
     private BookController bookcontroller;
     private ResultSet rs = null;
     private AlertMessage alertMessage = new AlertMessage();
-    private TypeModel type = null;
-    private CategoryModel category = null;
+    private TypeModel type = new TypeModel();
+    private CategoryModel category = new CategoryModel();
     private TableLogModel table = null;
     private AuthorModel author = null;
     private CreateLogFile logfile = new CreateLogFile();
-    private BookDetailModel addBook = null;
+    private BookDetailModel addBook = new BookDetailModel();
     private ArrayList<AuthorModel> author_id = null;
     private ArrayList<String> arr_type, arr_category;
-    private BookDetailModel book = null;
     private ObservableList<String> status = FXCollections.observableArrayList("ຫວ່າງ", "ກຳລົງຢືມ", "ເສຍ");;
     private ObservableList<String> items = null, author_items = null;
 
@@ -71,7 +70,6 @@ public class AddBookController implements Initializable {
 
     public void initConstructor2(BookController bookcontroller, BookDetailModel book) {
         this.bookcontroller = bookcontroller;
-        this.book = book;
         moveForm();
         btClose.setVisible(true);
         btClose.setOnAction(new EventHandler<ActionEvent>() {
@@ -104,6 +102,7 @@ public class AddBookController implements Initializable {
             cmbTable.getSelectionModel().select(book.getTableId());
 
             try {
+                // book = new BookDetailModel();
                 rs = book.showBarcode(bookid);
                 while (rs.next()) {
                     txtBarcode.appendText(rs.getString("barcode") + "\n");
@@ -112,7 +111,9 @@ public class AddBookController implements Initializable {
                 alertMessage.showErrorMessage("Load Barcode Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             }
 
+
             try {
+                book = new BookDetailModel();
                 rs = book.showWrite(bookid);
                 int index = 0;
                 String[] author_name = new String[6];
@@ -147,7 +148,6 @@ public class AddBookController implements Initializable {
 
             } catch (Exception e) {
                 alertMessage.showErrorMessage("Load Write Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-                e.printStackTrace();
             }
         }
     }
@@ -466,7 +466,7 @@ public class AddBookController implements Initializable {
         try {
             arr_type = new ArrayList<>();
             items = FXCollections.observableArrayList();
-            type = new TypeModel();
+            // type = new TypeModel();
             ResultSet rs = type.findAll();
             while (rs.next()) {
                 items.add(rs.getString(2));
@@ -488,7 +488,7 @@ public class AddBookController implements Initializable {
         try {
             arr_category = new ArrayList<>();
             items = FXCollections.observableArrayList();
-            category = new CategoryModel();
+            // category = new CategoryModel();
             ResultSet rs = category.findAll();
             while (rs.next()) {
                 arr_category.add(rs.getString(1));
@@ -702,7 +702,7 @@ public class AddBookController implements Initializable {
                                 } else {
                                     msg = null;
                                 }
-                            } catch (Exception e) {
+                            } catch (SQLException e) {
                                 msg = null;
                                 alertMessage.showWarningMessage("Save Barcode Error", "Can not save barcode.", 4,
                                         Pos.BOTTOM_RIGHT);
@@ -716,7 +716,7 @@ public class AddBookController implements Initializable {
                                     if (addBook.saveWrite(txtId.getText(), val) > 0) {
                                         msg = "Save data successfully.";
                                     }
-                                } catch (Exception e) {
+                                } catch (SQLException e) {
                                     alertMessage.showWarningMessage("Save Write Error", "Can not save writer.", 4,
                                             Pos.BOTTOM_RIGHT);
                                     return;
@@ -738,7 +738,7 @@ public class AddBookController implements Initializable {
                                         if (addBook.updateWrite(bookid, val, oldarr_author[old_id]) > 0) {
                                             msg = "Edit data successfully.";
                                         }
-                                    } catch (Exception e) {
+                                    } catch (SQLException e) {
                                         alertMessage.showErrorMessage("Edit Write Error", "Error: " + e.getMessage(), 4,
                                                 Pos.BOTTOM_RIGHT);
                                         return;
@@ -771,8 +771,6 @@ public class AddBookController implements Initializable {
                     clearText();
                     if (bookcontroller != null)
                         bookcontroller.showData();
-                } else {
-                    alertMessage.showWarningMessage("Saved Warning", "Can not save data.", 4, Pos.BOTTOM_RIGHT);
                 }
             } else {
                 validRules.setErrorDecorationEnabled(true);
@@ -781,7 +779,6 @@ public class AddBookController implements Initializable {
             }
         } catch (Exception e) {
             alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນປຶ້ມ", e);
         }
     }
 

@@ -8,10 +8,14 @@ import java.sql.SQLException;
 import java.text.ParseException;
 
 import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
+
+import javafx.geometry.Pos;
 
 public class AdjustmentModel implements DataAccessObject {
 
+    private AlertMessage alertMessage = new AlertMessage();
     private Connection con = MyConnection.getConnect();
     private PreparedStatement ps = null;
     private String sql = null;
@@ -99,14 +103,24 @@ public class AdjustmentModel implements DataAccessObject {
 
     @Override
     public int saveData() throws SQLException, ParseException {
-        sql = "call adjustment_Insert(?, ?, ?, ?, ?);";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, getRent_id());
-        ps.setInt(2, getQty());
-        ps.setDouble(3, getAdj_fee());
-        ps.setDate(4, getDatePay());
-        ps.setString(5, getDetail());
-        return ps.executeUpdate();
+        try {
+            sql = "call adjustment_Insert(?, ?, ?, ?, ?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, getRent_id());
+            ps.setInt(2, getQty());
+            ps.setDouble(3, getAdj_fee());
+            ps.setDate(4, getDatePay());
+            ps.setString(5, getDetail());
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            return 0;
+        } 
+        // finally {
+        //     ps.close();
+        //     con.close();
+        // }
+
     }
 
     @Override

@@ -48,6 +48,7 @@ public class DialogMessage {
         content.setBody(new Text(message));
         content.setActions(buttons);
         dialog.toFront();
+        dialog.requestFocus();
         dialog.show();        
     }
 

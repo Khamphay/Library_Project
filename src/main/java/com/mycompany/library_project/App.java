@@ -24,17 +24,22 @@ public class App extends Application implements Initializable {
     @Override
     public void start(Stage primaryStage) throws IOException {
        
-        Parent root= FXMLLoader.load(App.class.getResource("Login.fxml"));
-        Scene scene = new Scene(root);
-        scene.setFill(Color.TRANSPARENT);
-        primaryStage.setTitle("FNS Library Management System - Login");
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
-        primaryStage.setScene(scene);
-        //DesktopController.desktopStage = primaryStage;//Todo: set object
-        // Resizehelper.addResizeListener(DesktopController.desktopStage);//Todo: Set to windows form able Resize 
-        primaryStage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
-        LoginController.loginSatge = primaryStage;
-        primaryStage.show();
+        try {
+            Parent root = FXMLLoader.load(App.class.getResource("Login.fxml"));
+            Scene scene = new Scene(root);
+            scene.setFill(Color.TRANSPARENT);
+            primaryStage.setTitle("FNS Library Management System - Login");
+            primaryStage.initStyle(StageStyle.TRANSPARENT);
+            primaryStage.setScene(scene);
+           // DesktopController.desktopStage = primaryStage;//Todo: set object
+           // Resizehelper.addResizeListener(DesktopController.desktopStage);//Todo: Set to
+           // windows form able Resize
+           primaryStage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
+           LoginController.loginSatge = primaryStage;
+           primaryStage.show();
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
     }
 
     public static void main(String[] args) {

@@ -70,7 +70,7 @@ public class ManagePersonalCotroller implements Initializable {
                     }
                     textTotalList.setText(pnItems.getChildren().size() + " ລາຍການ");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
                 }
             }
 

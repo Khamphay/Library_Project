@@ -445,7 +445,6 @@ public class RegisterController implements Initializable {
             }
         } catch (Exception e) {
             alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນສະມາຊີກ", e);
         }
     }
 

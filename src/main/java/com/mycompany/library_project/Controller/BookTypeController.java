@@ -225,7 +225,6 @@ public class BookTypeController implements Initializable {
             }
         } catch (Exception e) {
             alertMessage.showErrorMessage(stackePane, "Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນປະເພດປຶ້ມ", e);
         }
     }
 
@@ -250,7 +249,6 @@ public class BookTypeController implements Initializable {
             }
         } catch (Exception e) {
             alertMessage.showErrorMessage(stackePane, "Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("ມີບັນຫາໃນການແກ້ໄຂຂໍ້ມູນປະເພດປຶ້ມ", e);
         }
     }
 

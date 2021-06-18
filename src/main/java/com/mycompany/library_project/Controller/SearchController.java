@@ -84,7 +84,7 @@ public class SearchController implements Initializable {
                     @Override
                     public void run() {
                         try {
-                            bookDetailModel = new BookDetailModel();
+                            // bookDetailModel = new BookDetailModel();
                             if (value != null) {
                                 rs = bookDetailModel.searchData(value);
                             } else
@@ -95,6 +95,7 @@ public class SearchController implements Initializable {
                                         rs.getString("book_name"), rs.getString("ISBN"), rs.getInt("page") + " ໜ້າ",
                                         rs.getString("catg_name"), rs.getString("type_name"), "", "", ""));
 
+                                // bookDetailModel = new BookDetailModel();
                                 final ResultSet sublog = bookDetailModel.showBarcode(rs.getString("book_id"));
                                 while (sublog.next()) {
                                     subItem = new TreeItem<>(new SearchModel(sublog.getString("barcode"), "", "", "",

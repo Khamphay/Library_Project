@@ -9,7 +9,6 @@ import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 import com.mycompany.library_project.Report.CreateReport;
-import com.mycompany.library_project.config.CreateLogFile;
 
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
@@ -33,12 +32,11 @@ public class BarcodeController implements Initializable {
 
     private ValidationSupport validRules = new ValidationSupport();
     private BookController bookController;
-    private BookDetailModel addBarcode = null;
+    private BookDetailModel addBarcode = new BookDetailModel();;
     private ResultSet rs = null;
     private TableLogModel table = new TableLogModel();
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = null;
-    private CreateLogFile logfile = new CreateLogFile();
     private ObservableList<BookDetailModel> data = null;
     private ObservableList<String> items = null;
     private ArrayList<String> book = null;
@@ -94,7 +92,7 @@ public class BarcodeController implements Initializable {
                 try {
                     if (!txtBarcode.getText().equals("")
                             && !cmbStatus.getSelectionModel().getSelectedItem().equals(null) && bookid != "") {
-                        addBarcode = new BookDetailModel();
+                        // addBarcode = new BookDetailModel();
                         if (addBarcode.saveBookBarCode(txtBarcode.getText(), bookid,
                                 cmbTabLog_id.getSelectionModel().getSelectedItem(),
                                 cmbStatus.getSelectionModel().getSelectedItem()) > 0) {
@@ -113,7 +111,6 @@ public class BarcodeController implements Initializable {
                     }
                 } catch (Exception e) {
                     alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-                    logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນ Barcode ປຶ້ມ", e);
                 }
             }
 
@@ -126,15 +123,13 @@ public class BarcodeController implements Initializable {
                 try {
                     if (!txtBarcode.getText().equals("")
                             && !cmbStatus.getSelectionModel().getSelectedItem().equals(null) && bookid != "") {
-                        addBarcode = new BookDetailModel();
+                        // addBarcode = new BookDetailModel();
                         if (addBarcode.updateData(bookid, txtBarcode.getText(), barcode,
                                 cmbTabLog_id.getSelectionModel().getSelectedItem(),
                                 cmbStatus.getSelectionModel().getSelectedItem()) > 0) {
                             alertMessage.showCompletedMessage("Edited", "Edit data completed", 4, Pos.BOTTOM_RIGHT);
                             clearText();
                             showBarcode(bookid);
-                        } else {
-                            alertMessage.showWarningMessage("Edited", "Edit data fail", 4, Pos.BOTTOM_RIGHT);
                         }
                     } else {
                         // Todo: Show warning message if text or combo box is empty
@@ -144,7 +139,6 @@ public class BarcodeController implements Initializable {
                     }
                 } catch (Exception e) {
                     alertMessage.showErrorMessage("Edited", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-                    logfile.createLogFile("ມີບັນຫາໃນການແກ້ໄຂຂໍ້ມູນ Barcode ປຶ້ມ", e);
                 }
             }
 
@@ -248,7 +242,9 @@ public class BarcodeController implements Initializable {
                     btEdit.setDisable(false);
                     btSave.setDisable(true);
 
+                    // table = new TableLogModel();
                     tableid = table.findTableId(tableBarcode.getSelectionModel().getSelectedItem().getTableLogId());
+
                     cmbTable.getSelectionModel().select(tableid);
                     barcode = tableBarcode.getSelectionModel().getSelectedItem().getBarcode();
                     txtBarcode.setText(tableBarcode.getSelectionModel().getSelectedItem().getBarcode());
@@ -282,7 +278,7 @@ public class BarcodeController implements Initializable {
     private void fillTable() {
         try {
             items = FXCollections.observableArrayList();
-            table = new TableLogModel();
+            // table = new TableLogModel();
             ResultSet rs = table.findAll();
             while (rs.next()) {
                 items.add(rs.getString(1));
@@ -295,12 +291,12 @@ public class BarcodeController implements Initializable {
         cmbTable.setOnAction(e -> {
             try {
                 // index_table = cmbTable.getSelectionModel().getSelectedIndex();
-                if (cmbTable.getSelectionModel().getSelectedItem() != null) {
-                    table = new TableLogModel();
+                if (!cmbTable.getSelectionModel().getSelectedItem().isEmpty()) {
                     items = FXCollections.observableArrayList();
-                    ResultSet rs = table.findById(cmbTable.getSelectionModel().getSelectedItem().toString());
-                    while (rs.next()) {
-                        items.add(rs.getString(2));
+                    // table = new TableLogModel();
+                    final ResultSet rsLog = table.findById(cmbTable.getSelectionModel().getSelectedItem().toString());
+                    while (rsLog.next()) {
+                        items.add(rsLog.getString(2));
                     }
                     cmbTabLog_id.setItems(items);
                 }
@@ -319,7 +315,7 @@ public class BarcodeController implements Initializable {
                     bookid = book_id;
                     data = FXCollections.observableArrayList();
                     book = new ArrayList<String>();
-                    addBarcode = new BookDetailModel();
+                    // addBarcode = new BookDetailModel();
                     rs = addBarcode.showBarcode(book_id);
                     while (rs.next()) {
                         data.add(new BookDetailModel(rs.getString("barcode"), rs.getString("table_log_id"),
@@ -410,7 +406,7 @@ public class BarcodeController implements Initializable {
         btyes.setOnAction(e -> {
             // Todo: Delete Data
             try {
-                addBarcode = new BookDetailModel();
+                // addBarcode = new BookDetailModel();
                 if (addBarcode.deleteBarcode(bookid, barcodeid) > 0) {
                     dialog.closeDialog();
                     alertMessage.showCompletedMessage("Deleted", "Delete data successfully.", 4, Pos.BOTTOM_RIGHT);
@@ -419,10 +415,8 @@ public class BarcodeController implements Initializable {
                         clearText();
                         bookController.showData();
                     }
-                } else {
-                    alertMessage.showWarningMessage("Deleted", "Can not delete data.", 4, Pos.BOTTOM_RIGHT);
                 }
-            } catch (SQLException ex) {
+            } catch (Exception ex) {
                 alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
             }
         });

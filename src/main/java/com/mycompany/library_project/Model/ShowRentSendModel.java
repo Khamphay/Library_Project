@@ -4,10 +4,16 @@ import java.sql.*;
 import java.text.ParseException;
 
 import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
+import com.mycompany.library_project.config.CreateLogFile;
+
+import javafx.geometry.Pos;
 
 public class ShowRentSendModel implements DataAccessObject {
 
+    private AlertMessage alertMessage = new AlertMessage();
+    private CreateLogFile logfile = new CreateLogFile();
     private Connection con = MyConnection.getConnect();
     private ResultSet rs = null;
     private PreparedStatement ps = null;
@@ -36,7 +42,7 @@ public class ShowRentSendModel implements DataAccessObject {
     }
 
     public ShowRentSendModel(String rentId, String barcode, String bookName, String catg, String type,
-            String tableLogId,  Date rentDate, Date sendDate, String status, String memberId, String memberName,
+            String tableLogId, Date rentDate, Date sendDate, String status, String memberId, String memberName,
             String cause) {
         this.rentId = rentId;
         this.barcode = barcode;
@@ -150,34 +156,70 @@ public class ShowRentSendModel implements DataAccessObject {
 
     @Override
     public ResultSet findAll() throws SQLException {
-        sql = "select * from showRent_SendBook;";
-        rs = con.createStatement().executeQuery(sql);
-        return rs;
+        try {
+            sql = "select * from showRent_SendBook;";
+            rs = con.createStatement().executeQuery(sql);
+            return rs;
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Load Rent and Send Book Error", e);
+            return null;
+        } finally {
+            //con.close();
+        }
     }
 
     public ResultSet findByRent(String status) throws SQLException {
-        sql = "select * from showRent_SendBook Where book_status=?;";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, status);
-        rs = ps.executeQuery();
-        return rs;
+        try {
+            sql = "select * from showRent_SendBook Where book_status=?;";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, status);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Load Rent and Send Book By Status Error", e);
+            return null;
+        } finally {
+            ps.close();
+            //con.close();
+        }
     }
 
     public ResultSet findByRentOutOfDate(Date date, String status) throws SQLException {
-        sql = "select * from showRent_SendBook Where date_send<? and book_status=?;";
-        ps = con.prepareStatement(sql);
-        ps.setDate(1, date);
-        ps.setString(2, status);
-        rs = ps.executeQuery();
-        return rs;
+        try {
+            sql = "select * from showRent_SendBook Where date_send<? and book_status=?;";
+            ps = con.prepareStatement(sql);
+            ps.setDate(1, date);
+            ps.setString(2, status);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Load rent book out of error", "Error: " + e.getMessage(), 4,
+                    Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Load Renting Book Out Of Error", e);
+            return null;
+        } finally {
+            ps.close();
+            //con.close();
+        }
     }
 
     public ResultSet findBySend(String status) throws SQLException {
-        sql = "select * from showRent_SendBook Where book_status=?;";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, status);
-        rs = ps.executeQuery();
-        return rs;
+        try {
+            sql = "select * from showRent_SendBook Where book_status=?;";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, status);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Load Sended Book Error", e);
+            return null;
+        } finally {
+            ps.close();
+            //con.close();
+        }
     }
 
     @Override
@@ -212,12 +254,21 @@ public class ShowRentSendModel implements DataAccessObject {
 
     @Override
     public int deleteData(String id) throws SQLException {
-        sql = "call rentbook_Delete(?, ?, ?);";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, getRentId());
-        ps.setString(2, getBarcode());
-        ps.setString(3, getStatus());
-        return ps.executeUpdate();
+        try {
+            sql = "call rentbook_Delete(?, ?, ?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, getRentId());
+            ps.setString(2, getBarcode());
+            ps.setString(3, getStatus());
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Delete Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Delete Sended Book Error", e);
+            return 0;
+        } finally {
+            ps.close();
+            //con.close();
+        }
     }
 
 }

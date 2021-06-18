@@ -3,6 +3,7 @@ package com.mycompany.library_project.Controller;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -253,8 +254,7 @@ public class BookLostController implements Initializable {
                                         if (rentBook.sendBook(rent_id, item.getBarcode(), "ສົ່ງແລ້ວ") > 0)
                                             message = "Save Successfully!.";
 
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                            } catch (SQLException e) {
                                 alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4,
                                         Pos.BOTTOM_RIGHT);
                                 message = null;
@@ -275,12 +275,10 @@ public class BookLostController implements Initializable {
                                     "ບັນທືກຂໍ້ມູນສຳເລັດ ແຕ່ມີບັນຫາໃນການບັນທຶກຂໍ້ມູນການປັບໃຫມ", DialogTransition.CENTER,
                                     buttons, false);
                             dialog.showDialog();
-                        } else
-                            alertMessage.showWarningMessage("Save Warning", "Cannot save data", 4, Pos.BOTTOM_RIGHT);
+                        }
                     }
                 } catch (Exception e) {
                     alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-                    e.printStackTrace();
                 }
             }
         });

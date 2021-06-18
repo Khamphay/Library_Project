@@ -94,23 +94,23 @@
                                           <Insets left="-2.0" />
                                        </padding>
                                     </JFXButton>
-                                    <DatePicker fx:id="dateSend" layoutX="1086.0" layoutY="124.0" prefHeight="33.0" prefWidth="206.0" promptText="ວັນທີສົ່ງ" showWeekNumbers="true" AnchorPane.topAnchor="130.0">
+                                    <DatePicker fx:id="dateSend" editable="false" layoutX="1086.0" layoutY="124.0" prefHeight="33.0" prefWidth="206.0" promptText="ວັນທີສົ່ງ" showWeekNumbers="true" AnchorPane.topAnchor="130.0">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </DatePicker>
-                                    <TextField fx:id="txtBookName" layoutX="320.0" layoutY="51.0" prefHeight="27.0" prefWidth="220.0" promptText="ຊື່ປຶ້ມ" styleClass="textfield" viewOrder="1.0" AnchorPane.topAnchor="49.0" />
+                                    <TextField fx:id="txtBookName" editable="false" layoutX="320.0" layoutY="51.0" prefHeight="27.0" prefWidth="220.0" promptText="ຊື່ປຶ້ມ" styleClass="textfield" viewOrder="1.0" AnchorPane.topAnchor="49.0" />
                                     <TextField fx:id="txtBarcode" layoutX="61.0" layoutY="50.0" prefHeight="27.0" prefWidth="220.0" promptText="ລະຫັດ Barcode" viewOrder="1.0" AnchorPane.topAnchor="49.0" />
-                                    <TextField fx:id="txtType" layoutX="840.0" layoutY="47.0" prefHeight="31.0" prefWidth="220.0" promptText="ປະເພດປຶ້ມ" styleClass="textfield" viewOrder="1.0" AnchorPane.topAnchor="49.0" />
-                                    <TextField fx:id="txtCatg" layoutX="579.0" layoutY="51.0" prefHeight="31.0" prefWidth="220.0" promptText="ໝວດປຶ້ມ" styleClass="textfield" viewOrder="1.0" AnchorPane.topAnchor="49.0" />
-                                    <DatePicker fx:id="dateRent" layoutX="1086.0" layoutY="46.0" prefHeight="33.0" prefWidth="207.0" promptText="ວັນທີຢືມ" showWeekNumbers="true" AnchorPane.topAnchor="49.0">
+                                    <TextField fx:id="txtType" editable="false" layoutX="840.0" layoutY="47.0" prefHeight="31.0" prefWidth="220.0" promptText="ປະເພດປຶ້ມ" styleClass="textfield" viewOrder="1.0" AnchorPane.topAnchor="49.0" />
+                                    <TextField fx:id="txtCatg" editable="false" layoutX="579.0" layoutY="51.0" prefHeight="31.0" prefWidth="220.0" promptText="ໝວດປຶ້ມ" styleClass="textfield" viewOrder="1.0" AnchorPane.topAnchor="49.0" />
+                                    <DatePicker fx:id="dateRent" editable="false" layoutX="1086.0" layoutY="46.0" prefHeight="33.0" prefWidth="207.0" promptText="ວັນທີຢືມ" showWeekNumbers="true" AnchorPane.topAnchor="49.0">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </DatePicker>
-                                    <TextField fx:id="txtPrice" layoutX="578.0" layoutY="132.0" prefHeight="27.0" prefWidth="220.0" promptText="ຄ່າປັບໃໝ/ມື້" styleClass="textfield" viewOrder="1.0" AnchorPane.topAnchor="130.0" />
-                                    <TextField fx:id="txtAllPrice" layoutX="835.0" layoutY="124.0" prefHeight="27.0" prefWidth="220.0" promptText="ຄ່າປັບໃໝທັງໝົດ" styleClass="textfield" viewOrder="1.0" AnchorPane.topAnchor="130.0" />
-                                    <TextField fx:id="txtOutDate" layoutX="322.0" layoutY="132.0" prefHeight="27.0" prefWidth="220.0" promptText="ຈຳນວນມື້ທີ່ຢືມກາຍ" styleClass="textfield" viewOrder="1.0" AnchorPane.topAnchor="130.0" />
+                                    <TextField fx:id="txtPrice" editable="false" layoutX="578.0" layoutY="132.0" prefHeight="27.0" prefWidth="220.0" promptText="ຄ່າປັບໃໝ/ມື້" styleClass="textfield" viewOrder="1.0" AnchorPane.topAnchor="130.0" />
+                                    <TextField fx:id="txtAllPrice" editable="false" layoutX="835.0" layoutY="124.0" prefHeight="27.0" prefWidth="220.0" promptText="ຄ່າປັບໃໝທັງໝົດ" styleClass="textfield" viewOrder="1.0" AnchorPane.topAnchor="130.0" />
+                                    <TextField fx:id="txtOutDate" editable="false" layoutX="322.0" layoutY="132.0" prefHeight="27.0" prefWidth="220.0" promptText="ຈຳນວນມື້ທີ່ຢືມກາຍ" styleClass="textfield" viewOrder="1.0" AnchorPane.topAnchor="130.0" />
                                     <Label layoutX="61.0" layoutY="29.0" styleClass="BoonBaan-size-14" text="ລະຫັດ Barcode" AnchorPane.topAnchor="28.0" />
                                     <Label layoutX="320.0" layoutY="30.0" styleClass="BoonBaan-size-14" text="ຊື່ປຶ້ມ" AnchorPane.topAnchor="28.0" />
                                     <Label layoutX="579.0" layoutY="30.0" styleClass="BoonBaan-size-14" text="ໝວດປຶ້ມ" AnchorPane.topAnchor="28.0" />
@@ -120,7 +120,7 @@
                                     <Label layoutX="578.0" layoutY="112.0" styleClass="BoonBaan-size-14" text="ຄ່າປັບໃໝ/ມື້" AnchorPane.topAnchor="112.0" />
                                     <Label layoutX="835.0" layoutY="104.0" styleClass="BoonBaan-size-14" text="ຄ່າປັບໃໝທັງໝົດ" AnchorPane.topAnchor="110.0" />
                                     <Label layoutX="1087.0" layoutY="104.0" styleClass="BoonBaan-size-14" text="ວັນທີສົ່ງປຶ້ມ" AnchorPane.topAnchor="110.0" />
-                                    <TextField fx:id="txtMemberName" layoutX="61.0" layoutY="131.0" prefHeight="27.0" prefWidth="220.0" promptText="ຊື່ ແລະ ນາມສະກຸນ ສະມາຊີກ" viewOrder="1.0" AnchorPane.topAnchor="130.0" />
+                                    <TextField fx:id="txtMemberName" editable="false" layoutX="61.0" layoutY="131.0" prefHeight="27.0" prefWidth="220.0" promptText="ຊື່ ແລະ ນາມສະກຸນ ສະມາຊີກ" viewOrder="1.0" AnchorPane.topAnchor="130.0" />
                                     <Label layoutX="61.0" layoutY="111.0" styleClass="BoonBaan-size-14" text="ຊື່ ແລະ ນາມສະກຸນ ສະມາຊີກ" AnchorPane.topAnchor="111.0" />
                                  </children>
                               </AnchorPane>

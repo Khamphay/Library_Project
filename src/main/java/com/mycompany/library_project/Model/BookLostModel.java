@@ -4,13 +4,19 @@ import java.sql.*;
 import java.text.ParseException;
 
 import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
+import com.mycompany.library_project.config.CreateLogFile;
+
+import javafx.geometry.Pos;
 
 public class BookLostModel implements DataAccessObject {
 
+    private AlertMessage alertMessage = new AlertMessage();
+    private CreateLogFile logfile = new CreateLogFile();
     private PreparedStatement ps = null;
     private ResultSet rs = null;
-    private Connection conn = MyConnection.getConnect();
+    private Connection con = MyConnection.getConnect();
     private String sql = null;
 
     private String rentId;
@@ -204,64 +210,66 @@ public class BookLostModel implements DataAccessObject {
 
     public void setPricePerBook(String pricePerBook) {
         this.pricePerBook = pricePerBook;
-        }
+    }
 
-        public double getPrice() {
-            return price;
-        }
+    public double getPrice() {
+        return price;
+    }
 
-        public void setPrice(double price) {
-            this.price = price;
-        }
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-        public double getFineCost() {
-            return fineCost;
-        }
+    public double getFineCost() {
+        return fineCost;
+    }
 
-        public void setFineCost(double fineCost) {
-            this.fineCost = fineCost;
-        }
+    public void setFineCost(double fineCost) {
+        this.fineCost = fineCost;
+    }
 
-        @Override
-        public ResultSet findAll() throws SQLException {
+    @Override
+    public ResultSet findAll() throws SQLException {
 
-            return null;
-        }
+        return null;
+    }
 
-        @Override
-        public ResultSet findById(String id) throws SQLException {
-            // TODO Auto-generated method stub
-            return null;
-        }
+    @Override
+    public ResultSet findById(String id) throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-        public ResultSet findByDate(Date date) throws SQLException {
-            sql = "select * from vwshowbooklost where date_pay=?;";
-            ps = conn.prepareStatement(sql);
-            ps.setDate(1, date);
-            rs = ps.executeQuery();
-            return rs;
-        }
+    public ResultSet findByDate(Date date) throws SQLException {
+        sql = "select * from vwshowbooklost where date_pay=?;";
+        ps = con.prepareStatement(sql);
+        ps.setDate(1, date);
+        rs = ps.executeQuery();
+        //con.close();
+        return rs;
+    }
 
-        public ResultSet findRentBookByMemderID(String member_Id, String book_status) throws SQLException {
-            sql = "call sendBook_ShowByMemberID(?, ?);";
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, member_Id);
-            ps.setString(2, book_status);
-            rs = ps.executeQuery();
-            return rs;
-        }
+    public ResultSet findRentBookByMemderID(String member_Id, String book_status) throws SQLException {
+        sql = "call sendBook_ShowByMemberID(?, ?);";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, member_Id);
+        ps.setString(2, book_status);
+        rs = ps.executeQuery();
+        //con.close();
+        return rs;
+    }
 
-        @Override
-        public ResultSet findByName(String name) throws SQLException {
-            // TODO Auto-generated method stub
-            return null;
-        }
+    @Override
+    public ResultSet findByName(String name) throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-        @Override
-        public ResultSet searchData(String values) throws SQLException {
-            // TODO Auto-generated method stub
-            return null;
-        }
+    @Override
+    public ResultSet searchData(String values) throws SQLException {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
     @Override
     public int saveData() throws SQLException, ParseException {
@@ -273,7 +281,7 @@ public class BookLostModel implements DataAccessObject {
          * 
          * Java Code: ==>(sql =
          * "INSERT INTO dblibrary.tbbooks_lost (member_id, total_qty, total_cost, date_pay) VALUES(?, ?, ?, ?);"
-         * ; ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+         * ; ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
          * 
          * 
          * ps.executeUpdate(); rs = ps.getGeneratedKeys();)<==
@@ -286,63 +294,103 @@ public class BookLostModel implements DataAccessObject {
          * return last auto max id;
          * 
          * Java Code: ==>(sql = "call book_lost_Insert(?, ?, ?, ?)"; ps =
-         * conn.prepareStatement(sql);
+         * con.prepareStatement(sql);
          * 
          * 
          * ps.executeUpdate(); rs = ps.executeQuery();)<==
          */
 
-        sql = "INSERT INTO dblibrary.tbbooks_lost (member_id, total_qty, total_cost, date_pay) VALUES(?, ?, ?, ?);";
-        ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, getMemberId());
-        ps.setInt(2, getQty());
-        ps.setDouble(3, getFineCost());
-        ps.setDate(4, getDate());
-        ps.executeUpdate();
-        rs = ps.getGeneratedKeys();
-
-        if (rs.next())
-            return rs.getInt(1);
-        else {
+        try {
+            sql = "INSERT INTO dblibrary.tbbooks_lost (member_id, total_qty, total_cost, date_pay) VALUES(?, ?, ?, ?);";
+            ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, getMemberId());
+            ps.setInt(2, getQty());
+            ps.setDouble(3, getFineCost());
+            ps.setDate(4, getDate());
+            ps.executeUpdate();
+            rs = ps.getGeneratedKeys();
+            if (rs.next())
+                return rs.getInt(1);
+            else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Save Book Lost Error", e);
             return 0;
+        } finally {
+            ps.close();
+            //con.close();
         }
 
     }
 
     public int saveLostDetail(int lost_id, String barcode, double price) throws SQLException {
+        // Todo: Don't use try...catch
         sql = "call book_lostdetail_Insert(?, ?, ?)";
-        ps = conn.prepareStatement(sql);
+        ps = con.prepareStatement(sql);
         ps.setInt(1, lost_id);
         ps.setString(2, barcode);
         ps.setDouble(3, price);
-        return ps.executeUpdate();
+        int result = ps.executeUpdate();
+        ps.close();
+        //con.close();
+        return result;
     }
 
     @Override
     public int updateData() throws SQLException, ParseException {
-        sql = "call book_lost_Update(?, ?, ?, ?, ?)";
-        ps = conn.prepareStatement(sql);
-        ps.setString(1, getRentId());
-        ps.setString(2, getMemberId());
-        ps.setInt(3, getQty());
-        ps.setDouble(4, getFineCost());
-        ps.setDate(5, getDate());
-        return ps.executeUpdate();
+        try {
+            sql = "call book_lost_Update(?, ?, ?, ?, ?)";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, getRentId());
+            ps.setString(2, getMemberId());
+            ps.setInt(3, getQty());
+            ps.setDouble(4, getFineCost());
+            ps.setDate(5, getDate());
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Update Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Update Book Lost Error", e);
+            return 0;
+        } finally {
+            ps.close();
+            //con.close();
+        }
     }
 
     @Override
     public int deleteData(String id) throws SQLException {
-        sql = "call book_lost_Delete(?";
-        ps = conn.prepareStatement(sql);
-        ps.setString(1, getRentId());
-        return ps.executeUpdate();
+        try {
+            sql = "call book_lost_Delete(?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, getRentId());
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Delete Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Delete Book Lost Error", e);
+            return 0;
+        } finally {
+            ps.close();
+            //con.close();
+        }
+
     }
 
     public int deleeLostDetail() throws SQLException {
+        try {
         sql = "call book_lostdetail_Delete(?)";
-        ps = conn.prepareStatement(sql);
+        ps = con.prepareStatement(sql);
         ps.setString(1, getRentId());
         return ps.executeUpdate();
+    } catch (SQLException e) {
+        alertMessage.showErrorMessage("Delete Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+        logfile.createLogFile("Delete Book Lost Error", e);
+        return 0;
+    } finally {
+        ps.close();
+        //con.close();
+    }
     }
 
 }

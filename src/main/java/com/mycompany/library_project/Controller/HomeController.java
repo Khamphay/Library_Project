@@ -402,7 +402,8 @@ public class HomeController implements Initializable {
                     }
                     textTotalList.setText(pnItems.getChildren().size() + " ລາຍການ");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    alertMessage.showErrorMessage("Load rent book out of Error", "Error: " + e.getMessage(), 4,
+                            Pos.BOTTOM_RIGHT);
                 }
             };
         });

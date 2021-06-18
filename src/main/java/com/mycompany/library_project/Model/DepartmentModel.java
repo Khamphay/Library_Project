@@ -4,10 +4,16 @@ import java.sql.*;
 import java.text.ParseException;
 
 import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
+import com.mycompany.library_project.config.CreateLogFile;
+
+import javafx.geometry.Pos;
 
 public class DepartmentModel implements DataAccessObject {
 
+    private AlertMessage alertMessage = new AlertMessage();
+    private CreateLogFile logfile = new CreateLogFile();
     private ResultSet rs = null;
     private PreparedStatement ps = null;
     private Connection con = MyConnection.getConnect();
@@ -46,8 +52,12 @@ public class DepartmentModel implements DataAccessObject {
             sql = "call department_ShowAll();";
             rs = con.createStatement().executeQuery(sql);
             return rs;
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Load Department Error", e);
             return null;
+        } finally {
+            //con.close();
         }
     }
 
@@ -59,8 +69,11 @@ public class DepartmentModel implements DataAccessObject {
             ps.setString(1, id);
             rs = ps.executeQuery();
             return rs;
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             return null;
+        } finally {
+            //con.close();
         }
     }
 
@@ -72,8 +85,11 @@ public class DepartmentModel implements DataAccessObject {
             ps.setString(1, name);
             rs = ps.executeQuery();
             return rs;
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             return null;
+        } finally {
+            //con.close();
         }
     }
 
@@ -85,34 +101,66 @@ public class DepartmentModel implements DataAccessObject {
             ps.setString(1, values);
             rs = ps.executeQuery();
             return rs;
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             return null;
+        } finally {
+            //con.close();
         }
     }
 
     @Override
     public int saveData() throws SQLException, ParseException {
-        sql = "call  department_Insert(?, ?);";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, getDepId());
-        ps.setString(2, getDepName());
-        return ps.executeUpdate();
+        try {
+            sql = "call  department_Insert(?, ?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, getDepId());
+            ps.setString(2, getDepName());
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Save Department Error", e);
+            return 0;
+        } finally {
+            ps.close();
+            //con.close();
+        }
     }
 
     @Override
     public int updateData() throws SQLException, ParseException {
-        sql = "call  department_Update(?, ?);";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, getDepId());
-        ps.setString(2, getDepName());
-        return ps.executeUpdate();
+        try {
+            sql = "call  department_Update(?, ?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, getDepId());
+            ps.setString(2, getDepName());
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Update Department Error", e);
+            return 0;
+        } finally {
+            ps.close();
+            //con.close();
+        }
+
     }
 
     @Override
     public int deleteData(String id) throws SQLException {
-        sql = "call  department_Delete(?);";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, id);
-        return ps.executeUpdate();
+        try {
+            sql = "call  department_Delete(?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, id);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Delete Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Delete Department Error", e);
+            return 0;
+        } finally {
+            ps.close();
+            //con.close();
+        }
+
     }
 }

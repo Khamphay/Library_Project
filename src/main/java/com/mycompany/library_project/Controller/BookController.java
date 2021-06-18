@@ -38,7 +38,7 @@ public class BookController implements Initializable {
 
     private ManageBookController manageBookController = null;
     private ResultSet rs = null;
-    private BookDetailModel bookDetail = null;
+    private BookDetailModel bookDetail = new BookDetailModel();
     private ObservableList<BookDetailModel> data = null;
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile logfile = new CreateLogFile();
@@ -108,12 +108,18 @@ public class BookController implements Initializable {
         }
     }
 
+    int value = 0;
+
     private void initEvents() {
+
         btRefresh.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
+
+                txtSearch.setText((value += 1) + "");
                 showData();
+
             }
         });
         menuList.setOnAction(new EventHandler<ActionEvent>() {
@@ -195,7 +201,6 @@ public class BookController implements Initializable {
                 // public void run() {
                 try {
                     data = FXCollections.observableArrayList();
-                    bookDetail = new BookDetailModel();
                     rs = bookDetail.findAll();
                     while (rs.next()) {
                         data.add(new BookDetailModel(rs.getString("book_id"), rs.getString("book_name"),
@@ -231,6 +236,8 @@ public class BookController implements Initializable {
                 } catch (Exception e) {
                     alertMessage.showErrorMessage(borderPane, "Load data", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
+                } finally {
+                    rs.close();
                 }
                 // }
                 // });
@@ -333,6 +340,7 @@ public class BookController implements Initializable {
 
     private void addButtonToTable() {
         TableColumn<BookDetailModel, Void> colAtion = new TableColumn<>("Action");
+        colAtion.setId("colCenter");
         Callback<TableColumn<BookDetailModel, Void>, TableCell<BookDetailModel, Void>> cellFactory = new Callback<TableColumn<BookDetailModel, Void>, TableCell<BookDetailModel, Void>>() {
 
             @Override
@@ -385,15 +393,13 @@ public class BookController implements Initializable {
         btyes.setOnAction(e -> {
             // Todo: Delete Data
             try {
-                bookDetail = new BookDetailModel();
+                // bookDetail = new BookDetailModel();
                 if (bookDetail.deleteData(bookid) > 0) {
                     dialog.closeDialog();
                     alertMessage.showCompletedMessage("Deleted", "Delete data successfully.", 4, Pos.BOTTOM_RIGHT);
                     showData();
-                } else {
-                    alertMessage.showWarningMessage("Deleted", "Can not delete data.", 4, Pos.BOTTOM_RIGHT);
                 }
-            } catch (SQLException ex) {
+            } catch (Exception ex) {
                 alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
             }
         });

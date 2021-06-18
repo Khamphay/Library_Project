@@ -4,10 +4,16 @@ import java.sql.*;
 import java.text.ParseException;
 
 import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
+import com.mycompany.library_project.config.CreateLogFile;
+
+import javafx.geometry.Pos;
 
 public class EmployeeModel implements DataAccessObject {
 
+    private AlertMessage alertMessage = new AlertMessage();
+    private CreateLogFile logfile = new CreateLogFile();
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private Connection con = MyConnection.getConnect();
@@ -43,7 +49,6 @@ public class EmployeeModel implements DataAccessObject {
         this.tel = tel;
         this.email = email;
     }
-
 
     public String getEmployeeId() {
         return employeeId;
@@ -124,8 +129,11 @@ public class EmployeeModel implements DataAccessObject {
             rs = con.createStatement().executeQuery(sql);
             return rs;
         } catch (Exception e) {
-            e.printStackTrace();
+            alertMessage.showErrorMessage("Load Data", "Error" + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Load Employee Error", e);
             return null;
+        } finally {
+            //con.close();
         }
     }
 
@@ -136,8 +144,10 @@ public class EmployeeModel implements DataAccessObject {
             rs = con.createStatement().executeQuery(sql);
             return rs;
         } catch (Exception e) {
-            e.printStackTrace();
+            alertMessage.showErrorMessage("Load Data", "Error" + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             return null;
+        } finally {
+            //con.close();
         }
     }
 
@@ -148,7 +158,7 @@ public class EmployeeModel implements DataAccessObject {
             rs = con.createStatement().executeQuery(sql);
             return rs;
         } catch (Exception e) {
-            e.printStackTrace();
+            alertMessage.showErrorMessage("Load Data", "Error" + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             return null;
         }
     }
@@ -162,86 +172,161 @@ public class EmployeeModel implements DataAccessObject {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        } finally {
+            //con.close();
         }
     }
 
     @Override
     public int saveData() throws SQLException, ParseException {
-        sql = "call employee_Insert(?, ?, ?, ?, ?, ?)";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, getEmployeeId());
-        ps.setString(2, getFirstName());
-        ps.setString(3, getLastName());
-        ps.setString(4, getGender());
-        ps.setString(5, getTel());
-        ps.setString(6, getEmail());
-        return ps.executeUpdate();
+        try {
+            sql = "call employee_Insert(?, ?, ?, ?, ?, ?)";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, getEmployeeId());
+            ps.setString(2, getFirstName());
+            ps.setString(3, getLastName());
+            ps.setString(4, getGender());
+            ps.setString(5, getTel());
+            ps.setString(6, getEmail());
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Save Employee Error", e);
+            return 0;
+        } finally {
+            ps.close();
+            //con.close();
+        }
+
     }
 
     @Override
     public int updateData() throws SQLException, ParseException {
-        sql = "call employee_Update(?, ?, ?, ?, ?, ?)";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, getEmployeeId());
-        ps.setString(2, getFirstName());
-        ps.setString(3, getLastName());
-        ps.setString(4, getGender());
-        ps.setString(5, getTel());
-        ps.setString(6, getEmail());
-        return ps.executeUpdate();
+        try {
+            sql = "call employee_Update(?, ?, ?, ?, ?, ?)";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, getEmployeeId());
+            ps.setString(2, getFirstName());
+            ps.setString(3, getLastName());
+            ps.setString(4, getGender());
+            ps.setString(5, getTel());
+            ps.setString(6, getEmail());
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Update Employee Error", e);
+            return 0;
+        } finally {
+            ps.close();
+            //con.close();
+        }
     }
 
     @Override
     public int deleteData(String id) throws SQLException {
-        sql = "call employee_Delete(?)";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, id);
-        return ps.executeUpdate();
+        try {
+            sql = "call employee_Delete(?)";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, id);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Delete Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Delete Employee Error", e);
+            return 0;
+        } finally {
+            ps.close();
+            //con.close();
+        }
     }
 
     public int addUser() throws SQLException {
-        sql = "call addUser(?, ?, ?, ?);";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, getEmployeeId());
-        ps.setString(2, getUser());
-        ps.setString(3, getPassword());
-        ps.setString(4, getSaltKey());
-        return ps.executeUpdate();
+        try {
+            sql = "call addUser(?, ?, ?, ?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, getEmployeeId());
+            ps.setString(2, getUser());
+            ps.setString(3, getPassword());
+            ps.setString(4, getSaltKey());
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Add User Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Add User Error", e);
+            return 0;
+        } finally {
+            ps.close();
+            //con.close();
+        }
     }
 
     public int updateUser(String empid, String oldUsername) throws SQLException {
-        sql = "call updateUser(?, ?, ?, ?, ?);";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, empid);
-        ps.setString(2, oldUsername);
-        ps.setString(3, getUser());
-        ps.setString(4, getPassword());
-        ps.setString(5, getSaltKey());
-        return ps.executeUpdate();
+        try {
+            sql = "call updateUser(?, ?, ?, ?, ?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, empid);
+            ps.setString(2, oldUsername);
+            ps.setString(3, getUser());
+            ps.setString(4, getPassword());
+            ps.setString(5, getSaltKey());
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Update User Error", e);
+            return 0;
+        } finally {
+            ps.close();
+            //con.close();
+        }
     }
 
     public int updateUserName(String empid, String oldUsername, String newUsername) throws SQLException {
-        sql = "update tbuser set user_name =? where employee_id = ? and user_name = ?;";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, newUsername);
-        ps.setString(2, empid);
-        ps.setString(3, oldUsername);
-        return ps.executeUpdate();
+        try {
+            sql = "update tbuser set user_name =? where employee_id = ? and user_name = ?;";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, newUsername);
+            ps.setString(2, empid);
+            ps.setString(3, oldUsername);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Update Username Error", e);
+            return 0;
+        } finally {
+            ps.close();
+            //con.close();
+        }
     }
 
     public ResultSet Login(String user) throws SQLException {
-        sql = "call Login(?);";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, user);
-        rs = ps.executeQuery();
-        return rs;
+        try {
+            sql = "call Login(?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, user);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Login Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Login Error", e);
+            return null;
+        } finally {
+            //con.close();
+        }
+
     }
 
     public ResultSet findUserByEmpId(String empId) throws SQLException {
-        sql = "call findUserByEmpId(?);";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, empId);
-        rs = ps.executeQuery();
-        return rs;
+
+        try {
+            sql = "call findUserByEmpId(?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, empId);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Load User Error", e);
+            return null;
+        } finally {
+            //con.close();
+        }
     }
 }

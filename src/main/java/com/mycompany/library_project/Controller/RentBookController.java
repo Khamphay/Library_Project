@@ -314,7 +314,6 @@ public class RentBookController implements Initializable {
                         dialog.showDialog();
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
                     alertMessage.showErrorMessage("Load Member Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
                 }
             }
@@ -342,7 +341,7 @@ public class RentBookController implements Initializable {
                     // dialog.showDialog();
                 }
             } catch (Exception e) {
-                alertMessage.showErrorMessage("Load Member Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                alertMessage.showErrorMessage("Load Book Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             }
         });
 
@@ -381,7 +380,7 @@ public class RentBookController implements Initializable {
                                     if (book.updateStatus(row.getBarcode(), "ກຳລັງຢືມ") > 0) {
                                         result = "Rent book completed";
                                     }
-                                } catch (Exception e) {
+                                } catch (SQLException e) {
                                     rentBook.deleteData(rent_id);
                                     result = "";
                                     alertMessage.showErrorMessage("Rent Book Error", "Error: " + e.getMessage(), 4,
@@ -532,7 +531,7 @@ public class RentBookController implements Initializable {
             }
             return new_id;
         } catch (Exception e) {
-            e.printStackTrace();
+            alertMessage.showErrorMessage("Load Max Id Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             return "";
         }
     }

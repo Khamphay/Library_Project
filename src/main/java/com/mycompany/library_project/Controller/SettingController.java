@@ -153,15 +153,18 @@ public class SettingController implements Initializable {
 
     private void SaveCost(double costRG, double costPD, double costPB) {
         try {
-            costPrice = new CostModel(costRG, costPD, costPB);
+
+            costPrice = new CostModel();
             final ResultSet rs = costPrice.findAll();
             if (!rs.next()) {
+                costPrice = new CostModel(costRG, costPD, costPB);
                 if (costPrice.saveData() > 0) {
                     alertMessage.showCompletedMessage("Saved", "Saved data successfully.", 4, Pos.BOTTOM_RIGHT);
                 }
             } else {
+                costPrice = new CostModel(costRG, costPD, costPB);
                 if (costPrice.updateData() > 0) {
-                    alertMessage.showCompletedMessage("Saved", "Saved data successfully.", 4, Pos.BOTTOM_RIGHT);
+                    alertMessage.showCompletedMessage("Edit", "Saved data successfully.", 4, Pos.BOTTOM_RIGHT);
                 }
             }
 

@@ -1,6 +1,5 @@
 package com.mycompany.library_project.Controller;
 
-import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -19,11 +18,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 
 public class ReportBookController implements Initializable {
 
+    private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = null;
     private CreateReport report = null;
     Map<String, Object> map = null;
@@ -94,6 +95,14 @@ public class ReportBookController implements Initializable {
                         super.succeeded();
                         masker.setProgressVisible(false);
                         masker.setVisible(false);
+                    }
+
+                    @Override
+                    protected void failed() {
+                        super.failed();
+                        masker.setProgressVisible(false);
+                        masker.setVisible(false);
+                        alertMessage.showErrorMessage("Report", "Report Failed", 4, Pos.BOTTOM_RIGHT);
                     }
                 };
                 new Thread(task).start();

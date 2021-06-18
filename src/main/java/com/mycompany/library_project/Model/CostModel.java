@@ -4,9 +4,16 @@ import java.sql.*;
 import java.text.ParseException;
 
 import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
+import com.mycompany.library_project.config.CreateLogFile;
+
+import javafx.geometry.Pos;
 
 public class CostModel implements DataAccessObject {
+
+    private AlertMessage alertMessage = new AlertMessage();
+    private CreateLogFile logfile = new CreateLogFile();
     private Connection con = MyConnection.getConnect();
     private ResultSet rs = null;
     private PreparedStatement ps = null;
@@ -48,9 +55,17 @@ public class CostModel implements DataAccessObject {
 
     @Override
     public ResultSet findAll() throws SQLException {
-        String sql = "Select * From tbcost;";
-        rs = con.createStatement().executeQuery(sql);
-        return rs;
+        try {
+            String sql = "Select * From tbcost;";
+            rs = con.createStatement().executeQuery(sql);
+            return rs;
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Load Cost Error", e);
+            return null;
+        } finally {
+            //con.close();
+        }
     }
 
     @Override
@@ -73,23 +88,42 @@ public class CostModel implements DataAccessObject {
 
     @Override
     public int saveData() throws SQLException, ParseException {
-        String sql = "insert into tbcost Values(?,?,?,?);";
-        ps = con.prepareStatement(sql);
-        ps.setInt(1, 1);
-        ps.setDouble(2, getCost_register());
-        ps.setDouble(3, getCost_perday());
-        ps.setDouble(4, getCost_perbook());
-        return ps.executeUpdate();
+        try {
+            String sql = "insert into tbcost Values(?,?,?,?);";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, 1);
+            ps.setDouble(2, getCost_register());
+            ps.setDouble(3, getCost_perday());
+            ps.setDouble(4, getCost_perbook());
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Insert Cost Error", e);
+            return 0;
+        } finally {
+            ps.close();
+            //con.close();
+        }
+
     }
 
     @Override
     public int updateData() throws SQLException, ParseException {
-        String sql = "Update tbcost set cost_register=?, cost_outofdate=?, cost_lost=? Where id=1;";
-        ps = con.prepareStatement(sql);
-        ps.setDouble(1, getCost_register());
-        ps.setDouble(2, getCost_perday());
-        ps.setDouble(3, getCost_perbook());
-        return ps.executeUpdate();
+        try {
+            String sql = "Update tbcost set cost_register=?, cost_outofdate=?, cost_lost=? Where id=1;";
+            ps = con.prepareStatement(sql);
+            ps.setDouble(1, getCost_register());
+            ps.setDouble(2, getCost_perday());
+            ps.setDouble(3, getCost_perbook());
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Update Cost Error", e);
+            return 0;
+        } finally {
+            ps.close();
+            //con.close();
+        }
     }
 
     @Override

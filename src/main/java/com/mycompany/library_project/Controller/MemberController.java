@@ -2,7 +2,6 @@ package com.mycompany.library_project.Controller;
 
 import java.io.InputStream;
 import java.net.URL;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
@@ -289,7 +288,7 @@ public class MemberController implements Initializable {
 
         tableMember.setOnMouseClicked(mevt -> {
             if (mevt.getClickCount() > 0 && tableMember.getSelectionModel().getSelectedItem() != null) {
-                memberModel = new MemberModel();
+                // memberModel = new MemberModel();
                 memberModel = tableMember.getSelectionModel().getSelectedItem();
             }
         });
@@ -308,12 +307,39 @@ public class MemberController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                InputStream imgInputStream = this.getClass().getResourceAsStream("bin/Logo.png");
-                CreateReport printCard = new CreateReport();
-                Map<String, Object> map = new HashMap<String, Object>();
-                map.put("memberid", memberModel.getMemberId());
-                map.put("logo", imgInputStream);
-                printCard.showReport(map, "printCardById.jrxml", "Print Member Card Error");
+                Task<Void> task = new Task<Void>() {
+
+                    @Override
+                    protected Void call() throws Exception {
+                        masker.setVisible(true);
+                        masker.setProgressVisible(true);
+
+                        InputStream imgInputStream = this.getClass().getResourceAsStream("bin/Logo.png");
+                        CreateReport printCard = new CreateReport();
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        map.put("memberid", memberModel.getMemberId());
+                        map.put("logo", imgInputStream);
+                        printCard.showReport(map, "printCardById.jrxml", "Print Member Card Error");
+                        return null;
+                    }
+
+                    @Override
+                    protected void succeeded() {
+                        super.succeeded();
+                        masker.setProgressVisible(false);
+                        masker.setVisible(false);
+                    }
+
+                    @Override
+                    protected void failed() {
+                        super.failed();
+                        masker.setProgressVisible(false);
+                        masker.setVisible(false);
+                        alertMessage.showErrorMessage("Print", "Print Member Card Failed", 4, Pos.BOTTOM_RIGHT);
+                    }
+                };
+                new Thread(task).start();
+
             }
 
         });
@@ -322,11 +348,39 @@ public class MemberController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                CreateReport createReport = new CreateReport();
-                Map<String, Object> map = new HashMap<String, Object>();
-                map.put("logo", Paths.get("bin/Logo.png").toAbsolutePath().toString());
-                map.put("memberId", tableMember.getSelectionModel().getSelectedItem().getMemberId());
-                createReport.showReport(map, "reportMaemberById.jrxml", "Report Member By ID Error");
+
+                Task<Void> task = new Task<Void>() {
+
+                    @Override
+                    protected Void call() throws Exception {
+                        masker.setVisible(true);
+                        masker.setProgressVisible(true);
+
+                        CreateReport createReport = new CreateReport();
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        map.put("logo", Paths.get("bin/Logo.png").toAbsolutePath().toString());
+                        map.put("memberId", tableMember.getSelectionModel().getSelectedItem().getMemberId());
+                        createReport.showReport(map, "reportMaemberById.jrxml", "Report Member By ID Error");
+
+                        return null;
+                    }
+
+                    @Override
+                    protected void succeeded() {
+                        super.succeeded();
+                        masker.setProgressVisible(false);
+                        masker.setVisible(false);
+                    }
+
+                    @Override
+                    protected void failed() {
+                        super.failed();
+                        masker.setProgressVisible(false);
+                        masker.setVisible(false);
+                        alertMessage.showErrorMessage("Report", "Report Member Failed", 4, Pos.BOTTOM_RIGHT);
+                    }
+                };
+                new Thread(task).start();
             }
 
         });
@@ -440,9 +494,8 @@ public class MemberController implements Initializable {
                     dialog.closeDialog();
                     alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4, Pos.BOTTOM_RIGHT);
                 }
-            } catch (SQLException ex) {
+            } catch (Exception ex) {
                 alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
-                logfile.createLogFile("ມີບັນຫາໃນການລົບຂໍ້ມູນສະມາຊີກ", ex);
             }
         });
         return btyes;

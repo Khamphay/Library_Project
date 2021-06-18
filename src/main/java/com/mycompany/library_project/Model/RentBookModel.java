@@ -4,10 +4,16 @@ import java.sql.*;
 import java.text.ParseException;
 
 import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
+import com.mycompany.library_project.config.CreateLogFile;
+
+import javafx.geometry.Pos;
 
 public class RentBookModel implements DataAccessObject {
 
+    private AlertMessage alertMessage = new AlertMessage();
+    private CreateLogFile logfile = new CreateLogFile();
     private Connection con = MyConnection.getConnect();
     private ResultSet rs = null;
     private PreparedStatement ps = null;
@@ -203,22 +209,50 @@ public class RentBookModel implements DataAccessObject {
     }
 
     public ResultSet findAll() throws SQLException {
-        sql = "";
-        rs = con.createStatement().executeQuery(sql);
-        return rs;
+
+        try {
+            sql = "";
+            rs = con.createStatement().executeQuery(sql);
+            return rs;
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            // logfile.createLogFile("Load Error", e);
+            return null;
+        } finally {
+            //con.close();
+        }
+
     }
 
     public ResultSet findByMemberId(String memver_id) throws SQLException {
-        sql = "";
-        rs = con.createStatement().executeQuery(sql);
-        return rs;
+        try {
+            sql = "";
+            rs = con.createStatement().executeQuery(sql);
+            return rs;
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            // logfile.createLogFile("Load Error", e);
+            return null;
+        } finally {
+            //con.close();
+        }
     }
 
     public int saveRentBook() throws SQLException {
-        sql = "";
-        ps = con.prepareStatement(sql);
 
-        return ps.executeUpdate();
+        try {
+            sql = "";
+            ps = con.prepareStatement(sql);
+
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            // logfile.createLogFile("Save Error", e);
+            return 0;
+        } finally {
+            ps.close();
+            //con.close();
+        }
     }
 
     @Override
@@ -241,23 +275,38 @@ public class RentBookModel implements DataAccessObject {
 
     @Override
     public int saveData() throws SQLException, ParseException {
-        sql = "call rentbook_detail_Insert(?, ?, ?, ?, ?);";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, getRentId());
-        ps.setString(2, getMember());
-        ps.setInt(3, getQty());
-        ps.setDate(4, getRentDate());
-        ps.setDate(5, getSendDate());
-        return ps.executeUpdate();
+        try {
+            sql = "call rentbook_detail_Insert(?, ?, ?, ?, ?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, getRentId());
+            ps.setString(2, getMember());
+            ps.setInt(3, getQty());
+            ps.setDate(4, getRentDate());
+            ps.setDate(5, getSendDate());
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Rent Book Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Save Rent Book Error", e);
+            return 0;
+        } finally {
+            ps.close();
+            //con.close();
+        }
+
     }
 
     public int saveRentBook(String id, String barcode, String status) throws SQLException {
+        // TODO: Don't use try...catch'
         sql = "call rentbook_Insert(?, ?, ?)";
         ps = con.prepareStatement(sql);
         ps.setString(1, id);
         ps.setString(2, barcode);
         ps.setString(3, status);
-        return ps.executeUpdate();
+        int result = ps.executeUpdate();
+        ps.close();
+        //con.close();
+        return result;
+
     }
 
     @Override
@@ -268,47 +317,90 @@ public class RentBookModel implements DataAccessObject {
 
     @Override
     public int deleteData(String id) throws SQLException {
-        sql = "call rentbook_detail_Delete(?);";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, id);
-        return ps.executeUpdate();
+        try {
+            sql = "call rentbook_detail_Delete(?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, id);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Delete Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Delete Rent Book Error", e);
+            return 0;
+        } finally {
+            ps.close();
+            //con.close();
+        }
     }
 
     public String getMaxID() throws SQLException {
-        sql = "select max(rent_id) as max_id From tbrent_detail;";
-        rs = con.createStatement().executeQuery(sql);
-        if (rs.next()) {
-            return rs.getString("max_id");
-        } else {
+        try {
+            sql = "select max(rent_id) as max_id From tbrent_detail;";
+            rs = con.createStatement().executeQuery(sql);
+            if (rs.next()) {
+                return rs.getString("max_id");
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Load Max Id Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Load Max Rent ID Error", e);
             return null;
+        } finally {
+            //con.close();
         }
 
     }
 
     public ResultSet chackMemberRentBook(String memberid, String book_status) throws SQLException {
-        sql = "call rentBook_Check(?, ?);";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, memberid);
-        ps.setString(2, book_status);
-        rs = ps.executeQuery();
-        return rs;
+        try {
+            sql = "call rentBook_Check(?, ?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, memberid);
+            ps.setString(2, book_status);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Check Rent Book Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Check Rent Book Error", e);
+            return null;
+        } finally {
+            //con.close();
+        }
+
     }
 
     public ResultSet getSendBook(String book_barcode, String book_status) throws SQLException {
-        sql = "call sendBook_ShowByBarcode(?,?)";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, book_barcode);
-        ps.setString(2, book_status);
-        rs = ps.executeQuery();
-        return rs;
+        try {
+            sql = "call sendBook_ShowByBarcode(?,?)";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, book_barcode);
+            ps.setString(2, book_status);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Load Book Rent For Send Error", e);
+            return null;
+        } finally {
+            //con.close();
+        }
     }
 
     public int sendBook(String rent_id, String book_barcode, String book_status) throws SQLException {
-        sql = "	call sendBook(?, ?, ?);";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, rent_id);
-        ps.setString(2, book_barcode);
-        ps.setString(3, book_status);
-        return ps.executeUpdate();
+        try {
+            sql = "	call sendBook(?, ?, ?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, rent_id);
+            ps.setString(2, book_barcode);
+            ps.setString(3, book_status);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            logfile.createLogFile("Save Send Books Error", e);
+            return 0;
+        } finally {
+            ps.close();
+            //con.close();
+        }
     }
 }

@@ -41,7 +41,7 @@ public class SendBookController implements Initializable {
     private AdjustmentModel adjustmentModel = null;
     private RentBookModel sendBook = new RentBookModel();
     private AlertMessage alertMessage = new AlertMessage();
-    private DialogMessage dialog = null;
+    // private DialogMessage dialog = null;
     private BookDetailModel book = new BookDetailModel();
     private MyDate mydate = new MyDate();
     private ResultSet rs = null;
@@ -323,14 +323,11 @@ public class SendBookController implements Initializable {
         txtPrice.setText(dcFormat.format(price));
     }
 
-    // private JFXButton buttonOK() {
-    // JFXButton btOk = new JFXButton("OK");
-    // btOk.setStyle(Style.buttonDialogStyle);
-    // btOk.setOnAction(e -> {
-    // dialog.closeDialog();
-    // });
-    // return btOk;
-    // }
+    /*
+     * private JFXButton buttonOK() { // JFXButton btOk = new JFXButton("OK"); //
+     * btOk.setStyle(Style.buttonDialogStyle); // btOk.setOnAction(e -> { //
+     * dialog.closeDialog(); // }); // return btOk; // }
+     */
 
     private void addButtonToTable() {
         TableColumn<RentBookModel, Void> colAction = new TableColumn<>("Action");
@@ -371,13 +368,13 @@ public class SendBookController implements Initializable {
         tableSendBooks.getColumns().add(colAction);
     }
 
-    private JFXButton buttonOK() {
-        JFXButton btOk = new JFXButton("OK");
-        btOk.setStyle(Style.buttonDialogStyle);
-        btOk.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btOk;
-    }
+    // private JFXButton buttonOK() {
+    // JFXButton btOk = new JFXButton("OK");
+    // btOk.setStyle(Style.buttonDialogStyle);
+    // btOk.setOnAction(e -> {
+    // dialog.closeDialog();
+    // });
+    // return btOk;
+    // }
 
 }

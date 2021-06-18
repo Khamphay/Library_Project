@@ -88,7 +88,6 @@ public class AdjustmentController implements Initializable {
                     }
                 };
                 new Thread(task).start();
-
             }
         });
     }

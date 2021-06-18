@@ -393,10 +393,10 @@
   -fx-background-radius: 2em;
 }
 
-.table-view  .column-header#colCenter  .label {
+.table-view .column-header#colCenter .label {
   -fx-alignment: CENTER;
 }
-.table-view  .cell#colCenter {
+.table-view .cell#colCenter {
   -fx-alignment: CENTER;
 }
 
@@ -462,24 +462,36 @@
   -fx-background-radius: 2em;
 }
 
-.tree-table-view  .column-header#colCenter  .label {
+.tree-table-view .column-header#colCenter .label {
   -fx-alignment: CENTER;
 }
-.tree-table-view  .cell#colCenter {
+.tree-table-view .cell#colCenter {
   -fx-alignment: CENTER;
 }
 
 .accordion .titled-pane .title {
-    -fx-background-color:  #101D3D;
-    -fx-border-color: #101D3D;
-    -fx-text-fill:#FFF;
+  -fx-background-color: #101d3d;
+  -fx-border-color: #101d3d;
+  -fx-text-fill: #fff;
 }
 
 .accordion .titled-pane .title:hover {
-    -fx-background-color: derive(#0b2e80, 10%);
-    -fx-font-weight: bold;
+  -fx-background-color: derive(#0b2e80, 10%);
+  -fx-font-weight: bold;
 }
 
-#masker-pane{
+#masker-pane {
   -fx-font-family: "BoonBaan";
+}
+
+.tab-pane {
+  -fx-border-color: #101d3d;
+  -fx-background-color: #f3f3f3;
+  -fx-font-family: "BoonBaan";
+}
+
+#acHeaderPane .label {
+  -fx-background-color: transparent;
+  -fx-background-radius: 5px 5px 0px 0px;
+  -fx-text-fill: #000000;
 }

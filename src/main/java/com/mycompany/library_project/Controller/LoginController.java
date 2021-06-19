@@ -85,19 +85,22 @@ public class LoginController implements Initializable {
     private void loginMethod() {
 
         try {
-            final JFXButton[] buttons = { buttonOK() };
-            if (!txtUsername.getText().equals("") && !txtPassword.getText().equals("")) {
-                user = new EmployeeModel();
-                final ResultSet rs = user.Login(txtUsername.getText());
-                if (rs.next()) {
-                    if (txtUsername.getText().equals(rs.getString("user_name"))) {
-                        final String salt = rs.getString("salt");
-                        final String scrPassword = rs.getString("password");
-                        final String providePassword = txtPassword.getText();
-                        final boolean checkPassword = ProtectUserPassword.verifyPassword(providePassword, scrPassword,
-                                salt);
-                        if (checkPassword) {
-                            final String[] userInfor = { rs.getString("full_name"), rs.getString("sur_name") };
+            // final JFXButton[] buttons = { buttonOK() };
+            // if (!txtUsername.getText().equals("") && !txtPassword.getText().equals("")) {
+            // user = new EmployeeModel();
+            // final ResultSet rs = user.Login(txtUsername.getText());
+            // if (rs.next()) {
+            // if (txtUsername.getText().equals(rs.getString("user_name"))) {
+            // final String salt = rs.getString("salt");
+            // final String scrPassword = rs.getString("password");
+            // final String providePassword = txtPassword.getText();
+            // final boolean checkPassword =
+            // ProtectUserPassword.verifyPassword(providePassword, scrPassword,
+            // salt);
+            // if (checkPassword) {
+            // final String[] userInfor = { rs.getString("full_name"),
+            // rs.getString("sur_name") };
+            final String[] userInfor = { "", "" };
                             final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmHome.fxml"));
                             final Parent root = loader.load();
                             final Scene scene = new Scene(root);
@@ -110,37 +113,42 @@ public class LoginController implements Initializable {
                             homeController.homeStage.getIcons()
                                     .add(new Image("/com/mycompany/library_project/Icon/icon.png"));
                             homeController.homeStage.show();
+                            loginSatge.close();
 
-                        } else {
-                            if (dialog != null)
-                                dialog.closeDialog();
-                            dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ",
-                                    "ບໍ່ສາມາດເຂົ້າລະບົບໄດ້ ເນື່ອງຈາກລະຫັດຜ່ານບໍ່ຖຶກຕ້ອງ", DialogTransition.CENTER,
-                                    buttons, false);
-                            dialog.showDialog();
-                        }
+                            // } else {
+                            // if (dialog != null)
+                            // dialog.closeDialog();
+                            // dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ",
+                            // "ບໍ່ສາມາດເຂົ້າລະບົບໄດ້ ເນື່ອງຈາກລະຫັດຜ່ານບໍ່ຖຶກຕ້ອງ",
+                            // DialogTransition.CENTER,
+                            // buttons, false);
+                            // dialog.showDialog();
+                            // }
 
-                    } else {
-                        if (dialog != null)
-                            dialog.closeDialog();
-                        dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ",
-                                "ບໍ່ສາມາດເຂົ້າລະບົບໄດ້ ເນື່ອງຈາກຊື່ຜູ້ບໍ່ຖຶກຕ້ອງ", DialogTransition.CENTER, buttons,
-                                false);
-                        dialog.showDialog();
-                    }
-                } else {
-                    if (dialog != null)
-                        dialog.closeDialog();
-                    dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ",
-                            "ບໍ່ສາມາດເຂົ້າລະບົບໄດ້ ເນື່ອງຈາກຊື່ຜູ້ໃຊ້ບໍ່ຖຶກຕ້ອງ", DialogTransition.CENTER, buttons,
-                            false);
-                    dialog.showDialog();
-                }
-            } else {
-                validRules.setErrorDecorationEnabled(true);
-                alertMessage.showWarningMessage("Login", "Please enter username, password and try again.", 4,
-                        Pos.BOTTOM_RIGHT);
-            }
+            // } else {
+            // if (dialog != null)
+            // dialog.closeDialog();
+            // dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ",
+            // "ບໍ່ສາມາດເຂົ້າລະບົບໄດ້ ເນື່ອງຈາກຊື່ຜູ້ບໍ່ຖຶກຕ້ອງ", DialogTransition.CENTER,
+            // buttons,
+            // false);
+            // dialog.showDialog();
+            // }
+            // } else {
+            // if (dialog != null)
+            // dialog.closeDialog();
+            // dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ",
+            // "ບໍ່ສາມາດເຂົ້າລະບົບໄດ້ ເນື່ອງຈາກຊື່ຜູ້ໃຊ້ບໍ່ຖຶກຕ້ອງ",
+            // DialogTransition.CENTER, buttons,
+            // false);
+            // dialog.showDialog();
+            // }
+            // } else {
+            // validRules.setErrorDecorationEnabled(true);
+            // alertMessage.showWarningMessage("Login", "Please enter username, password and
+            // try again.", 4,
+            // Pos.BOTTOM_RIGHT);
+            // }
         } catch (Exception e) {
             e.printStackTrace();
             alertMessage.showErrorMessage("Login Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);

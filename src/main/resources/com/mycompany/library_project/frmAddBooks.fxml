@@ -17,10 +17,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
-<StackPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.AddBookController">
+<StackPane id="stackPane" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.AddBookController">
    <children>
-      <BorderPane fx:id="borderPane" prefHeight="704.0" prefWidth="1149.0" style="-fx-background-radius: 0.5em; -fx-background-color: #F3F3F3;" stylesheets="@Style/appstyle.css">
+      <BorderPane id="borderContent" fx:id="borderPane" prefHeight="704.0" prefWidth="1149.0">
          <center>
             <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="497.0" prefWidth="779.0">
                <content>

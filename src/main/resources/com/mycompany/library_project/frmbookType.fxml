@@ -3,12 +3,15 @@
 <?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,9 +19,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="643.0" prefWidth="875.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.BookTypeController">
+<StackPane id="stackPane" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.BookTypeController">
    <children>
-      <BorderPane layoutX="152.0" layoutY="86.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane id="borderContent">
          <center>
             <StackPane fx:id="stackePane">
                <children>
@@ -111,9 +114,9 @@
             </StackPane>
          </center>
          <top>
-            <AnchorPane prefHeight="34.0" prefWidth="768.0" style="-fx-background-color: #101D3D;" BorderPane.alignment="CENTER">
+            <AnchorPane id="acHeaderPane" fx:id="acHeaderPane" prefHeight="34.0" prefWidth="768.0" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" layoutX="735.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#closeForm" prefHeight="24.0" prefWidth="24.0" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
+                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" layoutX="735.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -124,6 +127,9 @@
                      <font>
                         <Font size="1.0" />
                      </font>
+                     <tooltip>
+                        <Tooltip anchorLocation="CONTENT_TOP_RIGHT" autoHide="true" text="ປິດຟອມ" />
+                     </tooltip>
                   </JFXButton>
                   <Label graphicTextGap="10.0" layoutX="14.0" layoutY="13.0" prefHeight="32.0" prefWidth="161.0" styleClass="label-size-16" text="ປະເພດປຶ້ມ" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="1.0" AnchorPane.topAnchor="2.0">
                      <graphic>
@@ -135,8 +141,20 @@
                      </graphic>
                   </Label>
                </children>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
             </AnchorPane>
          </top>
+         <effect>
+            <DropShadow />
+         </effect>
+         <StackPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </StackPane.margin>
+         <padding>
+            <Insets bottom="4.0" left="2.0" right="2.0" />
+         </padding>
       </BorderPane>
    </children>
-</AnchorPane>
+</StackPane>

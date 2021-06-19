@@ -31,6 +31,7 @@ import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class AuthorController implements Initializable {
@@ -62,38 +63,34 @@ public class AuthorController implements Initializable {
 
     }
 
-    public void initConstructor2(AddBookController addBookController) {
+    public void initConstructor2(AddBookController addBookController, Stage stage) {
         this.addBookController = addBookController;
+        acHeaderPane.setOnMousePressed(mouseEvent -> {
+            x = mouseEvent.getSceneX();
+            y = mouseEvent.getSceneY();
+        });
+        // TODO: Set for move form
+        acHeaderPane.setOnMouseDragged(mouseEvent -> {
+            stage.setX(mouseEvent.getScreenX() - x);
+            stage.setY(mouseEvent.getScreenY() - y);
+            // stage.setOpacity(0.4f);
+        });
 
-        btClose.setDisable(true);
-        btClose.setVisible(false);
-        // anchorPaneHeader.setOnMousePressed(event -> {
-        // x = event.getSceneX();
-        // y = event.getSceneY();
-        // });
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
 
-        // anchorPaneHeader.setOnMouseDragged(event -> {
-        // addAuthor.setX(event.getScreenX() - x);
-        // addAuthor.setY(event.getScreenY() - y);
-        // });
+            @Override
+            public void handle(ActionEvent event) {
+                stage.close();
+            }
 
-        // btClose.setOnAction(new EventHandler<ActionEvent>() {
-
-        // @Override
-        // public void handle(ActionEvent event) {
-        // Stage stage = (Stage) stackPane.getScene().getWindow();
-        // stage.close();
-        // }
-
-        // });
-
+        });
     }
 
     @FXML
     private StackPane stackPane;
 
     @FXML
-    private AnchorPane anchorPaneHeader;
+    private AnchorPane acHeaderPane;
 
     @FXML
     private JFXButton btSave, btEdit, btCancel, btClose;
@@ -385,8 +382,7 @@ public class AuthorController implements Initializable {
                     sorted.comparatorProperty().bind(tableAuthor.comparatorProperty());
                     tableAuthor.setItems(sorted);
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage("Load Data", "Error" + e.getMessage(), 4,
-                            Pos.BOTTOM_RIGHT);
+                    alertMessage.showErrorMessage("Load Data", "Error" + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
                 }
             }
         });

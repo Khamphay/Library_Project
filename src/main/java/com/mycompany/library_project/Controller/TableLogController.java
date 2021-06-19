@@ -4,13 +4,16 @@ import javafx.application.Platform;
 import javafx.beans.value.*;
 import javafx.collections.*;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.*;
@@ -42,19 +45,48 @@ public class TableLogController implements Initializable {
     private JFXButton[] buttonOk = { buttonOK() };
     String maxLog = "";
     int qty = 0;
+    double x, y;
 
     public void initConstructor(ManageBookController manageBookController) {
         this.manageBookController = manageBookController;
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                manageBookController.showMainMenuBooks();
+            }
+
+        });
     }
 
-    public void initConstructor2(AddBookController addBookController) {
+    public void initConstructor2(AddBookController addBookController, Stage stage) {
         this.addBookController = addBookController;
-        btClose.setDisable(true);
-        btClose.setVisible(false);
+
+        acHeaderPane.setOnMousePressed(mouseEvent -> {
+            x = mouseEvent.getSceneX();
+            y = mouseEvent.getSceneY();
+        });
+        // TODO: Set for move form
+        acHeaderPane.setOnMouseDragged(mouseEvent -> {
+            stage.setX(mouseEvent.getScreenX() - x);
+            stage.setY(mouseEvent.getScreenY() - y);
+        });
+
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                stage.close();
+            }
+
+        });
     }
 
     @FXML
     private StackPane stackPane;
+
+    @FXML
+    private AnchorPane acHeaderPane;
 
     @FXML
     private TextField txtId, txtQty;
@@ -225,11 +257,6 @@ public class TableLogController implements Initializable {
 
         maxLog = "";
         qty = 0;
-    }
-
-    @FXML
-    private void closeForm() {
-        manageBookController.showMainMenuBooks();
     }
 
     @FXML

@@ -34,6 +34,7 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.*;
 import javafx.util.Callback;
 
@@ -89,13 +90,12 @@ public class MemberController implements Initializable {
             FXMLLoader loader = new FXMLLoader(App.class.getResource("frmRegister.fxml"));
             final Parent root = loader.load();
             final Scene scene = new Scene(root);
-
+            scene.setFill(Color.TRANSPARENT);
             registerController = loader.getController();
-            registerController.initConstructor2(this);
-
             addMemberStage = new Stage();
             addMemberStage.setScene(scene);
-            addMemberStage.initStyle(StageStyle.UNDECORATED);
+            addMemberStage.initStyle(StageStyle.TRANSPARENT);
+            registerController.initConstructor2(this, addMemberStage);
             // addMemberStage.setAlwaysOnTop(true);
             addMemberStage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
             addMemberStage.initModality(Modality.APPLICATION_MODAL);
@@ -116,16 +116,14 @@ public class MemberController implements Initializable {
             final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmRegister.fxml"));
             final Parent root = loader.load();
             final Scene scene = new Scene(root);
-
+            scene.setFill(Color.TRANSPARENT);
             registerController = loader.getController();
             registerController.memberModel = tableMember.getSelectionModel().getSelectedItem();
             registerController.memberModel.setByimg(byimg.get(tableMember.getSelectionModel().getSelectedIndex()));
-            registerController.initConstructor2(this);
-
             addMemberStage = new Stage();
             addMemberStage.setScene(scene);
             addMemberStage.initStyle(StageStyle.TRANSPARENT);
-            // addMemberStage.setAlwaysOnTop(true);
+            registerController.initConstructor2(this, addMemberStage);
             addMemberStage.initModality(Modality.APPLICATION_MODAL);
             addMemberStage.show();
 

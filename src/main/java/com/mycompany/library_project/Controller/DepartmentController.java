@@ -27,7 +27,9 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class DepartmentController implements Initializable {
@@ -40,19 +42,48 @@ public class DepartmentController implements Initializable {
     private DialogMessage dialog = null;
     private AlertMessage alertMessage = new AlertMessage();
     private RegisterController registerController = null;
+    double x, y;
 
     public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
-        this.personalCotroller = managePersonalCotroller;
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                personalCotroller.showMainMenuPerson();
+            }
+
+        });
     }
 
-    public void initConstructor2(RegisterController registerController) {
+    public void initConstructor2(RegisterController registerController, Stage stage) {
         this.registerController = registerController;
-        btClose.setDisable(true);
-        btClose.setVisible(false);
+
+        acHeaderPane.setOnMousePressed(mouseEvent -> {
+            x = mouseEvent.getSceneX();
+            y = mouseEvent.getSceneY();
+        });
+        // TODO: Set for move form
+        acHeaderPane.setOnMouseDragged(mouseEvent -> {
+            stage.setX(mouseEvent.getScreenX() - x);
+            stage.setY(mouseEvent.getScreenY() - y);
+            // stage.setOpacity(0.4f);
+        });
+
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                stage.close();
+            }
+
+        });
     }
 
     @FXML
     private StackPane stackPane;
+
+    @FXML
+    private AnchorPane acHeaderPane;
 
     @FXML
     private JFXButton btSave, btEdit, btCancel, btClose;
@@ -181,15 +212,6 @@ public class DepartmentController implements Initializable {
 
         btCancel.setOnAction(event -> {
             ClearText();
-        });
-
-        btClose.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                personalCotroller.showMainMenuPerson();
-            }
-
         });
     }
 

@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
 import javafx.collections.transformation.*;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -14,7 +15,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import com.mycompany.library_project.Model.TypeModel;
@@ -33,7 +36,6 @@ import java.util.ResourceBundle;
 public class BookTypeController implements Initializable {
 
     private ValidationSupport validRules = new ValidationSupport();
-    private ManageBookController manageBookController = null;
     private AddBookController addBookController = null;
     private ResultSet rs;
     private TypeModel type = null;
@@ -41,19 +43,45 @@ public class BookTypeController implements Initializable {
     private DialogMessage dialog = null;
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile logfile = new CreateLogFile();
+    double x, y;
 
     public void initConstructor(ManageBookController manageBookController) {
-        this.manageBookController = manageBookController;
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                manageBookController.showMainMenuBooks();
+            }
+
+        });
     }
 
-    public void initConstructor2(AddBookController addBookController) {
+    public void initConstructor2(AddBookController addBookController, Stage stage) {
         this.addBookController = addBookController;
-        btClose.setDisable(true);
-        btClose.setVisible(false);
+        acHeaderPane.setOnMousePressed(mouseEvent -> {
+            x = mouseEvent.getSceneX();
+            y = mouseEvent.getSceneY();
+        });
+        // TODO: Set for move form
+        acHeaderPane.setOnMouseDragged(mouseEvent -> {
+            stage.setX(mouseEvent.getScreenX() - x);
+            stage.setY(mouseEvent.getScreenY() - y);
+        });
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                stage.close();
+            }
+
+        });
     }
 
     @FXML
     private StackPane stackePane;
+
+    @FXML
+    private AnchorPane acHeaderPane;
 
     @FXML
     TextField txtTypeId, txtTypeName, txtSearch;
@@ -183,11 +211,6 @@ public class BookTypeController implements Initializable {
             if (keyEvent.getCode() == KeyCode.ENTER)
                 txtTypeId.requestFocus();
         });
-    }
-
-    @FXML
-    private void closeForm() {
-        manageBookController.showMainMenuBooks();
     }
 
     @FXML

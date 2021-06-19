@@ -15,6 +15,7 @@ import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.*;
 
 import java.io.*;
@@ -87,7 +88,7 @@ public class RegisterController implements Initializable {
         });
     }
 
-    public void initConstructor2(MemberController memberController) {
+    public void initConstructor2(MemberController memberController, Stage addMemberStage) {
         this.memberController = memberController;
 
         if (MemberController.add || memberModel != null) {
@@ -228,9 +229,11 @@ public class RegisterController implements Initializable {
             final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmDepartment.fxml"));
             final Parent deproot = loader.load();
             DepartmentController departmentController = loader.getController();
-            departmentController.initConstructor2(this);
             final Scene scene = new Scene(deproot);
+            scene.setFill(Color.TRANSPARENT);
             final Stage stage = new Stage();
+            stage.initStyle(StageStyle.TRANSPARENT);
+            departmentController.initConstructor2(this, stage);
             stage.setTitle("Add New Department");
             stage.setScene(scene);
             stage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));

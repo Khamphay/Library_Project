@@ -172,12 +172,12 @@ public class BookController implements Initializable {
             FXMLLoader loader = new FXMLLoader(App.class.getResource("frmAddBooks.fxml"));
             final Parent root = loader.load();
             final Scene scene = new Scene(root);
-
+            scene.setFill(Color.TRANSPARENT);
             addBookController = loader.getController();
             addBookController.initConstructor2(this, book);
 
             addNewBook = new Stage();
-            addNewBook.initStyle(StageStyle.UNDECORATED);
+            addNewBook.initStyle(StageStyle.TRANSPARENT);
             addNewBook.setScene(scene);
             addNewBook.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
             addNewBook.initModality(Modality.APPLICATION_MODAL);

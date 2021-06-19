@@ -490,8 +490,28 @@
   -fx-font-family: "BoonBaan";
 }
 
-#acHeaderPane .label {
-  -fx-background-color: transparent;
+#acHeaderPane {
+  -fx-background-color: #D1D1D1;
   -fx-background-radius: 5px 5px 0px 0px;
+  -fx-border-width: 0px 0px 1px 0px;
+  -fx-border-color: #c7c7c7;
+}
+
+#acHeaderPane .label {
   -fx-text-fill: #000000;
+}
+
+#borderContent{
+  -fx-background-color: #F3F3F3;
+  -fx-background-radius: 0.5em;
+  
+}
+
+.tooltip{
+  -fx-font-family: "BoonBaan";
+   -fx-font-size: 14;
+}
+
+#stackPane{
+  -fx-background-color:transparent;
 }

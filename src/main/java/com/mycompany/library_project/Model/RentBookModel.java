@@ -14,7 +14,7 @@ public class RentBookModel implements DataAccessObject {
 
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile logfile = new CreateLogFile();
-    private Connection con = MyConnection.getConnect();
+    private Connection con = null;
     private ResultSet rs = null;
     private PreparedStatement ps = null;
     private String sql = "";
@@ -35,7 +35,8 @@ public class RentBookModel implements DataAccessObject {
     private String outDate;
     private String pricePerBook;
 
-    public RentBookModel() {
+    public RentBookModel(Connection con) {
+        this.con = con;
     }
 
     public RentBookModel(String rentId, String barcode, String status) {

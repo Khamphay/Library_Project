@@ -3,7 +3,7 @@ package com.mycompany.library_project.Controller;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import com.mycompany.library_project.App;
-import com.mycompany.library_project.Style;
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 import com.mycompany.library_project.ModelShow.*;
@@ -23,28 +23,31 @@ import javafx.scene.text.Text;
 import javafx.stage.*;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
 
+
     public Stage homeStage = null;
     public static String[] summaryValue = new String[10];
 
+    private Connection con = MyConnection.getConnect();
     private boolean max_min = false;
-    // private double x, y;
     private Rectangle2D bounds = null;
     private HamburgerSlideCloseTransition hamburgerTransition = null;
     private boolean fragMenu = false;
     private Node node;
     private Parent rootMenu = null;
     private AlertMessage alertMessage = new AlertMessage();
-    private DialogMessage dialog = null;
+    private DialogMessage dialog = new DialogMessage();
     private ResultSet rs = null;
-    private ShowRentSendModel showRentSendModel = null;
+    private ShowRentSendModel showRentSendModel = new ShowRentSendModel(con);
     private ListBookModel listbook = null;
     private MyDate mydate = new MyDate();
 
@@ -222,7 +225,7 @@ public class HomeController implements Initializable {
                             SettingController.settingStage.show();
                         }
                     } catch (Exception e) {
-                        alertMessage.showErrorMessage(bpDisplay, "Open Form", "Error: " + e.getMessage(), 4,
+                        alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4,
                                 Pos.BOTTOM_RIGHT);
                     }
                 }
@@ -232,10 +235,26 @@ public class HomeController implements Initializable {
 
                 @Override
                 public void handle(Event event) {
-                    final JFXButton[] buttons = { buttonYes(), buttonNo() };
-                    dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການອອກຈາກລະບົບ ຫຼື ບໍ?",
-                            JFXDialog.DialogTransition.CENTER, buttons, false);
-                    dialog.showDialog();
+                    Optional<ButtonType> result = dialog.showComfirmDialog("Comfirmed", null,
+                            "ຕ້ອງການອອກຈາກລະບົບ ຫຼື ບໍ?");
+                    if (result.get() == ButtonType.YES)
+                        try {
+                            final FXMLLoader loader = new FXMLLoader(App.class.getResource("Login.fxml"));
+                            final Parent desktopRoot = loader.load();
+                            final Scene sceneDesktop = new Scene(desktopRoot);
+                            final LoginController loginController = loader.getController();
+                            sceneDesktop.setFill(Color.TRANSPARENT);
+                            final Stage stage = new Stage();
+                            stage.setTitle("FNS Library Management System - Login");
+                            stage.setScene(sceneDesktop);
+                            stage.initStyle(StageStyle.TRANSPARENT);
+                            stage.show();
+                            loginController.initConstructor(stage);
+                            homeStage.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການອອກຈາກລະບົບ", e);
+                        }
                 }
             });
 
@@ -275,9 +294,7 @@ public class HomeController implements Initializable {
             showRent_SendBookController.initConstructor(this);
             bpDisplay.setCenter(subroot);
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            CreateLogFile config = new CreateLogFile();
-            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Show Rent-Send Book", e);
+            dialog.showExcectionDialog("Error", null, "ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ", e);
         }
     }
 
@@ -290,9 +307,7 @@ public class HomeController implements Initializable {
             rentBookController.initConstructor(this);
             bpDisplay.setCenter(subroot);
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            CreateLogFile config = new CreateLogFile();
-            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Show Rent-Send Book", e);
+            dialog.showExcectionDialog("Error", null, "ການເປີດຟອມຢືມປຶ້ມມີບັນຫາ", e);
         }
     }
 
@@ -305,9 +320,7 @@ public class HomeController implements Initializable {
             sendBookController.initConstructor(this);
             bpDisplay.setCenter(subroot);
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            CreateLogFile config = new CreateLogFile();
-            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Show Rent-Send Book", e);
+            dialog.showExcectionDialog("Error", null, "ການເປີດຟອມສົ່ງປຶ້ມມີບັນຫາ", e);
         }
     }
 
@@ -320,9 +333,7 @@ public class HomeController implements Initializable {
             registerController.initConstructor1(this);
             bpDisplay.setCenter(subroot);
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            CreateLogFile config = new CreateLogFile();
-            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Show Rent-Send Book", e);
+            dialog.showExcectionDialog("Error", null, "ການເປີດຟອມລົງທະບຽນມີບັນຫາ", e);
         }
     }
 
@@ -335,9 +346,7 @@ public class HomeController implements Initializable {
             searchController.initConstructor(this);
             bpDisplay.setCenter(subroot);
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            CreateLogFile config = new CreateLogFile();
-            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Show Search Book", e);
+            dialog.showExcectionDialog("Error", null, "ການເປີດຟອມຄົ້ນຫາປຶ້ມມີບັນຫາ", e);
         }
     }
 
@@ -370,7 +379,7 @@ public class HomeController implements Initializable {
         System.exit(0);
     }
 
-    private void showRentBookOutOfDate() {
+    public void showRentBookOutOfDate() {
 
         Platform.runLater(new Runnable() {
 
@@ -380,7 +389,6 @@ public class HomeController implements Initializable {
             public void run() {
                 try {
                     pnItems.getChildren().clear();
-                    showRentSendModel = new ShowRentSendModel();
                     rs = showRentSendModel.findByRentOutOfDate(Date.valueOf(LocalDate.now()), "ກຳລັງຢືມ");
                     while (rs.next()) {
 
@@ -415,7 +423,7 @@ public class HomeController implements Initializable {
             @Override
             public void run() {
                 try {
-                    final CostModel cost = new CostModel();
+                    final CostModel cost = new CostModel(con);
                     ResultSet rs = cost.findAll();
                     if (rs.next()) {
                         StaticCostPrice.RegisterCost = rs.getDouble("cost_register");
@@ -423,7 +431,7 @@ public class HomeController implements Initializable {
                         StaticCostPrice.LostCost = rs.getDouble("cost_lost");
                     }
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
                 }
 
             }
@@ -439,37 +447,5 @@ public class HomeController implements Initializable {
         sliderMenuHamburger();
         getAnyCostPrice();
         // thItem.start();
-    }
-
-    private JFXButton buttonYes() {
-        JFXButton btyes = new JFXButton("ຕົກລົງ");
-        btyes.setStyle(Style.buttonDialogStyle);
-        btyes.setOnAction(event -> {
-            try {
-                dialog.closeDialog();
-                Parent desktopRoot = FXMLLoader.load(App.class.getResource("Login.fxml"));
-                Scene sceneDesktop = new Scene(desktopRoot);
-                sceneDesktop.setFill(Color.TRANSPARENT);
-                // DesktopController.desktopStage = new Stage(StageStyle.TRANSPARENT);
-                LoginController.loginSatge.setTitle("FNS Library Management System - Login");
-                LoginController.loginSatge.setScene(sceneDesktop);
-                LoginController.loginSatge.show();
-
-                // Close this form
-                homeStage.close();
-            } catch (Exception e) {
-                alertMessage.showErrorMessage(stackPane, "Log out", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            }
-        });
-        return btyes;
-    }
-
-    private JFXButton buttonNo() {
-        JFXButton btno = new JFXButton("  ບໍ່  ");
-        btno.setStyle(Style.buttonDialogStyle);
-        btno.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btno;
     }
 }

@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -254,4 +255,7 @@
         </panes>
       </Accordion>
    </children>
+   <effect>
+      <DropShadow height="0.0" radius="2.525" width="12.1" />
+   </effect>
 </AnchorPane>

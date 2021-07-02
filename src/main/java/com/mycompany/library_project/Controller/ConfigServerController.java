@@ -5,9 +5,8 @@ import java.sql.Connection;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
 import com.mycompany.library_project.MyConnection;
-import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
+import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.config.*;
 
 import javafx.concurrent.Task;
@@ -22,18 +21,30 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import org.controlsfx.control.MaskerPane;
+import org.controlsfx.validation.Severity;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
 public class ConfigServerController implements Initializable {
 
     private ValidationSupport validRules = new ValidationSupport();
-    public static Stage configStage = null;
-    public static boolean chack = false;
     private Double x, y;
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile config = new CreateLogFile();
     private MaskerPane masker = new MaskerPane();
+    private Stage configStage = null;
+
+    public void initConstructor(Stage stage) {
+        this.configStage = stage;
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                configStage.close();
+            }
+
+        });
+    }
 
     @FXML
     private StackPane stackPane;
@@ -48,19 +59,20 @@ public class ConfigServerController implements Initializable {
     private Text textResualt;
 
     @FXML
-    private JFXCheckBox chEnable;
-
-    @FXML
     private JFXButton btSave, btCancel, btTest, btClose;
 
     private void initRules() {
         validRules.setErrorDecorationEnabled(false);
         validRules.registerValidator(txtHost, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນ Host Name"));
         validRules.registerValidator(txtPort, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນ Port"));
+        validRules.registerValidator(txtUserName, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນ User Name"));
+        validRules.registerValidator(txtPassword, false,
+                Validator.createEmptyValidator("ກະລຸນາປ້ອນລະຫັດຜ່ານ (ຖ້າມີ)", Severity.WARNING));
 
     }
 
     private void saveData() {
+
         masker.setText("ກຳລັງບັນທືກຂໍ້ມູນ, ກະລຸນາລໍຖ້າ...");
         Task<Void> task = new Task<Void>() {
 
@@ -75,12 +87,11 @@ public class ConfigServerController implements Initializable {
                         MyConnection.server = txtHost.getText() + ":" + txtPort.getText();
                         MyConnection.userName = txtUserName.getText();
                         MyConnection.password = txtPassword.getText();
+                        textResualt.setFill(Color.GREEN);
                         textResualt.setText("ບັນທືກຂໍ້ມູນສຳເລ້ດແລ້ວ");
-                    } else {
-                        validRules.setErrorDecorationEnabled(true);
-                        textResualt.setText("ບັນທືກຂໍ້ມູນບໍ່ສຳເລ້ດ, ກະລຸນາກວດສອບຂໍ້ມຸນແລ້ວ ລອງໃຫມ່ອີກຄັ້ງ.");
                     }
                 } else {
+                    validRules.setErrorDecorationEnabled(true);
                     alertMessage.showWarningMessage("Save Configed", "Please input host name, port. and try again.", 4,
                             Pos.TOP_CENTER);
                 }
@@ -92,6 +103,15 @@ public class ConfigServerController implements Initializable {
                 super.succeeded();
                 masker.setVisible(false);
                 masker.setProgressVisible(false);
+            }
+
+            @Override
+            protected void failed() {
+                super.failed();
+                masker.setVisible(false);
+                masker.setProgressVisible(false);
+                textResualt.setFill(Color.RED);
+                textResualt.setText("ບັນທືກຂໍ້ມູນບໍ່ສຳເລ້ດ, ກະລຸນາກວດສອບຂໍ້ມຸນແລ້ວ ລອງໃຫມ່ອີກຄັ້ງ.");
             }
 
         };
@@ -115,9 +135,6 @@ public class ConfigServerController implements Initializable {
                 if (con != null) {
                     textResualt.setFill(Color.GREEN);
                     textResualt.setText("ການເຊື່ອມຕໍ່ສຳເລັດແລ້ວ");
-                } else {
-                    textResualt.setFill(Color.RED);
-                    textResualt.setText("ການເຊື່ອມຕໍ່ບໍ່ສຳເລັດແລ້ວ, ກະລຸນາກວດສອບຂໍ້ມຸນແລ້ວ ລອງໃຫມ່ອີກຄັ້ງ");
                 }
                 return null;
             }
@@ -127,6 +144,15 @@ public class ConfigServerController implements Initializable {
                 super.succeeded();
                 masker.setVisible(false);
                 masker.setProgressVisible(false);
+            }
+
+            @Override
+            protected void failed() {
+                super.failed();
+                masker.setVisible(false);
+                masker.setProgressVisible(false);
+                textResualt.setFill(Color.RED);
+                textResualt.setText("ການເຊື່ອມຕໍ່ບໍ່ສຳເລັດແລ້ວ, ກະລຸນາກວດສອບຂໍ້ມຸນແລ້ວ ລອງໃຫມ່ອີກຄັ້ງ");
             }
 
         };
@@ -161,36 +187,6 @@ public class ConfigServerController implements Initializable {
                 txtUserName.clear();
                 txtPassword.clear();
                 textResualt.setText("");
-            }
-
-        });
-
-        btClose.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                configStage.close();
-            }
-
-        });
-        chEnable.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                if (chEnable.isSelected() == true) {
-                    txtUserName.setEditable(true);
-                    txtPassword.setEditable(true);
-
-                    validRules.registerValidator(txtUserName, false,
-                            Validator.createEmptyValidator("ກະລຸນາປ້ອນ User Name"));
-                    validRules.registerValidator(txtPassword, false,
-                            Validator.createEmptyValidator("ກະລຸນາປ້ອນລະຫັດຜ່ານ"));
-                } else {
-                    validRules.revalidate(txtUserName);
-                    validRules.revalidate(txtPassword);
-                    txtUserName.setEditable(false);
-                    txtPassword.setEditable(false);
-                }
             }
 
         });
@@ -241,17 +237,15 @@ public class ConfigServerController implements Initializable {
             configStage.setOpacity(1.0f);
         });
 
-        if (chack == true) {
+        if (config.chackFileConfig()) {
             String[] server_infor = config.getServerInfor();
+            if (server_infor != null) {
             txtHost.setText(server_infor[0]);
             txtPort.setText(server_infor[1]);
             txtUserName.setText(server_infor[2]);
             txtPassword.setText(server_infor[3]);
-
-            if (txtUserName.getText() != "" && txtPassword.getText() != "") {
-                chEnable.setSelected(true);
-            }
         }
+    }
 
         masker.setVisible(false);
         masker.setPrefWidth(50.0);
@@ -260,5 +254,6 @@ public class ConfigServerController implements Initializable {
         stackPane.getChildren().add(masker);
 
     }
+
 
 }

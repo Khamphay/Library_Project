@@ -1,7 +1,6 @@
 package com.mycompany.library_project.Controller;
 
 import com.jfoenix.controls.*;
-import com.jfoenix.controls.JFXDialog.DialogTransition;
 import com.mycompany.library_project.*;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.EmployeeModel;
@@ -10,6 +9,7 @@ import com.mycompany.library_project.config.*;
 import org.controlsfx.control.MaskerPane;
 import org.controlsfx.validation.*;
 
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
@@ -22,34 +22,42 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
     private double x, y;
-    public static Stage loginSatge = null;// Seted object when open form 'Login' in class 'DesktopController.java'
+    private Stage loginSatge = null;// Seted object when open form 'Login' in class 'DesktopController.java'
     private ValidationSupport validRules = new ValidationSupport();;
-    private DialogMessage dialog = null;
+    private DialogMessage dialog = new DialogMessage();
     private Connection con = null;
     private CreateLogFile server = null;
     private EmployeeModel user = null;
     private AlertMessage alertMessage = new AlertMessage();
     private MaskerPane masker = new MaskerPane();
+    private TranslateTransition slider = new TranslateTransition();
+
+    public void initConstructor(Stage primaryStage) {
+        this.loginSatge = primaryStage;
+    }
 
     @FXML
-    private AnchorPane acPaneLogin;
+    private AnchorPane acPaneLogin, layerSlider;
     @FXML
     private StackPane stakePane;
     @FXML
-    private JFXButton btLogin, btCancel, btMinimize, btClose;
+    private JFXButton btLogin, btCancel, btMinimize, btClose, btSearch, btSingin, btBack;
     @FXML
     private TextField txtUsername;
     @FXML
     private PasswordField txtPassword;
+
     // @FXML
     // private JFXSpinner spinner;
 
@@ -85,22 +93,18 @@ public class LoginController implements Initializable {
     private void loginMethod() {
 
         try {
-            // final JFXButton[] buttons = { buttonOK() };
-            // if (!txtUsername.getText().equals("") && !txtPassword.getText().equals("")) {
-            // user = new EmployeeModel();
-            // final ResultSet rs = user.Login(txtUsername.getText());
-            // if (rs.next()) {
-            // if (txtUsername.getText().equals(rs.getString("user_name"))) {
-            // final String salt = rs.getString("salt");
-            // final String scrPassword = rs.getString("password");
-            // final String providePassword = txtPassword.getText();
-            // final boolean checkPassword =
-            // ProtectUserPassword.verifyPassword(providePassword, scrPassword,
-            // salt);
-            // if (checkPassword) {
-            // final String[] userInfor = { rs.getString("full_name"),
-            // rs.getString("sur_name") };
-            final String[] userInfor = { "", "" };
+            if (!txtUsername.getText().equals("") && !txtPassword.getText().equals("")) {
+                user = new EmployeeModel();
+                final ResultSet rs = user.Login(txtUsername.getText());
+                if (rs.next()) {
+                    if (txtUsername.getText().equals(rs.getString("user_name"))) {
+                        final String salt = rs.getString("salt");
+                        final String scrPassword = rs.getString("password");
+                        final String providePassword = txtPassword.getText();
+                        final boolean checkPassword = ProtectUserPassword.verifyPassword(providePassword, scrPassword,
+                                salt);
+                        if (checkPassword) {
+                            final String[] userInfor = { rs.getString("full_name"), rs.getString("sur_name") };
                             final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmHome.fxml"));
                             final Parent root = loader.load();
                             final Scene scene = new Scene(root);
@@ -115,45 +119,20 @@ public class LoginController implements Initializable {
                             homeController.homeStage.show();
                             loginSatge.close();
 
-                            // } else {
-                            // if (dialog != null)
-                            // dialog.closeDialog();
-                            // dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ",
-                            // "ບໍ່ສາມາດເຂົ້າລະບົບໄດ້ ເນື່ອງຈາກລະຫັດຜ່ານບໍ່ຖຶກຕ້ອງ",
-                            // DialogTransition.CENTER,
-                            // buttons, false);
-                            // dialog.showDialog();
-                            // }
-
-            // } else {
-            // if (dialog != null)
-            // dialog.closeDialog();
-            // dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ",
-            // "ບໍ່ສາມາດເຂົ້າລະບົບໄດ້ ເນື່ອງຈາກຊື່ຜູ້ບໍ່ຖຶກຕ້ອງ", DialogTransition.CENTER,
-            // buttons,
-            // false);
-            // dialog.showDialog();
-            // }
-            // } else {
-            // if (dialog != null)
-            // dialog.closeDialog();
-            // dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ",
-            // "ບໍ່ສາມາດເຂົ້າລະບົບໄດ້ ເນື່ອງຈາກຊື່ຜູ້ໃຊ້ບໍ່ຖຶກຕ້ອງ",
-            // DialogTransition.CENTER, buttons,
-            // false);
-            // dialog.showDialog();
-            // }
-            // } else {
-            // validRules.setErrorDecorationEnabled(true);
-            // alertMessage.showWarningMessage("Login", "Please enter username, password and
-            // try again.", 4,
-            // Pos.BOTTOM_RIGHT);
-            // }
+                        } else
+                            dialog.showWarningDialog(null, "ບໍ່ສາມາດເຂົ້າລະບົບໄດ້ ເນື່ອງຈາກລະຫັດຜ່ານບໍ່ຖຶກຕ້ອງ");
+                    } else
+                        dialog.showWarningDialog(null, "ບໍ່ສາມາດເຂົ້າລະບົບໄດ້ ເນື່ອງຈາກຊື່ຜູ້ບໍ່ຖຶກຕ້ອງ");
+                } else
+                    dialog.showWarningDialog(null, "ບໍ່ສາມາດເຂົ້າລະບົບໄດ້ ເນື່ອງຈາກຊື່ຜູ້ໃຊ້ບໍ່ຖຶກຕ້ອງ");
+            } else {
+                validRules.setErrorDecorationEnabled(true);
+                alertMessage.showWarningMessage("Login", "Please enter username, password and try again.", 4,
+                        Pos.BOTTOM_RIGHT);
+            }
         } catch (Exception e) {
-            e.printStackTrace();
-            alertMessage.showErrorMessage("Login Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເຂົ້າສູ່ລະບົບ", e);
         }
-
     }
 
     @FXML
@@ -185,25 +164,63 @@ public class LoginController implements Initializable {
     // Exit Programe
     @FXML
     private void closeForm(ActionEvent mouseEvent) {
-        // System.exit(0);
-        final JFXButton[] buttons = { buttonYes(), buttonNo() };
 
-        dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ", "ຕ້ອງການອອກຈາກໂປຣແກຣມບໍ?", JFXDialog.DialogTransition.CENTER,
-                buttons, false);
-        dialog.showDialog();
-
-        // Alert alert = new Alert(AlertType.CONFIRMATION);
-        // DialogPane dialog = alert.getDialogPane();
-        // dialog.getStylesheets().add(getClass().getResource("../Style/appstyle.css").toExternalForm());
-        // alert.setTitle("Confirmation Dialog");
-        // alert.setHeaderText("ຄຳເຕືອນ");
-        // alert.setContentText("ຕ້ອງການອອກຈາກໂປຣແກຣມບໍ?");
-        // alert.show();
+        Optional<ButtonType> result = dialog.showComfirmDialog("Exit Programe", null, "ຕ້ອງການອອກຈາກໂປຣແກຣມບໍ?");
+        if (result.get() == ButtonType.YES)
+            loginSatge.close();
     }
 
     // private void MyProgress(){
     // spinner.setVisible(false);
     // }
+
+    @FXML
+    private void slideSingin(ActionEvent event) {
+        btLogin.setDisable(false);
+        btCancel.setDisable(false);
+        btBack.setDisable(false);
+
+        slider.setToX(344);
+        slider.play();
+
+        slider.setOnFinished(e -> {
+            btSearch.setDisable(true);
+            btSingin.setDisable(true);
+        });
+    }
+
+    @FXML
+    private void slideBack(ActionEvent event) {
+        slider.setToX(0);
+        btSearch.setDisable(false);
+        btSingin.setDisable(false);
+
+        slider.play();
+        slider.setOnFinished(e -> {
+            btLogin.setDisable(true);
+            btCancel.setDisable(true);
+            btBack.setDisable(true);
+        });
+    }
+
+    @FXML
+    private void SearchBookData(ActionEvent event) {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmSearch.fxml"));
+            final Parent root = loader.load();
+            final Scene scene = new Scene(root);
+            final Stage stage = new Stage();
+            stage.setTitle("FNS Library Management System - Search");
+            final SearchController searchController = loader.getController();
+            searchController.initConstructor2();
+            stage.setScene(scene);
+            stage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
+            stage.show();
+            loginSatge.close();
+        } catch (Exception e) {
+            dialog.showExcectionDialog("Error", null, "ການເປີດຟອມຄົ້ນຫາປຶ້ມມີບັນຫາ", e);
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -214,6 +231,13 @@ public class LoginController implements Initializable {
         masker.setText("ກຳລັງໂຫລດຂໍ້ມູນ, ກະລຸນາລໍຖ້າ...");
         masker.setStyle("-fx-font-family: BoonBaan;");
         stakePane.getChildren().add(masker);
+
+        slider.setDuration(Duration.seconds(0.6));
+        slider.setNode(layerSlider);
+
+        btLogin.setDisable(true);
+        btCancel.setDisable(true);
+        btBack.setDisable(true);
 
         // Todo: Use FontAwesomeIcon
         // btLogin.setGraphic(new FontIcon());
@@ -238,67 +262,37 @@ public class LoginController implements Initializable {
             public void run() {
                 server = new CreateLogFile();
                 if (server.chackFileConfig() == true) {
-                    ConfigServerController.chack = true;
                     String[] infor = server.getServerInfor();
                     if (infor != null) {
                         MyConnection.server = infor[0] + ":" + infor[1];
                         MyConnection.userName = infor[2];
                         MyConnection.password = infor[3];
                         con = MyConnection.getConnect();
-                        if (con == null) {
-                            openConfigForm();
-                        }
-                    } else {
-                        openConfigForm();
-                    }
-                } else {
-                    openConfigForm();
-                }
+                        if (con == null)
+                            checkConnection();
+                    } else
+                        checkConnection();
+                } else
+                    checkConnection();
             }
         });
     }
 
-    private JFXButton buttonYes() {
-        JFXButton btyes = new JFXButton("ຕົກລົງ");
-        btyes.setStyle(Style.buttonDialogStyle);
-        btyes.setOnAction(e -> {
-            dialog.closeDialog();
-            loginSatge.close();
-        });
-        return btyes;
-    }
-
-    private JFXButton buttonNo() {
-        JFXButton btno = new JFXButton("  ບໍ່  ");
-        btno.setStyle(Style.buttonDialogStyle);
-        btno.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btno;
-    }
-
-    private void openConfigForm() {
+    private void checkConnection() {
         try {
-            final Parent root = FXMLLoader.load(App.class.getResource("frmConfig.fxml"));
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmConfig.fxml"));
+            final Parent root = loader.load();
             final Scene scene = new Scene(root);
+            final Stage stage = new Stage(StageStyle.TRANSPARENT);
+            final ConfigServerController configServerController = loader.getController();
+            configServerController.initConstructor(stage);
             scene.setFill(Color.TRANSPARENT);
-            ConfigServerController.configStage = new Stage();
-            ConfigServerController.configStage.setScene(scene);
-            ConfigServerController.configStage.initStyle(StageStyle.TRANSPARENT);
-            ConfigServerController.configStage.show();
+            stage.setTitle("Config Database");
+            stage.setScene(scene);
+            stage.show();
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Open Config", "Error: " + e.getMessage(), 4, Pos.TOP_CENTER);
-            server.createLogFile("ການເຂົ້າອອກລະບົບມິບັນຫາ", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມ Config ຖານຂໍ້ມູນ", e);
         }
-    }
-
-    private JFXButton buttonOK() {
-        JFXButton btOk = new JFXButton("OK");
-        btOk.setStyle(Style.buttonDialogStyle);
-        btOk.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btOk;
     }
 
 }

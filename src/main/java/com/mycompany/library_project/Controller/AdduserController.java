@@ -6,8 +6,7 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
-import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
-import com.mycompany.library_project.ControllerDAOModel.ProtectUserPassword;
+import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.EmployeeModel;
 
 import org.controlsfx.validation.ValidationResult;
@@ -29,7 +28,9 @@ public class AdduserController implements Initializable {
     private ValidationSupport validRules = new ValidationSupport();
     private ValidationSupport validRulePass = new ValidationSupport();
     private ValidationSupport validOldPass = new ValidationSupport();
+    private ValidationSupport validPassLengt = new ValidationSupport();
     private AlertMessage alertMessage = new AlertMessage();
+    private DialogMessage dialog = new DialogMessage();
     private EmployeeModel user = null;
     private String employeeId = null;
     private Double x, y;
@@ -100,6 +101,13 @@ public class AdduserController implements Initializable {
         try {
             if (!txtUserName.getText().equals("") && !txtPassword.getText().equals("")
                     && !txtRepassword.getText().equals("")) {
+
+                if (txtPassword.getText().length() < 6) {
+                    dialog.showWarningDialog(null, "ລະຫັດຜ່ານຕ້ອງມີຕົວເລກ ຫຼື ຕົວອັກສອນຢ່າງໜ້ອຍ 6 ຕົວ");
+                    txtRepassword.requestFocus();
+                    return;
+                }
+
                 final boolean chackPass = ProtectUserPassword.verifyPassword(txtOldPassword.getText(), oldScrPassword,
                         oldSalt);
                 if (chackPass) {
@@ -150,6 +158,8 @@ public class AdduserController implements Initializable {
     private void initRules() {
         validRules.setErrorDecorationEnabled(false);
         validRules.registerValidator(txtUserName, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນລະຫັດພະນັກງານ"));
+        validPassLengt.registerValidator(txtPassword, false, (Control c, String newValue) -> ValidationResult
+                .fromErrorIf(c, "ລະຫັດຜ່ານຕ້ອງມີຕົວເລກ ຫຼື ຕົວອັກສອນຢ່າງໜ້ອຍ 6 ຕົວ", newValue.length() < 6));
         if (chRenewPass.isSelected()) {
             validRules.registerValidator(txtPassword, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່"));
             validRulePass.registerValidator(txtRepassword, false, (Control c, String newValue) -> ValidationResult

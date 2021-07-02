@@ -154,7 +154,7 @@
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="24.0">
                            <image>
-                              <Image url="@Icon/book_50px.png" />
+                              <Image url="@Icon/author.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -163,7 +163,7 @@
             </AnchorPane>
          </top>
          <padding>
-            <Insets bottom="8.0" left="2.0" right="2.0" />
+            <Insets bottom="4.0" />
          </padding>
          <effect>
             <DropShadow />

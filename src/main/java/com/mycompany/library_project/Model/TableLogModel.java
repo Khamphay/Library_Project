@@ -6,19 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.jfoenix.controls.JFXButton;
-import com.mycompany.library_project.MyConnection;
-import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
-import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
-import com.mycompany.library_project.config.CreateLogFile;
-
-import javafx.geometry.Pos;
+import com.mycompany.library_project.ControllerDAOModel.*;
 
 public class TableLogModel implements DataAccessObject {
 
-    private AlertMessage alertMessage = new AlertMessage();
-    private CreateLogFile logfile = new CreateLogFile();
+    private DialogMessage dialog = new DialogMessage();
     private PreparedStatement ps = null;
-    private Connection con = MyConnection.getConnect();
+    private Connection con = null;
     private ResultSet rs = null;
     private String query = "";
 
@@ -29,7 +23,8 @@ public class TableLogModel implements DataAccessObject {
     private String newLog;
     private JFXButton action;
 
-    public TableLogModel() {
+    public TableLogModel(Connection con) {
+        this.con = con;
     }
 
     public TableLogModel(String tableLog) {
@@ -119,8 +114,7 @@ public class TableLogModel implements DataAccessObject {
             rs = con.createStatement().executeQuery(query);
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Table Log Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນຕູ້", e);
             return null;
         } finally {
             // con.close();
@@ -135,8 +129,7 @@ public class TableLogModel implements DataAccessObject {
             rs = con.createStatement().executeQuery(query);
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Table Log By Table ID Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນລ໋ອກຕູ້", e);
             return null;
         } finally {
             // con.close();
@@ -153,8 +146,7 @@ public class TableLogModel implements DataAccessObject {
                 return "";
             }
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Table Log By ID Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນຕູ້", e);
             return "";
         } finally {
             // con.close();
@@ -181,8 +173,7 @@ public class TableLogModel implements DataAccessObject {
             ps.setInt(2, qty);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Save Table Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນຕູ້", e);
             return 0;
         } finally {
             ps.close();
@@ -212,8 +203,7 @@ public class TableLogModel implements DataAccessObject {
             ps.setInt(2, getLogQty());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Update Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Update Table Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນລ໋ອກຕູ້", e);
             return 0;
         } finally {
             ps.close();
@@ -228,9 +218,7 @@ public class TableLogModel implements DataAccessObject {
             ps.setString(1, id);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showWarningMessage("Delete", "Can update table qty. Error: " + e.getMessage(), 4,
-                    Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Update Table Qty Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຈຳນວນລ໋ອກຕູ້", e);
             return 0;
         } finally {
             ps.close();
@@ -246,8 +234,7 @@ public class TableLogModel implements DataAccessObject {
             ps.setString(1, id);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Delete Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Delete Table Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນລ໋ອກຕູ້", e);
             return 0;
         } finally {
             ps.close();
@@ -262,8 +249,7 @@ public class TableLogModel implements DataAccessObject {
             ps.setString(1, id);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Delete Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Delete Table Log Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນຕູ້", e);
             return 0;
         } finally {
             ps.close();

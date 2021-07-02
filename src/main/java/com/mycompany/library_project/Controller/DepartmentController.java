@@ -2,9 +2,11 @@ package com.mycompany.library_project.Controller;
 
 import java.net.URL;
 import java.sql.*;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.DepartmentModel;
@@ -34,12 +36,12 @@ import javafx.util.Callback;
 
 public class DepartmentController implements Initializable {
 
+    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
-    private ManagePersonalCotroller personalCotroller = null;
-    private DepartmentModel depertment = null;
+    private DepartmentModel depertment = new DepartmentModel(con);
     private ResultSet rs = null;
     private ObservableList<DepartmentModel> data = null;
-    private DialogMessage dialog = null;
+    private DialogMessage dialog = new DialogMessage();
     private AlertMessage alertMessage = new AlertMessage();
     private RegisterController registerController = null;
     double x, y;
@@ -49,7 +51,7 @@ public class DepartmentController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                personalCotroller.showMainMenuPerson();
+                managePersonalCotroller.showMainMenuPerson();
             }
 
         });
@@ -172,14 +174,14 @@ public class DepartmentController implements Initializable {
                     if (depertment.saveData() > 0) {
                         showData();
                         ClearText();
-                        alertMessage.showCompletedMessage(stackPane, "Saved", "Save data successfully.", 3,
+                        alertMessage.showCompletedMessage("Saved", "Save data successfully.", 3,
                                 Pos.BOTTOM_RIGHT);
                         if (registerController != null)
                             registerController.fillDep();
                     }
                 } else {
                     validRules.setErrorDecorationEnabled(true);
-                    alertMessage.showWarningMessage(stackPane, "Save Warning",
+                    alertMessage.showWarningMessage("Save Warning",
                             "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                 }
             } catch (Exception ex) {
@@ -195,14 +197,14 @@ public class DepartmentController implements Initializable {
                     if (depertment.updateData() > 0) {
                         showData();
                         ClearText();
-                        alertMessage.showCompletedMessage(stackPane, "Edited", "Edit data successfully.", 4,
+                        alertMessage.showCompletedMessage("Edited", "Edit data successfully.", 4,
                                 Pos.BOTTOM_RIGHT);
                         if (registerController != null)
                             registerController.fillDep();
                     }
                 } else {
                     validRules.setErrorDecorationEnabled(true);
-                    alertMessage.showWarningMessage(stackPane, "Edit Warning",
+                    alertMessage.showWarningMessage("Edit Warning",
                             "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                 }
             } catch (Exception e) {
@@ -246,7 +248,6 @@ public class DepartmentController implements Initializable {
             @Override
             public void run() {
                 try {
-                    depertment = new DepartmentModel();
                     data = FXCollections.observableArrayList();
                     rs = depertment.findAll();
                     while (rs.next()) {
@@ -311,11 +312,25 @@ public class DepartmentController implements Initializable {
                         delete.setGraphic(imgView);
                         delete.setStyle(Style.buttonStyle);
                         delete.setOnAction(e -> {
-                            JFXButton[] buttons = { buttonYes(tableDepartment.getItems().get(getIndex()).getDepId()),
-                                    buttonNo(), buttonCancel() };
-                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
-                                    JFXDialog.DialogTransition.CENTER, buttons, false);
-                            dialog.showDialog();
+                            Optional<ButtonType> result = dialog.showComfirmDialog("Comfirmed", null,
+                                    "ຕ້ອງການລົບຂໍ້ມູນອອກ ຫຼື ບໍ?");
+                            if (result.get() == ButtonType.YES)
+                                // Todo: Delete Data
+                                try {
+                                    if (depertment
+                                            .deleteData(tableDepartment.getItems().get(getIndex()).getDepId()) > 0) {
+                                        showData();
+                                        ClearText();
+                                        alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4,
+                                                Pos.BOTTOM_RIGHT);
+                                        if (registerController != null)
+                                            registerController.fillDep();
+                                    }
+                                } catch (Exception ex) {
+                                    alertMessage.showErrorMessage("Delete", "Error: " + ex.getMessage(), 4,
+                                            Pos.BOTTOM_RIGHT);
+                                }
+
                         });
                     }
 
@@ -336,46 +351,4 @@ public class DepartmentController implements Initializable {
         tableDepartment.getColumns().add(colAtion);
 
     }
-
-    private JFXButton buttonYes(String depid) {
-        JFXButton btyes = new JFXButton("ຕົກລົງ");
-        btyes.setStyle(Style.buttonDialogStyle);
-        btyes.setOnAction(event -> {
-            // Todo: Delete Data
-            try {
-                depertment = new DepartmentModel();
-                if (depertment.deleteData(depid) > 0) {
-                    showData();
-                    ClearText();
-                    dialog.closeDialog();
-                    alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4,
-                            Pos.BOTTOM_RIGHT);
-                    if (registerController != null)
-                        registerController.fillDep();
-                }
-            } catch (Exception e) {
-                alertMessage.showErrorMessage("Delete", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            }
-        });
-        return btyes;
-    }
-
-    private JFXButton buttonNo() {
-        JFXButton btno = new JFXButton("  ບໍ່  ");
-        btno.setStyle(Style.buttonDialogStyle);
-        btno.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btno;
-    }
-
-    private JFXButton buttonCancel() {
-        JFXButton btcancel = new JFXButton("ຍົກເລີກ");
-        btcancel.setStyle(Style.buttonDialogStyle);
-        btcancel.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btcancel;
-    }
-
 }

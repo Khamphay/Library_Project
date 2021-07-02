@@ -89,10 +89,11 @@
 
 /*-------------------Dialog-----------------*/
 .dialog-pane:header *.header-panel *.label {
+  -fx-font-family: "BoonBaan";
   -fx-font-size: 16px;
   -fx-font-weight: bold;
 }
-.dialog-pane > .content.label {
+.dialog-pane > .content .label {
   -fx-padding: 0.5em 0.5em 0.5em 0.5em;
   -fx-font-size: 14px;
 }
@@ -200,6 +201,20 @@
   -fx-background-radius: 15px 15px 15px 15px;
   -fx-background-color: #2b2d8d;
   -fx-text-fill: #fff;
+}
+
+#btBack {
+  -fx-background-radius: 15px 15px 15px 15px;
+}
+
+#buttonForgotPassword:hover {
+  -fx-text-fill: #3461cb;
+  /* -fx-font-weight: bold; */
+}
+
+#buttonForgotPassword:pressed {
+  -fx-text-fill: #5355df;
+  -fx-font-weight: bold;
 }
 
 /*-------------------Button Hamburger -----------------*/
@@ -446,6 +461,16 @@
   -fx-background-color: transparent;
   -fx-background-radius: 2em;
 }
+
+/*==================Tree-view============*/
+.tree-view {
+  -fx-border-radius: 0.4em;
+  -fx-border-color: #101d3d;
+  -fx-background-radius: 0.4em;
+  -fx-font-family: "BoonBaan";
+  -fx-font-size: 16;
+}
+
 /* The main scrollbar **track** CSS class  */
 .tree-table-view .scroll-bar:horizontal .track,
 .tree-table-view .scroll-bar:vertical .track {
@@ -491,7 +516,7 @@
 }
 
 #acHeaderPane {
-  -fx-background-color: #D1D1D1;
+  -fx-background-color: #d1d1d1;
   -fx-background-radius: 5px 5px 0px 0px;
   -fx-border-width: 0px 0px 1px 0px;
   -fx-border-color: #c7c7c7;
@@ -499,19 +524,20 @@
 
 #acHeaderPane .label {
   -fx-text-fill: #000000;
+  -fx-padding: 0px 0px 0px 6px;
 }
 
-#borderContent{
-  -fx-background-color: #F3F3F3;
+#borderContent {
+  -fx-background-color: #f3f3f3;
   -fx-background-radius: 0.5em;
-  
+  -fx-padding: 0px 0px 4px 0px;
 }
 
-.tooltip{
+.tooltip {
   -fx-font-family: "BoonBaan";
-   -fx-font-size: 14;
+  -fx-font-size: 14;
 }
 
-#stackPane{
-  -fx-background-color:transparent;
+#stackPane {
+  -fx-background-color: transparent;
 }

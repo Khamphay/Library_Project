@@ -14,7 +14,7 @@ public class ShowRentSendModel implements DataAccessObject {
 
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile logfile = new CreateLogFile();
-    private Connection con = MyConnection.getConnect();
+    private Connection con = null;
     private ResultSet rs = null;
     private PreparedStatement ps = null;
     private String sql = "";
@@ -32,7 +32,8 @@ public class ShowRentSendModel implements DataAccessObject {
     private String memberName;
     private String cause;
 
-    public ShowRentSendModel() {
+    public ShowRentSendModel(Connection con) {
+        this.con = con;
     }
 
     public ShowRentSendModel(String rentId, String barcode, String status) {
@@ -157,7 +158,7 @@ public class ShowRentSendModel implements DataAccessObject {
     @Override
     public ResultSet findAll() throws SQLException {
         try {
-            sql = "select * from showRent_SendBook;";
+            sql = "select * from showRent_SendBook order by date_rent desc;";
             rs = con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
@@ -207,7 +208,7 @@ public class ShowRentSendModel implements DataAccessObject {
 
     public ResultSet findBySend(String status) throws SQLException {
         try {
-            sql = "select * from showRent_SendBook Where book_status=?;";
+            sql = "select * from showRent_SendBook Where book_status=? order by date_rent desc;";
             ps = con.prepareStatement(sql);
             ps.setString(1, status);
             rs = ps.executeQuery();

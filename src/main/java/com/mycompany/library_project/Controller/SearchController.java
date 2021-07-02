@@ -1,14 +1,14 @@
 package com.mycompany.library_project.Controller;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
-import com.mycompany.library_project.Model.BookDetailModel;
-import com.mycompany.library_project.Model.SearchModel;
+import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.ControllerDAOModel.*;
+import com.mycompany.library_project.Model.*;
 
 import org.controlsfx.control.MaskerPane;
 
@@ -20,15 +20,17 @@ import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.control.TreeView;
 import javafx.scene.layout.StackPane;
 
 public class SearchController implements Initializable {
 
-    private TreeItem<SearchModel> subItem, root, node;
-    private BookDetailModel bookDetailModel = null;
+    private Connection con = MyConnection.getConnect();
+    private TreeItem<String> subItemBarcode, subItemAuthor, root, node;
+    private BookDetailModel bookDetailModel = new BookDetailModel(con);
+    private AuthorModel authorModel = new AuthorModel(con);
     private AlertMessage alertMessage = new AlertMessage();
+    private DialogMessage dialog = new DialogMessage();
     private MaskerPane masker = new MaskerPane();
     private ResultSet rs = null;
 
@@ -43,6 +45,11 @@ public class SearchController implements Initializable {
         });
     }
 
+    public void initConstructor2() {
+        btClose.setDisable(true);
+        btClose.setVisible(false);
+    }
+
     @FXML
     private StackPane stackPane;
 
@@ -53,24 +60,7 @@ public class SearchController implements Initializable {
     private TextField txtSearch;
 
     @FXML
-    private JFXTreeTableView<SearchModel> tableSearch;
-
-    @FXML
-    private TreeTableColumn<BookDetailModel, String> colBookId, colBookName, colISBN, colPage, colCatg, colType,
-            collTable, colLog, colStatus;
-
-    private void initTable() {
-        colBookId.setCellValueFactory(new TreeItemPropertyValueFactory<>("bookId"));
-        colBookName.setCellValueFactory(new TreeItemPropertyValueFactory<>("bookName"));
-        colISBN.setCellValueFactory(new TreeItemPropertyValueFactory<>("ISBN"));
-        colPage.setCellValueFactory(new TreeItemPropertyValueFactory<>("page"));
-        colCatg.setCellValueFactory(new TreeItemPropertyValueFactory<>("catg"));
-        colType.setCellValueFactory(new TreeItemPropertyValueFactory<>("type"));
-        collTable.setCellValueFactory(new TreeItemPropertyValueFactory<>("tableId"));
-        colLog.setCellValueFactory(new TreeItemPropertyValueFactory<>("logId"));
-        colStatus.setCellValueFactory(new TreeItemPropertyValueFactory<>("status"));
-
-    }
+    private TreeView<String> treeViewShowBook;
 
     private void showData(String value) {
         Task<Void> task = new Task<Void>() {
@@ -91,24 +81,59 @@ public class SearchController implements Initializable {
                                 rs = bookDetailModel.findAll();
                             node = new TreeItem<>();
                             while (rs.next()) {
-                                root = new TreeItem<>(new SearchModel(rs.getString("book_id"),
-                                        rs.getString("book_name"), rs.getString("ISBN"), rs.getInt("page") + " ໜ້າ",
-                                        rs.getString("catg_name"), rs.getString("type_name"), "", "", ""));
+                                root = new TreeItem<>("ລະຫັດ: " + rs.getString("book_id") + " | ຊື່ປຶ້ມ: "
+                                        + rs.getString("book_name"));
 
-                                // bookDetailModel = new BookDetailModel();
-                                final ResultSet sublog = bookDetailModel.showBarcode(rs.getString("book_id"));
-                                while (sublog.next()) {
-                                    subItem = new TreeItem<>(new SearchModel(sublog.getString("barcode"), "", "", "",
-                                            "", "", sublog.getString("tableid"), sublog.getString("table_log_id"),
-                                            sublog.getString("status")));
-                                    root.getChildren().add(subItem);
+                                final TreeItem<String> itemCatg = new TreeItem<>("+ ໝວດ: " + rs.getString("catg_name"));
+                                final TreeItem<String> itemTypee = new TreeItem<>(
+                                        "+ ປະເພດ: " + rs.getString("type_name"));
+                                final TreeItem<String> itemISBN = new TreeItem<>("+ ISBN: " + rs.getString("ISBN"));
+                                final TreeItem<String> itemPage = new TreeItem<>(
+                                        " +ຈຳນວນໜ້າ: " + rs.getInt("page") + " ໜ້າ");
+                                final TreeItem<String> itemQty = new TreeItem<>(
+                                        "+ ຈຳນວນປຶ້ມ: " + rs.getInt("qty") + " ຫົວ");
+                                final TreeItem<String> itemWriteYear = new TreeItem<>(
+                                        "+ ແຕ່ງປີ: " + rs.getString("write_year"));
+                                final TreeItem<String> itemLog = new TreeItem<>(
+                                        "+ ເລກຕູ້: " + rs.getString("table_id"));
+
+                                subItemBarcode = new TreeItem<>("ລະຫັດບາໂຄດ ແລະ ສະຖານະຂອງປຶ້ມ:");
+                                final ResultSet rs_barcode = bookDetailModel.showBarcode(rs.getString("book_id"));
+                                int index = 1;
+                                while (rs_barcode.next()) {
+                                    final TreeItem<String> itemBarrcode = new TreeItem<>(
+                                            index + ". ລະຫັດບາໂຄດ: " + rs_barcode.getString("barcode") + " | ສະຖາານະ: "
+                                                    + rs_barcode.getString("status") + " | ລ໋ອກຕູ້: "
+                                                    + rs_barcode.getString("table_log_id"));
+                                    subItemBarcode.getChildren().add(itemBarrcode);
+                                    index++;
                                 }
+                                rs_barcode.close();
+                                subItemAuthor = new TreeItem<>("ແຕ່ງໂດຍ:");
+                                final ResultSet rs_author = authorModel.findByBookID(rs.getString("book_id"));
+                                int i = 1;
+                                while (rs_author.next()) {
+                                    final TreeItem<String> itemAuthor = new TreeItem<>(i + ". "
+                                            + rs_author.getString("full_name") + " " + rs_author.getString("sur_name"));
+                                    subItemAuthor.getChildren().add(itemAuthor);
+                                    i++;
+                                }
+
+                                root.getChildren().addAll(itemCatg, itemTypee, itemISBN, itemPage, itemQty,
+                                        itemWriteYear, itemLog, subItemBarcode, subItemAuthor);
                                 node.getChildren().add(root);
                             }
-                            tableSearch.setShowRoot(false);
-                            tableSearch.setRoot(node);
+
+                            if (node.getChildren().size() == 0) {
+                                node = new TreeItem<>("ບໍ່ມີຂໍ້ມູນ");
+                                treeViewShowBook.setShowRoot(true);
+                            } else
+                                treeViewShowBook.setShowRoot(false);
+
+                            treeViewShowBook.setRoot(node);
                         } catch (Exception e) {
-                            alertMessage.showErrorMessage("Load Data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                            e.printStackTrace();
+                            dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການໂຫຼດຂໍ້ມູນ", e);
                         }
                     }
                 });
@@ -143,7 +168,6 @@ public class SearchController implements Initializable {
         masker.setStyle("-fx-font-family: BoonBaan;");
         stackPane.getChildren().add(masker);
 
-        initTable();
         showData(null);
 
         btSearch.setOnAction(new EventHandler<ActionEvent>() {
@@ -164,5 +188,4 @@ public class SearchController implements Initializable {
         });
 
     }
-
 }

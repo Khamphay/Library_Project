@@ -165,7 +165,7 @@
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="24.0">
                            <image>
-                              <Image url="@Icon/book_50px.png" />
+                              <Image url="@Icon/member.png" />
                            </image>
                         </ImageView>
                      </graphic>

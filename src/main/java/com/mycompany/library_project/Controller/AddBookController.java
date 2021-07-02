@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,9 +25,9 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.App;
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
-import com.mycompany.library_project.config.CreateLogFile;
 
 import org.controlsfx.validation.Severity;
 import org.controlsfx.validation.ValidationSupport;
@@ -34,19 +35,20 @@ import org.controlsfx.validation.Validator;
 
 public class AddBookController implements Initializable {
 
+    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
     private BookController bookcontroller;
     private ResultSet rs = null;
     private AlertMessage alertMessage = new AlertMessage();
-    private TypeModel type = new TypeModel();
-    private CategoryModel category = new CategoryModel();
-    private TableLogModel table = null;
-    private AuthorModel author = null;
-    private CreateLogFile logfile = new CreateLogFile();
-    private BookDetailModel addBook = new BookDetailModel();
+    private TypeModel type = new TypeModel(con);
+    private CategoryModel category = new CategoryModel(con);
+    private TableLogModel table = new TableLogModel(con);
+    private AuthorModel author = new AuthorModel(con);
+    private DialogMessage dialog = new DialogMessage();
+    private BookDetailModel addBook = new BookDetailModel(con);
     private ArrayList<AuthorModel> author_id = null;
     private ArrayList<String> arr_type, arr_category;
-    private ObservableList<String> status = FXCollections.observableArrayList("ຫວ່າງ", "ກຳລົງຢືມ", "ເສຍ");;
+    private ObservableList<String> status = FXCollections.observableArrayList("ຫວ່າງ", "ກຳລ້ງຢືມ", "ເສຍ");;
     private ObservableList<String> items = null, author_items = null;
 
     private String[] arr_author = new String[6];
@@ -115,7 +117,6 @@ public class AddBookController implements Initializable {
 
 
             try {
-                book = new BookDetailModel();
                 rs = book.showWrite(bookid);
                 int index = 0;
                 String[] author_name = new String[6];
@@ -224,8 +225,7 @@ public class AddBookController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Warning Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Open Form Category", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມຈັດການຂໍ້ມູນໝວດປຶ້ມ", e);
         }
     }
 
@@ -245,8 +245,7 @@ public class AddBookController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Warning Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Open Form Category", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມຈັດການຂໍ້ມູນປະເພດປຶ້ມ", e);
         }
     }
 
@@ -266,8 +265,7 @@ public class AddBookController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Warning Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Open Form Category", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມຈັດການຂໍ້ມູນລ໋ອກຕູ້", e);
         }
     }
 
@@ -292,8 +290,7 @@ public class AddBookController implements Initializable {
                 }
             }
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Gennerate barcode", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("ມີບັນຫາໃນການສ້າງ Barcode ປຶ້ມ", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການສ້າງລະຫັດບາໂຄດ", e);
         }
     }
 
@@ -348,8 +345,7 @@ public class AddBookController implements Initializable {
             stage.show();
             ;
         } catch (Exception e) {
-            alertMessage.showErrorMessage(borderPane, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນສ່ວນບຸກຄົນມີບັນຫາ: " + "Form Author", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມຈັດການຂໍ້ມູນນັກແຕ່ງ", e);
         }
     }
 
@@ -513,7 +509,6 @@ public class AddBookController implements Initializable {
     public void fillTable() {
         try {
             items = FXCollections.observableArrayList();
-            table = new TableLogModel();
             ResultSet rs = table.findAll();
             while (rs.next()) {
                 items.add(rs.getString(1));
@@ -527,7 +522,6 @@ public class AddBookController implements Initializable {
             try {
                 // index_table = cmbTable.getSelectionModel().getSelectedIndex();
                 if (cmbTable.getSelectionModel().getSelectedItem() != null) {
-                    table = new TableLogModel();
                     items = FXCollections.observableArrayList();
                     ResultSet rs = table.findById(cmbTable.getSelectionModel().getSelectedItem().toString());
                     while (rs.next()) {
@@ -554,7 +548,6 @@ public class AddBookController implements Initializable {
         try {
             author_items = FXCollections.observableArrayList();
             author_id = new ArrayList<>();
-            author = new AuthorModel();
             rs = author.findAll();
             while (rs.next()) {
                 author_items.add(rs.getString("full_name") + " " + rs.getString("sur_name"));
@@ -749,8 +742,8 @@ public class AddBookController implements Initializable {
                                             msg = "Edit data successfully.";
                                         }
                                     } catch (SQLException e) {
-                                        alertMessage.showErrorMessage("Edit Write Error", "Error: " + e.getMessage(), 4,
-                                                Pos.BOTTOM_RIGHT);
+                                        dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນແຕ່ງປຶ້ມ",
+                                                e);
                                         return;
                                     }
                                     old_id++;

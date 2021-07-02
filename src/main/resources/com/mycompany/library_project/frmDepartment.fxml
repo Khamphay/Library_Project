@@ -145,7 +145,7 @@
                      <graphic>
                         <ImageView fitHeight="26.0" fitWidth="26.0">
                            <image>
-                              <Image url="@Icon/books_50px.png" />
+                              <Image url="@Icon/departmentedit.png" />
                            </image>
                         </ImageView>
                      </graphic>

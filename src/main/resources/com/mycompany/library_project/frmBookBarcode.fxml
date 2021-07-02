@@ -18,9 +18,9 @@
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 0.7em; -fx-background-color: #F3F3F3; -fx-border-color: #101D3D; -fx-border-radius: 0.7em;">
          <top>
-            <AnchorPane fx:id="acHeaderPane" prefHeight="42.0" prefWidth="971.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 0px 0px;" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="acHeaderPane" prefHeight="42.0" prefWidth="971.0" style="-fx-background-radius: 8px 8px 0px 0px;" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" layoutX="940.0" layoutY="9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="9.0">
+                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" layoutX="940.0" layoutY="9.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="9.0">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -36,7 +36,7 @@
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="24.0">
                            <image>
-                              <Image url="@Icon/book_50px.png" />
+                              <Image url="@Icon/books.png" />
                            </image>
                         </ImageView>
                      </graphic>

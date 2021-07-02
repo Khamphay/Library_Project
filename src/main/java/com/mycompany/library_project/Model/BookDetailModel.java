@@ -3,18 +3,11 @@ package com.mycompany.library_project.Model;
 import java.sql.*;
 import java.text.ParseException;
 
-import com.mycompany.library_project.MyConnection;
-import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
-import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
-import com.mycompany.library_project.config.CreateLogFile;
-
-import javafx.geometry.Pos;
-
+import com.mycompany.library_project.ControllerDAOModel.*;
 public class BookDetailModel implements DataAccessObject {
 
-    private AlertMessage alertMessage = new AlertMessage();
-    private CreateLogFile logfile = new CreateLogFile();
-    private Connection con = MyConnection.getConnect();
+    private DialogMessage dialog = new DialogMessage();
+    private Connection con = null;
     private ResultSet rs = null;
     private PreparedStatement ps = null;
 
@@ -36,7 +29,8 @@ public class BookDetailModel implements DataAccessObject {
     private String status;
     private String write_year;
 
-    public BookDetailModel() {
+    public BookDetailModel(Connection con) {
+        this.con = con;
     }
 
     public BookDetailModel(String barcode, String tableLogId, String status) {
@@ -188,7 +182,7 @@ public class BookDetailModel implements DataAccessObject {
             rs = con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
-            e.printStackTrace();
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນປຶ້ມ", e);
             return null;
         } finally {
             //con.close();
@@ -216,8 +210,7 @@ public class BookDetailModel implements DataAccessObject {
             rs = con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Book Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການຄົ້ນຫາຂໍ້ມູນປຶ້ມ", e);
             return null;
         } finally {
             //con.close();
@@ -241,8 +234,7 @@ public class BookDetailModel implements DataAccessObject {
             ps.setString(10, getTableId());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Insert Book Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນປຶ້ມ", e);
             return 0;
         } finally {
             ps.close();
@@ -268,8 +260,7 @@ public class BookDetailModel implements DataAccessObject {
             ps.setString(10, getTableId());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Update Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Update Book Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນປຶ້ມ", e);
             return 0;
         } finally {
             ps.close();
@@ -285,8 +276,7 @@ public class BookDetailModel implements DataAccessObject {
             ps.setString(1, book_id);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Update Book Qty Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Update Book Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຈຳນວນປຶ້ມ", e);
             return 0;
         } finally {
             ps.close();
@@ -302,8 +292,7 @@ public class BookDetailModel implements DataAccessObject {
             ps.setString(1, id);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Delete Book Qty Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Delete Book Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນປຶ້ມ", e);
             return 0;
         } finally {
             ps.close();
@@ -319,7 +308,7 @@ public class BookDetailModel implements DataAccessObject {
             //con.close();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Book Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນປຶ້ມ", e);
             return null;
         } finally {
             //con.close();
@@ -347,8 +336,7 @@ public class BookDetailModel implements DataAccessObject {
             ps.setString(4, status);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Update Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Update Book Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນປຶ້ມ", e);
             return 0;
         } finally {
             ps.close();
@@ -370,8 +358,7 @@ public class BookDetailModel implements DataAccessObject {
             ps.setString(5, book_status);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Edited", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Update Barcode Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນປຶ້ມ", e);
             return 0;
         } finally {
             ps.close();
@@ -389,8 +376,7 @@ public class BookDetailModel implements DataAccessObject {
             ps.setString(2, barcode);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Update Book Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນບາໂຄດປຶ້ມ", e);
             return 0;
         } finally {
             ps.close();
@@ -405,7 +391,7 @@ public class BookDetailModel implements DataAccessObject {
             rs = con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Write Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນແຕ່ງປຶ້ມ", e);
             return null;
         } finally {
             //con.close();
@@ -420,8 +406,7 @@ public class BookDetailModel implements DataAccessObject {
             ps.setString(1, book_id);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showWarningMessage("Save Write Error", "Can not save writer.", 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Save Write Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນແຕ່ງປຶ້ມ", e);
             return 0;
         } finally {
             ps.close();
@@ -463,8 +448,7 @@ public class BookDetailModel implements DataAccessObject {
             ps.setString(2, authorId);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Update Book Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນແຕ່ງປຶ້ມ", e);
             return 0;
         } finally {
             ps.close();

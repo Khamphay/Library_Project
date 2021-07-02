@@ -3,20 +3,14 @@ package com.mycompany.library_project.Model;
 import java.sql.*;
 import java.text.ParseException;
 
-import com.mycompany.library_project.MyConnection;
-import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
-import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
-import com.mycompany.library_project.config.CreateLogFile;
-
-import javafx.geometry.Pos;
+import com.mycompany.library_project.ControllerDAOModel.*;
 
 public class AuthorModel implements DataAccessObject {
 
-    private AlertMessage alertMessage = new AlertMessage();
-    private CreateLogFile logfile = new CreateLogFile();
+    private DialogMessage dialog = new DialogMessage();
     private ResultSet rs = null;
     private PreparedStatement ps = null;
-    private Connection con = MyConnection.getConnect();
+    private Connection con = null;
     private String sql = null;
 
     private String author_id;
@@ -26,7 +20,8 @@ public class AuthorModel implements DataAccessObject {
     private String tel;
     private String email;
 
-    public AuthorModel() {
+    public AuthorModel(Connection con) {
+        this.con = con;
     }
 
     public AuthorModel(String author_id, String full_name) {
@@ -98,8 +93,7 @@ public class AuthorModel implements DataAccessObject {
             rs = con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data", "Error" + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Author Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນນັກແຕ່ງ", e);
             return null;
         } finally {
             //con.close();
@@ -116,8 +110,7 @@ public class AuthorModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data", "Error" + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Author By ID Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນນັກແຕ່ງ", e);
             return null;
         } finally {
             //con.close();
@@ -133,11 +126,25 @@ public class AuthorModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data", "Error" + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Author By Name Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນນັກແຕ່ງ", e);
             return null;
         } finally {
             //con.close();
+        }
+    }
+
+    public ResultSet findByBookID(String bookid) throws SQLException {
+        try {
+            sql = "call showAutorBByBookID(?);";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, bookid);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນນັກແຕ່ງ", e);
+            return null;
+        } finally {
+            // con.close();
         }
     }
 
@@ -150,7 +157,7 @@ public class AuthorModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການຄົ້ນຫາຂໍ້ມູນນັກແຕ່ງ", e);
             return null;
         } finally {
             //con.close();
@@ -170,8 +177,7 @@ public class AuthorModel implements DataAccessObject {
             ps.setString(6, getEmail());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Save Author Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນນັກແຕ່ງ", e);
             return 0;
         } finally {
             ps.close();
@@ -193,8 +199,7 @@ public class AuthorModel implements DataAccessObject {
             ps.setString(6, getEmail());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Update Author Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ບຂໍ້ມູນນັກແຕ່ງ", e);
             return 0;
         } finally {
             ps.close();
@@ -210,8 +215,7 @@ public class AuthorModel implements DataAccessObject {
             ps.setString(1, id);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Delete Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Delete Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນນັກແຕ່ງ", e);
             return 0;
         } finally {
             ps.close();

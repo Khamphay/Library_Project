@@ -141,7 +141,7 @@
                      <graphic>
                         <ImageView fitHeight="26.0" fitWidth="26.0">
                            <image>
-                              <Image url="@Icon/table_50px.png" />
+                              <Image url="@Icon/table.png" />
                            </image>
                         </ImageView>
                      </graphic>

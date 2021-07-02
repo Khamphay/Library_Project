@@ -3,26 +3,21 @@ package com.mycompany.library_project.Model;
 import java.sql.*;
 import java.text.ParseException;
 
-import com.mycompany.library_project.MyConnection;
-import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
-import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
-import com.mycompany.library_project.config.CreateLogFile;
-
-import javafx.geometry.Pos;
+import com.mycompany.library_project.ControllerDAOModel.*;
 
 public class DepartmentModel implements DataAccessObject {
 
-    private AlertMessage alertMessage = new AlertMessage();
-    private CreateLogFile logfile = new CreateLogFile();
+    private DialogMessage dialog = new DialogMessage();
     private ResultSet rs = null;
     private PreparedStatement ps = null;
-    private Connection con = MyConnection.getConnect();
+    private Connection con = null;
     private String sql = null;
 
     private String depId;
     private String depName;
 
-    public DepartmentModel() {
+    public DepartmentModel(Connection con) {
+        this.con = con;
     }
 
     public DepartmentModel(String depId, String depName) {
@@ -53,8 +48,7 @@ public class DepartmentModel implements DataAccessObject {
             rs = con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Department Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນພາກວິຊາ", e);
             return null;
         } finally {
             //con.close();
@@ -70,7 +64,7 @@ public class DepartmentModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນພາກວິຊາ", e);
             return null;
         } finally {
             //con.close();
@@ -86,7 +80,7 @@ public class DepartmentModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນພາກວິຊາ", e);
             return null;
         } finally {
             //con.close();
@@ -102,7 +96,7 @@ public class DepartmentModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການຄົ້ນຂໍ້ມູນພາກວິຊາ", e);
             return null;
         } finally {
             //con.close();
@@ -118,8 +112,7 @@ public class DepartmentModel implements DataAccessObject {
             ps.setString(2, getDepName());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Save Department Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກຂໍ້ມູນພາກວິຊາ", e);
             return 0;
         } finally {
             ps.close();
@@ -136,8 +129,7 @@ public class DepartmentModel implements DataAccessObject {
             ps.setString(2, getDepName());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Update Department Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນພາກວິຊາ", e);
             return 0;
         } finally {
             ps.close();
@@ -154,8 +146,7 @@ public class DepartmentModel implements DataAccessObject {
             ps.setString(1, id);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Delete Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Delete Department Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນພາກວິຊາ", e);
             return 0;
         } finally {
             ps.close();

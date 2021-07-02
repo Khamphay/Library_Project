@@ -2,10 +2,11 @@ package com.mycompany.library_project.Controller;
 
 import java.net.URL;
 import java.sql.*;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
-import com.jfoenix.controls.JFXDialog.DialogTransition;
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.AuthorModel;
@@ -36,17 +37,17 @@ import javafx.util.Callback;
 
 public class AuthorController implements Initializable {
 
+    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
     private ManagePersonalCotroller personalCotroller = null;
     private AddBookController addBookController = null;
-    private AuthorModel author = new AuthorModel();
+    private AuthorModel author = new AuthorModel(con);
     private ResultSet rs = null;
     private String gender = "";
     private AlertMessage alertMessage = new AlertMessage();
-    private DialogMessage dialog = null;
+    private DialogMessage dialog = new DialogMessage();
     private ObservableList<AuthorModel> data = null;
     private CreateLogFile logfile = new CreateLogFile();
-    final JFXButton[] buttons = { buttonOK() };
     double x, y;
 
     public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
@@ -222,12 +223,7 @@ public class AuthorController implements Initializable {
                                 txtTel.getText(), txtEmail.getText());
 
                         if (txtTel.getText().length() < 7 || txtTel.getText().length() > 11) {
-                            if (dialog != null)
-                                dialog.closeDialog();
-                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                                    "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.", DialogTransition.CENTER,
-                                    buttons, false);
-                            dialog.showDialog();
+                            dialog.showWarningDialog(null, "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.");
                             txtTel.requestFocus();
                             return;
                         }
@@ -235,7 +231,7 @@ public class AuthorController implements Initializable {
                         if (author.saveData() > 0) {
                             showData();
                             clearText();
-                            alertMessage.showCompletedMessage(stackPane, "Saved", "Saved data successfully.", 4,
+                            alertMessage.showCompletedMessage("Saved", "Saved data successfully.", 4,
                                     Pos.BOTTOM_RIGHT);
 
                             // Todo: Open From Add Book
@@ -245,11 +241,11 @@ public class AuthorController implements Initializable {
                     } else {
                         // Todo: Show warning message if text or combo box is empty
                         validRules.setErrorDecorationEnabled(true);
-                        alertMessage.showWarningMessage(stackPane, "Save Warning",
+                        alertMessage.showWarningMessage("Save Warning",
                                 "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                     }
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage(stackPane, "Save Error", "Error: " + e.getMessage(), 4,
+                    alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
                 }
             }
@@ -264,12 +260,7 @@ public class AuthorController implements Initializable {
                             && !txtTel.getText().equals("")) {
 
                         if (txtTel.getText().length() < 7 || txtTel.getText().length() > 11) {
-                            if (dialog != null)
-                                dialog.closeDialog();
-                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                                    "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.", DialogTransition.CENTER,
-                                    buttons, false);
-                            dialog.showDialog();
+                            dialog.showWarningDialog(null, "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.");
                             txtTel.requestFocus();
                             return;
                         }
@@ -280,7 +271,7 @@ public class AuthorController implements Initializable {
                         if (author.updateData() > 0) {
                             showData();
                             clearText();
-                            alertMessage.showCompletedMessage(stackPane, "Edited", "Edit data successfully.", 4,
+                            alertMessage.showCompletedMessage("Edited", "Edit data successfully.", 4,
                                     Pos.BOTTOM_RIGHT);
 
                             // Todo: Open From Add Book
@@ -290,11 +281,11 @@ public class AuthorController implements Initializable {
                     } else {
                         // Todo: Show warning message
                         validRules.setErrorDecorationEnabled(true);
-                        alertMessage.showWarningMessage(stackPane, "Edit Warning",
+                        alertMessage.showWarningMessage("Edit Warning",
                                 "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                     }
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage(stackPane, "Edit Error", "Error: " + e.getMessage(), 4,
+                    alertMessage.showErrorMessage("Edit Error", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
                 }
             }
@@ -425,12 +416,30 @@ public class AuthorController implements Initializable {
 
                             @Override
                             public void handle(ActionEvent event) {
-                                JFXButton[] buttons = {
-                                        buttonYes(tableAuthor.getItems().get(getIndex()).getAuthor_id()), buttonNo(),
-                                        buttonCancel() };
-                                dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
-                                        JFXDialog.DialogTransition.CENTER, buttons, false);
-                                dialog.showDialog();
+
+                                Optional<ButtonType> result = dialog.showComfirmDialog("Comfirme", null,
+                                        "ຕ້ອງການລົບຂໍ້ມູນອອກ ຫຼື ບໍ?");
+                                if (result.get() == ButtonType.YES)
+                                    try {
+                                        if (author.deleteData(
+                                                tableAuthor.getItems().get(getIndex()).getAuthor_id()) > 0) {
+                                            showData();
+                                            clearText();
+                                            alertMessage.showCompletedMessage("Deleted", "Delete data successfully.", 4,
+                                                    Pos.BOTTOM_RIGHT);
+
+                                            // Todo: Open From Add Book
+                                            if (addBookController != null)
+                                                addBookController.fillAuthor();
+                                        } else {
+                                            alertMessage.showWarningMessage("Deleted",
+                                                    "Can not delete data, Please try again.", 4, Pos.BOTTOM_RIGHT);
+                                        }
+                                    } catch (SQLException e) {
+                                        alertMessage.showErrorMessage("Deleted", "Error: " + e.getMessage(), 4,
+                                                Pos.BOTTOM_RIGHT);
+                                        logfile.createLogFile("ມີບັນຫາໃນການລົບຂໍ້ມູນນັກແຕ່ງປຶ້ມ", e);
+                                    }
                             }
 
                         });
@@ -452,75 +461,6 @@ public class AuthorController implements Initializable {
         colAtion.setCellFactory(cellFactory);
         tableAuthor.getColumns().add(colAtion);
 
-    }
-
-    protected JFXButton buttonYes(String id) {
-        JFXButton btyes = new JFXButton("ຕົກລົງ");
-        btyes.setStyle(Style.buttonDialogStyle);
-        btyes.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                // author = new AuthorModel();
-                try {
-                    if (author.deleteData(id) > 0) {
-                        showData();
-                        clearText();
-                        alertMessage.showCompletedMessage(stackPane, "Deleted", "Delete data successfully.", 4,
-                                Pos.BOTTOM_RIGHT);
-                        dialog.closeDialog();
-
-                        // Todo: Open From Add Book
-                        if (addBookController != null)
-                            addBookController.fillAuthor();
-                    } else {
-                        alertMessage.showWarningMessage(stackPane, "Deleted", "Can not delete data, Please try again.",
-                                4, Pos.BOTTOM_RIGHT);
-                    }
-                } catch (SQLException e) {
-                    alertMessage.showErrorMessage(stackPane, "Deleted", "Error: " + e.getMessage(), 4,
-                            Pos.BOTTOM_RIGHT);
-                    logfile.createLogFile("ມີບັນຫາໃນການລົບຂໍ້ມູນນັກແຕ່ງປຶ້ມ", e);
-                }
-            }
-        });
-        return btyes;
-    }
-
-    protected JFXButton buttonNo() {
-        JFXButton btno = new JFXButton("  ບໍ່  ");
-        btno.setStyle(Style.buttonDialogStyle);
-        btno.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                dialog.closeDialog();
-            }
-        });
-        return btno;
-    }
-
-    protected JFXButton buttonCancel() {
-        JFXButton btcancel = new JFXButton("ຍົກເລີກ");
-        btcancel.setStyle(Style.buttonDialogStyle);
-        btcancel.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                dialog.closeDialog();
-            }
-
-        });
-        return btcancel;
-    }
-
-    private JFXButton buttonOK() {
-        JFXButton btOk = new JFXButton("OK");
-        btOk.setStyle(Style.buttonDialogStyle);
-        btOk.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btOk;
     }
 
 }

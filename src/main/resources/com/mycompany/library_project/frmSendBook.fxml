@@ -21,7 +21,7 @@
 
 <StackPane prefHeight="749.0" prefWidth="1416.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.SendBookController">
    <children>
-      <BorderPane id="borderContent" minHeight="-Infinity" minWidth="-Infinity" prefHeight="709.0" prefWidth="1252.0">
+      <BorderPane id="borderContent" prefHeight="709.0" prefWidth="1252.0">
          <center>
             <StackPane fx:id="stackPane" prefHeight="671.0" prefWidth="1599.0">
                <children>
@@ -159,7 +159,7 @@
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0">
                            <image>
-                              <Image url="@Icon/send_job_list_50px.png" />
+                              <Image url="@Icon/sendBooks.png" />
                            </image>
                         </ImageView>
                      </graphic>

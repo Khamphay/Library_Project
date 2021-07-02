@@ -4,16 +4,10 @@ import java.sql.*;
 import java.text.ParseException;
 
 import com.mycompany.library_project.MyConnection;
-import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
-import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
-import com.mycompany.library_project.config.CreateLogFile;
-
-import javafx.geometry.Pos;
-
+import com.mycompany.library_project.ControllerDAOModel.*;
 public class EmployeeModel implements DataAccessObject {
 
-    private AlertMessage alertMessage = new AlertMessage();
-    private CreateLogFile logfile = new CreateLogFile();
+    private DialogMessage dialog = new DialogMessage();
     private PreparedStatement ps = null;
     private ResultSet rs = null;
     private Connection con = MyConnection.getConnect();
@@ -128,9 +122,8 @@ public class EmployeeModel implements DataAccessObject {
             sql = "call employee_Show()";
             rs = con.createStatement().executeQuery(sql);
             return rs;
-        } catch (Exception e) {
-            alertMessage.showErrorMessage("Load Data", "Error" + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Employee Error", e);
+        } catch (SQLException e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນພະນັກງານ", e);
             return null;
         } finally {
             //con.close();
@@ -143,8 +136,8 @@ public class EmployeeModel implements DataAccessObject {
             sql = "call employee_ShowById(" + getEmployeeId() + ")";
             rs = con.createStatement().executeQuery(sql);
             return rs;
-        } catch (Exception e) {
-            alertMessage.showErrorMessage("Load Data", "Error" + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+        } catch (SQLException e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນພະນັກງານ", e);
             return null;
         } finally {
             //con.close();
@@ -157,8 +150,8 @@ public class EmployeeModel implements DataAccessObject {
             sql = "call employee_ShowByName(" + getFirstName() + ")";
             rs = con.createStatement().executeQuery(sql);
             return rs;
-        } catch (Exception e) {
-            alertMessage.showErrorMessage("Load Data", "Error" + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+        } catch (SQLException e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນພະນັກງານ", e);
             return null;
         }
     }
@@ -169,8 +162,8 @@ public class EmployeeModel implements DataAccessObject {
             sql = "call employee_Search(" + values + ")";
             rs = con.createStatement().executeQuery(sql);
             return rs;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການຄົ້ນຂໍ້ມູນພະນັກງານ", e);
             return null;
         } finally {
             //con.close();
@@ -190,8 +183,7 @@ public class EmployeeModel implements DataAccessObject {
             ps.setString(6, getEmail());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Save Employee Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກຂໍ້ມູນພະນັກງານ", e);
             return 0;
         } finally {
             ps.close();
@@ -213,8 +205,7 @@ public class EmployeeModel implements DataAccessObject {
             ps.setString(6, getEmail());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Update Employee Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນພະນັກງານ", e);
             return 0;
         } finally {
             ps.close();
@@ -230,8 +221,7 @@ public class EmployeeModel implements DataAccessObject {
             ps.setString(1, id);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Delete Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Delete Employee Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນພະນັກງານ", e);
             return 0;
         } finally {
             ps.close();
@@ -249,8 +239,7 @@ public class EmployeeModel implements DataAccessObject {
             ps.setString(4, getSaltKey());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Add User Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Add User Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກຂໍ້ມູນຜູ້ໃຊ້", e);
             return 0;
         } finally {
             ps.close();
@@ -269,8 +258,7 @@ public class EmployeeModel implements DataAccessObject {
             ps.setString(5, getSaltKey());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Update User Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນຜູ້ໃຊ້", e);
             return 0;
         } finally {
             ps.close();
@@ -287,8 +275,7 @@ public class EmployeeModel implements DataAccessObject {
             ps.setString(3, oldUsername);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Update Username Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຊື່ຜູ້ໃຊ້", e);
             return 0;
         } finally {
             ps.close();
@@ -304,8 +291,7 @@ public class EmployeeModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Login Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Login Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເຂົ້າລະບົບ", e);
             return null;
         } finally {
             //con.close();
@@ -322,8 +308,7 @@ public class EmployeeModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load User Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນຜູ້້ໃຊ້", e);
             return null;
         } finally {
             //con.close();

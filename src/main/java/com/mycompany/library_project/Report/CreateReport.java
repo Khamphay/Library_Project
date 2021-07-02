@@ -5,10 +5,7 @@ import java.sql.Connection;
 import java.util.Map;
 
 import com.mycompany.library_project.MyConnection;
-import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
-import com.mycompany.library_project.config.CreateLogFile;
-
-import javafx.geometry.Pos;
+import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -20,8 +17,7 @@ import net.sf.jasperreports.view.JasperViewer;
 
 public class CreateReport {
 
-    private AlertMessage alertMessage = new AlertMessage();
-    private CreateLogFile logfile = new CreateLogFile();
+    private DialogMessage dialog = new DialogMessage();
     public JasperDesign design;
     public JasperReport report;
     public JasperViewer viewer;
@@ -41,8 +37,7 @@ public class CreateReport {
             viewer = new JasperViewer(print, false);
             viewer.setVisible(true);
         } catch (JRException e) {
-            alertMessage.showErrorMessage("Report Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile(errorName, e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລາຍງານ", e);
         }
     }
 }

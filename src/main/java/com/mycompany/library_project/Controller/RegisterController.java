@@ -1,7 +1,6 @@
 package com.mycompany.library_project.Controller;
 
 import com.jfoenix.controls.*;
-import com.jfoenix.controls.JFXDialog.DialogTransition;
 
 import javafx.beans.value.*;
 import javafx.collections.*;
@@ -17,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.*;
+import javafx.util.Callback;
 
 import java.io.*;
 
@@ -28,13 +28,15 @@ import org.controlsfx.validation.Validator;
 import org.imgscalr.Scalr;
 
 import com.mycompany.library_project.App;
-import com.mycompany.library_project.Style;
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 
 import java.net.URL;
 import java.sql.*;
 import java.text.DecimalFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -44,16 +46,16 @@ import java.awt.image.BufferedImage;
 
 public class RegisterController implements Initializable {
 
+    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
     private MemberController memberController = null;
     private CreateLogFile logfile = new CreateLogFile();
     public MemberModel memberModel = null;
-    private DepartmentModel depertment = new DepartmentModel();
+    private DepartmentModel depertment = new DepartmentModel(con);
     private AlertMessage alertMessage = new AlertMessage();
-    private DialogMessage dialog = null;
-    final JFXButton[] buttons = { buttonOK() };
+    private DialogMessage dialog = new DialogMessage();
     private MyDate dateFormat = new MyDate();
-
+    private DateTimeFormatter formater = DateTimeFormatter.ofPattern("yy");
 
     private BufferedImage resizeImg = null;
     private ByteArrayOutputStream byteStrem = null;
@@ -78,6 +80,8 @@ public class RegisterController implements Initializable {
      * for Refresh table after add and delete
      */
     public void initConstructor1(HomeController homeController) {
+        dateRegister.setValue(LocalDate.now());
+        getDateRegisterEnd();
         btClose.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -166,13 +170,23 @@ public class RegisterController implements Initializable {
     private JFXRadioButton rdbMale, rdbFemale;
 
     @FXML
-    private DatePicker birtDate, registerDate, endDate, exitDate;
+    private DatePicker birtDate, dateRegister, dateEnd;
 
     @FXML
     private ImageView imgPic;
 
+    public void getDateRegisterEnd() {
+        if (!dateRegister.getValue().equals(null)) {
+            int year = dateRegister.getValue().getYear();
+            int month = dateRegister.getValue().getMonthValue();
+            if (month >= 9)
+                dateEnd.setValue(LocalDate.of(year + 1, 8, 31));
+            else
+                dateEnd.setValue(LocalDate.of(year, 8, 31));
+        }
+    }
+
     public void fillDep() {
-        depertment = new DepartmentModel();
         depIdList = new ArrayList<String>();
         try {
             ResultSet rs = depertment.findAll();
@@ -240,7 +254,7 @@ public class RegisterController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
-            e.printStackTrace();
+            dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການເປີດຟອມຈັດການຂໍ້ມູນພາກວິຊາ", e);
         }
     }
 
@@ -286,13 +300,40 @@ public class RegisterController implements Initializable {
         });
 
         cmbYears.setOnAction(evt -> {
+            int year = dateRegister.getValue().getYear();
+            int month = dateRegister.getValue().getMonthValue();
             if (cmbYears.getSelectionModel().getSelectedItem() == "ປີ 1 ຕໍ່ເນື່ອງ") {
-                localDateExit = LocalDate.now().plusYears(1);
+                if (month >= 9)
+                    localDateExit = LocalDate.of(year + 2, 8, 31);
+                else
+                    localDateExit = LocalDate.of(year + 1, 8, 31);
             } else if (cmbYears.getSelectionModel().getSelectedItem() == "ປີ 2 ຕໍ່ເນື່ອງ") {
-                localDateExit = LocalDate.now().plusYears(0);
+                if (month >= 9)
+                    localDateExit = LocalDate.of(year + 1, 8, 31);
+                else
+                    localDateExit = LocalDate.of(year, 8, 31);
+            } else if (cmbYears.getSelectionModel().getSelectedItem() == "ປີ 1") {
+                if (month >= 9)
+                    localDateExit = LocalDate.of(year + 4, 8, 31);
+                else
+                    localDateExit = LocalDate.of(year + 3, 8, 31);
+            } else if (cmbYears.getSelectionModel().getSelectedItem() == "ປີ 2") {
+                if (month >= 9)
+                    localDateExit = LocalDate.of(year + 3, 8, 31);
+                else
+                    localDateExit = LocalDate.of(year + 2, 8, 31);
+            } else if (cmbYears.getSelectionModel().getSelectedItem() == "ປີ 3") {
+                if (month >= 9)
+                    localDateExit = LocalDate.of(year + 2, 8, 31);
+                else
+                    localDateExit = LocalDate.of(year + 1, 8, 31);
             } else {
-                localDateExit = LocalDate.now().plusYears((4 - (cmbYears.getSelectionModel().getSelectedIndex() - 2)));
+                if (month >= 9)
+                    localDateExit = LocalDate.of(year + 1, 8, 31);
+                else
+                    localDateExit = LocalDate.of(year, 8, 31);
             }
+            System.out.println(localDateExit + "");
         });
         birtDate.setDayCellFactory(d -> new DateCell() {
             @Override
@@ -337,6 +378,27 @@ public class RegisterController implements Initializable {
             if (keyEvent.getCode() == KeyCode.ENTER)
                 txtStudentId.requestFocus();
         });
+
+        dateRegister.setDayCellFactory(new Callback<DatePicker, DateCell>() {
+
+            @Override
+            public DateCell call(DatePicker param) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        DayOfWeek day = DayOfWeek.from(item);
+                        if (day == DayOfWeek.SUNDAY || day == DayOfWeek.SATURDAY)
+                            this.setTextFill(Color.RED);
+                    }
+                };
+            }
+
+        });
+
+        dateRegister.setOnAction(e -> {
+            getDateRegisterEnd();
+        });
     }
 
     private void initRules() {
@@ -352,6 +414,9 @@ public class RegisterController implements Initializable {
         validRules.registerValidator(cmbYears, false, Validator.createEmptyValidator("ກະລຸນາເລືອກປີຮຽນຂອງນັກສຶກສາ"));
         validRules.registerValidator(birtDate, false, Validator
                 .createEmptyValidator("ກະລຸນາປ້ອນຂໍ້ມູນວັນເດືອນປີເກີດ ແລະ ວັນເດືອນປີເກີດຄວນຢູ່ລະຫວ່າງ 15-30 ປີ"));
+        validRules.registerValidator(dateRegister, false, Validator.createEmptyValidator("ກະລຸນາເລືອກວັນທີລົງທະບຽນ"));
+        validRules.registerValidator(dateEnd, false, Validator.createEmptyValidator("ກະລຸນາເລືອກວັນທີໝົດອາຍຸຂອງບັດ"));
+
     }
 
     private String getMemberId(String studentid) {
@@ -363,7 +428,7 @@ public class RegisterController implements Initializable {
                 endIndex = studentid.indexOf('/');
             else
                 endIndex = studentid.length();
-            String stid = "FNSLM" + studentid.substring(startIndex, endIndex);
+            String stid = "FNSLM" + studentid.substring(startIndex, endIndex) + "/" + formater.format(LocalDate.now());
             return stid;
         } catch (Exception e) {
             e.printStackTrace();
@@ -405,15 +470,11 @@ public class RegisterController implements Initializable {
             if (index > -1 && !txtStudentId.getText().equals("") && !txtFName.getText().equals("")
                     && !txtLName.getText().equals("") && !txtTel.getText().equals("") && !txtVill.getText().equals("")
                     && !txtDist.getText().equals("") && !txtProv.getText().equals("") && gender != ""
-                    && !birtDate.getValue().equals(null) && cmbYears.getSelectionModel().getSelectedItem() != null) {
+                    && !birtDate.getValue().equals(null) && cmbYears.getSelectionModel().getSelectedItem() != null
+                    && !dateRegister.getValue().equals(null) && !dateEnd.getValue().equals(null)) {
 
                 if (txtTel.getText().length() < 7 || txtTel.getText().length() > 11) {
-                    if (dialog != null)
-                        dialog.closeDialog();
-                    dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                            "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.", DialogTransition.CENTER, buttons,
-                            false);
-                    dialog.showDialog();
+                    dialog.showWarningDialog(null, "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.");
                     txtTel.requestFocus();
                     return;
                 }
@@ -422,7 +483,7 @@ public class RegisterController implements Initializable {
                         txtFName.getText(), txtLName.getText(), gender, txtTel.getText(), txtVill.getText(),
                         txtDist.getText(), txtProv.getText(), Date.valueOf(birtDate.getValue()),
                         cmbYears.getSelectionModel().getSelectedItem(), depIdList.get(index),
-                        Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now().plusYears(1)),
+                        Date.valueOf(dateRegister.getValue()), Date.valueOf(dateEnd.getValue()),
                         Date.valueOf(localDateExit), byimg, costPrice, memberid_edit);
 
                 if (memberid_edit == "") {
@@ -447,7 +508,7 @@ public class RegisterController implements Initializable {
                         Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກຂໍ້ມູນ", e);
         }
     }
 
@@ -460,6 +521,8 @@ public class RegisterController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         birtDate = dateFormat.formateDatePicker(birtDate);
+        dateRegister = dateFormat.formateDatePicker(dateRegister);
+        dateEnd = dateFormat.formateDatePicker(dateEnd);
 
         // Todo: Groud RadioButton
         ToggleGroup group = new ToggleGroup();
@@ -473,6 +536,9 @@ public class RegisterController implements Initializable {
         initKeyEvents();
         costPrice = StaticCostPrice.RegisterCost;
         txtCostRegister.setText(dcFormat.format(costPrice));
+
+        dateRegister.setValue(LocalDate.now());
+        getDateRegisterEnd();
     }
 
     private void moveForm() {
@@ -485,14 +551,5 @@ public class RegisterController implements Initializable {
             MemberController.addMemberStage.setX(event.getScreenX() - x);
             MemberController.addMemberStage.setY(event.getScreenY() - y);
         });
-    }
-
-    private JFXButton buttonOK() {
-        JFXButton btOk = new JFXButton("OK");
-        btOk.setStyle(Style.buttonDialogStyle);
-        btOk.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btOk;
     }
 }

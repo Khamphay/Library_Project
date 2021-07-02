@@ -44,3 +44,12 @@
   -fx-icon-code: "fas-times-circle";
 }
  */
+
+#buttons {
+  -fx-background-color: #fff;
+  -fx-border-color: #101d3d;
+  -fx-border-radius: 2em;
+  -fx-font-family: "BoonBaan";
+  -fx-font-size: 16;
+  -fx-text-fill: #101d3d;
+}

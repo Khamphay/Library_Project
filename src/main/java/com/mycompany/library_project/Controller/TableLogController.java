@@ -17,38 +17,34 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.*;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.TableLogModel;
-import com.mycompany.library_project.config.CreateLogFile;
 
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
 public class TableLogController implements Initializable {
 
+    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
-    private TableLogModel tableLogModel = new TableLogModel();
+    private TableLogModel tableLogModel = new TableLogModel(con);
     private ResultSet rs = null;
     private TreeItem<TableLogModel> subItem, root, node;
-    // private ValidationSupport validRules;
     private ObservableList<TreeItem<TableLogModel>> data = FXCollections.observableArrayList();
     private AlertMessage alertMessage = new AlertMessage();
-    private DialogMessage dialog = null;
-    private CreateLogFile logfile = new CreateLogFile();
-    private ManageBookController manageBookController = null;
+    private DialogMessage dialog = new DialogMessage();
     private AddBookController addBookController = null;
-    private JFXButton[] buttonOk = { buttonOK() };
     String maxLog = "";
     int qty = 0;
     double x, y;
 
     public void initConstructor(ManageBookController manageBookController) {
-        this.manageBookController = manageBookController;
         btClose.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -144,7 +140,7 @@ public class TableLogController implements Initializable {
                     tableLog.setRoot(node);
 
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage(stackPane, "Load Data", "Error: " + e.getMessage(), 4,
+                    alertMessage.showErrorMessage("Load Data", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
                 }
             }
@@ -218,14 +214,7 @@ public class TableLogController implements Initializable {
 
             if (Integer.parseInt(txtQty.getText()) <= 0 || (Integer.parseInt(txtQty.getText()) + qty) > 6) {
                 validRules.setErrorDecorationEnabled(true);
-                if (dialog != null)
-                    dialog.closeDialog();
-                dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                        "ຈຳນວນລ໋ອກຕູ້ທັງໝົດຕ້ອງຢູ່ລະຫວ່າງ 1 ຫາ 6 ລ໋ອກເທົ່ານັ້ນ.", JFXDialog.DialogTransition.CENTER,
-                        buttonOk, false);
-                dialog.showDialog();
-                txtQty.setText("0");
-                txtQty.requestFocus();
+                dialog.showWarningDialog(null, "ຈຳນວນລ໋ອກຕູ້ທັງໝົດຕ້ອງຢູ່ລະຫວ່າງ 1 ຫາ 6 ລ໋ອກເທົ່ານັ້ນ.");
                 return;
             }
 
@@ -287,7 +276,7 @@ public class TableLogController implements Initializable {
                             result = (tableLogModel.saveData() > 0) ? "Save Completed" : null; // Todo: if...else
                         } catch (SQLException e) {
                             tableLogModel.deleteTable(txtId.getText());
-                            logfile.createLogFile("Save Table Log Error", e);
+                            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນລ໋ອກຕູ້", e);
                             return;
                         }
                     }
@@ -302,12 +291,12 @@ public class TableLogController implements Initializable {
                 }
             } else {
                 validRules.setErrorDecorationEnabled(true);
-                alertMessage.showWarningMessage(stackPane, "Save Warning",
+                alertMessage.showWarningMessage("Save Warning",
                         "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
             }
 
         } catch (Exception e) {
-            alertMessage.showErrorMessage(stackPane, "Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -327,7 +316,7 @@ public class TableLogController implements Initializable {
                         result = tableLogModel.saveData();
                     } catch (Exception e) {
                         tableLogModel.deleteTable(txtId.getText());
-                        logfile.createLogFile("ມີບັນຫາໃນການບັນທືກຂໍ້ມູນລ໋ອກຕູ້", e);
+                        dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນລ໋ອກຕູ້", e);
                         return;
                     }
                 }
@@ -336,25 +325,25 @@ public class TableLogController implements Initializable {
                 if (result > 0) {
                     tableLogModel = new TableLogModel(txtId.getText(), Integer.parseInt(txtQty.getText()));
                     if (tableLogModel.updateData() > 0) {
-                        alertMessage.showCompletedMessage(stackPane, "Edited", "Edit data successfully.", 4,
+                        alertMessage.showCompletedMessage("Edited", "Edit data successfully.", 4,
                                 Pos.BOTTOM_RIGHT);
                         clearText();
                         showData();
                         if (addBookController != null)
                             addBookController.fillTable();
                     } else {
-                        alertMessage.showWarningMessage(stackPane, "Edit Warning", "Can not edit data", 4,
+                        alertMessage.showWarningMessage("Edit Warning", "Can not edit data", 4,
                                 Pos.BOTTOM_RIGHT);
                     }
                 } else
                     alertMessage.showWarningMessage("Edit Warning", "No data had changed", 4, Pos.BOTTOM_RIGHT);
 
             } else {
-                alertMessage.showWarningMessage(stackPane, "Edit Warning",
+                alertMessage.showWarningMessage("Edit Warning",
                         "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
-            alertMessage.showErrorMessage(stackPane, "Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -381,10 +370,22 @@ public class TableLogController implements Initializable {
             actionRoot.setId(id);
             actionRoot.setStyle(Style.buttonStyle);
             actionRoot.setOnAction(e -> {
-                JFXButton[] buttons = { buttonYesTable(actionRoot.getId()), buttonNo(), buttonCancel() };
-                dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
-                        JFXDialog.DialogTransition.CENTER, buttons, false);
-                dialog.showDialog();
+                Optional<ButtonType> result = dialog.showComfirmDialog("Comfirme", null, "ຕ້ອງການລົບຂໍ້ມູນອອກ ຫຼື ບໍ?");
+                if (result.get() == ButtonType.YES)// Todo: Delete Data
+                    // tableLogModel = new TableLogModel();
+                    try {
+                        if (tableLogModel.deleteTable(actionRoot.getId()) > 0) {
+                            showData();
+                            alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4,
+                                    Pos.BOTTOM_RIGHT);
+                            if (addBookController != null)
+                                addBookController.fillTable();
+                        } else {
+                            alertMessage.showWarningMessage("Delete", "Can not delete data.", 4, Pos.BOTTOM_RIGHT);
+                        }
+                    } catch (Exception ex) {
+                        alertMessage.showErrorMessage("Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                    }
 
             });
         } catch (Exception e) {
@@ -407,93 +408,28 @@ public class TableLogController implements Initializable {
                     + Style.buttonStyle);
             actionSubRoot.setOnAction(e -> {
 
-                JFXButton[] buttons = { buttonYesTableLog(actionSubRoot.getId()), buttonNo(),
-                        buttonCancel() };
-                dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
-                        JFXDialog.DialogTransition.CENTER, buttons, false);
-                dialog.showDialog();
+                Optional<ButtonType> result = dialog.showComfirmDialog("Comfirme", null, "ຕ້ອງການລົບຂໍ້ມູນອອກ ຫຼື ບໍ?");
+                if (result.get() == ButtonType.YES)
+                    // Todo: Delete Data
+                    // tableLogModel = new TableLogModel();
+                    try {
+                        rs = tableLogModel.findById(actionSubRoot.getId());
+                        if (tableLogModel.deleteData(actionSubRoot.getId()) > 0) {
+                            if (rs.next()) {
+                                if (tableLogModel.updateTableQty(rs.getString(1)) > 0) {
+                                    showData();
+                                    alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4,
+                                            Pos.BOTTOM_RIGHT);
+                                }
+                            }
+                        }
+                    } catch (SQLException ex) {
+                        alertMessage.showErrorMessage("Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                    }
 
             });
         } catch (Exception e) {
         }
         return actionSubRoot;
     }
-
-    private JFXButton buttonYesTable(String tableid) {
-        JFXButton btyes = new JFXButton("ຕົກລົງ");
-        btyes.setStyle(Style.buttonDialogStyle);
-        btyes.setOnAction(e -> {
-            // Todo: Delete Data
-            // tableLogModel = new TableLogModel();
-            try {
-                if (tableLogModel.deleteTable(tableid) > 0) {
-                    showData();
-                    dialog.closeDialog();
-                    alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4, Pos.BOTTOM_RIGHT);
-                    if (addBookController != null)
-                        addBookController.fillTable();
-                } else {
-                    alertMessage.showWarningMessage("Delete", "Can not delete data.", 4, Pos.BOTTOM_RIGHT);
-
-                }
-            } catch (Exception ex) {
-                alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
-                logfile.createLogFile("ມີບັນຫາໃນການລົບຂໍ້ມູນຕູ້", ex);
-            }
-        });
-        return btyes;
-    }
-
-    private JFXButton buttonYesTableLog(String tablelogid) {
-        JFXButton btyes = new JFXButton("ຕົກລົງ");
-        btyes.setStyle(Style.buttonDialogStyle);
-        btyes.setOnAction(e -> {
-            // Todo: Delete Data
-            // tableLogModel = new TableLogModel();
-            try {
-                rs = tableLogModel.findById(tablelogid);
-                if (tableLogModel.deleteData(tablelogid) > 0) {
-                    if (rs.next()) {
-                        if (tableLogModel.updateTableQty(rs.getString(1)) > 0) {
-                            showData();
-                            alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4,
-                                    Pos.BOTTOM_RIGHT);
-                        }
-                    }
-                }
-            } catch (SQLException ex) {
-                alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            }
-            dialog.closeDialog();
-        });
-        return btyes;
-    }
-
-    private JFXButton buttonNo() {
-        JFXButton btno = new JFXButton("  ບໍ່  ");
-        btno.setStyle(Style.buttonDialogStyle);
-        btno.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btno;
-    }
-
-    private JFXButton buttonCancel() {
-        JFXButton btcancel = new JFXButton("ຍົກເລີກ");
-        btcancel.setStyle(Style.buttonDialogStyle);
-        btcancel.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btcancel;
-    }
-
-    private JFXButton buttonOK() {
-        JFXButton btOk = new JFXButton("OK");
-        btOk.setStyle(Style.buttonDialogStyle);
-        btOk.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btOk;
-    }
-
 }

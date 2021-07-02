@@ -2,7 +2,7 @@ package com.mycompany.library_project;
 
 import java.sql.*;
 
-import com.mycompany.library_project.config.CreateLogFile;
+import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
 
 public class MyConnection {
 
@@ -17,9 +17,8 @@ public class MyConnection {
                     userName,
                     password);
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-            CreateLogFile log = new CreateLogFile();
-            log.createLogFile("Connection Error", e);
+            DialogMessage dialog = new DialogMessage();
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເຊື່ອມຕໍ່ຖານຂໍ້ມູນ", e);
             return null;
         }
     }

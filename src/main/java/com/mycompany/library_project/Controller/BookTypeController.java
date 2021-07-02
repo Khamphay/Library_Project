@@ -21,28 +21,29 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import com.mycompany.library_project.Model.TypeModel;
-import com.mycompany.library_project.config.CreateLogFile;
 
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
 import com.jfoenix.controls.*;
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import java.net.URL;
 import java.sql.*;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class BookTypeController implements Initializable {
 
+    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
     private AddBookController addBookController = null;
     private ResultSet rs;
-    private TypeModel type = null;
+    private TypeModel type = new TypeModel(con);
     private ObservableList<TypeModel> data = null;
-    private DialogMessage dialog = null;
+    private DialogMessage dialog = new DialogMessage();
     private AlertMessage alertMessage = new AlertMessage();
-    private CreateLogFile logfile = new CreateLogFile();
     double x, y;
 
     public void initConstructor(ManageBookController manageBookController) {
@@ -101,8 +102,7 @@ public class BookTypeController implements Initializable {
             @Override
             public void run() {
                try {
-                   data = FXCollections.observableArrayList();
-                   type = new TypeModel();
+                    data = FXCollections.observableArrayList();
                    rs = type.findAll();
                    while (rs.next()) {
                        data.add(new TypeModel(rs.getString(1), rs.getString(2)));
@@ -128,7 +128,7 @@ public class BookTypeController implements Initializable {
                    tableType.setItems(sorted);
 
                } catch (SQLException e) {
-                   alertMessage.showErrorMessage(stackePane, "Load Data Error", "Error: " + e.getMessage(), 4,
+                    alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4,
                            Pos.BOTTOM_RIGHT);
                }
            }
@@ -235,7 +235,7 @@ public class BookTypeController implements Initializable {
                 if (type.saveData() == 1) {
                     ShowData();
                     ClearData();
-                    alertMessage.showCompletedMessage(stackePane, "Save", "Save data successfully.", 4,
+                    alertMessage.showCompletedMessage("Save", "Save data successfully.", 4,
                             Pos.BOTTOM_RIGHT);
                     if (addBookController != null)
                         addBookController.fillType();
@@ -243,11 +243,11 @@ public class BookTypeController implements Initializable {
             } else {
                 // Todo: Show warning message if text or combo box is empty
                 validRules.setErrorDecorationEnabled(true);
-                alertMessage.showWarningMessage(stackePane, "Save Warning",
+                alertMessage.showWarningMessage("Save Warning",
                         "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
-            alertMessage.showErrorMessage(stackePane, "Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນຂໍ້ມູນ", e);
         }
     }
 
@@ -259,7 +259,7 @@ public class BookTypeController implements Initializable {
                 if (type.updateData() == 1) {
                     ShowData();
                     ClearData();
-                    alertMessage.showCompletedMessage(stackePane, "Edited", "Edit data successfully.", 4,
+                    alertMessage.showCompletedMessage("Edited", "Edit data successfully.", 4,
                             Pos.BOTTOM_RIGHT);
                     if (addBookController != null)
                         addBookController.fillType();
@@ -267,11 +267,11 @@ public class BookTypeController implements Initializable {
             } else {
                 // Todo: Show warning message if text or combo box is empty
                 validRules.setErrorDecorationEnabled(true);
-                alertMessage.showWarningMessage(stackePane, "Edit Warning",
+                alertMessage.showWarningMessage("Edit Warning",
                         "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
-            alertMessage.showErrorMessage(stackePane, "Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນ", e);
         }
     }
 
@@ -307,11 +307,22 @@ public class BookTypeController implements Initializable {
                         delete.setGraphic(imgView);
                         delete.setStyle(Style.buttonStyle);
                         delete.setOnAction(e -> {
-                            JFXButton[] buttons = { buttonYes(tableType.getItems().get(getIndex()).getTypeId()),
-                                    buttonNo(), buttonCancel() };
-                            dialog = new DialogMessage(stackePane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
-                                    JFXDialog.DialogTransition.CENTER, buttons, false);
-                            dialog.showDialog();
+                            Optional<ButtonType> result = dialog.showComfirmDialog("Comfirmed", null,
+                                    "ຕ້ອງການລົບຂໍ້ມູນອອກ ຫຼື ບໍ?");
+                            if (result.get() == ButtonType.YES)
+                                // Todo: Delete Data
+                                try {
+                                    if (type.deleteData(tableType.getItems().get(getIndex()).getTypeId()) > 0) {
+                                        ShowData();
+                                        ClearData();
+                                        alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4,
+                                                Pos.BOTTOM_RIGHT);
+                                        if (addBookController != null)
+                                            addBookController.fillType();
+                                    }
+                                } catch (SQLException ex) {
+                                    dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນ", ex);
+                                }
                         });
                     }
 
@@ -332,48 +343,4 @@ public class BookTypeController implements Initializable {
         tableType.getColumns().add(colAtion);
 
     }
-
-    private JFXButton buttonYes(String typeid) {
-        JFXButton btyes = new JFXButton("ຕົກລົງ");
-        btyes.setStyle(Style.buttonDialogStyle);
-        btyes.setOnAction(e -> {
-            // Todo: Delete Data
-            try {
-                type = new TypeModel();
-                if (type.deleteData(typeid) > 0) {
-                    ShowData();
-                    ClearData();
-                    dialog.closeDialog();
-                    alertMessage.showCompletedMessage(stackePane, "Delete", "Delete data successfully.", 4,
-                            Pos.BOTTOM_RIGHT);
-                    if (addBookController != null)
-                        addBookController.fillType();
-                }
-            } catch (SQLException ex) {
-                alertMessage.showErrorMessage(stackePane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
-                logfile.createLogFile("ມີບັນຫາໃນການລົບຂໍ້ມູນປະເພດປຶ້ມ", ex);
-            }
-        });
-        return btyes;
-    }
-
-    private JFXButton buttonNo() {
-        JFXButton btno = new JFXButton("  ບໍ່  ");
-        btno.setStyle(Style.buttonDialogStyle);
-        btno.setOnAction(e -> {
-            dialog.closeDialog();
-
-        });
-        return btno;
-    }
-
-    private JFXButton buttonCancel() {
-        JFXButton btcancel = new JFXButton("ຍົກເລີກ");
-        btcancel.setStyle(Style.buttonDialogStyle);
-        btcancel.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btcancel;
-    }
-
 }

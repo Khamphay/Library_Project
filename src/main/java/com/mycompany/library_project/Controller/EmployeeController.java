@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
-import com.jfoenix.controls.JFXDialog.DialogTransition;
 import com.mycompany.library_project.App;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
@@ -45,15 +44,15 @@ public class EmployeeController implements Initializable {
 
     private ValidationSupport validRules = new ValidationSupport();
     private ValidationSupport validRulePass = new ValidationSupport();
+    private ValidationSupport validPassLengt = new ValidationSupport();
     private ManagePersonalCotroller personalCotroller = null;
     private EmployeeModel employee = new EmployeeModel();
     private ResultSet rs = null;
     private String gender = "";
     private AlertMessage alertMessage = new AlertMessage();
-    private DialogMessage dialog = null;
+    private DialogMessage dialog = new DialogMessage();
     private ArrayList<EmployeeModel> user = null;
     private ObservableList<EmployeeModel> data = null;
-    final JFXButton[] buttons = { buttonOK() };
 
     public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
         this.personalCotroller = managePersonalCotroller;
@@ -112,6 +111,8 @@ public class EmployeeController implements Initializable {
         validRules.registerValidator(txtPassword, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່"));
         validRulePass.registerValidator(txtRepassword, false, (Control c, String newValue) -> ValidationResult
                 .fromErrorIf(c, "ລະຫັດຜ່ານທີ່ປ້ອນບໍ່ຄືກັນ", !newValue.equals(txtPassword.getText())));
+        validPassLengt.registerValidator(txtPassword, false, (Control c, String newValue) -> ValidationResult
+                .fromErrorIf(c, "ລະຫັດຜ່ານຕ້ອງມີຕົວເລກ ຫຼື ຕົວອັກສອນຢ່າງໜ້ອຍ 6 ຕົວ", newValue.length() < 6));
     }
 
     private void initTable() {
@@ -229,23 +230,19 @@ public class EmployeeController implements Initializable {
                             && !txtRepassword.getText().equals("")) {
 
                         if (txtTel.getText().length() < 7 || txtTel.getText().length() > 11) {
-                            if (dialog != null)
-                                dialog.closeDialog();
-                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                                    "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.", DialogTransition.CENTER,
-                                    buttons, false);
-                            dialog.showDialog();
+                            dialog.showWarningDialog(null, "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.");
                             txtTel.requestFocus();
                             return;
                         }
 
+                        if (txtPassword.getText().length() < 6) {
+                            dialog.showWarningDialog(null, "ລະຫັດຜ່ານຕ້ອງມີຕົວເລກ ຫຼື ຕົວອັກສອນຢ່າງໜ້ອຍ 6 ຕົວ");
+                            txtRepassword.requestFocus();
+                            return;
+                        }
+
                         if (!txtPassword.getText().equals(txtRepassword.getText())) {
-                            if (dialog != null)
-                                dialog.closeDialog();
-                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                                    "ລະຫັດຜ່ານບໍ່ຄືກັນ ກະລຸນາກວດສອອບແລ້ວລອງໃຫມ່ອິກຄັ້ງ.", DialogTransition.CENTER,
-                                    buttons, false);
-                            dialog.showDialog();
+                            dialog.showWarningDialog(null, "ລະຫັດຜ່ານບໍ່ຄືກັນ ກະລຸນາກວດສອອບແລ້ວລອງໃຫມ່ອິກຄັ້ງ.");
                             txtRepassword.requestFocus();
                             return;
                         }
@@ -259,11 +256,11 @@ public class EmployeeController implements Initializable {
 
                     } else {
                         validRules.setErrorDecorationEnabled(true);
-                        alertMessage.showWarningMessage(stackPane, "Save Warning",
+                        alertMessage.showWarningMessage("Save Warning",
                                 "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                     }
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage(stackPane, "Save Error", "Error: " + e.getMessage(), 4,
+                    alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
                 }
             }
@@ -278,12 +275,7 @@ public class EmployeeController implements Initializable {
                             && !txtTel.getText().equals("")) {
 
                         if (txtTel.getText().length() < 7 || txtTel.getText().length() > 11) {
-                            if (dialog != null)
-                                dialog.closeDialog();
-                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                                    "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.", DialogTransition.CENTER,
-                                    buttons, false);
-                            dialog.showDialog();
+                            dialog.showWarningDialog(null, "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.");
                             txtTel.requestFocus();
                             return;
                         }
@@ -294,16 +286,16 @@ public class EmployeeController implements Initializable {
                         if (employee.updateData() > 0) {
                             showData();
                             clearText();
-                            alertMessage.showCompletedMessage(stackPane, "Edited", "Edit data successfully.", 4,
+                            alertMessage.showCompletedMessage("Edited", "Edit data successfully.", 4,
                                     Pos.BOTTOM_RIGHT);
                         }
                     } else {
                         validRules.setErrorDecorationEnabled(true);
-                        alertMessage.showWarningMessage(stackPane, "Edit Warning",
+                        alertMessage.showWarningMessage("Edit Warning",
                                 "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                     }
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage(stackPane, "Edit Error", "Error: " + e.getMessage(), 4,
+                    alertMessage.showErrorMessage("Edit Error", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
                 }
             }
@@ -436,7 +428,7 @@ public class EmployeeController implements Initializable {
                     tableEmployee.setItems(sorted);
 
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage(stackPane, "Load Data", "Error" + e.getMessage(), 4,
+                    alertMessage.showErrorMessage("Load Data", "Error" + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
                 }
             }
@@ -480,12 +472,19 @@ public class EmployeeController implements Initializable {
 
                             @Override
                             public void handle(ActionEvent event) {
-                                JFXButton[] buttons = {
-                                        buttonYes(tableEmployee.getItems().get(getIndex()).getEmployeeId()), buttonNo(),
-                                        buttonCancel() };
-                                dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
-                                        JFXDialog.DialogTransition.CENTER, buttons, false);
-                                dialog.showDialog();
+                                dialog.showComfirmDialog("Comfirmed", null, "ຕ້ອງການລົບຂໍ້ມູນ ຫຼື ບໍ?");
+                                try {
+                                    if (employee
+                                            .deleteData(tableEmployee.getItems().get(getIndex()).getEmployeeId()) > 0) {
+                                        showData();
+                                        clearText();
+                                        alertMessage.showCompletedMessage("Deleted", "Delete data successfully.", 4,
+                                                Pos.BOTTOM_RIGHT);
+                                    }
+                                } catch (Exception e) {
+                                    alertMessage.showErrorMessage("Deleted", "Error: " + e.getMessage(), 4,
+                                            Pos.BOTTOM_RIGHT);
+                                }
                             }
 
                         });
@@ -508,67 +507,6 @@ public class EmployeeController implements Initializable {
         colAtion.setCellFactory(cellFactory);
         tableEmployee.getColumns().add(colAtion);
 
-    }
-
-    protected JFXButton buttonYes(String id) {
-        JFXButton btyes = new JFXButton("ຕົກລົງ");
-        btyes.setStyle(Style.buttonDialogStyle);
-        btyes.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                // employee = new EmployeeModel();
-                try {
-                    if (employee.deleteData(id) > 0) {
-                        showData();
-                        clearText();
-                        alertMessage.showCompletedMessage(stackPane, "Deleted", "Delete data successfully.", 4,
-                                Pos.BOTTOM_RIGHT);
-                        dialog.closeDialog();
-                    }
-                } catch (Exception e) {
-                    alertMessage.showErrorMessage(stackPane, "Deleted", "Error: " + e.getMessage(), 4,
-                            Pos.BOTTOM_RIGHT);
-                }
-            }
-        });
-        return btyes;
-    }
-
-    protected JFXButton buttonNo() {
-        JFXButton btno = new JFXButton("  ບໍ່  ");
-        btno.setStyle(Style.buttonDialogStyle);
-        btno.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                dialog.closeDialog();
-            }
-        });
-        return btno;
-    }
-
-    protected JFXButton buttonCancel() {
-        JFXButton btcancel = new JFXButton("ຍົກເລີກ");
-        btcancel.setStyle(Style.buttonDialogStyle);
-        btcancel.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                dialog.closeDialog();
-            }
-
-        });
-        return btcancel;
-    }
-
-    private JFXButton buttonOK() {
-        JFXButton btOk = new JFXButton("OK");
-        btOk.setStyle(Style.buttonDialogStyle);
-        btOk.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btOk;
     }
 
 }

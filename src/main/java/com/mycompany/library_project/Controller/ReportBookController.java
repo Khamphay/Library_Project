@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
-import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Report.CreateReport;
 
@@ -25,10 +24,10 @@ import javafx.scene.layout.StackPane;
 public class ReportBookController implements Initializable {
 
     private AlertMessage alertMessage = new AlertMessage();
-    private DialogMessage dialog = null;
+    private DialogMessage dialog = new DialogMessage();
     private CreateReport report = null;
     Map<String, Object> map = null;
-    private JFXButton[] buttons = { buttonOK() };
+    private Task<Void> task = null;
     private MaskerPane masker = new MaskerPane();
     String logo = Paths.get("bin/Logo.png").toAbsolutePath().toString();
 
@@ -62,14 +61,11 @@ public class ReportBookController implements Initializable {
 
                 if (rdbReportByBookId.isSelected())
                     if (txtBookId.getText().equals("")) {
-                        dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                                "ກະລຸນາປ້ອນລະຫັດປຶ້ມທີ່ຕ້ອງການລາຍງານແລ້ວ ລອງໃຫມ່ອີກຄັ້ງ.",
-                                JFXDialog.DialogTransition.CENTER, buttons, false);
-                        dialog.showDialog();
+                        dialog.showWarningDialog(null, "ກະລຸນາປ້ອນລະຫັດປຶ້ມທີ່ຕ້ອງການລາຍງານແລ້ວ ລອງໃຫມ່ອີກຄັ້ງ.");
                         return;
                     }
 
-                Task<Void> task = new Task<Void>() {
+                task = new Task<Void>() {
 
                     @Override
                     protected Void call() throws Exception {
@@ -103,6 +99,7 @@ public class ReportBookController implements Initializable {
                         masker.setProgressVisible(false);
                         masker.setVisible(false);
                         alertMessage.showErrorMessage("Report", "Report Failed", 4, Pos.BOTTOM_RIGHT);
+                        dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລາຍງານ", task.getException());
                     }
                 };
                 new Thread(task).start();
@@ -127,14 +124,5 @@ public class ReportBookController implements Initializable {
         stackPane.getChildren().add(masker);
 
         initEvents();
-    }
-
-    private JFXButton buttonOK() {
-        JFXButton btOk = new JFXButton("OK");
-        btOk.setStyle(Style.buttonDialogStyle);
-        btOk.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btOk;
     }
 }

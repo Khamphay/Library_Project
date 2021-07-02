@@ -6,15 +6,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import com.github.cliftonlabs.json_simple.*;
-import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
-
-import javafx.geometry.Pos;
-
+import com.mycompany.library_project.ControllerDAOModel.*;
 public class CreateLogFile {
     private String path_log = "log/";
     private String path_config = "config/";
     private String fileConfig = "Server_infor.json";
-    private AlertMessage alertMessage = new AlertMessage();
+    private DialogMessage dialog = new DialogMessage();
 
     public CreateLogFile() {
     }
@@ -37,7 +34,7 @@ public class CreateLogFile {
             writer.close();
             return true;
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Save Configed", "Error: " + e.getMessage(), 4, Pos.TOP_CENTER);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການກວດສອບຂໍ້ມູນການເຊື່ອມຕໍ່", e);
             return false;
         }
     }
@@ -56,8 +53,7 @@ public class CreateLogFile {
             reader.close();
             return server;
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Read Configed", "Error: " + e.getMessage(), 4, Pos.TOP_CENTER);
-            e.printStackTrace();
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການອ່ານຂໍ້ມູນການເຊື່ອມຕໍ່", e);
             return null;
         }
     }
@@ -76,7 +72,7 @@ public class CreateLogFile {
             pw.close();
             return true;
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Logfile Error", "Error: " + e.getMessage(), 4, Pos.TOP_CENTER);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການຂຽນຂໍ້ມູນ Logfile", e);
             return false;
         }
     }

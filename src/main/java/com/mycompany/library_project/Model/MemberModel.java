@@ -1,21 +1,17 @@
 package com.mycompany.library_project.Model;
 
 import com.mycompany.library_project.MyConnection;
-import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
+import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
-import com.mycompany.library_project.config.CreateLogFile;
-
-import javafx.geometry.Pos;
 
 import java.sql.*;
 import java.text.*;
 
 public class MemberModel implements DataAccessObject {
 
-    private AlertMessage alertMessage = new AlertMessage();
-    private CreateLogFile logfile = new CreateLogFile();
+    private DialogMessage dialog = new DialogMessage();
     private PreparedStatement ps = null;
-    private Connection con = MyConnection.getConnect();
+    private Connection con = null;
     private ResultSet rs = null;
     private String query = "";
 
@@ -39,8 +35,8 @@ public class MemberModel implements DataAccessObject {
     private byte[] byimg;
     private double costRegister;
 
-    public MemberModel() {
-
+    public MemberModel(Connection con) {
+        this.con = con;
     }
 
     public MemberModel(int number, String memberId, String firstName, String sureName, String study_year, String detp,
@@ -258,8 +254,7 @@ public class MemberModel implements DataAccessObject {
             rs = con.createStatement().executeQuery(query);
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Member Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນສະມາຊິດ", e);
             return null;
         } finally {
             //con.close();
@@ -275,8 +270,7 @@ public class MemberModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Member Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນສະມາຊິດ", e);
             return null;
         } finally {
             //con.close();
@@ -297,8 +291,7 @@ public class MemberModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Member Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການຄົ້ນຫາຂໍ້ມູນສະມາຊິດ", e);
             return null;
         } finally {
             //con.close();
@@ -313,8 +306,7 @@ public class MemberModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Member End Of Register Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນສະມາຊິດ", e);
             return null;
         } finally {
             //con.close();
@@ -350,8 +342,7 @@ public class MemberModel implements DataAccessObject {
             ps.setDouble(16, getCostRegister());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Save Rgister Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນສະມາຊິດ", e);
             return 0;
         } finally {
             ps.close();
@@ -389,8 +380,7 @@ public class MemberModel implements DataAccessObject {
             ps.setDouble(17, getCostRegister());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Edite Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Update Member Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນສະມາຊິດ", e);
             return 0;
         } finally {
             ps.close();
@@ -406,8 +396,7 @@ public class MemberModel implements DataAccessObject {
             ps.setString(1, id);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Delete Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Delete Member Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນສະມາຊິດ", e);
             return 0;
         } finally {
             ps.close();

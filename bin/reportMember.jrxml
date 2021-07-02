@@ -133,7 +133,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Phetsarath OT" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[ລາຍງານຂໍ້ມູນສະມາຊິດຫໍສະໝຸດ ຄວທ]]></text>
+				<text><![CDATA[ລາຍງານຂໍ້ມູນສະມາຊິກຫໍສະໝຸດ ຄວທ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="100" y="121" width="184" height="19" uuid="dd91b396-5bd1-4e6b-a461-8e309c329ea3"/>
@@ -164,16 +164,16 @@
 	<columnHeader>
 		<band height="32" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="100" height="30" uuid="faa8cfe3-163c-401c-923c-193ed57b2100">
+				<reportElement x="2" y="0" width="80" height="30" uuid="faa8cfe3-163c-401c-923c-193ed57b2100">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7adabac0-3597-49cf-bf55-b9483248890e"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Phetsarath OT" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[ລະຫັດສະມາຊິດ]]></text>
+				<text><![CDATA[ລຳດັບ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="103" y="0" width="100" height="30" uuid="100640cb-98ca-48c1-8c71-c50fbb1d89ca">
+				<reportElement x="91" y="0" width="100" height="30" uuid="100640cb-98ca-48c1-8c71-c50fbb1d89ca">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="911f6459-b9ad-4cb4-afa6-96b998baa1e3"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -182,7 +182,7 @@
 				<text><![CDATA[ລະຫັດນັກສຶກສາ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="207" y="0" width="113" height="30" uuid="c0be9b1f-f46b-4fec-b52d-6c5e2ba353ec">
+				<reportElement x="195" y="0" width="120" height="30" uuid="c0be9b1f-f46b-4fec-b52d-6c5e2ba353ec">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ff70c7f8-51c9-454c-8fed-36c1d523e0cc"/>
 				</reportElement>
 				<box padding="5"/>
@@ -192,7 +192,7 @@
 				<text><![CDATA[ຊື່]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="325" y="0" width="118" height="30" uuid="c5043414-be6e-4ebd-bfd5-ab7878a30a8d">
+				<reportElement x="321" y="0" width="118" height="30" uuid="c5043414-be6e-4ebd-bfd5-ab7878a30a8d">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2a8bc72a-4ff7-4a2e-af6d-2faa8515eea3"/>
 				</reportElement>
 				<box padding="5"/>
@@ -248,19 +248,10 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="31" splitType="Stretch">
+		<band height="48" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<textField>
-				<reportElement x="0" y="0" width="100" height="30" uuid="5d33208f-dfb4-47ad-85d8-991550d1ac8f">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7adabac0-3597-49cf-bf55-b9483248890e"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Phetsarath OT" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{member_id}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="103" y="0" width="100" height="30" uuid="4a4b9c35-84aa-4b7b-b6ad-9e5368625987">
+				<reportElement x="91" y="0" width="100" height="30" uuid="4a4b9c35-84aa-4b7b-b6ad-9e5368625987">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="911f6459-b9ad-4cb4-afa6-96b998baa1e3"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -269,7 +260,7 @@
 				<textFieldExpression><![CDATA[$F{student_id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="207" y="0" width="113" height="30" uuid="e3876683-53f3-41b9-84e9-33073bca0ef8">
+				<reportElement x="195" y="0" width="120" height="30" uuid="e3876683-53f3-41b9-84e9-33073bca0ef8">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ff70c7f8-51c9-454c-8fed-36c1d523e0cc"/>
 				</reportElement>
 				<box padding="5"/>
@@ -279,7 +270,7 @@
 				<textFieldExpression><![CDATA[$F{full_name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="325" y="0" width="118" height="30" uuid="db9c12b4-f28e-4e1c-aad4-6c8143cc612e">
+				<reportElement x="321" y="0" width="118" height="30" uuid="db9c12b4-f28e-4e1c-aad4-6c8143cc612e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2a8bc72a-4ff7-4a2e-af6d-2faa8515eea3"/>
 				</reportElement>
 				<box padding="5"/>
@@ -335,17 +326,17 @@
 				</reportElement>
 			</line>
 			<line>
-				<reportElement x="101" y="-32" width="1" height="62" uuid="ebc89c51-2967-42ad-8e6f-ae328ebc92de">
+				<reportElement x="85" y="-32" width="1" height="62" uuid="ebc89c51-2967-42ad-8e6f-ae328ebc92de">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 			</line>
 			<line>
-				<reportElement x="204" y="-33" width="1" height="63" uuid="cef7d478-f01e-480d-99a7-a525e9bc2549">
+				<reportElement x="192" y="-33" width="1" height="63" uuid="cef7d478-f01e-480d-99a7-a525e9bc2549">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 			</line>
 			<line>
-				<reportElement x="322" y="-33" width="1" height="63" uuid="6bffd9ea-c552-43d3-998d-d9574cc0b315">
+				<reportElement x="317" y="-33" width="1" height="63" uuid="6bffd9ea-c552-43d3-998d-d9574cc0b315">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 			</line>
@@ -374,6 +365,13 @@
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 			</line>
+			<textField>
+				<reportElement x="2" y="0" width="80" height="30" uuid="0e80f3d6-f3b2-4f3d-a91a-f0318c407823"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_COUNT}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>

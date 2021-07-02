@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog.DialogTransition;
-import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Report.CreateReport;
 
@@ -19,7 +17,6 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.*;
-import javafx.geometry.Pos;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.StackPane;
 
@@ -27,10 +24,9 @@ public class ReportBookLostController implements Initializable {
 
     private CreateReport report = null;
     private Map<String, Object> map = null;
-    private DialogMessage dialog = null;
-    private AlertMessage alertMessage = new AlertMessage();
+    private DialogMessage dialog = new DialogMessage();
     private MaskerPane masker = new MaskerPane();
-    private JFXButton[] buttons = { buttonOK() };
+    private Task<Void> task = null;
 
     @FXML
     private StackPane stackPane;
@@ -47,14 +43,11 @@ public class ReportBookLostController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 if (dateSatrt.getValue() == null && dateEnd.getValue() == null) {
-                    dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                            "ກະລຸນາເລືອກວັນທີທີ່ຕ້ອງການລາຍງານ ລອງໃຫມ່ອີກຄັ້ງ.", DialogTransition.CENTER, buttons,
-                            false);
-                    dialog.showDialog();
+                    dialog.showWarningDialog(null, "ກະລຸນາເລືອກວັນທີທີ່ຕ້ອງການລາຍງານ ລອງໃຫມ່ອີກຄັ້ງ.");
                     return;
                 }
 
-                Task<Void> task = new Task<Void>() {
+                task = new Task<Void>() {
 
                     @Override
                     protected Void call() throws Exception {
@@ -83,7 +76,7 @@ public class ReportBookLostController implements Initializable {
                         super.failed();
                         masker.setProgressVisible(false);
                         masker.setVisible(false);
-                        alertMessage.showErrorMessage("Report", "Report Failed", 4, Pos.BOTTOM_RIGHT);
+                        dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລາຍງານ", task.getException());
                     }
                 };
                 new Thread(task).start();
@@ -101,14 +94,5 @@ public class ReportBookLostController implements Initializable {
         masker.setStyle("-fx-font-family: BoonBaan;");
         stackPane.getChildren().add(masker);
         initEvents();
-    }
-
-    private JFXButton buttonOK() {
-        JFXButton btOk = new JFXButton("OK");
-        btOk.setStyle(Style.buttonDialogStyle);
-        btOk.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btOk;
     }
 }

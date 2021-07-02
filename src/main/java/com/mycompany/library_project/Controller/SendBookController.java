@@ -2,50 +2,49 @@ package com.mycompany.library_project.Controller;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
+import javafx.scene.paint.Color;
+import javafx.stage.*;
 import javafx.util.Callback;
 
 import java.net.URL;
 import java.sql.*;
 import java.text.DecimalFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.App;
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
-import com.mycompany.library_project.config.CreateLogFile;
 
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
 public class SendBookController implements Initializable {
 
+    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
     private DecimalFormat dcFormat = new DecimalFormat("#,##0.00 ກີບ");
     private HomeController homeController = null;
-    private AdjustmentModel adjustmentModel = null;
-    private RentBookModel sendBook = new RentBookModel();
+    private RentBookModel sendBook = new RentBookModel(con);
     private AlertMessage alertMessage = new AlertMessage();
-    // private DialogMessage dialog = null;
-    private BookDetailModel book = new BookDetailModel();
+    private DialogMessage dialog = new DialogMessage();
+    private BookDetailModel book = new BookDetailModel(con);
     private MyDate mydate = new MyDate();
     private ResultSet rs = null;
-    // private JFXButton[] buttons = { buttonOK() };
     String rent_id = "", table = "", tableLog = "";
     int page = 0, qtyOutOfDate = 0;
     double price = 0.0, allPrice = 0.0;
@@ -66,7 +65,7 @@ public class SendBookController implements Initializable {
     private JFXButton btSave, btBookLost, btCancel, btClose;
 
     @FXML
-    private TableView<RentBookModel> tableSendBooks;
+    public TableView<RentBookModel> tableSendBooks;
 
     @FXML
     private TableColumn<RentBookModel, String> colRentId, colBarcode, colBookName, colPage, colCatg, colType, colTable,
@@ -80,17 +79,18 @@ public class SendBookController implements Initializable {
             final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmBookLost.fxml"));
             final Parent subForm = loader.load();
             BookLostController booklostController = loader.getController();
-            booklostController.initConstructor(this);
             final Scene scene = new Scene(subForm);
+            scene.setFill(Color.TRANSPARENT);
             final Stage stage = new Stage();
+            stage.initStyle(StageStyle.TRANSPARENT);
+            booklostController.initConstructor(this, stage);
             stage.setTitle("Ajustment");
             stage.setScene(scene);
-            stage.showAndWait();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
 
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            CreateLogFile config = new CreateLogFile();
-            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Book Lost", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມ", e);
         }
     }
 
@@ -196,6 +196,38 @@ public class SendBookController implements Initializable {
     }
 
     private void initEvents() {
+        dateRent.setDayCellFactory(new Callback<DatePicker, DateCell>() {
+
+            @Override
+            public DateCell call(DatePicker param) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        DayOfWeek day = DayOfWeek.from(item);
+                        if (day == DayOfWeek.SUNDAY || day == DayOfWeek.SATURDAY)
+                            this.setTextFill(Color.RED);
+                    }
+                };
+            }
+
+        });
+        dateSend.setDayCellFactory(new Callback<DatePicker, DateCell>() {
+
+            @Override
+            public DateCell call(DatePicker param) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        DayOfWeek day = DayOfWeek.from(item);
+                        if (day == DayOfWeek.SUNDAY || day == DayOfWeek.SATURDAY)
+                            this.setTextFill(Color.RED);
+                    }
+                };
+            }
+
+        });
         txtBarcode.setOnKeyPressed(key -> {
             if (key.getCode() == KeyCode.ENTER) {
                 try {
@@ -245,13 +277,13 @@ public class SendBookController implements Initializable {
                         }
                     } else {
                         validRules.setErrorDecorationEnabled(true);
-                        alertMessage.showWarningMessage(stackPane, "Warning",
-                                "Please chack your information and try again", 4, Pos.TOP_CENTER);
+                        alertMessage.showWarningMessage("Warning", "Please chack your information and try again", 4,
+                                Pos.TOP_CENTER);
                         clearTextField();
                     }
 
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage("Load Error", "Error" + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                    dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການກວດສອບຂໍ້ມູນ", e);
                 }
 
             }
@@ -260,29 +292,12 @@ public class SendBookController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                try {
-                    String msg = null;
-                    for (RentBookModel row : tableSendBooks.getItems()) {
-                        if (sendBook.sendBook(row.getRentId(), row.getBarcode(), "ສົ່ງແລ້ວ") > 0) {
-                            msg = ((book.updateStatus(row.getBarcode(), "ຫວ່າງ") > 0) ? "Send books successfully"
-                                    : null);
-                        }
-                    }
-
-                    if (qtyOutOfDate > 0) {
-                        adjustmentModel = new AdjustmentModel(rent_id, qtyOutOfDate, allPrice,
-                                Date.valueOf(LocalDate.now()), "ຢືມປຶ້ມກາຍກຳນົດ");
-                        adjustmentModel.saveData();
-                    }
-                    if (msg != null) {
-                        alertMessage.showCompletedMessage(stackPane, "Send", msg, 4, Pos.TOP_CENTER);
-                        tableSendBooks.getItems().clear();
-                        clearText();
-                    } else
-                        alertMessage.showWarningMessage(stackPane, "Warning",
-                                "Can not save, Please chack your information and try again", 4, Pos.TOP_CENTER);
-                } catch (Exception e) {
-                    alertMessage.showErrorMessage("Send Error", "Error" + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                if (allPrice > 0 && qtyOutOfDate > 0)
+                    showPay(rent_id, qtyOutOfDate, allPrice);
+                else if (sendBook() > 0) {
+                    alertMessage.showCompletedMessage("Saved", "Send Book successfully", 4, Pos.BOTTOM_RIGHT);
+                } else {
+                    alertMessage.showWarningMessage("Saved", "Can not send book", 4, Pos.BOTTOM_RIGHT);
                 }
             }
 
@@ -310,6 +325,44 @@ public class SendBookController implements Initializable {
             }
 
         });
+    }
+
+    private void showPay(String rentid, int outofdate, double pricePay) {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmPay.fxml"));
+            final Parent root = loader.load();
+            final Scene scene = new Scene(root);
+            scene.setFill(Color.TRANSPARENT);
+            final Stage stage = new Stage(StageStyle.TRANSPARENT);
+            stage.setScene(scene);
+            final PayController pay = loader.getController();
+            pay.initSendConstutor(this, stage, rentid, outofdate, pricePay);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+
+        } catch (Exception e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມຈ່າຍຄ່າປັບໃຫມ", e);
+        }
+    }
+
+    public int sendBook() {
+        try {
+            int result = 0;
+            for (RentBookModel row : tableSendBooks.getItems()) {
+                if (sendBook.sendBook(row.getRentId(), row.getBarcode(), "ສົ່ງແລ້ວ") > 0) {
+                    result = book.updateStatus(row.getBarcode(), "ຫວ່າງ");
+                }
+            }
+            clearText();
+            return result;
+        } catch (Exception e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກຂໍ້ມູນ", e);
+            return 0;
+        }
+    }
+
+    public void refreshRentOutOfDate() {
+        homeController.showRentBookOutOfDate();
     }
 
     @Override
@@ -367,14 +420,4 @@ public class SendBookController implements Initializable {
         colAction.setCellFactory(cellFactory);
         tableSendBooks.getColumns().add(colAction);
     }
-
-    // private JFXButton buttonOK() {
-    // JFXButton btOk = new JFXButton("OK");
-    // btOk.setStyle(Style.buttonDialogStyle);
-    // btOk.setOnAction(e -> {
-    // dialog.closeDialog();
-    // });
-    // return btOk;
-    // }
-
 }

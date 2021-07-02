@@ -7,10 +7,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
 import com.mycompany.library_project.App;
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.MemberModel;
@@ -40,13 +42,14 @@ import javafx.util.Callback;
 
 public class MemberController implements Initializable {
 
+    private Connection con = MyConnection.getConnect();
     private ManagePersonalCotroller personalCotroller = null;
     private ObservableList<MemberModel> data = null;
     private AlertMessage alertMessage = new AlertMessage();
-    private MemberModel memberModel = new MemberModel();
+    private MemberModel memberModel = new MemberModel(con);
     private MaskerPane masker = new MaskerPane();
     private ResultSet rs = null;
-    private DialogMessage dialog = null;
+    private DialogMessage dialog = new DialogMessage();
     private ArrayList<byte[]> byimg;
     public static Stage addMemberStage = null;
     public static boolean add = false;
@@ -102,7 +105,7 @@ public class MemberController implements Initializable {
             addMemberStage.show();
 
         } catch (Exception e) {
-            alertMessage.showErrorMessage(stackPane, "Open New Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Open New Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             logfile.createLogFile("ເກີດບັນຫາໃນການເປືດຟອມລົງທະບຽນ", e);
         }
     }
@@ -128,7 +131,7 @@ public class MemberController implements Initializable {
             addMemberStage.show();
 
         } catch (Exception e) {
-            alertMessage.showErrorMessage(stackPane, "Open New Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage( "Open New Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             logfile.createLogFile("ເກີດບັນຫາໃນການເປືດຟອມແກ້ໂຂຂໍ້ມູນ", e);
         }
     }
@@ -191,7 +194,7 @@ public class MemberController implements Initializable {
                     tableMember.setItems(sorted);
 
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage(boderPane, "Show Data Error", "Error: " + e.getMessage(), 4,
+                    alertMessage.showErrorMessage("Show Data Error", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
                 }
                 // }
@@ -390,7 +393,7 @@ public class MemberController implements Initializable {
                 if (tableMember.getSelectionModel().getSelectedItem() != null) {
                     showEditeMembers();
                 } else {
-                    alertMessage.showWarningMessage(stackPane, "Edit", "Please selecte the data and try again", 4,
+                    alertMessage.showWarningMessage("Edit", "Please selecte the data and try again", 4,
                             Pos.BOTTOM_RIGHT);
                 }
             }
@@ -398,16 +401,20 @@ public class MemberController implements Initializable {
         menuDelete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (tableMember.getSelectionModel().getSelectedItem() != null) {
-                    JFXButton[] buttons = { buttonYes(tableMember.getSelectionModel().getSelectedItem().getMemberId()),
-                            buttonNo(), buttonCancel() };
-                    dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
-                            JFXDialog.DialogTransition.CENTER, buttons, false);
-                    dialog.showDialog();
-                } else {
-                    alertMessage.showWarningMessage(stackPane, "Delete", "Please selecte the data and try again", 4,
-                            Pos.BOTTOM_RIGHT);
-                }
+                Optional<ButtonType> result = dialog.showComfirmDialog("Comfirmed", null, "ຕ້ອງການລົບຂໍ້ມູນ ຫຼື ບໍ?");
+                if (result.get() == ButtonType.YES)
+                    try {
+                        if (memberModel
+                                .deleteData(tableMember.getSelectionModel().getSelectedItem().getMemberId()) > 0) {
+                            showData();
+                            dialog.closeDialog();
+                            alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4,
+                                    Pos.BOTTOM_RIGHT);
+                        }
+                    } catch (Exception ex) {
+                        alertMessage.showErrorMessage("Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
+
+                    }
             }
         });
 
@@ -454,11 +461,21 @@ public class MemberController implements Initializable {
                         delete.setGraphic(imgView);
                         delete.setStyle(Style.buttonStyle);
                         delete.setOnAction(e -> {
-                            JFXButton[] buttons = { buttonYes(tableMember.getItems().get(getIndex()).getMemberId()),
-                                    buttonNo(), buttonCancel() };
-                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
-                                    JFXDialog.DialogTransition.CENTER, buttons, false);
-                            dialog.showDialog();
+                            Optional<ButtonType> result = dialog.showComfirmDialog("Comfirmed", null,
+                                    "ຕ້ອງການລົບຂໍ້ມູນ ຫຼື ບໍ?");
+                            if (result.get() == ButtonType.YES)
+                                try {
+                                    if (memberModel
+                                            .deleteData(tableMember.getItems().get(getIndex()).getMemberId()) > 0) {
+                                        showData();
+                                        dialog.closeDialog();
+                                        alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4,
+                                                Pos.BOTTOM_RIGHT);
+                                    }
+                                } catch (Exception ex) {
+                                    alertMessage.showErrorMessage("Delete", "Error: " + ex.getMessage(), 4,
+                                            Pos.BOTTOM_RIGHT);
+                                }
                         });
                     }
 
@@ -479,42 +496,4 @@ public class MemberController implements Initializable {
         tableMember.getColumns().add(colAtion);
 
     }
-
-    private JFXButton buttonYes(String memberid) {
-        JFXButton btyes = new JFXButton("ຕົກລົງ");
-        btyes.setStyle(Style.buttonDialogStyle);
-        btyes.setOnAction(e -> {
-            // Todo: Delete Data
-            try {
-                if (memberModel.deleteData(memberid) > 0) {
-                    showData();
-                    // tableMember.getItems().remove(index);
-                    dialog.closeDialog();
-                    alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4, Pos.BOTTOM_RIGHT);
-                }
-            } catch (Exception ex) {
-                alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            }
-        });
-        return btyes;
-    }
-
-    private JFXButton buttonNo() {
-        JFXButton btno = new JFXButton("  ບໍ່  ");
-        btno.setStyle(Style.buttonDialogStyle);
-        btno.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btno;
-    }
-
-    private JFXButton buttonCancel() {
-        JFXButton btcancel = new JFXButton("ຍົກເລີກ");
-        btcancel.setStyle(Style.buttonDialogStyle);
-        btcancel.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btcancel;
-    }
-
 }

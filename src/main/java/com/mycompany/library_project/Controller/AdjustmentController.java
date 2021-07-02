@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
 import com.mycompany.library_project.Report.CreateReport;
@@ -29,10 +27,9 @@ public class AdjustmentController implements Initializable {
 
     private CreateReport report = null;
     private Map<String, Object> map = null;
-    private DialogMessage dialog = null;
+    private DialogMessage dialog = new DialogMessage();
     private AlertMessage alertMessage = new AlertMessage();
     private MaskerPane masker = new MaskerPane();
-    private JFXButton[] buttons = { buttonOK() };
 
     @FXML
     private StackPane stackPane;
@@ -49,9 +46,7 @@ public class AdjustmentController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 if (dateSatrt.getValue() == null && dateEnd.getValue() == null) {
-                    dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ກະລຸນາເລືອກວັນທີທີ່ຕ້ອງການລາຍງານ ລອງໃຫມ່ອີກຄັ້ງ.",
-                            JFXDialog.DialogTransition.CENTER, buttons, false);
-                    dialog.showDialog();
+                    dialog.showWarningDialog(null, "ກະລຸນາເລືອກວັນທີທີ່ຕ້ອງການລາຍງານ ລອງໃຫມ່ອີກຄັ້ງ.");
                     return;
                 }
 
@@ -102,14 +97,5 @@ public class AdjustmentController implements Initializable {
         masker.setStyle("-fx-font-family: BoonBaan;");
         stackPane.getChildren().add(masker);
         initEvents();
-    }
-
-    private JFXButton buttonOK() {
-        JFXButton btOk = new JFXButton("OK");
-        btOk.setStyle(Style.buttonDialogStyle);
-        btOk.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btOk;
     }
 }

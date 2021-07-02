@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 
@@ -16,7 +15,7 @@ import javafx.geometry.Pos;
 public class AdjustmentModel implements DataAccessObject {
 
     private AlertMessage alertMessage = new AlertMessage();
-    private Connection con = MyConnection.getConnect();
+    private Connection con = null;
     private PreparedStatement ps = null;
     private String sql = null;
 
@@ -26,7 +25,8 @@ public class AdjustmentModel implements DataAccessObject {
     private Date datePay;
     private String detail;
 
-    public AdjustmentModel() {
+    public AdjustmentModel(Connection con) {
+        this.con = con;
     }
 
     public AdjustmentModel(String rent_id, int qty, double adj_fee, Date datePay, String detail) {

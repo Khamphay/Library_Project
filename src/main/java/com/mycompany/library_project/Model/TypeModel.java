@@ -1,12 +1,6 @@
 package com.mycompany.library_project.Model;
 
-import com.mycompany.library_project.MyConnection;
-import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
-import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
-import com.mycompany.library_project.config.CreateLogFile;
-
-import javafx.geometry.Pos;
-
+import com.mycompany.library_project.ControllerDAOModel.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,19 +8,18 @@ import java.sql.SQLException;
 
 public class TypeModel implements DataAccessObject {
 
-    private AlertMessage alertMessage = new AlertMessage();
-    private CreateLogFile logfile = new CreateLogFile();
+    private DialogMessage dialog = new DialogMessage();
     private PreparedStatement ps = null;
     private ResultSet rs = null;
-    private Connection con = MyConnection.getConnect();
+    private Connection con = null;
 
     private String sql = "";
 
     private String typeId;
     private String typeName;
 
-    public TypeModel() {
-
+    public TypeModel(Connection con) {
+        this.con = con;
     }
 
     public TypeModel(String typeId) {
@@ -61,8 +54,7 @@ public class TypeModel implements DataAccessObject {
             rs = con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Book Type Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນປະເພດປຶ້ມ", e);
             return null;
         } finally {
             //con.close();
@@ -78,8 +70,7 @@ public class TypeModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Book Type By Id Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນປະເພດປຶ້ມ", e);
             return null;
         } finally {
             ps.close();
@@ -96,8 +87,7 @@ public class TypeModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Book Type By Name Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນປະເພດປຶ້ມ", e);
             return null;
         } finally {
             ps.close();
@@ -114,8 +104,7 @@ public class TypeModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Book Type Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການຄົ້ນຂໍ້ມູນປະເພດປຶ້ມ", e);
             return null;
         } finally {
             ps.close();
@@ -133,8 +122,7 @@ public class TypeModel implements DataAccessObject {
             ps.setString(2, getTypeName());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Save Book Type Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກຂໍ້ມູນປະເພດປຶ້ມ", e);
             return 0;
         } finally {
             ps.close();
@@ -151,8 +139,7 @@ public class TypeModel implements DataAccessObject {
             ps.setString(2, getTypeName());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Update Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Update Book Type Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນປະເພດປຶ້ມ", e);
             return 0;
         } finally {
             ps.close();
@@ -168,8 +155,7 @@ public class TypeModel implements DataAccessObject {
         ps.setString(1, id);
         return ps.executeUpdate();
     } catch (SQLException e) {
-        alertMessage.showErrorMessage("Datele Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-        logfile.createLogFile("Datele Book Type Error", e);
+        dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນປະເພດປຶ້ມ", e);
         return 0;
     } finally {
         ps.close();

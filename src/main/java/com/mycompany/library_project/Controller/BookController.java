@@ -21,6 +21,7 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
@@ -36,14 +37,15 @@ public class BookController implements Initializable {
     String[] values = { "001", "Data Analyst", "07-646712-21", "200", "20", "ຄອມພິວເຕີ", "ແບບຮຽນ", "ພາສາອັງກິດ" };
     Node node[] = new Node[1000];
 
+    private Connection con = MyConnection.getConnect();
     private ManageBookController manageBookController = null;
     private ResultSet rs = null;
-    private BookDetailModel bookDetail = new BookDetailModel();
+    private BookDetailModel bookDetail = new BookDetailModel(con);
     private ObservableList<BookDetailModel> data = null;
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile logfile = new CreateLogFile();
     private MaskerPane masker = new MaskerPane();
-    private DialogMessage dialog = null;
+    private DialogMessage dialog = new DialogMessage();
     public static Stage addNewBook = null;
     public static Stage addBarcode = null;
     public static String _book_id = "";
@@ -65,7 +67,7 @@ public class BookController implements Initializable {
     private StackPane stackPane;
 
     @FXML
-    private JFXButton btAddNewBook, btRefresh, btClose;
+    private JFXButton btAddNewBook, btClose;
 
     @FXML
     private MenuItem menuList, menuEdit;
@@ -112,16 +114,6 @@ public class BookController implements Initializable {
 
     private void initEvents() {
 
-        btRefresh.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-
-                txtSearch.setText((value += 1) + "");
-                showData();
-
-            }
-        });
         menuList.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -138,7 +130,7 @@ public class BookController implements Initializable {
                     try {
                         showAddBook(tableBook.getSelectionModel().getSelectedItem());
                     } catch (Exception e) {
-                        alertMessage.showErrorMessage(stackPane, "Open New Form", "Error: " + e.getMessage(), 4,
+                        alertMessage.showErrorMessage("Open New Form", "Error: " + e.getMessage(), 4,
                                 Pos.BOTTOM_RIGHT);
                         logfile.createLogFile("Open Form Edit Book Error", e);
                     }
@@ -183,7 +175,7 @@ public class BookController implements Initializable {
             addNewBook.initModality(Modality.APPLICATION_MODAL);
             addNewBook.show();
         } catch (IOException e) {
-            alertMessage.showErrorMessage(borderPane, "Open New Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Open New Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -234,7 +226,7 @@ public class BookController implements Initializable {
                     tableBook.setItems(sorted);
 
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage(borderPane, "Load data", "Error: " + e.getMessage(), 4,
+                    alertMessage.showErrorMessage("Load data", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
                 } finally {
                     rs.close();
@@ -360,11 +352,23 @@ public class BookController implements Initializable {
 
                             @Override
                             public void handle(ActionEvent event) {
-                                JFXButton[] buttons = { buttonYes(tableBook.getItems().get(getIndex()).getBookId()),
-                                        buttonNo(), buttonCancel() };
-                                dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
-                                        JFXDialog.DialogTransition.CENTER, buttons, false);
-                                dialog.showDialog();
+
+                                Optional<ButtonType> result = dialog.showComfirmDialog("Comfirmed", null,
+                                        "ຕ້ອງການລົບຂໍ້ມູນ ຫຼື ບໍ?");
+                                if (result.get() == ButtonType.YES)
+                                    // Todo: Delete Data
+                                    try {
+                                        // bookDetail = new BookDetailModel();
+                                        if (bookDetail
+                                                .deleteData(tableBook.getItems().get(getIndex()).getBookId()) > 0) {
+                                            alertMessage.showCompletedMessage("Deleted", "Delete data successfully.", 4,
+                                                    Pos.BOTTOM_RIGHT);
+                                            showData();
+                                        }
+                                    } catch (Exception ex) {
+                                        alertMessage.showErrorMessage("Delete", "Error: " + ex.getMessage(), 4,
+                                                Pos.BOTTOM_RIGHT);
+                                    }
                             }
                         });
                     }
@@ -386,42 +390,4 @@ public class BookController implements Initializable {
         tableBook.getColumns().add(colAtion);
 
     }
-
-    private JFXButton buttonYes(String bookid) {
-        JFXButton btyes = new JFXButton("ຕົກລົງ");
-        btyes.setStyle(Style.buttonDialogStyle);
-        btyes.setOnAction(e -> {
-            // Todo: Delete Data
-            try {
-                // bookDetail = new BookDetailModel();
-                if (bookDetail.deleteData(bookid) > 0) {
-                    dialog.closeDialog();
-                    alertMessage.showCompletedMessage("Deleted", "Delete data successfully.", 4, Pos.BOTTOM_RIGHT);
-                    showData();
-                }
-            } catch (Exception ex) {
-                alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            }
-        });
-        return btyes;
-    }
-
-    private JFXButton buttonNo() {
-        JFXButton btno = new JFXButton("  ບໍ່  ");
-        btno.setStyle(Style.buttonDialogStyle);
-        btno.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btno;
-    }
-
-    private JFXButton buttonCancel() {
-        JFXButton btcancel = new JFXButton("ຍົກເລີກ");
-        btcancel.setStyle(Style.buttonDialogStyle);
-        btcancel.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btcancel;
-    }
-
 }

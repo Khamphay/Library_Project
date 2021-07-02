@@ -19,7 +19,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
 <StackPane prefHeight="638.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.RentBookController">
    <children>
       <BorderPane id="borderContent" fx:id="borderPane" prefHeight="631.0" prefWidth="1387.0" stylesheets="@Style/appstyle.css">
@@ -188,7 +187,7 @@
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="24.0">
                            <image>
-                              <Image url="@Icon/return_book_50px.png" />
+                              <Image url="@Icon/study_50px.png" />
                            </image>
                         </ImageView>
                      </graphic>

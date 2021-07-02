@@ -1,20 +1,26 @@
 package com.mycompany.library_project.Controller;
 
 import java.net.URL;
+import java.nio.file.Paths;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
-import com.jfoenix.controls.JFXDialog.DialogTransition;
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
+import com.mycompany.library_project.Report.CreateReport;
 
+import org.controlsfx.control.MaskerPane;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
@@ -22,6 +28,7 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.*;
@@ -31,45 +38,66 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class BookLostController implements Initializable {
 
-    private BookDetailModel bookDetail = new BookDetailModel();
-    private BookLostModel booklostModel = new BookLostModel();
-    private RentBookModel rentBook = new RentBookModel();
+    private Connection con = MyConnection.getConnect();
+    private BookDetailModel bookDetail = new BookDetailModel(con);
+    private BookLostModel booklostModel = new BookLostModel(con);
+    private RentBookModel rentBook = new RentBookModel(con);
     private AdjustmentModel adjustmentModel = null;
     private ObservableList<BookLostModel> data = null;
     private ValidationSupport validRules = new ValidationSupport();
     private AlertMessage alertMessage = new AlertMessage();
-    private DialogMessage dialog = null;
+    private DialogMessage dialog = new DialogMessage();
+    private CreateReport report = new CreateReport();
+    private MaskerPane masker = new MaskerPane();
     private MyDate mydate = new MyDate();
+    private ResultSet rs = null;
+    private Task<Void> task = null;
     private ArrayList<PriceList> priceList = null;;
     private DecimalFormat dcFormat = new DecimalFormat("#,##0.00 ກີບ");
-    private ResultSet rs = null;
-    private JFXButton[] buttons = { buttonOK() };
+
     double outPrice = 0.0, lostPrice = 0.0, sumOutPrice = 0.0, sumLostPrice = 0.0, totalPrice = 0.0;
     String rent_id = "", memberId = "";
+    double x, y;
 
+    private SendBookController sendBookController = null;
     // Todo: Call by ManageBookController Form
-    public void initConstructor(SendBookController sendBookController) {
+    public void initConstructor(SendBookController sendBookController, Stage stage) {
+        this.sendBookController = sendBookController;
 
-        btClose.setDisable(true);
-        btClose.setVisible(false);
+        acHeaderPane.setOnMousePressed(mouseEvent -> {
+            x = mouseEvent.getSceneX();
+            y = mouseEvent.getSceneY();
+        });
 
-        // btClose.setOnAction((EventHandler<ActionEvent>) new
-        // EventHandler<ActionEvent>() {
+        // TODO: Set for move form
+        acHeaderPane.setOnMouseDragged(mouseEvent -> {
+            stage.setX(mouseEvent.getScreenX() - x);
+            stage.setY(mouseEvent.getScreenY() - y);
+            // stage.setOpacity(0.4f);
+        });
 
-        // @Override
-        // public void handle(ActionEvent event) {
-        // manageBookController.showMainMenuBooks();
-        // }
-        // });
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                stage.close();
+            }
+
+        });
     }
 
     @FXML
     private StackPane stackPane;
+
+    @FXML
+    private AnchorPane acHeaderPane;
 
     @FXML
     private TextField txtMemberId, txtFName, txtLname, txtTel, txtDep, txtOutPrice, txtSumOutPrice, txtLostPrice,
@@ -135,6 +163,7 @@ public class BookLostController implements Initializable {
         colNumber.setMinWidth(50);
         colNumber.setMaxWidth(120);
         colNumber.setPrefWidth(60);
+        colNumber.setId("colCenter");
         colNumber.setCellValueFactory(
                 new Callback<CellDataFeatures<BookLostModel, BookLostModel>, ObservableValue<BookLostModel>>() {
 
@@ -207,12 +236,7 @@ public class BookLostController implements Initializable {
                         }
 
                         if (data.isEmpty()) {
-                            if (dialog != null) {
-                                dialog.closeDialog();
-                            }
-                            dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ບໍ່ພົບຂໍ້ມູນການຢືມປຶ້ມ",
-                                    DialogTransition.CENTER, buttons, false);
-                            dialog.showDialog();
+                            dialog.showWarningDialog(null, "ບໍ່ພົບຂໍ້ມູນການຢືມປຶ້ມ");
                             return;
                         }
 
@@ -225,8 +249,8 @@ public class BookLostController implements Initializable {
                         txtQty.setText(tableLost.getItems().size() + " ຫົວ");
                     } else {
                         validRules.setErrorDecorationEnabled(true);
-                        alertMessage.showWarningMessage(stackPane, "Edit Warning",
-                                "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
+                        alertMessage.showWarningMessage("Edit Warning", "Please chack your information and try again.",
+                                4, Pos.BOTTOM_RIGHT);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -246,7 +270,6 @@ public class BookLostController implements Initializable {
                     if (id > 0) {
                         int index = 0;
                         for (BookLostModel item : tableLost.getItems()) {
-                            System.out.println("After:=========== " + tableLost.getItems().size());
                             try {
                                 if (booklostModel.saveLostDetail(id, item.getBarcode(),
                                         priceList.get(index).getPricePerBook()) > 0)
@@ -255,8 +278,8 @@ public class BookLostController implements Initializable {
                                             message = "Save Successfully!.";
 
                             } catch (SQLException e) {
-                                alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4,
-                                        Pos.BOTTOM_RIGHT);
+                                dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກລາຍລະອຽດຂໍ້ມູນປຶ້ມເສຍ",
+                                        e);
                                 message = null;
                                 return;
                             }
@@ -269,12 +292,11 @@ public class BookLostController implements Initializable {
 
                         if (message != null && resualt > 0) {
                             alertMessage.showCompletedMessage("Saved", message, 4, Pos.BOTTOM_RIGHT);
+                            printBin(id);// Todo: Print Bin
                             clearText();
+                            sendBookController.refreshRentOutOfDate();
                         } else if (resualt <= 0) {
-                            dialog = new DialogMessage(stackPane, "ບັນທຶກຂໍ້ມູນ",
-                                    "ບັນທືກຂໍ້ມູນສຳເລັດ ແຕ່ມີບັນຫາໃນການບັນທຶກຂໍ້ມູນການປັບໃຫມ", DialogTransition.CENTER,
-                                    buttons, false);
-                            dialog.showDialog();
+                            dialog.showInErrorDialog(null, "ບັນທືກຂໍ້ມູນສຳເລັດ ແຕ່ມີບັນຫາໃນການບັນທຶກຂໍ້ມູນການປັບໃຫມ");
                         }
                     }
                 } catch (Exception e) {
@@ -293,8 +315,50 @@ public class BookLostController implements Initializable {
 
     }
 
+    private void printBin(int lostid) {
+
+        task = new Task<Void>() {
+
+            @Override
+            protected Void call() throws Exception {
+                masker.setVisible(true);
+                masker.setProgressVisible(true);
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("lostid", lostid);
+                map.put("logo", Paths.get("bin/Logo.png").toAbsolutePath().toString());
+                report.showReport(map, "binPayBookLost.jrxml", "Error print bin");
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                super.succeeded();
+                masker.setVisible(false);
+                masker.setProgressVisible(false);
+            }
+
+            @Override
+            protected void failed() {
+                super.failed();
+                masker.setVisible(false);
+                masker.setProgressVisible(false);
+                dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການພີມໃບບິນ", task.getException());
+            }
+
+        };
+        new Thread(task).start();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        masker.setVisible(false);
+        masker.setPrefWidth(50.0);
+        masker.setPrefHeight(50.0);
+        masker.setText("ກຳລັງໂຫລດຂໍ້ມູນ, ກະລຸນາລໍຖ້າ...");
+        masker.setStyle("-fx-font-family: BoonBaan;");
+        stackPane.getChildren().add(masker);
+
         initTable();
         initEvents();
         initRules();
@@ -362,15 +426,6 @@ public class BookLostController implements Initializable {
 
         colAction.setCellFactory(cellFactory);
         tableLost.getColumns().add(colAction);
-    }
-
-    private JFXButton buttonOK() {
-        JFXButton btOk = new JFXButton("OK");
-        btOk.setStyle(Style.buttonDialogStyle);
-        btOk.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btOk;
     }
 
     class PriceList {

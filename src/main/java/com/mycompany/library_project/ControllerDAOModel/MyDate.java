@@ -67,4 +67,10 @@ public class MyDate {
         }
         return outdate;
     }
+
+    public String formaterDate(LocalDate values, String format) {
+
+        final DateTimeFormatter formater = DateTimeFormatter.ofPattern(format);
+        return formater.format(values);
+    }
 }

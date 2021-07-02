@@ -22,9 +22,11 @@ import javafx.util.Callback;
 
 import java.net.URL;
 import java.sql.*;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.CategoryModel;
@@ -35,12 +37,13 @@ import org.controlsfx.validation.Validator;
 
 public class BookCategoryController implements Initializable {
 
+    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
     private AddBookController addBookController = null;
-    private CategoryModel category = new CategoryModel();
+    private CategoryModel category = new CategoryModel(con);
     private ObservableList<CategoryModel> data = null;
     private ResultSet rs = null;
-    private DialogMessage dialog = null;
+    private DialogMessage dialog = new DialogMessage();
     private AlertMessage alertMessage = new AlertMessage();
     double x, y;
 
@@ -144,7 +147,7 @@ public class BookCategoryController implements Initializable {
                     tableCategory.setItems(sorted);
                     TextFields.bindAutoCompletion(txtSearch, sorted);
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage(stakePane, "Load data", "Error: " + e.getMessage(), 4,
+                    alertMessage.showErrorMessage("Load data", "Error: " + e.getMessage(), 4,
                             Pos.BOTTOM_RIGHT);
                 }
             }
@@ -193,7 +196,7 @@ public class BookCategoryController implements Initializable {
                 if (category.saveData() > 0) {
                     showData();
                     ClearData();
-                    alertMessage.showCompletedMessage(stakePane, "Save", "Save data successfully.", 4,
+                    alertMessage.showCompletedMessage("Save", "Save data successfully.", 4,
                             Pos.BOTTOM_RIGHT);
                     if (addBookController != null)
                         addBookController.fillCategory();
@@ -201,12 +204,12 @@ public class BookCategoryController implements Initializable {
             } else {
                 // Todo: Show warning message if text or combo box is empty
                 validRules.setErrorDecorationEnabled(true);
-                alertMessage.showWarningMessage(stakePane, "Save Warning",
+                alertMessage.showWarningMessage("Save Warning",
                         "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
             }
 
         } catch (Exception e) {
-            alertMessage.showErrorMessage(stakePane, "Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -218,7 +221,7 @@ public class BookCategoryController implements Initializable {
                 if (category.updateData() > 0) {
                     showData();
                     ClearData();
-                    alertMessage.showCompletedMessage(stakePane, "Edit", "Edit data successfully.", 4,
+                    alertMessage.showCompletedMessage("Edit", "Edit data successfully.", 4,
                             Pos.BOTTOM_RIGHT);
                     if (addBookController != null)
                         addBookController.fillCategory();
@@ -226,11 +229,11 @@ public class BookCategoryController implements Initializable {
             } else {
                 // Todo: Show warning message if text or combo box is empty
                 validRules.setErrorDecorationEnabled(true);
-                alertMessage.showWarningMessage(stakePane, "Edit Warning",
+                alertMessage.showWarningMessage("Edit Warning",
                         "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
-            alertMessage.showErrorMessage(stakePane, "Edit", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Edit", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
         }
     }
 
@@ -317,11 +320,24 @@ public class BookCategoryController implements Initializable {
                         delete.setGraphic(imgView);
                         delete.setStyle(Style.buttonStyle);
                         delete.setOnAction(e -> {
-                            JFXButton[] buttons = { buttonYes(tableCategory.getItems().get(getIndex()).getCatgId()),
-                                    buttonNo(), buttonCancel() };
-                            dialog = new DialogMessage(stakePane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
-                                    JFXDialog.DialogTransition.CENTER, buttons, false);
-                            dialog.showDialog();
+                            Optional<ButtonType> result = dialog.showComfirmDialog("Comfirmed", null,
+                                    "ຕ້ອງການລົບຂໍ້ມູນ ຫຼື ບໍ?");
+                            if (result.get() == ButtonType.YES)
+                                // Todo: Delete Data
+                                try {
+                                    // category = new CategoryModel();
+                                    if (category.deleteData(tableCategory.getItems().get(getIndex()).getCatgId()) > 0) {
+                                        showData();
+                                        ClearData();
+                                        alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4,
+                                                Pos.BOTTOM_RIGHT);
+                                        if (addBookController != null)
+                                            addBookController.fillCategory();
+                                    }
+                                } catch (Exception ex) {
+                                    alertMessage.showErrorMessage("Delete", "Error: " + ex.getMessage(), 4,
+                                            Pos.BOTTOM_RIGHT);
+                                }
                         });
                     }
 
@@ -344,56 +360,4 @@ public class BookCategoryController implements Initializable {
         tableCategory.getColumns().add(colAtion);
 
     }
-
-    private JFXButton buttonYes(String catgid) {
-        JFXButton btyes = new JFXButton("ຕົກລົງ");
-        btyes.setStyle(Style.buttonDialogStyle);
-        btyes.setOnAction(e -> {
-            // Todo: Delete Data
-            try {
-                // category = new CategoryModel();
-                if (category.deleteData(catgid) > 0) {
-                    showData();
-                    ClearData();
-                    dialog.closeDialog();
-                    alertMessage.showCompletedMessage(stakePane, "Delete", "Delete data successfully.", 4,
-                            Pos.BOTTOM_RIGHT);
-                    if (addBookController != null)
-                        addBookController.fillCategory();
-                }
-            } catch (Exception ex) {
-                alertMessage.showErrorMessage(stakePane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            }
-        });
-        return btyes;
-    }
-
-    private JFXButton buttonNo() {
-        JFXButton btno = new JFXButton("  ບໍ່  ");
-        btno.setStyle(Style.buttonDialogStyle);
-        btno.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btno;
-    }
-
-    private JFXButton buttonCancel() {
-        JFXButton btcancel = new JFXButton("ຍົກເລີກ");
-        btcancel.setStyle(Style.buttonDialogStyle);
-        btcancel.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btcancel;
-    }
-
-
-    // private JFXButton buttonOK() {
-    // JFXButton btok = new JFXButton("OK");
-    // btok.setStyle(Style.buttonDialogStyle);
-    // btok.setOnAction(e -> {
-    // dialog.closeDialog();
-    // });
-    // return btok;
-    // }
-
 }

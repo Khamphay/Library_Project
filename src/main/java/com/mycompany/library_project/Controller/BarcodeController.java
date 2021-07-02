@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.*;
 
 import com.jfoenix.controls.*;
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
@@ -30,13 +31,14 @@ import javafx.util.Callback;
 
 public class BarcodeController implements Initializable {
 
+    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
     private BookController bookController;
-    private BookDetailModel addBarcode = new BookDetailModel();;
+    private BookDetailModel addBarcode = new BookDetailModel(con);;
     private ResultSet rs = null;
-    private TableLogModel table = new TableLogModel();
+    private TableLogModel table = new TableLogModel(con);
     private AlertMessage alertMessage = new AlertMessage();
-    private DialogMessage dialog = null;
+    private DialogMessage dialog = new DialogMessage();
     private ObservableList<BookDetailModel> data = null;
     private ObservableList<String> items = null;
     private ArrayList<String> book = null;
@@ -373,11 +375,28 @@ public class BarcodeController implements Initializable {
 
                             @Override
                             public void handle(ActionEvent event) {
-                                JFXButton[] buttons = { buttonYes(tableBarcode.getItems().get(getIndex()).getBarcode()),
-                                        buttonNo(), buttonCancel() };
-                                dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ", "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ?",
-                                        JFXDialog.DialogTransition.CENTER, buttons, false);
-                                dialog.showDialog();
+
+                                Optional<ButtonType> result = dialog.showComfirmDialog("Comfirmed", null,
+                                        "ຕ້ອງການລົບຂໍ້ມູນອອກບໍ ຫຼື ບໍ?");
+                                if (result.get() == ButtonType.YES)
+                                    // Todo: Delete Data
+                                    try {
+                                        // addBarcode = new BookDetailModel();
+                                        if (addBarcode.deleteBarcode(bookid,
+                                                tableBarcode.getItems().get(getIndex()).getBarcode()) > 0) {
+                                            dialog.closeDialog();
+                                            alertMessage.showCompletedMessage("Deleted", "Delete data successfully.", 4,
+                                                    Pos.BOTTOM_RIGHT);
+                                            showBarcode(bookid);
+                                            if (addBarcode.updateBookQty(bookid) > 0) {
+                                                clearText();
+                                                bookController.showData();
+                                            }
+                                        }
+                                    } catch (Exception ex) {
+                                        alertMessage.showErrorMessage("Delete", "Error: " + ex.getMessage(), 4,
+                                                Pos.BOTTOM_RIGHT);
+                                    }
                             }
                         });
                     }
@@ -398,47 +417,6 @@ public class BarcodeController implements Initializable {
         colAtion.setCellFactory(cellFactory);
         tableBarcode.getColumns().add(colAtion);
 
-    }
-
-    private JFXButton buttonYes(String barcodeid) {
-        JFXButton btyes = new JFXButton("ຕົກລົງ");
-        btyes.setStyle(Style.buttonDialogStyle);
-        btyes.setOnAction(e -> {
-            // Todo: Delete Data
-            try {
-                // addBarcode = new BookDetailModel();
-                if (addBarcode.deleteBarcode(bookid, barcodeid) > 0) {
-                    dialog.closeDialog();
-                    alertMessage.showCompletedMessage("Deleted", "Delete data successfully.", 4, Pos.BOTTOM_RIGHT);
-                    showBarcode(bookid);
-                    if (addBarcode.updateBookQty(bookid) > 0) {
-                        clearText();
-                        bookController.showData();
-                    }
-                }
-            } catch (Exception ex) {
-                alertMessage.showErrorMessage(stackPane, "Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            }
-        });
-        return btyes;
-    }
-
-    private JFXButton buttonNo() {
-        JFXButton btno = new JFXButton("  ບໍ່  ");
-        btno.setStyle(Style.buttonDialogStyle);
-        btno.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btno;
-    }
-
-    private JFXButton buttonCancel() {
-        JFXButton btcancel = new JFXButton("ຍົກເລີກ");
-        btcancel.setStyle(Style.buttonDialogStyle);
-        btcancel.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btcancel;
     }
 
 }

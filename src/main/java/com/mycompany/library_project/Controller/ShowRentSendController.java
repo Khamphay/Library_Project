@@ -4,14 +4,14 @@ import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
-import com.jfoenix.controls.JFXDialog.DialogTransition;
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.ShowRentSendModel;
-import com.mycompany.library_project.config.CreateLogFile;
 
 import org.controlsfx.control.MaskerPane;
 
@@ -32,18 +32,17 @@ import javafx.util.Callback;
 
 public class ShowRentSendController implements Initializable {
 
+    private Connection con = MyConnection.getConnect();
     private HomeController homeController = null;
     private AlertMessage alertMessage = new AlertMessage();
-    private CreateLogFile logfile = new CreateLogFile();
     private MaskerPane masker = new MaskerPane();
     // private DialogMessage dialog = null;
-    private ShowRentSendModel showbookModel = new ShowRentSendModel();
+    private ShowRentSendModel showbookModel = new ShowRentSendModel(con);
     private ObservableList<ShowRentSendModel> data = null;
     private ResultSet rs = null;
     private FilteredList<ShowRentSendModel> filterShow = null;
     private MyDate mydate = new MyDate();
-    private DialogMessage dialog = null;
-    private JFXButton[] buttonOK = { buttonOK() };
+    private DialogMessage dialog = new DialogMessage();
     private ArrayList<String> autobarcode = null;
 
     public void initConstructor(HomeController homeController) {
@@ -170,7 +169,7 @@ public class ShowRentSendController implements Initializable {
                         if (rs.getString("book_status").equals("ກຳລັງຢືມ")) {
                             int outday = mydate.cancalarDate(rs.getDate("date_send").toLocalDate());
                             if (outday > 0) {
-                                outdate = "ຢືມກາຍກຳນົດ" + outday + " ມື້";
+                                outdate = "ຢືມກາຍກຳນົດ " + outday + " ມື້";
                             }
                         }
                         autobarcode.add(rs.getString("barcode"));
@@ -321,21 +320,26 @@ public class ShowRentSendController implements Initializable {
                         delete.setStyle(Style.buttonStyle);
                         delete.setOnAction(event -> {
                             if (tableShow.getItems().get(getIndex()).getStatus().equals("ສົ່ງແລ້ວ")) {
-                                final JFXButton buttons[] = { buttonYes(getIndex()), buttonNo(), buttonCancel() };
-                                if (dialog != null)
-                                    dialog.closeDialog();
-                                dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                                        "ຕ້ອງການລົບຂໍ້ນີ້ອອກ ຫຼື ບໍ່? (ຖ້າລົບແລ້ວຈະບໍ່ສາມາດກູ້ຄືນໄດ້).",
-                                        DialogTransition.CENTER, buttons, false);
-                                dialog.showDialog();
-                            } else {
-                                if (dialog != null)
-                                    dialog.closeDialog();
-                                dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                                        "ບໍ່ສາມາດລົບຂໍ້ມູນໄດ້ເນື່ອງຈາກຍັງຢູ່ໃນຊ່ວງກຳລັງຢືມ", DialogTransition.CENTER,
-                                        buttonOK, false);
-                                dialog.showDialog();
-                            }
+                                Optional<ButtonType> result = dialog.showComfirmDialog("Comfirmed", null,
+                                        "ຕ້ອງການລົບຂໍ້ມູນ ຫຼື ບໍ?");
+                                if (result.get() == ButtonType.YES)
+                                    try {
+                                        showbookModel = new ShowRentSendModel(
+                                                tableShow.getItems().get(getIndex()).getRentId(),
+                                                tableShow.getItems().get(getIndex()).getBarcode(),
+                                                tableShow.getItems().get(getIndex()).getStatus());
+                                        if (showbookModel.deleteData("") > 0) {
+                                            alertMessage.showCompletedMessage("Deleted", "Deleted data successfully.",
+                                                    4, Pos.BOTTOM_RIGHT);
+                                            showData();
+                                        } else
+                                            alertMessage.showCompletedMessage("Delete Warning", "Can not deleted data.",
+                                                    4, Pos.BOTTOM_RIGHT);
+                                    } catch (Exception e) {
+                                        dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນ", e);
+                                    }
+                            } else
+                                dialog.showWarningDialog(null, "ບໍ່ສາມາດລົບຂໍ້ມູນໄດ້ເນື່ອງຈາກຍັງຢູ່ໃນຊ່ວງກຳລັງຢືມ");
                         });
                     }
 
@@ -357,67 +361,4 @@ public class ShowRentSendController implements Initializable {
         colAction.setCellFactory(cellFactory);
         tableShow.getColumns().add(colAction);
     }
-
-    private JFXButton buttonYes(int index) {
-        JFXButton btyes = new JFXButton("ຕົກລົງ");
-        btyes.setStyle(Style.buttonDialogStyle);
-        btyes.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    showbookModel = new ShowRentSendModel(tableShow.getItems().get(index).getRentId(),
-                            tableShow.getItems().get(index).getBarcode(), tableShow.getItems().get(index).getStatus());
-                    if (showbookModel.deleteData("") > 0) {
-                        alertMessage.showCompletedMessage("Deleted", "Deleted data successfully.", 4, Pos.BOTTOM_RIGHT);
-                        showData();
-                    } else
-                        alertMessage.showCompletedMessage("Delete Warning", "Can not deleted data.", 4,
-                                Pos.BOTTOM_RIGHT);
-                } catch (Exception e) {
-                    alertMessage.showErrorMessage("Delete Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-                    logfile.createLogFile("Error Delete Rent And Send Book", e);
-                }
-                dialog.closeDialog();
-            }
-        });
-        return btyes;
-    }
-
-    private JFXButton buttonNo() {
-        JFXButton btno = new JFXButton("  ບໍ່  ");
-        btno.setStyle(Style.buttonDialogStyle);
-        btno.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                dialog.closeDialog();
-            }
-        });
-        return btno;
-    }
-
-    private JFXButton buttonCancel() {
-        JFXButton btcancel = new JFXButton("ຍົກເລີກ");
-        btcancel.setStyle(Style.buttonDialogStyle);
-        btcancel.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                dialog.closeDialog();
-            }
-
-        });
-        return btcancel;
-    }
-
-    private JFXButton buttonOK() {
-        JFXButton btOk = new JFXButton("OK");
-        btOk.setStyle(Style.buttonDialogStyle);
-        btOk.setOnAction(e -> {
-            dialog.closeDialog();
-        });
-        return btOk;
-    }
-
 }

@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.Controller.LoginController;
+import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,7 +26,7 @@ import javafx.stage.StageStyle;
 public class DesktopController implements Initializable {
 
     public static Stage desktopStage = null;//Todo: seted object from class 'Add.java' when you run project
-    // public static Stage dstStage;
+    private DialogMessage dialog = new DialogMessage();
     private boolean max_res = false;
     private double x, y;
     private Rectangle2D bounds=null;
@@ -97,17 +98,23 @@ public class DesktopController implements Initializable {
     }
 
     @FXML
-    private void LoginMS(ActionEvent event)throws Exception {
-        Parent rootLogin = FXMLLoader.load(App.class.getResource("Login.fxml"));
-        Scene scene = new Scene(rootLogin);
-        LoginController.loginSatge = new Stage(StageStyle.TRANSPARENT);
-        scene.setFill(Color.TRANSPARENT);// Todo: set 'transparent' color to form, you must set 'transparent' to style in fxml
-        LoginController.loginSatge.setScene(scene);
-        LoginController.loginSatge.setTitle("Login");
-        LoginController.loginSatge.initModality(Modality.APPLICATION_MODAL); //Todo: set dialog mode
-        LoginController.loginSatge.showAndWait();// Todo: Show dialog mode
-        
-        // boderLayout.setCenter(rootLogin);
+    private void LoginMS(ActionEvent event) throws Exception {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("Login.fxml"));
+            final Parent rootLogin = loader.load();
+            final LoginController loginController = loader.getController();
+            final Scene scene = new Scene(rootLogin);
+            final Stage stage = new Stage(StageStyle.TRANSPARENT);
+            loginController.initConstructor(stage);
+            scene.setFill(Color.TRANSPARENT);// Todo: set 'transparent' color to form, you must set 'transparent' to
+                                             // style in fxml
+            stage.setScene(scene);
+            stage.setTitle("Login");
+            stage.initModality(Modality.APPLICATION_MODAL); // Todo: set dialog mode
+            stage.show();// Todo: Show dialog mode
+        } catch (Exception e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມ Login",e);
+        }
     }
 
     @Override

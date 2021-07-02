@@ -1,12 +1,14 @@
 package com.mycompany.library_project.Controller;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import com.mycompany.library_project.App;
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.Model.BookLostModel;
 import com.mycompany.library_project.Model.ListBookModel;
@@ -24,9 +26,10 @@ import javafx.scene.text.Text;
 
 public class ManageBookController implements Initializable {
 
+    private Connection con = MyConnection.getConnect();
     private AlertMessage alertMessage = new AlertMessage();
     public static BorderPane mainBorder = null;
-    private BookLostModel booklost = null;
+    private BookLostModel booklost = new BookLostModel(con);
     private ResultSet rs = null;
     private ListBookModel listbook = null;
 
@@ -57,7 +60,6 @@ public class ManageBookController implements Initializable {
             public void run() {
                 try {
                     int number = 1;
-                    booklost = new BookLostModel();
                     rs = booklost.findByDate(Date.valueOf(LocalDate.now()));
                     while (rs.next()) {
 
@@ -91,7 +93,7 @@ public class ManageBookController implements Initializable {
             bookTypeController.initConstructor(this);
             bpManageBook.setCenter(subForm);
         } catch (Exception e) {
-            alertMessage.showErrorMessage(bpManageBook, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             CreateLogFile config = new CreateLogFile();
             config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Book Type", e);
         }
@@ -106,7 +108,7 @@ public class ManageBookController implements Initializable {
             bookCategoryController.initConstructor(this);
             bpManageBook.setCenter(subForm);
         } catch (Exception e) {
-            alertMessage.showErrorMessage(bpManageBook, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             CreateLogFile config = new CreateLogFile();
             config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Book Category", e);
         }
@@ -121,7 +123,7 @@ public class ManageBookController implements Initializable {
             tableLogController.initConstructor(this);
             bpManageBook.setCenter(subForm);
         } catch (Exception e) {
-            alertMessage.showErrorMessage(bpManageBook, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             CreateLogFile config = new CreateLogFile();
             config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Table Log", e);
         }
@@ -136,7 +138,7 @@ public class ManageBookController implements Initializable {
             bookController.initConstructor(this);
             bpManageBook.setCenter(subForm);
         } catch (Exception e) {
-            alertMessage.showErrorMessage(bpManageBook, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             CreateLogFile config = new CreateLogFile();
             config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Book", e);
         }
@@ -144,7 +146,17 @@ public class ManageBookController implements Initializable {
 
     @FXML
     private void btBookLost_Click(ActionEvent event) {
-
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmShowBookLost.fxml"));
+            final Parent subForm = loader.load();
+            ShowBookLostController booklostController = loader.getController();
+            booklostController.initConstructor(this);
+            bpManageBook.setCenter(subForm);
+        } catch (Exception e) {
+            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            CreateLogFile config = new CreateLogFile();
+            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Book", e);
+        }
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import com.mycompany.library_project.App;
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.Model.MemberModel;
 import com.mycompany.library_project.config.CreateLogFile;
@@ -22,11 +23,12 @@ import javafx.scene.text.Text;
 
 public class ManagePersonalCotroller implements Initializable {
 
+    private Connection con = MyConnection.getConnect();
     private Parent subForm = null;
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile logfile = new CreateLogFile();
     private ResultSet rs = null;
-    private MemberModel memberModel = null;
+    private MemberModel memberModel = new MemberModel(con);
 
     @FXML
     private Text txtMember, txtEmployee, txtAuthor, txtDep;
@@ -51,7 +53,6 @@ public class ManagePersonalCotroller implements Initializable {
             public void run() {
                 try {
                     int number = 1;
-                    memberModel = new MemberModel();
                     rs = memberModel.findMemberEndOfDate(Date.valueOf(LocalDate.now()));
                     while (rs.next()) {
 
@@ -90,7 +91,7 @@ public class ManagePersonalCotroller implements Initializable {
             employeeController.initConstructor(this);
             bpManagePerson.setCenter(subForm);
         } catch (Exception e) {
-            alertMessage.showErrorMessage(bpManagePerson, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             logfile.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນສ່ວນບຸກຄົນມີບັນຫາ: " + "Form Employee", e);
         }
     }
@@ -104,7 +105,7 @@ public class ManagePersonalCotroller implements Initializable {
             memberController.initConstructor(this);
             bpManagePerson.setCenter(subForm);
         } catch (Exception e) {
-            alertMessage.showErrorMessage(bpManagePerson, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             logfile.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນສ່ວນບຸກຄົນມີບັນຫາ: " + "Form Member", e);
         }
     }
@@ -118,7 +119,7 @@ public class ManagePersonalCotroller implements Initializable {
             authorController.initConstructor(this);
             bpManagePerson.setCenter(subForm);
         } catch (Exception e) {
-            alertMessage.showErrorMessage(bpManagePerson, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             logfile.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນສ່ວນບຸກຄົນມີບັນຫາ: " + "Form Author", e);
         }
     }
@@ -132,7 +133,7 @@ public class ManagePersonalCotroller implements Initializable {
             departmentController.initConstructor(this);
             bpManagePerson.setCenter(subForm);
         } catch (Exception e) {
-            alertMessage.showErrorMessage(bpManagePerson, "Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             logfile.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນສ່ວນບຸກຄົນມີບັນຫາ: " + "Form Department", e);
         }
     }

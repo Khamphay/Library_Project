@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.App;
+import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
 import com.mycompany.library_project.Report.CreateReport;
 
 
@@ -24,6 +25,7 @@ import javafx.stage.Stage;
 
 public class MenuController1 implements Initializable {
 
+    private DialogMessage dialog = new DialogMessage();
     private CreateReport report = null;
     private Map<String, Object> map = null;
 
@@ -52,8 +54,21 @@ public class MenuController1 implements Initializable {
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.show();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລາຍງານ", e);
                 }
+            }
+
+        });
+
+        btReportRentBook.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                report = new CreateReport();
+                map = new HashMap<String, Object>();
+                map.put("logo", Paths.get("bin/Logo.png").toAbsolutePath().toString());
+                map.put("status", "ກຳລັງຢືມ");
+                report.showReport(map, "reportRentAndSendBook.jrxml", "Report Rent book Error");
             }
 
         });
@@ -72,7 +87,7 @@ public class MenuController1 implements Initializable {
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.show();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລາຍງານ", e);
                 }
             }
 
@@ -104,7 +119,7 @@ public class MenuController1 implements Initializable {
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.show();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລາຍງານ", e);
                 }
             }
 

@@ -210,7 +210,7 @@
                               <Insets left="20.0" />
                            </VBox.margin>
                         </JFXButton>
-                        <JFXButton id="btReport" fx:id="btReportMember" alignment="BASELINE_LEFT" graphicTextGap="15.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" text="ລາຍງານຂໍ້ມູນສະມາຊິດ" textFill="WHITE">
+                        <JFXButton id="btReport" fx:id="btReportMember" alignment="BASELINE_LEFT" graphicTextGap="15.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" text="ລາຍງານຂໍ້ມູນສະມາຊິກ" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>

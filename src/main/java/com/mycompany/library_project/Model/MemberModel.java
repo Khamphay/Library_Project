@@ -1,6 +1,5 @@
 package com.mycompany.library_project.Model;
 
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 
@@ -254,7 +253,7 @@ public class MemberModel implements DataAccessObject {
             rs = con.createStatement().executeQuery(query);
             return rs;
         } catch (SQLException e) {
-            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນສະມາຊິດ", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນສະມາຊິກ", e);
             return null;
         } finally {
             //con.close();
@@ -270,7 +269,7 @@ public class MemberModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນສະມາຊິດ", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນສະມາຊິກ", e);
             return null;
         } finally {
             //con.close();
@@ -291,7 +290,7 @@ public class MemberModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການຄົ້ນຫາຂໍ້ມູນສະມາຊິດ", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການຄົ້ນຫາຂໍ້ມູນສະມາຊິກ", e);
             return null;
         } finally {
             //con.close();
@@ -306,7 +305,7 @@ public class MemberModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນສະມາຊິດ", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນສະມາຊິກ", e);
             return null;
         } finally {
             //con.close();
@@ -342,7 +341,7 @@ public class MemberModel implements DataAccessObject {
             ps.setDouble(16, getCostRegister());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນສະມາຊິດ", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນສະມາຊິກ", e);
             return 0;
         } finally {
             ps.close();
@@ -380,7 +379,7 @@ public class MemberModel implements DataAccessObject {
             ps.setDouble(17, getCostRegister());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນສະມາຊິດ", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນສະມາຊິກ", e);
             return 0;
         } finally {
             ps.close();
@@ -396,7 +395,7 @@ public class MemberModel implements DataAccessObject {
             ps.setString(1, id);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນສະມາຊິດ", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນສະມາຊິກ", e);
             return 0;
         } finally {
             ps.close();

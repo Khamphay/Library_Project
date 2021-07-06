@@ -3,7 +3,6 @@ package com.mycompany.library_project.Model;
 import java.sql.*;
 import java.text.ParseException;
 
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 import com.mycompany.library_project.config.CreateLogFile;

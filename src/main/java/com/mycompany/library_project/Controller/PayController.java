@@ -12,12 +12,10 @@ import com.mycompany.library_project.Model.AdjustmentModel;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -27,7 +25,11 @@ public class PayController implements Initializable {
     private DialogMessage dialog = new DialogMessage();
     private AdjustmentModel adjustmentModel = null;
     private DecimalFormat dcFormat = new DecimalFormat("#,##0.00 ກີບ");
-    private Tooltip tooltip = new Tooltip();
+    private SendBookController sendBookController = null;
+    private Stage stage = null;
+    String rent_id = null;
+    int qtyOutOfDate = 0;
+    double pricePay = 0.0;
     double x, y;
 
     @FXML
@@ -42,6 +44,11 @@ public class PayController implements Initializable {
     public void initSendConstutor(SendBookController sendBookController, Stage stage, String rent_id, int qtyOutOfDate,
             double pricePay) {
 
+        this.sendBookController = sendBookController;
+        this.stage = stage;
+        this.rent_id = rent_id;
+        this.pricePay = pricePay;
+
         acHeaderPane.setOnMousePressed(mouseEvent -> {
             x = mouseEvent.getSceneX();
             y = mouseEvent.getSceneY();
@@ -52,7 +59,10 @@ public class PayController implements Initializable {
             stage.setX(mouseEvent.getScreenX() - x);
             stage.setY(mouseEvent.getScreenY() - y);
         });
+    }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         btComfirme.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -104,10 +114,5 @@ public class PayController implements Initializable {
                 txtWd.setText(dcFormat.format(Double.parseDouble(txtRc.getText()) - pricePay));
             }
         });
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        
     }
 }

@@ -79,15 +79,15 @@
                                                 <Insets left="-2.0" />
                                              </padding>
                                           </JFXButton>
-                                          <TextField fx:id="txtFName" editable="false" layoutX="301.0" layoutY="50.0" prefHeight="27.0" prefWidth="220.0" promptText="ຊື່ສະມາຊີກ" styleClass="textfield" viewOrder="1.0" AnchorPane.topAnchor="49.0" />
-                                          <TextField fx:id="txtMemberId" layoutX="63.0" layoutY="50.0" prefHeight="27.0" prefWidth="220.0" promptText="ລະຫັດສະມາຊິດ" viewOrder="1.0" AnchorPane.topAnchor="49.0" />
-                                          <Label layoutX="63.0" layoutY="29.0" styleClass="BoonBaan-size-14" text="ລະຫັດສະມາຊິດ" AnchorPane.topAnchor="28.0" />
-                                          <Label layoutX="304.0" layoutY="29.0" styleClass="BoonBaan-size-14" text="ຊື່ສະມາຊີກ" AnchorPane.topAnchor="28.0" />
+                                          <TextField fx:id="txtFName" editable="false" layoutX="301.0" layoutY="50.0" prefHeight="27.0" prefWidth="220.0" promptText="ຊື່ສະມາຊິກ" styleClass="textfield" viewOrder="1.0" AnchorPane.topAnchor="49.0" />
+                                          <TextField fx:id="txtMemberId" layoutX="63.0" layoutY="50.0" prefHeight="27.0" prefWidth="220.0" promptText="ລະຫັດສະມາຊິກ" viewOrder="1.0" AnchorPane.topAnchor="49.0" />
+                                          <Label layoutX="63.0" layoutY="29.0" styleClass="BoonBaan-size-14" text="ລະຫັດສະມາຊິກ" AnchorPane.topAnchor="28.0" />
+                                          <Label layoutX="304.0" layoutY="29.0" styleClass="BoonBaan-size-14" text="ຊື່ສະມາຊິກ" AnchorPane.topAnchor="28.0" />
                                           <TextField fx:id="txtLname" editable="false" layoutX="540.0" layoutY="50.0" prefHeight="27.0" prefWidth="220.0" promptText="ນາມສະກຸນ" styleClass="textfield" viewOrder="1.0" AnchorPane.topAnchor="49.0" />
-                                          <Label layoutX="542.0" layoutY="29.0" styleClass="BoonBaan-size-14" text="ນາມສະກຸນສະມາຊີກ" AnchorPane.topAnchor="28.0" />
+                                          <Label layoutX="542.0" layoutY="29.0" styleClass="BoonBaan-size-14" text="ນາມສະກຸນສະມາຊິກ" AnchorPane.topAnchor="28.0" />
                                           <TextField fx:id="txtTel" editable="false" layoutX="784.0" layoutY="50.0" prefHeight="27.0" prefWidth="220.0" promptText="ເບີໂທລະສັບ" styleClass="textfield" viewOrder="1.0" AnchorPane.topAnchor="49.0" />
                                           <Label layoutX="786.0" layoutY="29.0" styleClass="BoonBaan-size-14" text="ເບີໂທລະສັບ" AnchorPane.topAnchor="28.0" />
-                                          <TextField fx:id="txtDep" editable="false" layoutX="1035.0" layoutY="50.0" prefHeight="27.0" prefWidth="220.0" promptText="ເບີໂທລະສັບ" styleClass="textfield" viewOrder="1.0" AnchorPane.topAnchor="49.0" />
+                                          <TextField fx:id="txtDep" editable="false" layoutX="1035.0" layoutY="50.0" prefHeight="27.0" prefWidth="220.0" promptText="ພາກວິຊາ" styleClass="textfield" viewOrder="1.0" AnchorPane.topAnchor="49.0" />
                                           <Label layoutX="1037.0" layoutY="29.0" styleClass="BoonBaan-size-14" text="ພາກວິຊາ" AnchorPane.topAnchor="28.0" />
                                        </children>
                                     </AnchorPane>

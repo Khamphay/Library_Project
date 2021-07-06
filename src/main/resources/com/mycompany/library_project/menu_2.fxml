@@ -268,7 +268,7 @@
                               <Insets left="6.0" />
                            </VBox.margin>
                            <tooltip>
-                              <Tooltip autoHide="true" text="ລາຍງານຂໍ້ມູນສະມາຊິດ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+                              <Tooltip autoHide="true" text="ລາຍງານຂໍ້ມູນສະມາຊິກ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
                                  <font>
                                     <Font name="Phetsarath OT" size="12.0" />
                                  </font>

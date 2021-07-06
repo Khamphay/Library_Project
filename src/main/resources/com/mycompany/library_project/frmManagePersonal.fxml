@@ -91,12 +91,12 @@
                                           <Insets left="4.0" />
                                        </HBox.margin>
                                     </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລະຫັດສະມາຊິດ" wrappingWidth="151.79999923706055">
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລະຫັດສະມາຊິກ" wrappingWidth="151.79999923706055">
                                        <HBox.margin>
                                           <Insets left="4.0" />
                                        </HBox.margin>
                                     </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊື່ສະມາຊິດ" wrappingWidth="188.79999923706055" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊື່ສະມາຊິກ" wrappingWidth="188.79999923706055" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ນາມສະກຸນ" wrappingWidth="189.79999923706055" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຮຽນປີທີ" wrappingWidth="211.79999923706055" />
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ພາກວິຊາ" wrappingWidth="202.79999923706055" />

@@ -36,9 +36,9 @@
                                     <Label text="ບໍ່ມີຂໍ້ມູນ" />
                                  </placeholder>
                                  <columns>
-                                    <TableColumn id="colCenter" fx:id="memberId" prefWidth="97.0" text="ລະຫັດສະມາຊິດ" />
+                                    <TableColumn id="colCenter" fx:id="memberId" prefWidth="97.0" text="ລະຫັດສະມາຊິກ" />
                                     <TableColumn fx:id="studentId" prefWidth="113.0" text="ລະຫັົດນັກສຶກສາ" />
-                                    <TableColumn fx:id="name" prefWidth="180.0" text="ຊື່ສະມາຊີກ" />
+                                    <TableColumn fx:id="name" prefWidth="180.0" text="ຊື່ສະມາຊິກ" />
                                     <TableColumn fx:id="surname" prefWidth="178.0" text="ນາມສະກຸນ" />
                                     <TableColumn id="colCenter" fx:id="gender" prefWidth="70.0" style="-fx-text-alignment: center;" text="ເພດ" />
                                     <TableColumn id="colCenter" fx:id="tel" minWidth="8.0" prefWidth="118.0" text="ເບີໂທ" />
@@ -54,7 +54,7 @@
                                  <contextMenu>
                                     <ContextMenu>
                                       <items>
-                                          <MenuItem fx:id="menuPrintCard" mnemonicParsing="false" text="ພີມບັດສະມາຊິດ">
+                                          <MenuItem fx:id="menuPrintCard" mnemonicParsing="false" text="ພີມບັດສະມາຊິກ">
                                              <graphic>
                                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>

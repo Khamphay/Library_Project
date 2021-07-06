@@ -119,7 +119,7 @@
                                                 <Cursor fx:constant="HAND" />
                                              </cursor>
                                           </DatePicker>
-                                          <TextField fx:id="txtMemberName" editable="false" layoutX="232.0" layoutY="35.0" prefHeight="27.0" prefWidth="260.0" promptText="ຊື່ສະມາຊີກ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.topAnchor="35.0">
+                                          <TextField fx:id="txtMemberName" editable="false" layoutX="232.0" layoutY="35.0" prefHeight="27.0" prefWidth="260.0" promptText="ຊື່ສະມາຊິກ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.topAnchor="35.0">
                                              <font>
                                                 <Font name="Phetsarath OT" size="12.0" />
                                              </font>

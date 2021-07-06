@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.*;
 import javafx.util.Callback;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.text.DecimalFormat;
@@ -294,10 +295,11 @@ public class SendBookController implements Initializable {
             public void handle(ActionEvent event) {
                 if (allPrice > 0 && qtyOutOfDate > 0)
                     showPay(rent_id, qtyOutOfDate, allPrice);
-                else if (sendBook() > 0) {
-                    alertMessage.showCompletedMessage("Saved", "Send Book successfully", 4, Pos.BOTTOM_RIGHT);
-                } else {
-                    alertMessage.showWarningMessage("Saved", "Can not send book", 4, Pos.BOTTOM_RIGHT);
+                else {
+                    if (sendBook() > 0)
+                        alertMessage.showCompletedMessage("Saved", "Send Book successfully", 4, Pos.BOTTOM_RIGHT);
+                    else
+                        alertMessage.showWarningMessage("Saved", "Can not send book", 4, Pos.BOTTOM_RIGHT);
                 }
             }
 
@@ -339,9 +341,9 @@ public class SendBookController implements Initializable {
             pay.initSendConstutor(this, stage, rentid, outofdate, pricePay);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
-
-        } catch (Exception e) {
-            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມຈ່າຍຄ່າປັບໃຫມ", e);
+        } catch (IOException e) {
+            e.printStackTrace();
+           dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມຈ່າຍຄ່າປັບໃຫມ", e);
         }
     }
 

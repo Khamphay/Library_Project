@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.ControllerDAOModel.*;
+
 
 public class TableLogModel implements DataAccessObject {
 
@@ -192,6 +194,29 @@ public class TableLogModel implements DataAccessObject {
         ps.close();
         // con.close();
         return result;
+    }
+
+    public int saveTableLog(List<TableLogModel> list) {
+        try {
+            query = "call tablelog_Insert(?,?)";
+            // query = "insert into tbtablelog values(?, ?)";
+            ps = con.prepareStatement(query);
+            int result = 0;
+            for (TableLogModel tableLog : list) {
+                ps.setString(1, tableLog.getTableId());
+                ps.setString(2, tableLog.getTableLog());
+                ps.addBatch();
+                result++;
+                if (result % 100 == 0 || result == list.size()) {
+                    ps.executeBatch();
+                    result = 1;
+                }
+            }
+            return result;
+        } catch (SQLException e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນລ໋ອກຕູ້", e);
+            return 0;
+        }
     }
 
     @Override

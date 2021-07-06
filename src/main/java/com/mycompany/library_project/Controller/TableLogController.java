@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -140,8 +142,7 @@ public class TableLogController implements Initializable {
                     tableLog.setRoot(node);
 
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage("Load Data", "Error: " + e.getMessage(), 4,
-                            Pos.BOTTOM_RIGHT);
+                    alertMessage.showErrorMessage("Load Data", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
                 }
             }
         });
@@ -270,29 +271,39 @@ public class TableLogController implements Initializable {
                 if (tableLogModel.saveTable(txtId.getText(), Integer.parseInt(txtQty.getText())) > 0) {
                     String line = txtLog.getText();
                     String[] lineCount = line.split("\n");
+
+                    ArrayList<TableLogModel> list = new ArrayList<TableLogModel>();
+
                     for (int i = 0; i < lineCount.length; i++) {
-                        try {
-                            tableLogModel = new TableLogModel(txtId.getText(), lineCount[i]);
-                            result = (tableLogModel.saveData() > 0) ? "Save Completed" : null; // Todo: if...else
-                        } catch (SQLException e) {
-                            tableLogModel.deleteTable(txtId.getText());
-                            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນລ໋ອກຕູ້", e);
-                            return;
-                        }
+                        // try {
+                        // tableLogModel = new TableLogModel(txtId.getText(), lineCount[i]);
+                        // result = (tableLogModel.saveData() > 0) ? "Save Completed" : null; // Todo:
+                        // if...else
+                        // } catch (SQLException e) {
+                        // tableLogModel.deleteTable(txtId.getText());
+                        // dialog.showExcectionDialog("Error", null,
+                        // "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນລ໋ອກຕູ້", e);
+                        // return;
+                        // }
+                        list.add(new TableLogModel(txtId.getText(), lineCount[i]));
                     }
+
+                    if (tableLogModel.saveTableLog(list) > 0) {
+                        showData();
+                        clearText();
+                        alertMessage.showCompletedMessage("Saved", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
+                        if (addBookController != null)
+                            addBookController.fillTable();
+                   }
                 }
 
                 if (result != null) {
-                    showData();
-                    clearText();
-                    alertMessage.showCompletedMessage("Saved", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
-                    if (addBookController != null)
-                        addBookController.fillTable();
+                    
                 }
             } else {
                 validRules.setErrorDecorationEnabled(true);
-                alertMessage.showWarningMessage("Save Warning",
-                        "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
+                alertMessage.showWarningMessage("Save Warning", "Please chack your information and try again.", 4,
+                        Pos.BOTTOM_RIGHT);
             }
 
         } catch (Exception e) {
@@ -325,22 +336,20 @@ public class TableLogController implements Initializable {
                 if (result > 0) {
                     tableLogModel = new TableLogModel(txtId.getText(), Integer.parseInt(txtQty.getText()));
                     if (tableLogModel.updateData() > 0) {
-                        alertMessage.showCompletedMessage("Edited", "Edit data successfully.", 4,
-                                Pos.BOTTOM_RIGHT);
+                        alertMessage.showCompletedMessage("Edited", "Edit data successfully.", 4, Pos.BOTTOM_RIGHT);
                         clearText();
                         showData();
                         if (addBookController != null)
                             addBookController.fillTable();
                     } else {
-                        alertMessage.showWarningMessage("Edit Warning", "Can not edit data", 4,
-                                Pos.BOTTOM_RIGHT);
+                        alertMessage.showWarningMessage("Edit Warning", "Can not edit data", 4, Pos.BOTTOM_RIGHT);
                     }
                 } else
                     alertMessage.showWarningMessage("Edit Warning", "No data had changed", 4, Pos.BOTTOM_RIGHT);
 
             } else {
-                alertMessage.showWarningMessage("Edit Warning",
-                        "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
+                alertMessage.showWarningMessage("Edit Warning", "Please chack your information and try again.", 4,
+                        Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
             alertMessage.showErrorMessage("Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);

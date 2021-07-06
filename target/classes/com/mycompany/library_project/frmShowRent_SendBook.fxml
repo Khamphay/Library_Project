@@ -72,7 +72,7 @@
                               <TableColumn id="colCenter" fx:id="colDateSend" prefWidth="116.0" text="ວັນທີສົ່ງ" />
                               <TableColumn id="colCenter" fx:id="colStatus" prefWidth="117.0" text="ສະຖານະ" />
                               <TableColumn fx:id="colMemberId" prefWidth="132.0" text="ລະຫັດສະມາຊິກ" />
-                              <TableColumn fx:id="colMemberName" prefWidth="171.0" text="ຊື່ສະມາຊິດ" />
+                              <TableColumn fx:id="colMemberName" prefWidth="171.0" text="ຊື່ສະມາຊິກ" />
                               <TableColumn id="colCenter" fx:id="colCause" prefWidth="148.0" text="ໝາຍເຫດ" />
                           </columns>
                         </TableView>

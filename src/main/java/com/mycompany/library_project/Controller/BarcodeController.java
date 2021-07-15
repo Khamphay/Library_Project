@@ -95,9 +95,11 @@ public class BarcodeController implements Initializable {
                     if (!txtBarcode.getText().equals("")
                             && !cmbStatus.getSelectionModel().getSelectedItem().equals(null) && bookid != "") {
                         // addBarcode = new BookDetailModel();
-                        if (addBarcode.saveBookBarCode(txtBarcode.getText(), bookid,
+                        ArrayList<BookDetailModel> list = new ArrayList<>();
+                        list.add(new BookDetailModel(txtBarcode.getText(), bookid,
                                 cmbTabLog_id.getSelectionModel().getSelectedItem(),
-                                cmbStatus.getSelectionModel().getSelectedItem()) > 0) {
+                                cmbStatus.getSelectionModel().getSelectedItem()));
+                        if (addBarcode.saveBookBarCode(list) > 0) {
                             alertMessage.showCompletedMessage("Saved", "Save data completed", 4, Pos.BOTTOM_RIGHT);
                             clearText();
                             showBarcode(bookid);

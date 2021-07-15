@@ -44,7 +44,9 @@ public class BookTypeController implements Initializable {
     private ObservableList<TypeModel> data = null;
     private DialogMessage dialog = new DialogMessage();
     private AlertMessage alertMessage = new AlertMessage();
+    private ImportController importController = null;
     double x, y;
+
 
     public void initConstructor(ManageBookController manageBookController) {
         btClose.setOnAction(new EventHandler<ActionEvent>() {
@@ -59,6 +61,27 @@ public class BookTypeController implements Initializable {
 
     public void initConstructor2(AddBookController addBookController, Stage stage) {
         this.addBookController = addBookController;
+        acHeaderPane.setOnMousePressed(mouseEvent -> {
+            x = mouseEvent.getSceneX();
+            y = mouseEvent.getSceneY();
+        });
+        // TODO: Set for move form
+        acHeaderPane.setOnMouseDragged(mouseEvent -> {
+            stage.setX(mouseEvent.getScreenX() - x);
+            stage.setY(mouseEvent.getScreenY() - y);
+        });
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                stage.close();
+            }
+
+        });
+    }
+
+    public void initConstructor3(ImportController importController, Stage stage) {
+        this.importController = importController;
         acHeaderPane.setOnMousePressed(mouseEvent -> {
             x = mouseEvent.getSceneX();
             y = mouseEvent.getSceneY();
@@ -239,6 +262,8 @@ public class BookTypeController implements Initializable {
                             Pos.BOTTOM_RIGHT);
                     if (addBookController != null)
                         addBookController.fillType();
+                    if (importController != null)
+                        importController.fillType();
                 }
             } else {
                 // Todo: Show warning message if text or combo box is empty
@@ -263,6 +288,8 @@ public class BookTypeController implements Initializable {
                             Pos.BOTTOM_RIGHT);
                     if (addBookController != null)
                         addBookController.fillType();
+                    if (importController != null)
+                        importController.fillType();
                 }
             } else {
                 // Todo: Show warning message if text or combo box is empty
@@ -319,6 +346,8 @@ public class BookTypeController implements Initializable {
                                                 Pos.BOTTOM_RIGHT);
                                         if (addBookController != null)
                                             addBookController.fillType();
+                                        if (importController != null)
+                                            importController.fillType();
                                     }
                                 } catch (SQLException ex) {
                                     dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນ", ex);

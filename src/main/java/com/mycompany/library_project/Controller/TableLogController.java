@@ -18,7 +18,6 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -42,9 +41,11 @@ public class TableLogController implements Initializable {
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = new DialogMessage();
     private AddBookController addBookController = null;
+    private ImportController importController = null;
     String maxLog = "";
     int qty = 0;
     double x, y;
+
 
     public void initConstructor(ManageBookController manageBookController) {
         btClose.setOnAction(new EventHandler<ActionEvent>() {
@@ -59,6 +60,29 @@ public class TableLogController implements Initializable {
 
     public void initConstructor2(AddBookController addBookController, Stage stage) {
         this.addBookController = addBookController;
+
+        acHeaderPane.setOnMousePressed(mouseEvent -> {
+            x = mouseEvent.getSceneX();
+            y = mouseEvent.getSceneY();
+        });
+        // TODO: Set for move form
+        acHeaderPane.setOnMouseDragged(mouseEvent -> {
+            stage.setX(mouseEvent.getScreenX() - x);
+            stage.setY(mouseEvent.getScreenY() - y);
+        });
+
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                stage.close();
+            }
+
+        });
+    }
+
+    public void initConstructor3(ImportController importController, Stage stage) {
+        this.importController = importController;
 
         acHeaderPane.setOnMousePressed(mouseEvent -> {
             x = mouseEvent.getSceneX();
@@ -264,7 +288,6 @@ public class TableLogController implements Initializable {
 
     @FXML
     private void tbSaveData(ActionEvent event) {
-        String result = null;
         try {
             if (!txtId.getText().equals("") && !txtId.getText().equals("") && !txtQty.getText().equals("")) {
                 // tableLogModel = new TableLogModel();
@@ -294,11 +317,9 @@ public class TableLogController implements Initializable {
                         alertMessage.showCompletedMessage("Saved", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
                         if (addBookController != null)
                             addBookController.fillTable();
-                   }
-                }
-
-                if (result != null) {
-                    
+                        if (importController != null)
+                            importController.fillTable();
+                    }
                 }
             } else {
                 validRules.setErrorDecorationEnabled(true);
@@ -341,6 +362,8 @@ public class TableLogController implements Initializable {
                         showData();
                         if (addBookController != null)
                             addBookController.fillTable();
+                        if (importController != null)
+                            importController.fillTable();
                     } else {
                         alertMessage.showWarningMessage("Edit Warning", "Can not edit data", 4, Pos.BOTTOM_RIGHT);
                     }
@@ -389,6 +412,8 @@ public class TableLogController implements Initializable {
                                     Pos.BOTTOM_RIGHT);
                             if (addBookController != null)
                                 addBookController.fillTable();
+                            if (importController != null)
+                                importController.fillTable();
                         } else {
                             alertMessage.showWarningMessage("Delete", "Can not delete data.", 4, Pos.BOTTOM_RIGHT);
                         }

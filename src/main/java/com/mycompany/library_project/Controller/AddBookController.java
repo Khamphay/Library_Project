@@ -332,7 +332,7 @@ public class AddBookController implements Initializable {
         try {
             final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmAuthor.fxml"));
             final Parent subForm = loader.load();
-            AuthorController authorController = loader.getController();
+            final AuthorController authorController = loader.getController();
             final Scene scene = new Scene(subForm);
             scene.setFill(Color.TRANSPARENT);
             final Stage stage = new Stage();
@@ -690,17 +690,20 @@ public class AddBookController implements Initializable {
                         cmbTable.getSelectionModel().getSelectedItem().toString(), txtYear.getText(),
                         txtDetail.getText());
 
+                ArrayList<BookDetailModel> list = new ArrayList<>();
+                String line = txtBarcode.getText();
+                String[] lineCount = line.split("\n");
+                // Todo: Save Barcode
+                for (int i = 0; i < lineCount.length; i++) {
+                    list.add(new BookDetailModel(lineCount[i], txtId.getText(),
+                            cmbtableLog.getSelectionModel().getSelectedItem(),
+                            cmbStatus.getSelectionModel().getSelectedItem().toString()));
+                }
+
                 if (bookid == "") {
                     if (addBook.saveData() > 0) {
-                        String line = txtBarcode.getText();
-                        String[] lineCount = line.split("\n");
-                        // Todo: Save Barcode
-                        for (int i = 0; i < lineCount.length; i++) {
-                            try {
-                                int result = addBook.saveBookBarCode(lineCount[i], txtId.getText(),
-                                        cmbtableLog.getSelectionModel().getSelectedItem(),
-                                        cmbStatus.getSelectionModel().getSelectedItem().toString());
-                                if (result > 0) {
+                        try {
+                            if (addBook.saveBookBarCode(list) > 0) {
                                     msg = "Save data successfully.";
                                 } else {
                                     msg = null;
@@ -709,9 +712,10 @@ public class AddBookController implements Initializable {
                                 msg = null;
                                 alertMessage.showWarningMessage("Save Barcode Error", "Can not save barcode.", 4,
                                         Pos.BOTTOM_RIGHT);
-                                return;
-                            }
+                                addBook.deleteData(txtId.getText());
+                            return;
                         }
+
                         // Todo: Save Write
                         for (String val : arr_author) {
                             if (val != null) {

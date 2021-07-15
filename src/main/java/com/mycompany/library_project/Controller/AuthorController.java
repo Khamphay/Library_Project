@@ -48,6 +48,7 @@ public class AuthorController implements Initializable {
     private DialogMessage dialog = new DialogMessage();
     private ObservableList<AuthorModel> data = null;
     private CreateLogFile logfile = new CreateLogFile();
+    private ImportController importController = null;
     double x, y;
 
     public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
@@ -66,6 +67,29 @@ public class AuthorController implements Initializable {
 
     public void initConstructor2(AddBookController addBookController, Stage stage) {
         this.addBookController = addBookController;
+        acHeaderPane.setOnMousePressed(mouseEvent -> {
+            x = mouseEvent.getSceneX();
+            y = mouseEvent.getSceneY();
+        });
+        // TODO: Set for move form
+        acHeaderPane.setOnMouseDragged(mouseEvent -> {
+            stage.setX(mouseEvent.getScreenX() - x);
+            stage.setY(mouseEvent.getScreenY() - y);
+            // stage.setOpacity(0.4f);
+        });
+
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                stage.close();
+            }
+
+        });
+    }
+
+    public void initConstructor3(ImportController importController, Stage stage) {
+        this.importController = importController;
         acHeaderPane.setOnMousePressed(mouseEvent -> {
             x = mouseEvent.getSceneX();
             y = mouseEvent.getSceneY();
@@ -237,6 +261,8 @@ public class AuthorController implements Initializable {
                             // Todo: Open From Add Book
                             if (addBookController != null)
                                 addBookController.fillAuthor();
+                            if (importController != null)
+                                importController.fillAuthor();
                         }
                     } else {
                         // Todo: Show warning message if text or combo box is empty
@@ -277,6 +303,8 @@ public class AuthorController implements Initializable {
                             // Todo: Open From Add Book
                             if (addBookController != null)
                                 addBookController.fillAuthor();
+                            if (importController != null)
+                                importController.fillAuthor();
                         }
                     } else {
                         // Todo: Show warning message
@@ -431,6 +459,8 @@ public class AuthorController implements Initializable {
                                             // Todo: Open From Add Book
                                             if (addBookController != null)
                                                 addBookController.fillAuthor();
+                                            if (importController != null)
+                                                importController.fillAuthor();
                                         } else {
                                             alertMessage.showWarningMessage("Deleted",
                                                     "Can not delete data, Please try again.", 4, Pos.BOTTOM_RIGHT);
@@ -462,5 +492,4 @@ public class AuthorController implements Initializable {
         tableAuthor.getColumns().add(colAtion);
 
     }
-
 }

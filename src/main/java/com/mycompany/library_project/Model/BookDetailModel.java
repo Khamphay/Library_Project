@@ -2,6 +2,7 @@ package com.mycompany.library_project.Model;
 
 import java.sql.*;
 import java.text.ParseException;
+import java.util.List;
 
 import com.mycompany.library_project.ControllerDAOModel.*;
 public class BookDetailModel implements DataAccessObject {
@@ -18,8 +19,6 @@ public class BookDetailModel implements DataAccessObject {
     private Integer page;
     private String ISBN;
     private Integer qty;
-    private Integer rentQty;
-    private Integer reserQty;
     private String barcode;
     private String catgId;
     private String typeId;
@@ -39,6 +38,13 @@ public class BookDetailModel implements DataAccessObject {
         this.status = status;
     }
 
+    public BookDetailModel(String barcode, String bookId, String tableLogId, String status) {
+        this.barcode = barcode;
+        this.bookId = bookId;
+        this.tableLogId = tableLogId;
+        this.status = status;
+    }
+
     public BookDetailModel(String bookId, String bookName, String ISBN, Integer page, Integer qty, String catgId,
             String typeId, String tableId, String write_year, String detail) {
         this.bookId = bookId;
@@ -51,7 +57,21 @@ public class BookDetailModel implements DataAccessObject {
         this.tableId = tableId;
         this.write_year = write_year;
         this.detail = detail;
+    }
 
+    public BookDetailModel(String bookId, String bookName, String ISBN, Integer page, Integer qty, String catgId,
+            String typeId, String tableId, String write_year, String detail, Connection con) {
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.ISBN = ISBN;
+        this.page = page;
+        this.qty = qty;
+        this.catgId = catgId;
+        this.typeId = typeId;
+        this.tableId = tableId;
+        this.write_year = write_year;
+        this.detail = detail;
+        this.con = con;
     }
 
     public String getBookId() {
@@ -92,22 +112,6 @@ public class BookDetailModel implements DataAccessObject {
 
     public void setQty(Integer qty) {
         this.qty = qty;
-    }
-
-    public Integer getRentQty() {
-        return rentQty;
-    }
-
-    public void setRentQty(Integer rentQty) {
-        this.rentQty = rentQty;
-    }
-
-    public Integer getReserQty() {
-        return reserQty;
-    }
-
-    public void setReserQty(Integer reserQty) {
-        this.reserQty = reserQty;
     }
 
     public String getBarcode() {
@@ -326,15 +330,34 @@ public class BookDetailModel implements DataAccessObject {
             return rs;
     }
 
-    public int saveBookBarCode(String barcode, String bookid, String table_log_id, String status) throws SQLException {
+    public int saveBookBarCode(List<BookDetailModel> list) throws SQLException {
         try {
-            sql = "call book_Insert(?, ?, ?, ?);";
+            // sql = "call book_Insert(?, ?, ?, ?);";
+            // ps = con.prepareStatement(sql);
+            // ps.setString(1, barcode);
+            // ps.setString(2, bookid);
+            // ps.setString(3, table_log_id);
+            // ps.setString(4, status);
+            // return ps.executeUpdate();
+
+            sql = "INSERT INTO tbbook (?, ?, ?, ?) VALUES(barcode, bookId, log_id, status)";
             ps = con.prepareStatement(sql);
-            ps.setString(1, barcode);
-            ps.setString(2, bookid);
-            ps.setString(3, table_log_id);
-            ps.setString(4, status);
-            return ps.executeUpdate();
+            int result = 0;
+            for (BookDetailModel item : list) {
+                ps.setString(1, item.getBarcode());
+                ps.setString(2, item.getBookId());
+                ps.setString(3, item.getTableLogId());
+                ps.setString(4, item.getStatus());
+                ps.addBatch();
+                result++;
+                if (result % 100 == 0 || result == list.size()) {
+                    ps.executeBatch();
+                    result = 1;
+                }
+
+            }
+            return result;
+
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນປຶ້ມ", e);
             return 0;
@@ -399,9 +422,8 @@ public class BookDetailModel implements DataAccessObject {
     }
 
     public int saveWrite(String book_id, String author_id) throws SQLException {
-
         try {
-            sql = "call write_Insert(?, ?);";
+            sql = "INSERT INTO dblibrary.tbwrite (book_id, author_id) VALUES(bookId, authorId)";
             ps = con.prepareStatement(sql);
             ps.setString(1, book_id);
             return ps.executeUpdate();

@@ -26,7 +26,7 @@ import javafx.scene.layout.StackPane;
 public class SearchController implements Initializable {
 
     private Connection con = MyConnection.getConnect();
-    private TreeItem<String> subItemBarcode, subItemAuthor, root, node;
+    private TreeItem<String> root, node;
     private BookDetailModel bookDetailModel = new BookDetailModel(con);
     private AuthorModel authorModel = new AuthorModel(con);
     private AlertMessage alertMessage = new AlertMessage();
@@ -84,20 +84,20 @@ public class SearchController implements Initializable {
                                 root = new TreeItem<>("ລະຫັດ: " + rs.getString("book_id") + " | ຊື່ປຶ້ມ: "
                                         + rs.getString("book_name"));
 
-                                final TreeItem<String> itemCatg = new TreeItem<>("+ ໝວດ: " + rs.getString("catg_name"));
-                                final TreeItem<String> itemTypee = new TreeItem<>(
+                                final var itemCatg = new TreeItem<>("+ ໝວດ: " + rs.getString("catg_name"));
+                                final var itemTypee = new TreeItem<>(
                                         "+ ປະເພດ: " + rs.getString("type_name"));
-                                final TreeItem<String> itemISBN = new TreeItem<>("+ ISBN: " + rs.getString("ISBN"));
-                                final TreeItem<String> itemPage = new TreeItem<>(
+                                final var itemISBN = new TreeItem<>("+ ISBN: " + rs.getString("ISBN"));
+                                final var itemPage = new TreeItem<>(
                                         " +ຈຳນວນໜ້າ: " + rs.getInt("page") + " ໜ້າ");
-                                final TreeItem<String> itemQty = new TreeItem<>(
+                                final var itemQty = new TreeItem<>(
                                         "+ ຈຳນວນປຶ້ມ: " + rs.getInt("qty") + " ຫົວ");
-                                final TreeItem<String> itemWriteYear = new TreeItem<>(
+                                final var itemWriteYear = new TreeItem<>(
                                         "+ ແຕ່ງປີ: " + rs.getString("write_year"));
-                                final TreeItem<String> itemLog = new TreeItem<>(
+                                final var itemLog = new TreeItem<>(
                                         "+ ເລກຕູ້: " + rs.getString("table_id"));
 
-                                subItemBarcode = new TreeItem<>("ລະຫັດບາໂຄດ ແລະ ສະຖານະຂອງປຶ້ມ:");
+                                final var subItemBarcode = new TreeItem<>("ລະຫັດບາໂຄດ ແລະ ສະຖານະຂອງປຶ້ມ:");
                                 final ResultSet rs_barcode = bookDetailModel.showBarcode(rs.getString("book_id"));
                                 int index = 1;
                                 while (rs_barcode.next()) {
@@ -109,7 +109,8 @@ public class SearchController implements Initializable {
                                     index++;
                                 }
                                 rs_barcode.close();
-                                subItemAuthor = new TreeItem<>("ແຕ່ງໂດຍ:");
+
+                                final var subItemAuthor = new TreeItem<>("ແຕ່ງໂດຍ:");
                                 final ResultSet rs_author = authorModel.findByBookID(rs.getString("book_id"));
                                 int i = 1;
                                 while (rs_author.next()) {
@@ -119,9 +120,9 @@ public class SearchController implements Initializable {
                                     i++;
                                 }
 
-                                root.getChildren().addAll(itemCatg, itemTypee, itemISBN, itemPage, itemQty,
-                                        itemWriteYear, itemLog, subItemBarcode, subItemAuthor);
+                                root.getChildren().addAll(itemCatg, itemTypee, itemISBN, itemPage, itemQty, itemWriteYear, itemLog, subItemBarcode, subItemAuthor);
                                 node.getChildren().add(root);
+                                rs_author.close();
                             }
 
                             if (node.getChildren().size() == 0) {

@@ -45,7 +45,9 @@ public class BookCategoryController implements Initializable {
     private ResultSet rs = null;
     private DialogMessage dialog = new DialogMessage();
     private AlertMessage alertMessage = new AlertMessage();
+    private ImportController importController = null;
     double x, y;
+
 
     public void initConstructor(ManageBookController manageBookController) {
         btClose.setOnAction(new EventHandler<ActionEvent>() {
@@ -83,7 +85,31 @@ public class BookCategoryController implements Initializable {
                 stage.close();
             }
         });
+    }
 
+    public void initConstructor3(ImportController importController, Stage stage) {
+        this.importController = importController;
+        acHeaderPane.setOnMousePressed(mouseEvent -> {
+            x = mouseEvent.getSceneX();
+            y = mouseEvent.getSceneY();
+        });
+        // TODO: Set for move form
+        acHeaderPane.setOnMouseDragged(mouseEvent -> {
+            stage.setX(mouseEvent.getScreenX() - x);
+            stage.setY(mouseEvent.getScreenY() - y);
+        });
+
+        // acHeaderPane.setOnDragDone(mouseEvent -> {
+        // stage.setOpacity(1.0f);
+        // });
+
+        btClose.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                stage.close();
+            }
+        });
     }
 
     @FXML
@@ -200,6 +226,8 @@ public class BookCategoryController implements Initializable {
                             Pos.BOTTOM_RIGHT);
                     if (addBookController != null)
                         addBookController.fillCategory();
+                    if (importController != null)
+                        importController.fillCategory();
                 }
             } else {
                 // Todo: Show warning message if text or combo box is empty
@@ -225,6 +253,8 @@ public class BookCategoryController implements Initializable {
                             Pos.BOTTOM_RIGHT);
                     if (addBookController != null)
                         addBookController.fillCategory();
+                    if (importController != null)
+                        importController.fillCategory();
                 }
             } else {
                 // Todo: Show warning message if text or combo box is empty
@@ -333,6 +363,8 @@ public class BookCategoryController implements Initializable {
                                                 Pos.BOTTOM_RIGHT);
                                         if (addBookController != null)
                                             addBookController.fillCategory();
+                                        if (importController != null)
+                                            importController.fillCategory();
                                     }
                                 } catch (Exception ex) {
                                     alertMessage.showErrorMessage("Delete", "Error: " + ex.getMessage(), 4,

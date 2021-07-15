@@ -234,7 +234,7 @@ public class ShowBookLostController implements Initializable {
                         delete.setStyle(Style.buttonStyle);
                         delete.setOnAction(e -> {
                             Optional<ButtonType> result = dialog.showComfirmDialog("Comfirmed", null,
-                                    "ຕ້ອງການລົບຂໍ້ນີ້ອອກ ຫຼື ບໍ່? (ຖ້າລົບແລ້ວຈະບໍ່ສາມາດກູ້ຄືນໄດ້).");
+                                    "ຕ້ອງການລົບຂໍ້ມູນນີ້ອອກ ຫຼື ບໍ່? (ຖ້າລົບແລ້ວຈະບໍ່ສາມາດກູ້ຄືນຂໍ້ມູນໄດ້).");
                             if (result.get() == ButtonType.YES)
                                 try {
                                     if (booklostModel.deleeLostDetail(lost_id.get(getIndex()).getLost_id(),

@@ -22,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.*;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.Date;
@@ -113,15 +114,14 @@ public class HomeController implements Initializable {
 
     private void show_ImportBooks() {
         try {
-            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmAddBooks.fxml"));
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmImportBook.fxml"));
             final Parent subroot = loader.load();
-            AddBookController addBookController = loader.getController();
-            addBookController.initConstructor1(this);
+            ImportController importController = loader.getController();
+            importController.initConstructor(this);
             bpDisplay.setCenter(subroot);
-        } catch (Exception e) {
-            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            CreateLogFile config = new CreateLogFile();
-            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Add Book", e);
+        } catch (IOException e) {
+            e.printStackTrace();
+            dialog.showExcectionDialog("Error", null, "ການເປີດຟອມນຳຂໍ້ມູນປຶ້ມເຂົ້າມີບັນຫາ", e);
         }
     }
 

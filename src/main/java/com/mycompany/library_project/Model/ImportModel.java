@@ -8,12 +8,13 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
 
 public class ImportModel implements DataAccessObject {
 
-    private Connection con = null;
+    private Connection con = MyConnection.getConnect();
     private String sql = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
@@ -33,8 +34,7 @@ public class ImportModel implements DataAccessObject {
     private double price, totalPrice;
     private Date importDate;
 
-    public ImportModel(Connection con) {
-        this.con = con;
+    public ImportModel() {
     }
 
     public ImportModel(String importid, String bookid, int qty, double price) {

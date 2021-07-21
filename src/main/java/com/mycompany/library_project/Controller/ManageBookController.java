@@ -1,14 +1,12 @@
 package com.mycompany.library_project.Controller;
 
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import com.mycompany.library_project.App;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.Model.BookLostModel;
 import com.mycompany.library_project.Model.ListBookModel;
@@ -26,10 +24,9 @@ import javafx.scene.text.Text;
 
 public class ManageBookController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
     private AlertMessage alertMessage = new AlertMessage();
     public static BorderPane mainBorder = null;
-    private BookLostModel booklost = new BookLostModel(con);
+    private BookLostModel booklost = new BookLostModel();
     private ResultSet rs = null;
     private ListBookModel listbook = null;
 

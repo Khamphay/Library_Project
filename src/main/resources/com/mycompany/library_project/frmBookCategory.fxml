@@ -46,7 +46,7 @@
                                        <children>
                                           <TextField fx:id="txtcatgName" layoutX="261.0" layoutY="53.0" prefHeight="31.0" prefWidth="338.0" promptText="ໝວດປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.topAnchor="52.0" />
                                           <TextField fx:id="txtcatgId" layoutX="21.0" layoutY="49.0" prefHeight="31.0" prefWidth="214.0" promptText="ລະຫັດໝວດ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.topAnchor="49.0" />
-                                          <JFXButton id="btClick" fx:id="btSave" alignment="CENTER" buttonType="RAISED" layoutX="18.0" layoutY="120.0" onAction="#Save" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
+                                          <JFXButton id="btClick" fx:id="btSave" alignment="CENTER" buttonType="RAISED" focusTraversable="false" layoutX="18.0" layoutY="120.0" onAction="#Save" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
@@ -61,7 +61,7 @@
                                                 <Insets left="-6.0" />
                                              </padding>
                                           </JFXButton>
-                                          <JFXButton id="btClick" fx:id="btCancel" alignment="CENTER" buttonType="RAISED" layoutX="216.0" layoutY="120.0" onAction="#Clear" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
+                                          <JFXButton id="btClick" fx:id="btCancel" alignment="CENTER" buttonType="RAISED" focusTraversable="false" layoutX="216.0" layoutY="120.0" onAction="#Clear" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
@@ -76,7 +76,7 @@
                                                 <Insets left="-4.0" />
                                              </padding>
                                           </JFXButton>
-                                          <JFXButton id="btClick" fx:id="btEdite" alignment="CENTER" buttonType="RAISED" layoutX="116.0" layoutY="120.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#Update" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ແກໄຂ້" textFill="WHITE">
+                                          <JFXButton id="btClick" fx:id="btEdite" alignment="CENTER" buttonType="RAISED" focusTraversable="false" layoutX="116.0" layoutY="120.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#Update" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ແກໄຂ້" textFill="WHITE">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
@@ -118,7 +118,7 @@
          <top>
             <AnchorPane id="acHeaderPane" fx:id="acHeaderPane" prefHeight="34.0" prefWidth="768.0" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" layoutX="735.0" layoutY="5.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="26.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
+                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="735.0" layoutY="5.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="26.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>

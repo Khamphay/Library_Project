@@ -22,7 +22,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.TableLogModel;
@@ -32,9 +31,8 @@ import org.controlsfx.validation.Validator;
 
 public class TableLogController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
-    private TableLogModel tableLogModel = new TableLogModel(con);
+    private TableLogModel tableLogModel = new TableLogModel();
     private ResultSet rs = null;
     private TreeItem<TableLogModel> subItem, root, node;
     private ObservableList<TreeItem<TableLogModel>> data = FXCollections.observableArrayList();
@@ -45,7 +43,6 @@ public class TableLogController implements Initializable {
     String maxLog = "";
     int qty = 0;
     double x, y;
-
 
     public void initConstructor(ManageBookController manageBookController) {
         btClose.setOnAction(new EventHandler<ActionEvent>() {
@@ -291,6 +288,12 @@ public class TableLogController implements Initializable {
         try {
             if (!txtId.getText().equals("") && !txtId.getText().equals("") && !txtQty.getText().equals("")) {
                 // tableLogModel = new TableLogModel();
+                if (tableLogModel.findTable(txtId.getText()).next()) {
+                    dialog.showWarningDialog(null,
+                            "ລະຫັດຕູ້ຊ້ຳກັບຂໍ້ມູນທີ່ມີຢູ່ໃນລະບົບກະລຸນາກວດສອບຂໍ້ມູນ ແລ້ວລອງບັນທຶກໃຫມ່ອີກຄັ້ງ");
+                    return;
+                }
+
                 if (tableLogModel.saveTable(txtId.getText(), Integer.parseInt(txtQty.getText())) > 0) {
                     String line = txtLog.getText();
                     String[] lineCount = line.split("\n");
@@ -298,20 +301,18 @@ public class TableLogController implements Initializable {
                     ArrayList<TableLogModel> list = new ArrayList<TableLogModel>();
 
                     for (int i = 0; i < lineCount.length; i++) {
-                        // try {
-                        // tableLogModel = new TableLogModel(txtId.getText(), lineCount[i]);
-                        // result = (tableLogModel.saveData() > 0) ? "Save Completed" : null; // Todo:
-                        // if...else
-                        // } catch (SQLException e) {
-                        // tableLogModel.deleteTable(txtId.getText());
-                        // dialog.showExcectionDialog("Error", null,
-                        // "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນລ໋ອກຕູ້", e);
-                        // return;
-                        // }
+                        /*
+                         * try { // tableLogModel = new TableLogModel(txtId.getText(), lineCount[i]); //
+                         * result = (tableLogModel.saveData() > 0) ? "Save Completed" : null; // Todo:
+                         * // if...else // } catch (SQLException e) { //
+                         * tableLogModel.deleteTable(txtId.getText()); //
+                         * dialog.showExcectionDialog("Error", null, //
+                         * "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນລ໋ອກຕູ້", e); // return; }
+                         */
                         list.add(new TableLogModel(txtId.getText(), lineCount[i]));
                     }
 
-                    if (tableLogModel.saveTableLog(list) > 0) {
+                    if (tableLogModel.saveTableLog(list, txtId.getText()) > 0) {
                         showData();
                         clearText();
                         alertMessage.showCompletedMessage("Saved", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);

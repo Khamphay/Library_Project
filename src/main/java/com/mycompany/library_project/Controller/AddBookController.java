@@ -17,7 +17,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.App;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 
@@ -35,17 +33,16 @@ import org.controlsfx.validation.Validator;
 
 public class AddBookController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
     private BookController bookcontroller;
     private ResultSet rs = null;
     private AlertMessage alertMessage = new AlertMessage();
-    private TypeModel type = new TypeModel(con);
-    private CategoryModel category = new CategoryModel(con);
-    private TableLogModel table = new TableLogModel(con);
-    private AuthorModel author = new AuthorModel(con);
+    private TypeModel type = new TypeModel();
+    private CategoryModel category = new CategoryModel();
+    private TableLogModel table = new TableLogModel();
+    private AuthorModel author = new AuthorModel();
     private DialogMessage dialog = new DialogMessage();
-    private BookDetailModel addBook = new BookDetailModel(con);
+    private BookDetailModel addBook = new BookDetailModel();
     private ArrayList<AuthorModel> author_id = null;
     private ArrayList<String> arr_type, arr_category;
     private ObservableList<String> status = FXCollections.observableArrayList("ຫວ່າງ", "ກຳລ້ງຢືມ", "ເສຍ");;
@@ -114,7 +111,6 @@ public class AddBookController implements Initializable {
             } catch (SQLException e) {
                 alertMessage.showErrorMessage("Load Barcode Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             }
-
 
             try {
                 rs = book.showWrite(bookid);
@@ -684,13 +680,19 @@ public class AddBookController implements Initializable {
                     && !cmbType.getSelectionModel().getSelectedItem().equals(null)
                     && !cmbTable.getSelectionModel().getSelectedItem().equals(null)) {
 
+                if (addBook.findById(txtId.getText()).next()) {
+                    dialog.showWarningDialog(null,
+                            "ລະຫັດປຶ້ມຊ້ຳກັບຂໍ້ມູນທີ່ມີຢູ່ໃນລະບົບກະລຸນາກວດສອບຂໍ້ມູນ ແລ້ວລອງບັນທຶກໃຫມ່ອີກຄັ້ງ");
+                    return;
+                }
+
                 addBook = new BookDetailModel(txtId.getText(), txtName.getText(), txtISBN.getText(),
                         Integer.parseInt(txtPage.getText()), Integer.parseInt(txtQty.getText()),
                         arr_category.get(index_category), arr_type.get(index_type),
                         cmbTable.getSelectionModel().getSelectedItem().toString(), txtYear.getText(),
                         txtDetail.getText());
 
-                ArrayList<BookDetailModel> list = new ArrayList<>();
+                final ArrayList<BookDetailModel> list = new ArrayList<>();
                 String line = txtBarcode.getText();
                 String[] lineCount = line.split("\n");
                 // Todo: Save Barcode
@@ -700,37 +702,20 @@ public class AddBookController implements Initializable {
                             cmbStatus.getSelectionModel().getSelectedItem().toString()));
                 }
 
+                final ArrayList<BookDetailModel> listWrite = new ArrayList<>();
+                for (String val : arr_author) {
+                    if (val != null) {
+                        listWrite.add(new BookDetailModel(txtId.getText(), val));
+                    }
+                }
                 if (bookid == "") {
                     if (addBook.saveData() > 0) {
-                        try {
-                            if (addBook.saveBookBarCode(list) > 0) {
-                                    msg = "Save data successfully.";
-                                } else {
-                                    msg = null;
-                                }
-                            } catch (SQLException e) {
-                                msg = null;
-                                alertMessage.showWarningMessage("Save Barcode Error", "Can not save barcode.", 4,
-                                        Pos.BOTTOM_RIGHT);
-                                addBook.deleteData(txtId.getText());
-                            return;
-                        }
-
-                        // Todo: Save Write
-                        for (String val : arr_author) {
-                            if (val != null) {
-                                try {
-                                    if (addBook.saveWrite(txtId.getText(), val) > 0) {
-                                        msg = "Save data successfully.";
-                                    }
-                                } catch (SQLException e) {
-                                    alertMessage.showWarningMessage("Save Write Error", "Can not save writer.", 4,
-                                            Pos.BOTTOM_RIGHT);
-                                    return;
-                                }
+                        if (addBook.saveBookBarCode(list, txtId.getText()) > 0) {
+                            // Todo: Save Write
+                            if (addBook.saveWrite(listWrite) > 0) {
+                                msg = "Save data successfully.";
                             }
                         }
-
                     } else {
                         msg = null;
                     }
@@ -755,18 +740,8 @@ public class AddBookController implements Initializable {
                             }
                         } else {
                             // Todo: Save Write
-                            for (String val : arr_author) {
-                                if (val != null) {
-                                    try {
-                                        if (addBook.saveWrite(txtId.getText(), val) > 0) {
-                                            msg = "Save data successfully.";
-                                        }
-                                    } catch (Exception e) {
-                                        alertMessage.showWarningMessage("Save Write Error", "Can not save writer.", 4,
-                                                Pos.BOTTOM_RIGHT);
-                                        return;
-                                    }
-                                }
+                            if (addBook.saveWrite(listWrite) > 0) {
+                                msg = "Edit data successfully.";
                             }
                         }
                         msg = "Edit data successfully.";

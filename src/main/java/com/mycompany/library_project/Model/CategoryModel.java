@@ -1,5 +1,6 @@
 package com.mycompany.library_project.Model;
 
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
 import java.sql.Connection;
@@ -12,14 +13,13 @@ public class CategoryModel implements DataAccessObject {
     private DialogMessage dialog = new DialogMessage();
     private PreparedStatement ps = null;
     private String sql = "";
-    private Connection con = null;
+    private Connection con = MyConnection.getConnect();
     private ResultSet rs = null;
 
     private String catgId;
     private String catgName;
 
-    public CategoryModel(Connection con) {
-        this.con = con;
+    public CategoryModel() {
     }
 
     public CategoryModel(String catgId, String catgName) {

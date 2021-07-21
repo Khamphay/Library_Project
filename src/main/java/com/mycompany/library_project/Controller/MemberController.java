@@ -12,7 +12,6 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
 import com.mycompany.library_project.App;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.MemberModel;
@@ -42,11 +41,10 @@ import javafx.util.Callback;
 
 public class MemberController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
     private ManagePersonalCotroller personalCotroller = null;
     private ObservableList<MemberModel> data = null;
     private AlertMessage alertMessage = new AlertMessage();
-    private MemberModel memberModel = new MemberModel(con);
+    private MemberModel memberModel = new MemberModel();
     private MaskerPane masker = new MaskerPane();
     private ResultSet rs = null;
     private DialogMessage dialog = new DialogMessage();

@@ -26,7 +26,6 @@ import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
 import com.jfoenix.controls.*;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import java.net.URL;
@@ -36,11 +35,10 @@ import java.util.ResourceBundle;
 
 public class BookTypeController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
     private AddBookController addBookController = null;
     private ResultSet rs;
-    private TypeModel type = new TypeModel(con);
+    private TypeModel type = new TypeModel();
     private ObservableList<TypeModel> data = null;
     private DialogMessage dialog = new DialogMessage();
     private AlertMessage alertMessage = new AlertMessage();
@@ -280,6 +278,12 @@ public class BookTypeController implements Initializable {
     private void Update(ActionEvent event) throws SQLException {
         try {
             if (!txtTypeId.getText().equals("") && !txtTypeName.getText().equals("")) {
+
+                if (type.findById(txtTypeId.getText()).next()) {
+                    dialog.showWarningDialog(null,
+                            "ລະຫັດປະເພດປຶ້ມຊ້ຳກັບຂໍ້ມູນທີ່ມີຢູ່ໃນລະບົບກະລຸນາກວດສອບຂໍ້ມູນ ແລ້ວລອງບັນທຶກໃຫມ່ອີກຄັ້ງ");
+                    return;
+                }
                 type = new TypeModel(txtTypeId.getText(), txtTypeName.getText());
                 if (type.updateData() == 1) {
                     ShowData();

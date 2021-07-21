@@ -2,18 +2,16 @@ package com.mycompany.library_project.Model;
 
 import java.sql.*;
 import java.text.ParseException;
+import java.util.List;
 
-import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
+import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
-import com.mycompany.library_project.config.CreateLogFile;
-
-import javafx.geometry.Pos;
 
 public class RentBookModel implements DataAccessObject {
 
-    private AlertMessage alertMessage = new AlertMessage();
-    private CreateLogFile logfile = new CreateLogFile();
-    private Connection con = null;
+    private DialogMessage dialog = new DialogMessage();
+    private Connection con = MyConnection.getConnect();
     private ResultSet rs = null;
     private PreparedStatement ps = null;
     private String sql = "";
@@ -34,8 +32,7 @@ public class RentBookModel implements DataAccessObject {
     private String outDate;
     private String pricePerBook;
 
-    public RentBookModel(Connection con) {
-        this.con = con;
+    public RentBookModel() {
     }
 
     public RentBookModel(String rentId, String barcode, String status) {
@@ -215,8 +212,7 @@ public class RentBookModel implements DataAccessObject {
             rs = con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            // logfile.createLogFile("Load Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນຢືມປື້ມ", e);
             return null;
         } finally {
             //con.close();
@@ -230,8 +226,7 @@ public class RentBookModel implements DataAccessObject {
             rs = con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            // logfile.createLogFile("Load Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນຢືມປື້ມ", e);
             return null;
         } finally {
             //con.close();
@@ -246,8 +241,7 @@ public class RentBookModel implements DataAccessObject {
 
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            // logfile.createLogFile("Save Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກຂໍ້ມູນຢືມປື້ມ", e);
             return 0;
         } finally {
             ps.close();
@@ -285,28 +279,40 @@ public class RentBookModel implements DataAccessObject {
             ps.setDate(5, getSendDate());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Rent Book Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Save Rent Book Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກຂໍ້ມູນຢືມປື້ມ", e);
             return 0;
         } finally {
             ps.close();
-            //con.close();
         }
 
     }
 
-    public int saveRentBook(String id, String barcode, String status) throws SQLException {
-        // TODO: Don't use try...catch'
-        sql = "call rentbook_Insert(?, ?, ?)";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, id);
-        ps.setString(2, barcode);
-        ps.setString(3, status);
-        int result = ps.executeUpdate();
-        ps.close();
-        //con.close();
-        return result;
-
+    public int saveRentBook(List<RentBookModel> list) throws SQLException {
+        try {
+            int result = 0, count = 0;
+            sql = "INSERT INTO dblibrary.tbrent_book (rent_id, barcode, status) VALUES(?, ?, ?)";
+            ps = con.prepareStatement(sql);
+            con.setAutoCommit(false);
+            for (RentBookModel val : list) {
+                ps.setString(1, val.getRentId());
+                ps.setString(2, val.getBarcode());
+                ps.setString(3, val.getStatus());
+                ps.addBatch();
+                result++;
+                if (count % 100 == 0 || count == list.size()) {
+                    ps.executeBatch();
+                    con.commit();
+                    result = 1;
+                }
+            }
+            return result;
+        } catch (BatchUpdateException e) {
+            this.deleteData(list.get(0).getRentId());
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກຂໍ້ມູນລາຍລະອຽດຢືມປື້ມ", e);
+            return 0;
+        } finally {
+            ps.close();
+        }
     }
 
     @Override
@@ -323,12 +329,10 @@ public class RentBookModel implements DataAccessObject {
             ps.setString(1, id);
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Delete Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Delete Rent Book Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນຢືມປື້ມ", e);
             return 0;
         } finally {
             ps.close();
-            //con.close();
         }
     }
 
@@ -342,13 +346,11 @@ public class RentBookModel implements DataAccessObject {
                 return null;
             }
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Max Id Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Max Rent ID Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດລະຫັດຢືມປື້ມ", e);
             return null;
         } finally {
-            //con.close();
+            ps.close();
         }
-
     }
 
     public ResultSet chackMemberRentBook(String memberid, String book_status) throws SQLException {
@@ -360,11 +362,10 @@ public class RentBookModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Check Rent Book Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Check Rent Book Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການກວດສອບຂໍ້ມູນຢືມປື້ມ", e);
             return null;
         } finally {
-            //con.close();
+            ps.close();
         }
 
     }
@@ -378,29 +379,33 @@ public class RentBookModel implements DataAccessObject {
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Book Rent For Send Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນຢືມປື້ມ", e);
             return null;
         } finally {
-            //con.close();
+            ps.close();
         }
     }
 
-    public int sendBook(String rent_id, String book_barcode, String book_status) throws SQLException {
+    public int sendBook(List<RentBookModel> list) throws SQLException {
         try {
-            sql = "	call sendBook(?, ?, ?);";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, rent_id);
-            ps.setString(2, book_barcode);
-            ps.setString(3, book_status);
-            return ps.executeUpdate();
-        } catch (SQLException e) {
-            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Save Send Books Error", e);
+            int result = 0;
+            for (RentBookModel val : list) {
+                sql = " call sendBook(?, ?, ?);";
+                ps = con.prepareStatement(sql);
+                ps.setString(1, val.getRentId());
+                ps.setString(2, val.getBarcode());
+                ps.setString(3, val.getStatus());
+                result = ps.executeUpdate();
+                if (result <= 0) {
+                    return result;
+                }
+            }
+            return result;
+        } catch (BatchUpdateException e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການສົ່ງປື້ມ", e);
             return 0;
         } finally {
             ps.close();
-            //con.close();
         }
     }
 }

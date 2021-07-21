@@ -3,6 +3,7 @@ package com.mycompany.library_project.Model;
 import java.sql.*;
 import java.text.ParseException;
 
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 import com.mycompany.library_project.config.CreateLogFile;
@@ -13,7 +14,7 @@ public class ShowRentSendModel implements DataAccessObject {
 
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile logfile = new CreateLogFile();
-    private Connection con = null;
+    private Connection con = MyConnection.getConnect();
     private ResultSet rs = null;
     private PreparedStatement ps = null;
     private String sql = "";
@@ -31,8 +32,7 @@ public class ShowRentSendModel implements DataAccessObject {
     private String memberName;
     private String cause;
 
-    public ShowRentSendModel(Connection con) {
-        this.con = con;
+    public ShowRentSendModel() {
     }
 
     public ShowRentSendModel(String rentId, String barcode, String status) {

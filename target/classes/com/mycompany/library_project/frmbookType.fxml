@@ -47,7 +47,7 @@
                                        <children>
                                           <TextField fx:id="txtTypeId" layoutX="14.0" layoutY="32.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="206.0" promptText="ລະຫັດປະເພດ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.topAnchor="49.0" />
                                           <TextField fx:id="txtTypeName" layoutX="256.0" layoutY="31.0" prefHeight="27.0" prefWidth="298.0" promptText="ປະເພດປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="49.0" />
-                                          <JFXButton id="btClick" fx:id="btSave" alignment="CENTER" buttonType="RAISED" layoutX="17.0" layoutY="117.0" mnemonicParsing="false" onAction="#Save" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
+                                          <JFXButton id="btClick" fx:id="btSave" alignment="CENTER" buttonType="RAISED" focusTraversable="false" layoutX="17.0" layoutY="117.0" mnemonicParsing="false" onAction="#Save" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
                                              <graphic>
                                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
@@ -59,7 +59,7 @@
                                                 <Insets left="-4.0" />
                                              </padding>
                                           </JFXButton>
-                                          <JFXButton id="btClick" fx:id="btCancel" alignment="CENTER" buttonType="RAISED" layoutX="213.0" layoutY="117.0" onAction="#ClearText" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
+                                          <JFXButton id="btClick" fx:id="btCancel" alignment="CENTER" buttonType="RAISED" focusTraversable="false" layoutX="213.0" layoutY="117.0" onAction="#ClearText" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
@@ -85,7 +85,7 @@
                                              </image>
                                           </ImageView>
                                           <Separator layoutX="351.0" layoutY="121.0" orientation="VERTICAL" prefHeight="23.0" />
-                                          <JFXButton id="btClick" fx:id="btEdit" alignment="CENTER" buttonType="RAISED" layoutX="115.0" layoutY="117.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#Update" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ແກໄຂ້" textFill="WHITE">
+                                          <JFXButton id="btClick" fx:id="btEdit" alignment="CENTER" buttonType="RAISED" focusTraversable="false" layoutX="115.0" layoutY="117.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#Update" prefHeight="32.0" prefWidth="85.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ແກໄຂ້" textFill="WHITE">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
@@ -116,7 +116,7 @@
          <top>
             <AnchorPane id="acHeaderPane" fx:id="acHeaderPane" prefHeight="34.0" prefWidth="768.0" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" layoutX="735.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
+                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="735.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>

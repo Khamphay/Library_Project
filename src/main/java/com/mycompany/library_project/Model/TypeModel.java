@@ -1,5 +1,6 @@
 package com.mycompany.library_project.Model;
 
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,15 +12,14 @@ public class TypeModel implements DataAccessObject {
     private DialogMessage dialog = new DialogMessage();
     private PreparedStatement ps = null;
     private ResultSet rs = null;
-    private Connection con = null;
+    private Connection con = MyConnection.getConnect();
 
     private String sql = "";
 
     private String typeId;
     private String typeName;
 
-    public TypeModel(Connection con) {
-        this.con = con;
+    public TypeModel() {
     }
 
     public TypeModel(String typeId) {

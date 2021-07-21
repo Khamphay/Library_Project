@@ -229,6 +229,12 @@ public class EmployeeController implements Initializable {
                             && !txtTel.getText().equals("") && !txtPassword.getText().equals("")
                             && !txtRepassword.getText().equals("")) {
 
+                        if (employee.findById(txtId.getText()).next()) {
+                            dialog.showWarningDialog(null,
+                                    "ລະຫັດພະນັກງານຊ້ຳກັບຂໍ້ມູນທີ່ມີຢູ່ໃນລະບົບກະລຸນາກວດສອບຂໍ້ມູນ ແລ້ວລອງບັນທຶກໃຫມ່ອີກຄັ້ງ");
+                            return;
+                        }
+
                         if (txtTel.getText().length() < 7 || txtTel.getText().length() > 11) {
                             dialog.showWarningDialog(null, "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.");
                             txtTel.requestFocus();

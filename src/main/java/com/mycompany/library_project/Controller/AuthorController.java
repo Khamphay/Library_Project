@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.AuthorModel;
@@ -37,11 +36,10 @@ import javafx.util.Callback;
 
 public class AuthorController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
     private ManagePersonalCotroller personalCotroller = null;
     private AddBookController addBookController = null;
-    private AuthorModel author = new AuthorModel(con);
+    private AuthorModel author = new AuthorModel();
     private ResultSet rs = null;
     private String gender = "";
     private AlertMessage alertMessage = new AlertMessage();
@@ -243,8 +241,11 @@ public class AuthorController implements Initializable {
                     if (!txtId.getText().equals("") && !txtFname.getText().equals("") && !txtLname.getText().equals("")
                             && !txtTel.getText().equals("")) {
                         gender = (rdbMale.isSelected() ? rdbMale.getText() : rdbFemale.getText());
-                        author = new AuthorModel(txtId.getText(), txtFname.getText(), txtLname.getText(), gender,
-                                txtTel.getText(), txtEmail.getText());
+                        if (author.findById(txtId.getText()).next()) {
+                            dialog.showWarningDialog(null,
+                                    "ລະຫັດຊ້ຳກັບຂໍ້ມູນທີ່ມີຢູ່ໃນລະບົບກະລຸນາກວດສອບຂໍ້ມູນ ແລ້ວລອງບັນທຶກໃຫມ່ອີກຄັ້ງ");
+                            return;
+                        }
 
                         if (txtTel.getText().length() < 7 || txtTel.getText().length() > 11) {
                             dialog.showWarningDialog(null, "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.");
@@ -252,6 +253,8 @@ public class AuthorController implements Initializable {
                             return;
                         }
 
+                        author = new AuthorModel(txtId.getText(), txtFname.getText(), txtLname.getText(), gender,
+                                txtTel.getText(), txtEmail.getText());
                         if (author.saveData() > 0) {
                             showData();
                             clearText();

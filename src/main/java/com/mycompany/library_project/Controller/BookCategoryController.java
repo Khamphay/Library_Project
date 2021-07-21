@@ -26,7 +26,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.CategoryModel;
@@ -37,10 +36,9 @@ import org.controlsfx.validation.Validator;
 
 public class BookCategoryController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
     private AddBookController addBookController = null;
-    private CategoryModel category = new CategoryModel(con);
+    private CategoryModel category = new CategoryModel();
     private ObservableList<CategoryModel> data = null;
     private ResultSet rs = null;
     private DialogMessage dialog = new DialogMessage();
@@ -218,6 +216,13 @@ public class BookCategoryController implements Initializable {
     private void Save(ActionEvent event) {
         try {
             if (!txtcatgId.getText().equals("") && !txtcatgName.getText().equals("")) {
+
+                if (category.findById(txtcatgId.getText()).next()) {
+                    dialog.showWarningDialog(null,
+                            "ລະຫັດໝວກປຶ້ມຊ້ຳກັບຂໍ້ມູນທີ່ມີຢູ່ໃນລະບົບກະລຸນາກວດສອບຂໍ້ມູນ ແລ້ວລອງບັນທຶກໃຫມ່ອີກຄັ້ງ");
+                    return;
+                }
+
                 category = new CategoryModel(txtcatgId.getText(), txtcatgName.getText());
                 if (category.saveData() > 0) {
                     showData();

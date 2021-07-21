@@ -1,7 +1,6 @@
 package com.mycompany.library_project.Controller;
 
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.text.DecimalFormat;
@@ -10,7 +9,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
@@ -37,8 +35,7 @@ import javafx.util.Callback;
 
 public class ShowBookLostController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
-    private BookLostModel booklostModel = new BookLostModel(con);
+    private BookLostModel booklostModel = new BookLostModel();
     private ObservableList<BookLostModel> data = null;
     private ArrayList<BookLostModel> lost_id = null;
     private AlertMessage alertMessage = new AlertMessage();

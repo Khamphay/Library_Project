@@ -3,6 +3,7 @@ package com.mycompany.library_project.Model;
 import java.sql.*;
 import java.text.ParseException;
 
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 import com.mycompany.library_project.config.CreateLogFile;
@@ -13,14 +14,13 @@ public class CostModel implements DataAccessObject {
 
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile logfile = new CreateLogFile();
-    private Connection con = null;
+    private Connection con = MyConnection.getConnect();
     private ResultSet rs = null;
     private PreparedStatement ps = null;
 
     private double cost_register, cost_perday, cost_perbook;
 
-    public CostModel(Connection con) {
-        this.con = con;
+    public CostModel() {
     }
 
     public CostModel(double cost_register, double cost_perday, double cost_perbook) {

@@ -19,11 +19,11 @@ import java.net.URL;
 import java.sql.*;
 import java.time.*;
 import java.time.format.TextStyle;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
@@ -34,13 +34,12 @@ import org.controlsfx.validation.Validator;
 
 public class RentBookController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
     private ValidationSupport dateRules = new ValidationSupport();
     private HomeController homeController = null;
-    private MemberModel member = new MemberModel(con);
-    private BookDetailModel book = new BookDetailModel(con);
-    private RentBookModel rentBook = new RentBookModel(con);
+    private MemberModel member = new MemberModel();
+    private BookDetailModel book = new BookDetailModel();
+    private RentBookModel rentBook = new RentBookModel();
     private MyDate formatDate = new MyDate();
     private ResultSet rs = null;
     private AlertMessage alertMessage = new AlertMessage();
@@ -117,12 +116,20 @@ public class RentBookController implements Initializable {
     }
 
     private void addToRentBook() {
+
+        LocalDate dateRent = rentDate.getValue();
+        DayOfWeek days = dateRent.getDayOfWeek();
+
+        if (days.getDisplayName(TextStyle.FULL, Locale.getDefault()).equals("Sunday")) {
+            dialog.showWarningDialog(null, "ກະນາເລືອກສະເພາະວັນຈັນຫາວັນສຸກເທົ່ານັ້ນ");
+            return;
+        }
         if (!txtMemberId.getText().equals("") && !txtMemberName.getText().equals("") && !txtSurName.getText().equals("")
                 && !txtBookId.getText().equals("") && !txtBookName.getText().equals("") && !txtCatg.getText().equals("")
                 && !txtType.getText().equals("")) {
             try {
                 if (rentDate.getValue() == null || sendDate.getValue() == null) {
-                    dialog.showWarningDialog(null, "ປື້ມຫົວນີ້ເສຍແລ້ວ, ດັັ່ງນັ້ນບໍ່ສາມາດຢືມໄດ້");
+                    dialog.showWarningDialog(null, "ກະລຸນາເລືອກວັນທີຢືມ ແລະ ສົ່ງປຶ້ມ.");
                     return;
                 }
 
@@ -359,36 +366,26 @@ public class RentBookController implements Initializable {
                 rent_id = autoMaxID();
                 try {
                     if (qty > 0) {
+
+                        final ArrayList<RentBookModel> list = new ArrayList<>();
+                        final ArrayList<BookDetailModel> listBarcode = new ArrayList<>();
+                        for (RentBookModel row : tableRentBook.getItems()) {
+                            list.add(new RentBookModel(rent_id, row.getBarcode(), "ກຳລັງຢືມ"));
+                            listBarcode.add(new BookDetailModel(row.getBarcode(), "ກຳລັງຢືມ"));
+                        }
+
                         rentBook = new RentBookModel(rent_id, txtMemberId.getText(), txtBookId.getText(), qty,
                                 Date.valueOf(rentDate.getValue()), Date.valueOf(sendDate.getValue()));
                         if (rentBook.saveData() > 0) {
-                            for (RentBookModel row : tableRentBook.getItems()) {
-                                try {
-                                    rentBook.saveRentBook(rent_id, row.getBarcode(), "ກຳລັງຢືມ");
-                                    if (book.updateStatus(row.getBarcode(), "ກຳລັງຢືມ") > 0) {
-                                        result = "Rent book completed";
-                                    }
-                                } catch (SQLException e) {
-                                    rentBook.deleteData(rent_id);
-                                    result = "";
-                                    dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ສະຖານະຂອງປຶ້ມ", e);
-                                    return;
+                            if (rentBook.saveRentBook(list) > 0) {
+                                if (book.updateStatus(listBarcode, rent_id) > 0) {
+                                    alertMessage.showCompletedMessage("Rent Book Successfully", result, 4,
+                                            Pos.BOTTOM_RIGHT);
+                                    tableRentBook.getItems().clear();
+                                    clearText();
                                 }
                             }
-                        } else {
-                            result = "";
                         }
-                    } else {
-                        result = "";
-                    }
-
-                    if (result != "") {
-                        alertMessage.showCompletedMessage("Rent Book Successfully", result, 4, Pos.BOTTOM_RIGHT);
-                        tableRentBook.getItems().clear();
-                        clearText();
-                    } else {
-                        alertMessage.showWarningMessage("Rent Book",
-                                "Can't save. Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
                     }
                 } catch (Exception e) {
                     dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກຂໍ້ມູນຢືມປື້ມ", e);
@@ -425,7 +422,16 @@ public class RentBookController implements Initializable {
         initEvents();
         // cancalarDate();
         rentDate.setValue(LocalDate.now());
-        cancalarDate();
+        LocalDate dateRent = rentDate.getValue();
+        DayOfWeek days = dateRent.getDayOfWeek();
+
+        if (days.getDisplayName(TextStyle.FULL, Locale.getDefault()).equals("Sunday")) {
+            rentDate.setValue(null);
+            return;
+        } else {
+            cancalarDate();
+        }
+
     }
 
     private void addButtonToTable() {
@@ -474,8 +480,8 @@ public class RentBookController implements Initializable {
 
         if (formatDate.cancalarDate(rentDate.getValue()) > 0) {
             rentDate.setValue(LocalDate.now());
-            alertMessage.showWarningMessage("Warning", "Can not select the date after today. ເຮໂຣ", 4,
-                    Pos.TOP_CENTER);
+            dialog.showWarningDialog(null, "ບໍ່ສາມາດເລືອກວັນຍ້ອນຫຼັງໄດ້.");
+            return;
         }
 
         if (!days.getDisplayName(TextStyle.FULL, Locale.getDefault()).equals("Sunday")

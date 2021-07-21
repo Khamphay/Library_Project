@@ -1,12 +1,10 @@
 package com.mycompany.library_project.Controller;
 
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 
@@ -25,10 +23,9 @@ import javafx.scene.layout.StackPane;
 
 public class SearchController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
     private TreeItem<String> root, node;
-    private BookDetailModel bookDetailModel = new BookDetailModel(con);
-    private AuthorModel authorModel = new AuthorModel(con);
+    private BookDetailModel bookDetailModel = new BookDetailModel();
+    private AuthorModel authorModel = new AuthorModel();
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = new DialogMessage();
     private MaskerPane masker = new MaskerPane();

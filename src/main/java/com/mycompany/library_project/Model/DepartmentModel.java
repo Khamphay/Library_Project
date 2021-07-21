@@ -3,6 +3,7 @@ package com.mycompany.library_project.Model;
 import java.sql.*;
 import java.text.ParseException;
 
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 
 public class DepartmentModel implements DataAccessObject {
@@ -10,14 +11,13 @@ public class DepartmentModel implements DataAccessObject {
     private DialogMessage dialog = new DialogMessage();
     private ResultSet rs = null;
     private PreparedStatement ps = null;
-    private Connection con = null;
+    private Connection con = MyConnection.getConnect();
     private String sql = null;
 
     private String depId;
     private String depName;
 
-    public DepartmentModel(Connection con) {
-        this.con = con;
+    public DepartmentModel() {
     }
 
     public DepartmentModel(String depId, String depName) {

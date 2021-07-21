@@ -5,12 +5,12 @@ import java.sql.*;
 import java.util.*;
 
 import com.jfoenix.controls.*;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 import com.mycompany.library_project.Report.CreateReport;
 
+import org.controlsfx.control.MaskerPane;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
@@ -18,6 +18,7 @@ import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
+import javafx.concurrent.Task;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
@@ -31,14 +32,15 @@ import javafx.util.Callback;
 
 public class BarcodeController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
     private BookController bookController;
-    private BookDetailModel addBarcode = new BookDetailModel(con);;
-    private ResultSet rs = null;
-    private TableLogModel table = new TableLogModel(con);
+    private BookDetailModel addBarcode = new BookDetailModel();;
+    private MaskerPane masker = new MaskerPane();
+    private TableLogModel table = new TableLogModel();
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = new DialogMessage();
+    private ResultSet rs = null;
+    private Task<Void> task = null;
     private ObservableList<BookDetailModel> data = null;
     private ObservableList<String> items = null;
     private ArrayList<String> book = null;
@@ -99,7 +101,7 @@ public class BarcodeController implements Initializable {
                         list.add(new BookDetailModel(txtBarcode.getText(), bookid,
                                 cmbTabLog_id.getSelectionModel().getSelectedItem(),
                                 cmbStatus.getSelectionModel().getSelectedItem()));
-                        if (addBarcode.saveBookBarCode(list) > 0) {
+                        if (addBarcode.saveBookBarCode(list, null) > 0) {
                             alertMessage.showCompletedMessage("Saved", "Save data completed", 4, Pos.BOTTOM_RIGHT);
                             clearText();
                             showBarcode(bookid);
@@ -161,15 +163,37 @@ public class BarcodeController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                CreateReport printBarcode = new CreateReport();
-                Map<String, Object> map = new HashMap<String, Object>();
-                if (!txtBarcode.getText().equals("")) {
-                    map.put("bar_code", txtBarcode.getText());
-                    map.put("bookid", "");
-                } else
-                    map.put("bookid", bookid);
+                task = new Task<Void>() {
 
-                printBarcode.showReport(map, "printBarcodeByBookId.jrxml", "Print Barcode Error");
+                    @Override
+                    protected Void call() throws Exception {
+                        masker.setVisible(true);
+                        masker.setProgressVisible(true);
+                        CreateReport printBarcode = new CreateReport();
+                        Map<String, Object> map = new HashMap<String, Object>();
+                        if (!txtBarcode.getText().equals("")) {
+                            map.put("bar_code", txtBarcode.getText());
+                            map.put("bookid", "");
+                        } else
+                            map.put("bookid", bookid);
+                        printBarcode.showReport(map, "printBarcodeByBookId.jrxml", "Print Barcode Error");
+                        return null;
+                    }
+
+                    @Override
+                    protected void succeeded() {
+                        masker.setVisible(false);
+                        masker.setProgressVisible(false);
+                    }
+
+                    @Override
+                    protected void failed() {
+                        masker.setVisible(false);
+                        masker.setProgressVisible(false);
+                        dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການພິມບາໂຄດ", task.getException());
+                    }
+                };
+                new Thread(task).start();
             }
 
         });
@@ -348,6 +372,12 @@ public class BarcodeController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        masker.setVisible(false);
+        masker.setText("ກຳລັງໂຫລດຂໍ້ມູນ, ກະລຸນາລໍຖ້າ...");
+        masker.setStyle("-fx-font-family: BoonBaan;");
+        stackPane.getChildren().add(masker);
+
         moveForm();
         fillTable();
         initTable();

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.jfoenix.controls.JFXButton;
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 
 
@@ -14,7 +15,7 @@ public class TableLogModel implements DataAccessObject {
 
     private DialogMessage dialog = new DialogMessage();
     private PreparedStatement ps = null;
-    private Connection con = null;
+    private Connection con = MyConnection.getConnect();
     private ResultSet rs = null;
     private String query = "";
 
@@ -25,8 +26,7 @@ public class TableLogModel implements DataAccessObject {
     private String newLog;
     private JFXButton action;
 
-    public TableLogModel(Connection con) {
-        this.con = con;
+    public TableLogModel() {
     }
 
     public TableLogModel(String tableLog) {
@@ -124,6 +124,19 @@ public class TableLogModel implements DataAccessObject {
 
     }
 
+    public ResultSet findTable(String id) throws SQLException {
+        try {
+            query = "call table_ShowByID('" + id + "');";
+            rs = con.createStatement().executeQuery(query);
+            return rs;
+        } catch (SQLException e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນຕູ້", e);
+            return null;
+        } finally {
+            // con.close();
+        }
+    }
+
     @Override
     public ResultSet findById(String id) throws SQLException {
         try {
@@ -192,28 +205,33 @@ public class TableLogModel implements DataAccessObject {
         ps.setString(2, getTableLog());
         int result = ps.executeUpdate();
         ps.close();
-        // con.close();
         return result;
     }
 
-    public int saveTableLog(List<TableLogModel> list) {
+    public int saveTableLog(List<TableLogModel> list, String id) {
         try {
-            query = "call tablelog_Insert(?,?)";
-            // query = "insert into tbtablelog values(?, ?)";
+            // query = "call tablelog_Insert(?,?)";
+            query = "insert into tbtablelog values(?, ?)";
             ps = con.prepareStatement(query);
-            int result = 0;
+            con.setAutoCommit(false);
+            int result = 0, count = 0;
             for (TableLogModel tableLog : list) {
                 ps.setString(1, tableLog.getTableId());
                 ps.setString(2, tableLog.getTableLog());
                 ps.addBatch();
-                result++;
-                if (result % 100 == 0 || result == list.size()) {
+                count++;
+                if (count % 100 == 0 || count == list.size()) {
                     ps.executeBatch();
+                    con.commit();
                     result = 1;
                 }
             }
             return result;
         } catch (SQLException e) {
+            try {
+                this.deleteTable(id);
+            } catch (SQLException ex) {
+            }
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນລ໋ອກຕູ້", e);
             return 0;
         }
@@ -273,6 +291,7 @@ public class TableLogModel implements DataAccessObject {
             ps = con.prepareStatement(query);
             ps.setString(1, id);
             return ps.executeUpdate();
+
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນຕູ້", e);
             return 0;

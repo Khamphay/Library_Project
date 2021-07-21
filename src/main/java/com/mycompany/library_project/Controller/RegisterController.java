@@ -28,7 +28,6 @@ import org.controlsfx.validation.Validator;
 import org.imgscalr.Scalr;
 
 import com.mycompany.library_project.App;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 
 import java.net.URL;
@@ -46,12 +45,11 @@ import java.awt.image.BufferedImage;
 
 public class RegisterController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
     private MemberController memberController = null;
     private CreateLogFile logfile = new CreateLogFile();
     public MemberModel memberModel = null;
-    private DepartmentModel depertment = new DepartmentModel(con);
+    private DepartmentModel depertment = new DepartmentModel();
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = new DialogMessage();
     private MyDate dateFormat = new MyDate();
@@ -472,6 +470,12 @@ public class RegisterController implements Initializable {
                     && !txtDist.getText().equals("") && !txtProv.getText().equals("") && gender != ""
                     && !birtDate.getValue().equals(null) && cmbYears.getSelectionModel().getSelectedItem() != null
                     && !dateRegister.getValue().equals(null) && !dateEnd.getValue().equals(null)) {
+
+                if (memberModel.findById(getMemberId(txtStudentId.getText())).next()) {
+                    dialog.showWarningDialog(null,
+                            "ລະຫັດສະມາຊິກຊ້ຳກັບຂໍ້ມູນທີ່ມີຢູ່ໃນລະບົບກະລຸນາກວດສອບຂໍ້ມູນ ແລ້ວລອງບັນທຶກໃຫມ່ອີກຄັ້ງ");
+                    return;
+                }
 
                 if (txtTel.getText().length() < 7 || txtTel.getText().length() > 11) {
                     dialog.showWarningDialog(null, "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.");

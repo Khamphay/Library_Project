@@ -2,7 +2,9 @@ package com.mycompany.library_project.Model;
 
 import java.sql.*;
 import java.text.ParseException;
+import java.util.List;
 
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 
 public class BookLostModel implements DataAccessObject {
@@ -10,7 +12,7 @@ public class BookLostModel implements DataAccessObject {
     private DialogMessage dialog = new DialogMessage();
     private PreparedStatement ps = null;
     private ResultSet rs = null;
-    private Connection con = null;
+    private Connection con = MyConnection.getConnect();
     private String sql = null;
 
     private int lost_id;
@@ -35,12 +37,17 @@ public class BookLostModel implements DataAccessObject {
     private double price;
     private double fineCost;
 
-    public BookLostModel(Connection con) {
-        this.con = con;
+    public BookLostModel() {
     }
 
     public BookLostModel(int lost_id, double price) {
         this.lost_id = lost_id;
+        this.price = price;
+    }
+
+    public BookLostModel(int lost_id, String barcode, double price) {
+        this.lost_id = lost_id;
+        this.barcode = barcode;
         this.price = price;
     }
 
@@ -361,17 +368,41 @@ public class BookLostModel implements DataAccessObject {
 
     }
 
-    public int saveLostDetail(int lost_id, String barcode, double price) throws SQLException {
+    public int saveLostDetail(/* int lost_id, String barcode, double price */ List<BookLostModel> list)
+            throws SQLException {
         // Todo: Don't use try...catch
-        sql = "call book_lostdetail_Insert(?, ?, ?)";
-        ps = con.prepareStatement(sql);
-        ps.setInt(1, lost_id);
-        ps.setString(2, barcode);
-        ps.setDouble(3, price);
-        int result = ps.executeUpdate();
-        ps.close();
-        // con.close();
-        return result;
+        // sql = "call book_lostdetail_Insert(?, ?, ?)";
+        // ps = con.prepareStatement(sql);
+        // ps.setInt(1, lost_id);
+        // ps.setString(2, barcode);
+        // ps.setDouble(3, price);
+        // int result = ps.executeUpdate();
+        // ps.close();
+        // // con.close();
+        // return result;
+
+        try {
+            int result = 0;
+            sql = "INSERT INTO dblibrary.tbbooks_lost_detail (lost_id, barcode, book_price) VALUES(id, Barcode, Price)";
+            ps = con.prepareStatement(sql);
+            con.commit();
+            for (BookLostModel val : list) {
+                ps.setInt(1, val.getLost_id());
+                ps.setString(2, val.getBarcode());
+                ps.setDouble(3, val.getPrice());
+                ps.addBatch();
+                result++;
+                if (result % 100 == 0 || result == list.size()) {
+                    ps.executeBatch();
+                    con.commit();
+                    result++;
+                }
+            }
+            return result;
+        } catch (Exception e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນລາຍລະອຽດປຶ້ມເສຍ", e);
+            return 0;
+        }
     }
 
     @Override

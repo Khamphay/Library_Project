@@ -18,7 +18,7 @@
          <top>
             <AnchorPane fx:id="achHeader" prefHeight="83.0" prefWidth="768.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 0px 0px;" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="735.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#closeForm" prefHeight="23.0" prefWidth="23.0" style="-fx-background-radius: 15px 15px 15px 15px;">
+                  <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="735.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#closeForm" prefHeight="23.0" prefWidth="23.0" style="-fx-background-radius: 15px 15px 15px 15px;">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -30,7 +30,7 @@
                         <Font size="1.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="701.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#minimizeForm" prefHeight="23.0" prefWidth="23.0" style="-fx-background-radius: 15px 15px 15px 15px;">
+                  <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="701.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#minimizeForm" prefHeight="23.0" prefWidth="23.0" style="-fx-background-radius: 15px 15px 15px 15px;">
                      <font>
                         <Font size="1.0" />
                      </font>
@@ -58,7 +58,7 @@
             <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 0px 0px 8px 8px; -fx-border-color: #101D3D; -fx-border-radius: 0px 0px 8px 8px;" BorderPane.alignment="CENTER">
                <children>
                   <Label layoutX="237.0" layoutY="283.0" styleClass="BoonBaan-size-14" text="ຢືນຢັນລະຫັດຜ່ານ" AnchorPane.leftAnchor="235.0" />
-                  <JFXButton fx:id="btSave" layoutX="340.0" layoutY="370.0" prefHeight="33.0" prefWidth="84.0" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" />
+                  <JFXButton fx:id="btSave" focusTraversable="false" layoutX="340.0" layoutY="370.0" prefHeight="33.0" prefWidth="84.0" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" />
                   <TextField fx:id="txtUserName" layoutX="234.0" layoutY="67.0" prefHeight="31.0" prefWidth="300.0" AnchorPane.leftAnchor="234.0" />
                   <Label layoutX="234.0" layoutY="46.0" styleClass="BoonBaan-size-14" text="ຊື່ຜູ້ລະບົບ (Username)" AnchorPane.leftAnchor="234.0" />
                   <PasswordField fx:id="txtPassword" layoutX="237.0" layoutY="238.0" prefHeight="31.0" prefWidth="298.0" AnchorPane.leftAnchor="235.0" />

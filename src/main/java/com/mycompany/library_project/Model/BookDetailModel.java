@@ -4,11 +4,12 @@ import java.sql.*;
 import java.text.ParseException;
 import java.util.List;
 
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 public class BookDetailModel implements DataAccessObject {
 
     private DialogMessage dialog = new DialogMessage();
-    private Connection con = null;
+    private Connection con = MyConnection.getConnect();
     private ResultSet rs = null;
     private PreparedStatement ps = null;
 
@@ -28,8 +29,12 @@ public class BookDetailModel implements DataAccessObject {
     private String status;
     private String write_year;
 
-    public BookDetailModel(Connection con) {
-        this.con = con;
+    public BookDetailModel() {
+    }
+
+    public BookDetailModel(String barcode, String status) {
+        this.barcode = barcode;
+        this.status = status;
     }
 
     public BookDetailModel(String barcode, String tableLogId, String status) {
@@ -195,8 +200,9 @@ public class BookDetailModel implements DataAccessObject {
 
     @Override
     public ResultSet findById(String id) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+        sql = "call book_detail_ShowById('" + id + "');";
+        rs = con.createStatement().executeQuery(sql);
+        return rs;
     }
 
     @Override
@@ -330,7 +336,7 @@ public class BookDetailModel implements DataAccessObject {
             return rs;
     }
 
-    public int saveBookBarCode(List<BookDetailModel> list) throws SQLException {
+    public int saveBookBarCode(List<BookDetailModel> list, String id) throws SQLException {
         try {
             // sql = "call book_Insert(?, ?, ?, ?);";
             // ps = con.prepareStatement(sql);
@@ -340,18 +346,20 @@ public class BookDetailModel implements DataAccessObject {
             // ps.setString(4, status);
             // return ps.executeUpdate();
 
-            sql = "INSERT INTO tbbook (?, ?, ?, ?) VALUES(barcode, bookId, log_id, status)";
+            sql = "INSERT INTO tbbook (barcode, book_id, table_log_id, status) VALUES(?, ?, ?, ?)";
             ps = con.prepareStatement(sql);
-            int result = 0;
+            con.setAutoCommit(false);
+            int result = 0, count = 0;
             for (BookDetailModel item : list) {
                 ps.setString(1, item.getBarcode());
                 ps.setString(2, item.getBookId());
                 ps.setString(3, item.getTableLogId());
                 ps.setString(4, item.getStatus());
                 ps.addBatch();
-                result++;
-                if (result % 100 == 0 || result == list.size()) {
+                count++;
+                if (count % 100 == 0 || count == list.size()) {
                     ps.executeBatch();
+                    con.commit();
                     result = 1;
                 }
 
@@ -360,6 +368,10 @@ public class BookDetailModel implements DataAccessObject {
 
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນປຶ້ມ", e);
+            if (id != null) {
+                this.deleteData(id);
+            }
+
             return 0;
         } finally {
             ps.close();
@@ -421,12 +433,25 @@ public class BookDetailModel implements DataAccessObject {
         }
     }
 
-    public int saveWrite(String book_id, String author_id) throws SQLException {
+    public int saveWrite(/* String book_id, String author_id */ List<BookDetailModel> list) throws SQLException {
         try {
-            sql = "INSERT INTO dblibrary.tbwrite (book_id, author_id) VALUES(bookId, authorId)";
+            int result = 0, count = 0;
+            sql = "INSERT INTO dblibrary.tbwrite (book_id, author_id) VALUES(?, ?)";
             ps = con.prepareStatement(sql);
-            ps.setString(1, book_id);
-            return ps.executeUpdate();
+            con.setAutoCommit(false);
+            for (BookDetailModel val : list) {
+                ps.setString(1, val.getBookId());
+                ps.setString(2, val.getStatus()); // Todo: use variable 'status' for get the 'author id' (ໃຊ້ຕົວປ່ຽນ
+                                                  // status ເກັບຂໍ້ມູນລະຫັດນັກແຕ່ງ )
+                ps.addBatch();
+                count++;
+                if (count % 100 == 0 || count == list.size()) {
+                    ps.executeBatch();
+                    con.commit();
+                    result = 1;
+                }
+            }
+            return result;
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນແຕ່ງປຶ້ມ", e);
             return 0;
@@ -450,16 +475,32 @@ public class BookDetailModel implements DataAccessObject {
 
     }
 
-    public int updateStatus(String barcode, String status) throws SQLException {
-        // TODO: Don't use try...catch
-        sql = " call book_UpdateStatus(?, ?);";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, barcode);
-        ps.setString(2, status);
-        int result = ps.executeUpdate();
-        ps.close();
-        //con.close();
-        return result;
+    public int updateStatus(List<BookDetailModel> list, String rentId) throws SQLException {
+        try {
+            int result = 0;
+            // sql = " call book_UpdateStatus(?, ?);";
+            // sql = "update tbbook set status=? where barcode=?";
+            // ps = con.prepareStatement(sql);
+            for (BookDetailModel val : list) {
+                sql = " call book_UpdateStatus(?, ?);";
+                ps = con.prepareStatement(sql);
+                ps.setString(1, val.getBarcode());
+                ps.setString(2, val.getStatus());
+                result = ps.executeUpdate();
+                if (result <= 0) {
+                    return result;
+                }
+            }
+            return result;
+        } catch (BatchUpdateException e) {
+            if (rentId != null) {
+                RentBookModel rent = new RentBookModel();
+                rent.deleteData(rentId);
+            }
+            return 0;
+        } finally {
+            ps.close();
+        }
     }
 
     public int deleteWrite(String book_id, String authorId) throws SQLException {

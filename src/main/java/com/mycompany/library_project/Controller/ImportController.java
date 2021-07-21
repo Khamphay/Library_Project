@@ -21,17 +21,14 @@ import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.App;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 
@@ -41,20 +38,19 @@ import org.controlsfx.validation.Validator;
 
 public class ImportController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
     private ResultSet rs = null;
     private AlertMessage alertMessage = new AlertMessage();
-    private TypeModel type = new TypeModel(con);
-    private CategoryModel category = new CategoryModel(con);
-    private TableLogModel table = new TableLogModel(con);
-    private AuthorModel author = new AuthorModel(con);
+    private TypeModel type = new TypeModel();
+    private CategoryModel category = new CategoryModel();
+    private TableLogModel table = new TableLogModel();
+    private AuthorModel author = new AuthorModel();
     private DialogMessage dialog = new DialogMessage();
-    private BookDetailModel addBook = new BookDetailModel(con);
-    private ImportModel importBook = new ImportModel(con);
+    private BookDetailModel addBook = new BookDetailModel();
+    private ImportModel importBook = new ImportModel();
     private ArrayList<AuthorModel> author_id = null;
     private ArrayList<String> arr_type, arr_category;
-    private ObservableList<String> status = FXCollections.observableArrayList("ຫວ່າງ", "ກຳລ້ງຢືມ", "ເສຍ");;
+    private ObservableList<String> status = FXCollections.observableArrayList("ຫວ່າງ", "ກຳລ້ງຢືມ", "ເສຍ");
     private ObservableList<String> items = null, author_items = null;
 
     private String[] arr_author = new String[6];
@@ -97,16 +93,16 @@ public class ImportController implements Initializable {
     private ComboBox<String> cmbAuthor1, cmbAuthor2, cmbAuthor3, cmbAuthor4, cmbAuthor5, cmbAuthor6;
 
     @FXML
-    private TableView<ImportBooksModel> tableHistoryImportBook;
+    private TableView<ImportModel> tableHistoryImportBook;
 
     @FXML
-    private TableColumn<ImportBooksModel, String> bookid, bookname, bookisbn, bppkcategory, bppktype, tableid, tbalelog;
+    private TableColumn<ImportModel, String> bookid, bookname, bookisbn, bppkcategory, bppktype, tableid, tbalelog;
 
     @FXML
-    private TableColumn<ImportBooksModel, Integer> bookpage, bookqty;
+    private TableColumn<ImportModel, Integer> bookpage, bookqty;
 
     @FXML
-    private TableColumn<ImportBooksModel, Double> bookPrice;
+    private TableColumn<ImportModel, Double> bookPrice;
 
     private String getMaxImportId() {
         try {
@@ -638,86 +634,79 @@ public class ImportController implements Initializable {
     }
 
     @FXML
+    private void addBook(ActionEvent event) {
+
+        tableHistoryImportBook.getItems().add(new ImportModel(txtId.getText(), txtName.getText(), txtISBN.getText(),
+                Integer.parseInt(txtPage.getText()), cmbCagtegory.getSelectionModel().getSelectedItem().toString(),
+                cmbType.getSelectionModel().getSelectedItem().toString(), arr_category.get(index_category),
+                arr_type.get(index_type), Integer.parseInt(txtQty.getText()),
+                Double.parseDouble(txtTotalPrice.getText())));
+    }
+
+    @FXML
     private void btSave(ActionEvent event) {
+        if (!txtId.getText().equals("") && !txtName.getText().equals("") && !txtPage.getText().equals("")
+                && !txtQty.getText().equals("") && !cmbCagtegory.getSelectionModel().getSelectedItem().equals(null)
+                && !cmbType.getSelectionModel().getSelectedItem().equals(null)
+                && !cmbTable.getSelectionModel().getSelectedItem().equals(null)) {
+            // cmbType.g
+            String msg = null;
+            try {
+                if (tableHistoryImportBook.getItems().size() > 0) {
+                    String maxid = getMaxImportId();
 
-        // cmbType.g
-        String msg = null;
-        try {
-            if (!txtId.getText().equals("") && !txtName.getText().equals("") && !txtPage.getText().equals("")
-                    && !txtQty.getText().equals("") && !cmbCagtegory.getSelectionModel().getSelectedItem().equals(null)
-                    && !cmbType.getSelectionModel().getSelectedItem().equals(null)
-                    && !cmbTable.getSelectionModel().getSelectedItem().equals(null)) {
-                String maxid = getMaxImportId();
-                importBook = new ImportModel(maxid, _totalQty, _totalPrice, Date.valueOf(LocalDate.now()));
-                if (importBook.saveData() > 0) {
-                    ArrayList<ImportModel> list = new ArrayList<>();
-                    for (int i = 0; i < tableHistoryImportBook.getItems().size(); i++) {
-                        list.add(new ImportModel(maxid, tableHistoryImportBook.getItems().get(i).getBook_id(),
-                                tableHistoryImportBook.getItems().get(i).getQty(),
-                                tableHistoryImportBook.getItems().get(i).getPrice()));
-                    }
-                    if (importBook.saveDataImportDetail(list) > 0)
-                        alertMessage.showCompletedMessage("Saved", "Saved data successfully.", 4, Pos.BASELINE_LEFT);
-                }
-
-                addBook = new BookDetailModel(txtId.getText(), txtName.getText(), txtISBN.getText(),
-                        Integer.parseInt(txtPage.getText()), Integer.parseInt(txtQty.getText()),
-                        arr_category.get(index_category), arr_type.get(index_type),
-                        cmbTable.getSelectionModel().getSelectedItem().toString(), txtYear.getText(), "", con);
-
-                String barcode = txtId.getText() + "000";
-                ArrayList<BookDetailModel> list = new ArrayList<>();
-                for (int i = 1; i <= Integer.parseInt(txtQty.getText()); i++) {
-                    list.add(new BookDetailModel(barcode + i, txtId.getText(),
-                            cmbtableLog.getSelectionModel().getSelectedItem().toString(), "ຫວ່າງ"));
-                }
-
-                if (_bookid == "") {
-                    if (addBook.saveData() > 0) {
-                        // Todo: Save Barcode
-                        try {
-                            if (addBook.saveBookBarCode(list) > 0) {
-                                msg = "Save data successfully.";
-                            } else {
-                                msg = null;
-                            }
-                        } catch (SQLException e) {
-                            msg = null;
-                            alertMessage.showWarningMessage("Save Barcode Error", "Can not save barcode.", 4,
-                                    Pos.BOTTOM_RIGHT);
-                            addBook.deleteData(txtId.getText());
-                            return;
+                    importBook = new ImportModel(maxid, _totalQty, _totalPrice, Date.valueOf(LocalDate.now()));
+                    if (importBook.saveData() > 0) {
+                        ArrayList<ImportModel> list = new ArrayList<>();
+                        for (int i = 0; i < tableHistoryImportBook.getItems().size(); i++) {
+                            list.add(new ImportModel(maxid, tableHistoryImportBook.getItems().get(i).getBookid(),
+                                    tableHistoryImportBook.getItems().get(i).getQty(),
+                                    tableHistoryImportBook.getItems().get(i).getPrice()));
                         }
+                        if (importBook.saveDataImportDetail(list) > 0)
+                            alertMessage.showCompletedMessage("Saved", "Saved data successfully.", 4,
+                                    Pos.BASELINE_LEFT);
+                    }
 
-                        // Todo: Save Write
-                        for (String val : arr_author) {
-                            if (val != null) {
-                                try {
-                                    if (addBook.saveWrite(txtId.getText(), val) > 0) {
-                                        msg = "Save data successfully.";
-                                    }
-                                } catch (SQLException e) {
-                                    alertMessage.showWarningMessage("Save Write Error", "Can not save writer.", 4,
+                    addBook = new BookDetailModel(txtId.getText(), txtName.getText(), txtISBN.getText(),
+                            Integer.parseInt(txtPage.getText()), Integer.parseInt(txtQty.getText()),
+                            arr_category.get(index_category), arr_type.get(index_type),
+                            cmbTable.getSelectionModel().getSelectedItem().toString(), txtYear.getText(), "");
+
+                    String barcode = txtId.getText() + "000";
+                    final ArrayList<BookDetailModel> list = new ArrayList<>();
+                    for (int i = 1; i <= Integer.parseInt(txtQty.getText()); i++) {
+                        list.add(new BookDetailModel(barcode + i, txtId.getText(),
+                                cmbtableLog.getSelectionModel().getSelectedItem().toString(), "ຫວ່າງ"));
+                    }
+
+                    final ArrayList<BookDetailModel> listWrite = new ArrayList<>();
+                    for (String val : arr_author) {
+                        if (val != null) {
+                            listWrite.add(new BookDetailModel(txtId.getText(), val));
+                        }
+                    }
+
+                    if (_bookid == "") {
+                        if (addBook.saveData() > 0) {
+                            // Todo: Save Barcode
+                            if (addBook.saveBookBarCode(list, txtId.getText()) > 0) {
+                                // Todo: Save Write
+                                if (addBook.saveWrite(listWrite) > 0) {
+                                    alertMessage.showCompletedMessage("Saved", "Save data successfully.", 4,
                                             Pos.BOTTOM_RIGHT);
-                                    return;
                                 }
                             }
                         }
-
-                    } else {
-                        msg = null;
                     }
-                } else {
-
                 }
-
-            } else {
-                validRules.setErrorDecorationEnabled(true);
-                alertMessage.showWarningMessage("Save Warning", "Please chack your information and try again.", 4,
-                        Pos.BOTTOM_RIGHT);
+            } catch (Exception e) {
+                alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             }
-        } catch (Exception e) {
-            alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+        } else {
+            validRules.setErrorDecorationEnabled(true);
+            alertMessage.showWarningMessage("Save Warning", "Please chack your information and try again.", 4,
+                    Pos.BOTTOM_RIGHT);
         }
     }
 

@@ -39,7 +39,7 @@
                                     <ComboBox fx:id="cmbTable" layoutX="476.0" layoutY="274.0" prefHeight="31.0" prefWidth="85.0" promptText="ເລກຕູ້" AnchorPane.topAnchor="274.0" />
                                     <ComboBox fx:id="cmbtableLog" layoutX="581.0" layoutY="274.0" prefHeight="31.0" prefWidth="98.0" promptText="ລ໋ອກຕູ້" AnchorPane.topAnchor="274.0" />
                                     <TextArea fx:id="txtBarcode" editable="false" layoutX="31.0" layoutY="124.0" prefHeight="328.0" prefWidth="161.0" promptText="ບາໂຄດປຶ້ມ" styleClass="BoonBaan-size-14-Regular" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="125.0" />
-                                    <JFXButton alignment="CENTER" layoutX="401.0" layoutY="518.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#btSave" prefHeight="35.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
+                                    <JFXButton alignment="CENTER" focusTraversable="false" layoutX="401.0" layoutY="518.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#btSave" prefHeight="35.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
@@ -57,7 +57,7 @@
                                           <Insets left="-2.0" />
                                        </padding>
                                     </JFXButton>
-                                    <JFXButton alignment="CENTER" layoutX="551.0" layoutY="518.0" onAction="#btClearText" prefHeight="35.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
+                                    <JFXButton alignment="CENTER" focusTraversable="false" layoutX="551.0" layoutY="518.0" onAction="#btClearText" prefHeight="35.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
@@ -88,7 +88,7 @@
                                     <Label layoutX="217.0" layoutY="177.0" styleClass="BoonBaan-size-14" text="ແຕ່ງຂຶ້ນໃນປີ" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="177.0" />
                                     <Label layoutX="216.0" layoutY="322.0" styleClass="BoonBaan-size-14" text="ລາຍລະອຽດເພີ່ມຕື່ມ" AnchorPane.leftAnchor="216.0" />
                                     <TextField fx:id="txtYear" layoutX="217.0" layoutY="197.0" prefHeight="31.0" prefWidth="235.0" promptText="ແຕ່ງຂຶ້ນໃນປີ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="198.0" />
-                                    <JFXButton fx:id="btAddTableLog" buttonType="RAISED" layoutX="680.0" layoutY="274.0" prefHeight="31.0" prefWidth="52.0" ripplerFill="#3d62e8" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" styleClass="BoonBaan-size-14-Regular" text="ເພີ່ມ" AnchorPane.topAnchor="274.0">
+                                    <JFXButton fx:id="btAddTableLog" buttonType="RAISED" focusTraversable="false" layoutX="680.0" layoutY="274.0" prefHeight="31.0" prefWidth="52.0" ripplerFill="#3d62e8" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" styleClass="BoonBaan-size-14-Regular" text="ເພີ່ມ" AnchorPane.topAnchor="274.0">
                                        <graphic>
                                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -100,7 +100,7 @@
                                           <Insets left="-4.0" />
                                        </padding>
                                     </JFXButton>
-                                    <JFXButton fx:id="btAddType" buttonType="RAISED" layoutX="683.0" layoutY="122.0" prefHeight="31.0" prefWidth="52.0" ripplerFill="#3d62e8" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" styleClass="BoonBaan-size-14-Regular" text="ເພີ່ມ" AnchorPane.topAnchor="124.0">
+                                    <JFXButton fx:id="btAddType" buttonType="RAISED" focusTraversable="false" layoutX="683.0" layoutY="122.0" prefHeight="31.0" prefWidth="52.0" ripplerFill="#3d62e8" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" styleClass="BoonBaan-size-14-Regular" text="ເພີ່ມ" AnchorPane.topAnchor="124.0">
                                        <graphic>
                                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -112,7 +112,7 @@
                                           <Insets left="-4.0" />
                                        </padding>
                                     </JFXButton>
-                                    <JFXButton fx:id="btAddCategory" buttonType="RAISED" layoutX="683.0" layoutY="50.0" prefHeight="31.0" prefWidth="52.0" ripplerFill="#3d62e8" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" styleClass="BoonBaan-size-14-Regular" text="ເພີ່ມ" AnchorPane.topAnchor="49.0">
+                                    <JFXButton fx:id="btAddCategory" buttonType="RAISED" focusTraversable="false" layoutX="683.0" layoutY="50.0" prefHeight="31.0" prefWidth="52.0" ripplerFill="#3d62e8" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" styleClass="BoonBaan-size-14-Regular" text="ເພີ່ມ" AnchorPane.topAnchor="49.0">
                                        <graphic>
                                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -132,7 +132,7 @@
                                           <ComboBox fx:id="cmbAuthor4" layoutX="11.0" layoutY="190.0" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
                                           <ComboBox fx:id="cmbAuthor5" layoutX="11.0" layoutY="244.0" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
                                           <ComboBox fx:id="cmbAuthor6" layoutX="11.0" layoutY="298.0" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
-                                          <JFXButton fx:id="btAddNewAuthor" alignment="CENTER" layoutX="111.0" layoutY="361.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="70.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ເພີ່ມ" textFill="WHITE">
+                                          <JFXButton fx:id="btAddNewAuthor" alignment="CENTER" focusTraversable="false" layoutX="111.0" layoutY="361.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="70.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ເພີ່ມ" textFill="WHITE">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
@@ -186,7 +186,7 @@
                         </ImageView>
                      </graphic>
                   </Label>
-                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
+                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>

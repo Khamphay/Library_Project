@@ -3,6 +3,7 @@ package com.mycompany.library_project.Model;
 import java.sql.*;
 import java.text.ParseException;
 
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 
 public class AuthorModel implements DataAccessObject {
@@ -10,7 +11,7 @@ public class AuthorModel implements DataAccessObject {
     private DialogMessage dialog = new DialogMessage();
     private ResultSet rs = null;
     private PreparedStatement ps = null;
-    private Connection con = null;
+    private Connection con = MyConnection.getConnect();
     private String sql = null;
 
     private String author_id;
@@ -20,8 +21,7 @@ public class AuthorModel implements DataAccessObject {
     private String tel;
     private String email;
 
-    public AuthorModel(Connection con) {
-        this.con = con;
+    public AuthorModel() {
     }
 
     public AuthorModel(String author_id, String full_name) {

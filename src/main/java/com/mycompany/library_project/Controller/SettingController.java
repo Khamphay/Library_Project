@@ -11,12 +11,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.ControllerDAOModel.StaticCostPrice;
 import com.mycompany.library_project.Model.CostModel;
@@ -25,10 +23,9 @@ import org.controlsfx.validation.*;
 
 public class SettingController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
     private AlertMessage alertMessage = new AlertMessage();
     private ValidationSupport valiType = new ValidationSupport();
-    private CostModel costPrice = new CostModel(con);
+    private CostModel costPrice = new CostModel();
     private double x, y;
     public static Stage settingStage = null; // Todo: Set object in when open Setting in class 'HomeController.java'
     double r, d, b;

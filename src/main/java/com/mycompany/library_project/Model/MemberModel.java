@@ -1,5 +1,6 @@
 package com.mycompany.library_project.Model;
 
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 
@@ -10,7 +11,7 @@ public class MemberModel implements DataAccessObject {
 
     private DialogMessage dialog = new DialogMessage();
     private PreparedStatement ps = null;
-    private Connection con = null;
+    private Connection con = MyConnection.getConnect();
     private ResultSet rs = null;
     private String query = "";
 
@@ -34,8 +35,7 @@ public class MemberModel implements DataAccessObject {
     private byte[] byimg;
     private double costRegister;
 
-    public MemberModel(Connection con) {
-        this.con = con;
+    public MemberModel() {
     }
 
     public MemberModel(int number, String memberId, String firstName, String sureName, String study_year, String detp,

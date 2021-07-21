@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import com.mycompany.library_project.App;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.Model.MemberModel;
 import com.mycompany.library_project.config.CreateLogFile;
@@ -23,12 +22,11 @@ import javafx.scene.text.Text;
 
 public class ManagePersonalCotroller implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
     private Parent subForm = null;
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile logfile = new CreateLogFile();
     private ResultSet rs = null;
-    private MemberModel memberModel = new MemberModel(con);
+    private MemberModel memberModel = new MemberModel();
 
     @FXML
     private Text txtMember, txtEmployee, txtAuthor, txtDep;

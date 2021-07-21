@@ -148,30 +148,6 @@
                   </ImageView>
                   <Label layoutX="50.0" layoutY="376.0" styleClass="label-size-16" text="ຫໍສະໝຸດ ຄະນະວິທະຍາສາດທຳມະຊາດ" textFill="WHITE" />
                   <Label layoutX="85.0" layoutY="350.0" styleClass="label-size-16" text="ຄະນະວິທະຍາສາດທຳມະຊາດ" textFill="WHITE" />
-                  <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="116.0" layoutY="445.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="33.0" ripplerFill="WHITE" style="-fx-background-radius: 2em; -fx-border-radius: 2em;">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Icon/facebook.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <tooltip>
-                        <Tooltip contentDisplay="TOP" text="Facebook" />
-                     </tooltip>
-                  </JFXButton>
-                  <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="175.0" layoutY="445.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="33.0" ripplerFill="WHITE" style="-fx-background-radius: 2em; -fx-border-radius: 2em;">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Icon/website.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <tooltip>
-                        <Tooltip contentDisplay="TOP" text="Website" />
-                     </tooltip>
-                  </JFXButton>
                </children>
             </AnchorPane>
             <!-- <JFXSpinner layoutX="262.0" layoutY="64.0" prefHeight="103.0" prefWidth="104.0" style="-fx-background-color: #0000;" /> -->

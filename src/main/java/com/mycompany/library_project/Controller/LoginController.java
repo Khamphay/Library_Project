@@ -253,7 +253,10 @@ public class LoginController implements Initializable {
         });
         txtPassword.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER)
+            {
                 btLogin.requestFocus();
+                loginMethod();
+            }
         });
 
         Platform.runLater(new Runnable() {

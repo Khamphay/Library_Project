@@ -3,7 +3,6 @@ package com.mycompany.library_project.Controller;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import com.mycompany.library_project.App;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 import com.mycompany.library_project.ModelShow.*;
@@ -24,7 +23,6 @@ import javafx.stage.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,7 +36,6 @@ public class HomeController implements Initializable {
     public Stage homeStage = null;
     public static String[] summaryValue = new String[10];
 
-    private Connection con = MyConnection.getConnect();
     private boolean max_min = false;
     private Rectangle2D bounds = null;
     private HamburgerSlideCloseTransition hamburgerTransition = null;
@@ -48,7 +45,7 @@ public class HomeController implements Initializable {
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = new DialogMessage();
     private ResultSet rs = null;
-    private ShowRentSendModel showRentSendModel = new ShowRentSendModel(con);
+    private ShowRentSendModel showRentSendModel = new ShowRentSendModel();
     private ListBookModel listbook = null;
     private MyDate mydate = new MyDate();
 
@@ -74,7 +71,7 @@ public class HomeController implements Initializable {
     public BorderPane bpDisplay;
 
     @FXML
-    private JFXButton btShowRent_Send, btRentBook, btSendBook, btRegister;
+    private JFXButton btShowRent_Send, btRentBook, btSendBook, btRegister, btConfig;
 
     @FXML
     private JFXButton btCloseForm, btMinimize, btMaximum, btSalieder;
@@ -423,7 +420,7 @@ public class HomeController implements Initializable {
             @Override
             public void run() {
                 try {
-                    final CostModel cost = new CostModel(con);
+                    final CostModel cost = new CostModel();
                     ResultSet rs = cost.findAll();
                     if (rs.next()) {
                         StaticCostPrice.RegisterCost = rs.getDouble("cost_register");
@@ -437,6 +434,25 @@ public class HomeController implements Initializable {
             }
 
         });
+    }
+
+    @FXML
+    private void openConfigSer(ActionEvent event) {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmConfig.fxml"));
+            final Parent root = loader.load();
+            final Scene scene = new Scene(root);
+            final Stage stage = new Stage(StageStyle.TRANSPARENT);
+            final ConfigServerController configServerController = loader.getController();
+            configServerController.initConstructor(stage);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setTitle("Config Database");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        } catch (Exception e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມ Config ຖານຂໍ້ມູນ", e);
+        }
     }
 
     @Override

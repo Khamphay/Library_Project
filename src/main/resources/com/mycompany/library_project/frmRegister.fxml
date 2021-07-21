@@ -41,7 +41,7 @@
                                     <DatePicker fx:id="birtDate" cache="true" editable="false" layoutX="27.0" layoutY="321.0" prefHeight="28.0" prefWidth="271.0" promptText="ວ.ດ.ປ ເກີດ" showWeekNumbers="true" AnchorPane.topAnchor="321.0" />
                                     <ComboBox fx:id="cmbDept" layoutX="352.0" layoutY="245.0" prefHeight="31.0" prefWidth="219.0" promptText="ຮຽນພາກວີຊາ" AnchorPane.leftAnchor="352.0" AnchorPane.topAnchor="245.0" />
                                     <ComboBox fx:id="cmbYears" layoutX="352.0" layoutY="322.0" prefHeight="27.0" prefWidth="271.0" promptText="ຮຽນປີ" AnchorPane.leftAnchor="352.0" AnchorPane.topAnchor="322.0" />
-                                    <JFXButton id="btClick" alignment="CENTER" layoutX="386.0" layoutY="542.0" minHeight="-Infinity" onAction="#Save" prefHeight="32.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
+                                    <JFXButton id="btClick" alignment="CENTER" focusTraversable="false" layoutX="386.0" layoutY="542.0" minHeight="-Infinity" onAction="#Save" prefHeight="32.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
@@ -56,7 +56,7 @@
                                           <Insets left="-5.0" />
                                        </padding>
                                     </JFXButton>
-                                    <JFXButton id="btClick" alignment="CENTER" layoutX="512.0" layoutY="542.0" minHeight="-Infinity" onAction="#clearText" prefHeight="32.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
+                                    <JFXButton id="btClick" alignment="CENTER" focusTraversable="false" layoutX="512.0" layoutY="542.0" minHeight="-Infinity" onAction="#clearText" prefHeight="32.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
@@ -71,7 +71,7 @@
                                           <Insets left="-5.0" />
                                        </padding>
                                     </JFXButton>
-                                    <JFXButton id="btClick" alignment="CENTER" graphicTextGap="6.0" layoutX="758.0" layoutY="365.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#setImage" prefHeight="32.0" prefWidth="92.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ເລືອກຮູບ" textFill="WHITE">
+                                    <JFXButton id="btClick" alignment="CENTER" focusTraversable="false" graphicTextGap="6.0" layoutX="758.0" layoutY="365.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#setImage" prefHeight="32.0" prefWidth="92.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ເລືອກຮູບ" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="1.0" />
                                        </font>
@@ -119,7 +119,7 @@
                                     <Text layoutX="27.0" layoutY="316.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ວັນເດືອນປືເກີດ" wrappingWidth="83.13671875" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="301.7666664123535" />
                                     <TextField fx:id="txtCostRegister" editable="false" layoutX="28.0" layoutY="468.0" prefHeight="31.0" prefWidth="271.0" promptText="ຄ່າລົງທະບຽນ" viewOrder="1.0" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="468.0" />
                                     <Text layoutX="28.0" layoutY="461.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຄ່າລົງທະບຽນ" wrappingWidth="88.13671875" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="446.7666664123535" />
-                                    <JFXButton fx:id="btAddDepartment" layoutX="572.0" layoutY="245.0" prefHeight="31.0" prefWidth="52.0" ripplerFill="#3d62e8" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" styleClass="BoonBaan-size-14-Regular" text="ເພີ່ມ" AnchorPane.topAnchor="245.0">
+                                    <JFXButton fx:id="btAddDepartment" focusTraversable="false" layoutX="572.0" layoutY="245.0" prefHeight="31.0" prefWidth="52.0" ripplerFill="#3d62e8" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" styleClass="BoonBaan-size-14-Regular" text="ເພີ່ມ" AnchorPane.topAnchor="245.0">
                                        <graphic>
                                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -147,7 +147,7 @@
          <top>
             <AnchorPane id="acHeaderPane" fx:id="acPaneHeader" prefHeight="34.0" prefWidth="768.0" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" layoutX="949.0" layoutY="3.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
+                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="949.0" layoutY="3.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>

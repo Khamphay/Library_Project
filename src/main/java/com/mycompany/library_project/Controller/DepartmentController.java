@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.DepartmentModel;
@@ -36,9 +35,8 @@ import javafx.util.Callback;
 
 public class DepartmentController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
-    private DepartmentModel depertment = new DepartmentModel(con);
+    private DepartmentModel depertment = new DepartmentModel();
     private ResultSet rs = null;
     private ObservableList<DepartmentModel> data = null;
     private DialogMessage dialog = new DialogMessage();
@@ -170,6 +168,12 @@ public class DepartmentController implements Initializable {
         btSave.setOnAction(event -> {
             try {
                 if (!txtId.getText().equals("") && !txtName.getText().equals("")) {
+                    if (depertment.findById(txtId.getText()).next()) {
+                        dialog.showWarningDialog(null,
+                                "ລະຫັດພາກວິຊາຊ້ຳກັບຂໍ້ມູນທີ່ມີຢູ່ໃນລະບົບກະລຸນາກວດສອບຂໍ້ມູນ ແລ້ວລອງບັນທຶກໃຫມ່ອີກຄັ້ງ");
+                        return;
+                    }
+
                     depertment = new DepartmentModel(txtId.getText(), txtName.getText());
                     if (depertment.saveData() > 0) {
                         showData();

@@ -2,7 +2,6 @@ package com.mycompany.library_project.Controller;
 
 import java.net.URL;
 import java.nio.file.Paths;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +13,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
@@ -45,10 +43,9 @@ import javafx.util.Callback;
 
 public class BookLostController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
-    private BookDetailModel bookDetail = new BookDetailModel(con);
-    private BookLostModel booklostModel = new BookLostModel(con);
-    private RentBookModel rentBook = new RentBookModel(con);
+    private BookDetailModel bookDetail = new BookDetailModel();
+    private BookLostModel booklostModel = new BookLostModel();
+    private RentBookModel rentBook = new RentBookModel();
     private AdjustmentModel adjustmentModel = null;
     private ObservableList<BookLostModel> data = null;
     private ValidationSupport validRules = new ValidationSupport();
@@ -266,37 +263,43 @@ public class BookLostController implements Initializable {
                 try {
                     booklostModel = new BookLostModel(txtMemberId.getText(), tableLost.getItems().size(), totalPrice,
                             Date.valueOf(LocalDate.now()));
-                    int id = booklostModel.saveData();
+                    final int id = booklostModel.saveData();
                     if (id > 0) {
                         int index = 0;
-                        for (BookLostModel item : tableLost.getItems()) {
-                            try {
-                                if (booklostModel.saveLostDetail(id, item.getBarcode(),
-                                        priceList.get(index).getPricePerBook()) > 0)
-                                    if (bookDetail.updateStatus(item.getBarcode(), "ເສຍ") > 0)
-                                        if (rentBook.sendBook(rent_id, item.getBarcode(), "ສົ່ງແລ້ວ") > 0)
-                                            message = "Save Successfully!.";
 
-                            } catch (SQLException e) {
-                                dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກລາຍລະອຽດຂໍ້ມູນປຶ້ມເສຍ",
-                                        e);
-                                message = null;
-                                return;
-                            }
-                            index++;
-                        }
+                        final ArrayList<BookLostModel> listBookLost = new ArrayList<>();
+                        final ArrayList<BookDetailModel> listBarcode = new ArrayList<>();
+                        final ArrayList<RentBookModel> listSendBook = new ArrayList<>();
 
                         adjustmentModel = new AdjustmentModel(rent_id, tableLost.getItems().size(), totalPrice,
                                 Date.valueOf(LocalDate.now()), "ປຶ້ມເສຍ");
-                        int resualt = adjustmentModel.saveData();
 
-                        if (message != null && resualt > 0) {
-                            alertMessage.showCompletedMessage("Saved", message, 4, Pos.BOTTOM_RIGHT);
-                            printBin(id);// Todo: Print Bin
-                            clearText();
-                            sendBookController.refreshRentOutOfDate();
-                        } else if (resualt <= 0) {
-                            dialog.showInErrorDialog(null, "ບັນທືກຂໍ້ມູນສຳເລັດ ແຕ່ມີບັນຫາໃນການບັນທຶກຂໍ້ມູນການປັບໃຫມ");
+                        for (BookLostModel item : tableLost.getItems()) {
+                            listBookLost.add(
+                                    new BookLostModel(id, item.getBarcode(), priceList.get(index).getPricePerBook()));
+                            listBarcode.add(new BookDetailModel(item.getBarcode(), "ເສຍ"));
+                            listSendBook.add(new RentBookModel(rent_id, item.getBarcode(), "ສົ່ງແລ້ວ"));
+                            index++;
+                        }
+
+                        try {
+                            if (booklostModel.saveLostDetail(listBookLost) > 0)
+                                if (rentBook.sendBook(listSendBook) > 0)
+                                    if (bookDetail.updateStatus(listBarcode, null) > 0)
+                                        if (adjustmentModel.saveData() > 0) {
+                                            alertMessage.showCompletedMessage("Saved", message, 4, Pos.BOTTOM_RIGHT);
+                                            printBin(id);// Todo: Print Bin
+                                            clearText();
+                                            sendBookController.refreshRentOutOfDate();
+                                        } else {
+                                            dialog.showInErrorDialog(null,
+                                                    "ບັນທືກຂໍ້ມູນສຳເລັດ ແຕ່ມີບັນຫາໃນການບັນທຶກຂໍ້ມູນການປັບໃຫມ");
+                                        }
+
+                        } catch (SQLException e) {
+                            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກລາຍລະອຽດຂໍ້ມູນປຶ້ມເສຍ", e);
+                            message = null;
+                            return;
                         }
                     }
                 } catch (Exception e) {

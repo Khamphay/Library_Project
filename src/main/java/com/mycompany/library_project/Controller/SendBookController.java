@@ -22,11 +22,11 @@ import java.sql.*;
 import java.text.DecimalFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.App;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
@@ -36,14 +36,13 @@ import org.controlsfx.validation.Validator;
 
 public class SendBookController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
     private ValidationSupport validRules = new ValidationSupport();
     private DecimalFormat dcFormat = new DecimalFormat("#,##0.00 ກີບ");
     private HomeController homeController = null;
-    private RentBookModel sendBook = new RentBookModel(con);
+    private RentBookModel sendBook = new RentBookModel();
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = new DialogMessage();
-    private BookDetailModel book = new BookDetailModel(con);
+    private BookDetailModel book = new BookDetailModel();
     private MyDate mydate = new MyDate();
     private ResultSet rs = null;
     String rent_id = "", table = "", tableLog = "";
@@ -343,18 +342,21 @@ public class SendBookController implements Initializable {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-           dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມຈ່າຍຄ່າປັບໃຫມ", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມຈ່າຍຄ່າປັບໃຫມ", e);
         }
     }
 
     public int sendBook() {
         try {
             int result = 0;
+            final ArrayList<RentBookModel> listSendBook = new ArrayList<>();
+            final ArrayList<BookDetailModel> listBarcode = new ArrayList<>();
             for (RentBookModel row : tableSendBooks.getItems()) {
-                if (sendBook.sendBook(row.getRentId(), row.getBarcode(), "ສົ່ງແລ້ວ") > 0) {
-                    result = book.updateStatus(row.getBarcode(), "ຫວ່າງ");
-                }
+                listSendBook.add(new RentBookModel(row.getRentId(), row.getBarcode(), "ສົ່ງແລ້ວ"));
+                listBarcode.add(new BookDetailModel(row.getBarcode(), "ຫວ່າງ"));
             }
+            if (sendBook.sendBook(listSendBook) > 0)
+                result = book.updateStatus(listBarcode, null);
             clearText();
             return result;
         } catch (Exception e) {

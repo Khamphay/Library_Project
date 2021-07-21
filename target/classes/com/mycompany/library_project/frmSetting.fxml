@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -15,7 +16,7 @@
          <top>
             <AnchorPane fx:id="acSettings" prefHeight="83.0" prefWidth="768.0" style="-fx-background-color: #101D3D; -fx-background-radius: 8px 8px 0px 0px;" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="735.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#closeFormSetting" prefHeight="23.0" prefWidth="23.0" style="-fx-background-radius: 15px 15px 15px 15px;">
+                  <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="735.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#closeFormSetting" prefHeight="23.0" prefWidth="23.0" style="-fx-background-radius: 15px 15px 15px 15px;">
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -27,7 +28,7 @@
                         <Font size="1.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" layoutX="701.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#minimizeForm" prefHeight="23.0" prefWidth="23.0" style="-fx-background-radius: 15px 15px 15px 15px;">
+                  <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" layoutX="701.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#minimizeForm" prefHeight="23.0" prefWidth="23.0" style="-fx-background-radius: 15px 15px 15px 15px;">
                      <font>
                         <Font size="1.0" />
                      </font>
@@ -58,7 +59,17 @@
                   <TextField fx:id="txtCostPerBook" layoutX="233.0" layoutY="222.0" prefHeight="31.0" prefWidth="300.0" />
                   <Label layoutX="233.0" layoutY="125.0" styleClass="BoonBaan-size-14" text="ຄ່າປັບໃຫມ 1 ຫົວ/ມື້ (ກໍລະນີຢືມປຶ້ມກາຍກຳນົດ)" />
                   <Label layoutX="235.0" layoutY="199.0" styleClass="BoonBaan-size-14" text="ຄ່າປັບໃຫມ/1 ໜ້າ (ກໍລະນີເຮັດປຶ້ມເສຍ)" />
-                  <JFXButton fx:id="btSave" layoutX="341.0" layoutY="326.0" prefHeight="33.0" prefWidth="84.0" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" />
+                  <JFXButton fx:id="btSave" focusTraversable="false" layoutX="341.0" layoutY="326.0" prefHeight="33.0" prefWidth="84.0" stylesheets="@Style/buttonFont.css" text="ບັນທືກ">
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icon/checked.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <padding>
+                        <Insets left="-4.0" />
+                     </padding></JFXButton>
                   <TextField fx:id="txtCostRegister" layoutX="233.0" layoutY="69.0" prefHeight="31.0" prefWidth="300.0" />
                   <Label layoutX="233.0" layoutY="48.0" styleClass="BoonBaan-size-14" text="ຄ່າລົງທະບຽນ" />
                </children>

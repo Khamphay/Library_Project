@@ -26,7 +26,7 @@
                <children>
                   <AnchorPane maxWidth="-Infinity" prefHeight="725.0" prefWidth="1396.0">
                      <children>
-                        <JFXButton alignment="TOP_LEFT" buttonType="RAISED" layoutX="195.0" layoutY="47.0" onAction="#btMember_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນສະມາຊິກ" textAlignment="CENTER" textFill="#ffeded">
+                        <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" layoutX="195.0" layoutY="47.0" onAction="#btMember_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນສະມາຊິກ" textAlignment="CENTER" textFill="#ffeded">
                            <graphic>
                               <ImageView fitHeight="44.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -36,7 +36,7 @@
                            </graphic>
                         </JFXButton>
                         <Text fx:id="txtMember" fill="WHITE" layoutX="257.0" layoutY="111.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="253400 ຄົນ" />
-                        <JFXButton alignment="TOP_LEFT" buttonType="RAISED" layoutX="484.0" layoutY="47.0" onAction="#btEmployee_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນພະນັກງານ" textFill="#ffeded">
+                        <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" layoutX="484.0" layoutY="47.0" onAction="#btEmployee_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນພະນັກງານ" textFill="#ffeded">
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -46,7 +46,7 @@
                            </graphic>
                         </JFXButton>
                         <Text fx:id="txtEmployee" fill="WHITE" layoutX="538.0" layoutY="111.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="2 ຄົນ" />
-                        <JFXButton alignment="TOP_LEFT" buttonType="RAISED" layoutX="760.0" layoutY="47.0" onAction="#btAncthor_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນຜູ້ແຕ່ງປຶ້ມ" textFill="#ffeded">
+                        <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" layoutX="760.0" layoutY="47.0" onAction="#btAncthor_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນຜູ້ແຕ່ງປຶ້ມ" textFill="#ffeded">
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -59,7 +59,7 @@
                            </graphic>
                         </JFXButton>
                         <Text fx:id="txtAuthor" fill="WHITE" layoutX="816.0" layoutY="111.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="428 ຄົນ" />
-                        <JFXButton alignment="TOP_LEFT" buttonType="RAISED" layoutX="1040.0" layoutY="47.0" onAction="#btDepartment_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນພາກວິຊາ" textFill="#ffeded">
+                        <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" layoutX="1040.0" layoutY="47.0" onAction="#btDepartment_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນພາກວິຊາ" textFill="#ffeded">
                            <graphic>
                               <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

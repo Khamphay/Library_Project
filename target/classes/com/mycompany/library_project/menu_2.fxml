@@ -15,7 +15,7 @@
 
 <AnchorPane fx:id="acPaneMenu" accessibleRole="DATE_PICKER" prefHeight="738.0" prefWidth="57.0" style="-fx-background-color: #101D3D;" styleClass="button-color" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.MenuController2">
    <children>
-      <JFXButton id="btHome" fx:id="btHome" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" layoutY="33.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
+      <JFXButton id="btHome" fx:id="btHome" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutY="33.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -37,7 +37,7 @@
             </Tooltip>
          </tooltip>
       </JFXButton>
-      <JFXButton id="btManageBook" fx:id="btManageBook" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" layoutY="74.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="84.0">
+      <JFXButton id="btManageBook" fx:id="btManageBook" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutY="74.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="84.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -59,7 +59,7 @@
             </Tooltip>
          </tooltip>
       </JFXButton>
-      <JFXButton id="btManagePerson" fx:id="btManagePerson" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" layoutY="123.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="133.0">
+      <JFXButton id="btManagePerson" fx:id="btManagePerson" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutY="123.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="133.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -81,7 +81,7 @@
             </Tooltip>
          </tooltip>
       </JFXButton>
-      <JFXButton id="btImport" fx:id="btImport" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="10.0" layoutY="133.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="49.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="182.0">
+      <JFXButton id="btImport" fx:id="btImport" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutX="10.0" layoutY="133.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="49.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="182.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -103,7 +103,7 @@
             </Tooltip>
          </tooltip>
       </JFXButton>
-      <JFXButton id="btSetting" fx:id="btSetting" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutY="254.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="231.0">
+      <JFXButton id="btSetting" fx:id="btSetting" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutY="254.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="231.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -150,7 +150,7 @@
                <content>
                   <VBox alignment="TOP_CENTER" prefHeight="256.0" prefWidth="74.0" spacing="2.0" style="-fx-background-color: #101D3D;">
                      <children>
-                        <JFXButton id="btReport" fx:id="btReportBook" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="39.0" prefWidth="64.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
+                        <JFXButton id="btReport" fx:id="btReportBook" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="39.0" prefWidth="64.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -175,7 +175,7 @@
                               </Tooltip>
                            </tooltip>
                         </JFXButton>
-                        <JFXButton id="btReport" fx:id="btReportRentBook" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
+                        <JFXButton id="btReport" fx:id="btReportRentBook" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -200,7 +200,7 @@
                               </Tooltip>
                            </tooltip>
                         </JFXButton>
-                        <JFXButton id="btReport" fx:id="btReportImport" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
+                        <JFXButton id="btReport" fx:id="btReportImport" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -225,7 +225,7 @@
                               </Tooltip>
                            </tooltip>
                         </JFXButton>
-                        <JFXButton id="btReport" fx:id="btReportBookLost" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
+                        <JFXButton id="btReport" fx:id="btReportBookLost" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -250,7 +250,7 @@
                               </Tooltip>
                            </tooltip>
                         </JFXButton>
-                        <JFXButton id="btReport" fx:id="btReportMember" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
+                        <JFXButton id="btReport" fx:id="btReportMember" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -275,7 +275,7 @@
                               </Tooltip>
                            </tooltip>
                         </JFXButton>
-                        <JFXButton id="btReport" fx:id="btReportAdjustment" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
+                        <JFXButton id="btReport" fx:id="btReportAdjustment" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>

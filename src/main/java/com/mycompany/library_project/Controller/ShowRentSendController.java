@@ -8,7 +8,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.ShowRentSendModel;
@@ -32,12 +31,11 @@ import javafx.util.Callback;
 
 public class ShowRentSendController implements Initializable {
 
-    private Connection con = MyConnection.getConnect();
     private HomeController homeController = null;
     private AlertMessage alertMessage = new AlertMessage();
     private MaskerPane masker = new MaskerPane();
     // private DialogMessage dialog = null;
-    private ShowRentSendModel showbookModel = new ShowRentSendModel(con);
+    private ShowRentSendModel showbookModel = new ShowRentSendModel();
     private ObservableList<ShowRentSendModel> data = null;
     private ResultSet rs = null;
     private FilteredList<ShowRentSendModel> filterShow = null;

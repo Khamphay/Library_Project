@@ -37,10 +37,9 @@ public class BookController implements Initializable {
     String[] values = { "001", "Data Analyst", "07-646712-21", "200", "20", "ຄອມພິວເຕີ", "ແບບຮຽນ", "ພາສາອັງກິດ" };
     Node node[] = new Node[1000];
 
-    private Connection con = MyConnection.getConnect();
     private ManageBookController manageBookController = null;
     private ResultSet rs = null;
-    private BookDetailModel bookDetail = new BookDetailModel(con);
+    private BookDetailModel bookDetail = new BookDetailModel();
     private ObservableList<BookDetailModel> data = null;
     private AlertMessage alertMessage = new AlertMessage();
     private CreateLogFile logfile = new CreateLogFile();

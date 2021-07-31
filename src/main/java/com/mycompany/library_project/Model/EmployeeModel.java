@@ -3,14 +3,15 @@ package com.mycompany.library_project.Model;
 import java.sql.*;
 import java.text.ParseException;
 
-import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.Controller.HomeController;
 import com.mycompany.library_project.ControllerDAOModel.*;
+
 public class EmployeeModel implements DataAccessObject {
 
     private DialogMessage dialog = new DialogMessage();
     private PreparedStatement ps = null;
     private ResultSet rs = null;
-    private Connection con = MyConnection.getConnect();
+    // private Connection con = MyConnection.getConnect();
     private String sql = null;
 
     private String employeeId;
@@ -120,13 +121,11 @@ public class EmployeeModel implements DataAccessObject {
     public ResultSet findAll() throws SQLException {
         try {
             sql = "call employee_Show()";
-            rs = con.createStatement().executeQuery(sql);
+            rs = HomeController.con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນພະນັກງານ", e);
             return null;
-        } finally {
-            //con.close();
         }
     }
 
@@ -134,13 +133,11 @@ public class EmployeeModel implements DataAccessObject {
     public ResultSet findById(String id) throws SQLException {
         try {
             sql = "call employee_ShowById(" + getEmployeeId() + ")";
-            rs = con.createStatement().executeQuery(sql);
+            rs = HomeController.con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນພະນັກງານ", e);
             return null;
-        } finally {
-            //con.close();
         }
     }
 
@@ -148,7 +145,7 @@ public class EmployeeModel implements DataAccessObject {
     public ResultSet findByName(String name) throws SQLException {
         try {
             sql = "call employee_ShowByName(" + getFirstName() + ")";
-            rs = con.createStatement().executeQuery(sql);
+            rs = HomeController.con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນພະນັກງານ", e);
@@ -160,13 +157,11 @@ public class EmployeeModel implements DataAccessObject {
     public ResultSet searchData(String values) throws SQLException {
         try {
             sql = "call employee_Search(" + values + ")";
-            rs = con.createStatement().executeQuery(sql);
+            rs = HomeController.con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການຄົ້ນຂໍ້ມູນພະນັກງານ", e);
             return null;
-        } finally {
-            //con.close();
         }
     }
 
@@ -174,7 +169,7 @@ public class EmployeeModel implements DataAccessObject {
     public int saveData() throws SQLException, ParseException {
         try {
             sql = "call employee_Insert(?, ?, ?, ?, ?, ?)";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, getEmployeeId());
             ps.setString(2, getFirstName());
             ps.setString(3, getLastName());
@@ -186,8 +181,7 @@ public class EmployeeModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກຂໍ້ມູນພະນັກງານ", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            ////ps.close();
         }
 
     }
@@ -196,7 +190,7 @@ public class EmployeeModel implements DataAccessObject {
     public int updateData() throws SQLException, ParseException {
         try {
             sql = "call employee_Update(?, ?, ?, ?, ?, ?)";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, getEmployeeId());
             ps.setString(2, getFirstName());
             ps.setString(3, getLastName());
@@ -208,8 +202,7 @@ public class EmployeeModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນພະນັກງານ", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            ////ps.close();
         }
     }
 
@@ -217,22 +210,21 @@ public class EmployeeModel implements DataAccessObject {
     public int deleteData(String id) throws SQLException {
         try {
             sql = "call employee_Delete(?)";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, id);
             return ps.executeUpdate();
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນພະນັກງານ", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            ////ps.close();
         }
     }
 
     public int addUser() throws SQLException {
         try {
             sql = "call addUser(?, ?, ?, ?);";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, getEmployeeId());
             ps.setString(2, getUser());
             ps.setString(3, getPassword());
@@ -242,15 +234,14 @@ public class EmployeeModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກຂໍ້ມູນຜູ້ໃຊ້", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            ////ps.close();
         }
     }
 
     public int updateUser(String empid, String oldUsername) throws SQLException {
         try {
             sql = "call updateUser(?, ?, ?, ?, ?);";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, empid);
             ps.setString(2, oldUsername);
             ps.setString(3, getUser());
@@ -261,15 +252,14 @@ public class EmployeeModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນຜູ້ໃຊ້", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            ////ps.close();
         }
     }
 
     public int updateUserName(String empid, String oldUsername, String newUsername) throws SQLException {
         try {
-            sql = "update tbuser set user_name =? where employee_id = ? and user_name = ?;";
-            ps = con.prepareStatement(sql);
+            sql = "update tbuser set user_name=? where employee_id = ? and user_name = ?;";
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, newUsername);
             ps.setString(2, empid);
             ps.setString(3, oldUsername);
@@ -278,15 +268,14 @@ public class EmployeeModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຊື່ຜູ້ໃຊ້", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            ////ps.close();
         }
     }
 
     public ResultSet Login(String user) throws SQLException {
         try {
             sql = "call Login(?);";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, user);
             rs = ps.executeQuery();
             return rs;
@@ -294,7 +283,7 @@ public class EmployeeModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເຂົ້າລະບົບ", e);
             return null;
         } finally {
-            //con.close();
+            ////ps.close();
         }
 
     }
@@ -303,7 +292,7 @@ public class EmployeeModel implements DataAccessObject {
 
         try {
             sql = "call findUserByEmpId(?);";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, empId);
             rs = ps.executeQuery();
             return rs;
@@ -311,7 +300,7 @@ public class EmployeeModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນຜູ້້ໃຊ້", e);
             return null;
         } finally {
-            //con.close();
+            ////ps.close();
         }
     }
 }

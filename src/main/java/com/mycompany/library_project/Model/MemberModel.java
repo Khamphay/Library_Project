@@ -1,6 +1,6 @@
 package com.mycompany.library_project.Model;
 
-import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.Controller.HomeController;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 
@@ -11,7 +11,7 @@ public class MemberModel implements DataAccessObject {
 
     private DialogMessage dialog = new DialogMessage();
     private PreparedStatement ps = null;
-    private Connection con = MyConnection.getConnect();
+    // private Connection con = MyConnection.getConnect();
     private ResultSet rs = null;
     private String query = "";
 
@@ -250,13 +250,13 @@ public class MemberModel implements DataAccessObject {
     public ResultSet findAll() throws SQLException {
         try {
             query = "select * from vwshowmember;";
-            rs = con.createStatement().executeQuery(query);
+            rs = HomeController.con.createStatement().executeQuery(query);
             return rs;
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນສະມາຊິກ", e);
             return null;
         } finally {
-            //con.close();
+            //HomeController.con.close();
         }
     }
 
@@ -264,7 +264,7 @@ public class MemberModel implements DataAccessObject {
     public ResultSet findById(String id) throws SQLException {
         try {
             query = "select * from vwshowmember where member_id=?";
-            ps = con.prepareStatement(query);
+            ps = HomeController.con.prepareStatement(query);
             ps.setString(1, id);
             rs = ps.executeQuery();
             return rs;
@@ -272,7 +272,7 @@ public class MemberModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນສະມາຊິກ", e);
             return null;
         } finally {
-            //con.close();
+            //ps.close();
         }
     }
 
@@ -286,21 +286,21 @@ public class MemberModel implements DataAccessObject {
     public ResultSet searchData(String values) throws SQLException {
         try {
             query = "call  member_Search(?);";
-            ps = con.prepareStatement(query);
+            ps = HomeController.con.prepareStatement(query);
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການຄົ້ນຫາຂໍ້ມູນສະມາຊິກ", e);
             return null;
         } finally {
-            //con.close();
+            //ps.close();
         }
     }
 
     public ResultSet findMemberEndOfDate(Date date) throws SQLException {
         try {
             query = "select * from vwshowmember where date_end<?";
-            ps = con.prepareStatement(query);
+            ps = HomeController.con.prepareStatement(query);
             ps.setDate(1, date);
             rs = ps.executeQuery();
             return rs;
@@ -308,7 +308,7 @@ public class MemberModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນສະມາຊິກ", e);
             return null;
         } finally {
-            //con.close();
+            //ps.close();
         }
     }
 
@@ -317,11 +317,11 @@ public class MemberModel implements DataAccessObject {
         try {
             if (getByimg() != null) {
                 query = "call  member_Insert_Img(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                ps = con.prepareStatement(query);
+                ps = HomeController.con.prepareStatement(query);
                 ps.setBytes(17, getByimg());
             } else {
                 query = "call  member_Insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                ps = con.prepareStatement(query);
+                ps = HomeController.con.prepareStatement(query);
             }
             ps.setString(1, getMemberId());
             ps.setString(2, getStudentId());
@@ -344,8 +344,7 @@ public class MemberModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນສະມາຊິກ", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            //ps.close();
         }
     }
 
@@ -353,37 +352,35 @@ public class MemberModel implements DataAccessObject {
     public int updateData() throws SQLException, ParseException {
         try {
             if (getByimg() != null) {
-                query = "call  member_Update_Img(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                ps = con.prepareStatement(query);
-                ps.setBytes(18, getByimg());
+                query = "call  member_Update_Img(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                ps = HomeController.con.prepareStatement(query);
+                ps.setBytes(17, getByimg());
             } else {
-                query = "call  member_Update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                ps = con.prepareStatement(query);
+                query = "call  member_Update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                ps = HomeController.con.prepareStatement(query);
             }
             ps.setString(1, getOldmemberId());
-            ps.setString(2, getMemberId());
-            ps.setString(3, getStudentId());
-            ps.setString(4, getFirstName());
-            ps.setString(5, getSureName());
-            ps.setString(6, getGender());
-            ps.setString(7, getTel());
-            ps.setString(8, getVillage());
-            ps.setString(9, getDistrict());
-            ps.setString(10, getProvince());
-            ps.setDate(12, getBirdate());
-            ps.setString(11, getDetp());
-            ps.setString(13, getStudy_year());
-            ps.setDate(14, getDateRegister());
-            ps.setDate(15, getDateRegisterEnd());
-            ps.setDate(16, getDateExit());
-            ps.setDouble(17, getCostRegister());
+            ps.setString(2, getStudentId());
+            ps.setString(3, getFirstName());
+            ps.setString(4, getSureName());
+            ps.setString(5, getGender());
+            ps.setString(6, getTel());
+            ps.setString(7, getVillage());
+            ps.setString(8, getDistrict());
+            ps.setString(9, getProvince());
+            ps.setDate(11, getBirdate());
+            ps.setString(10, getDetp());
+            ps.setString(12, getStudy_year());
+            ps.setDate(13, getDateRegister());
+            ps.setDate(14, getDateRegisterEnd());
+            ps.setDate(15, getDateExit());
+            ps.setDouble(16, getCostRegister());
             return ps.executeUpdate();
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນສະມາຊິກ", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            //ps.close();
         }
     }
 
@@ -391,15 +388,14 @@ public class MemberModel implements DataAccessObject {
     public int deleteData(String id) throws SQLException {
         try {
             query = "call  member_Delete(?);";
-            ps = con.prepareStatement(query);
+            ps = HomeController.con.prepareStatement(query);
             ps.setString(1, id);
             return ps.executeUpdate();
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນສະມາຊິກ", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            //ps.close();
         }
     }
 }

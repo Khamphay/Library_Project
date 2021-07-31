@@ -1,13 +1,12 @@
 package com.mycompany.library_project.Model;
 
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 
-import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.Controller.HomeController;
 import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 
@@ -16,10 +15,9 @@ import javafx.geometry.Pos;
 public class AdjustmentModel implements DataAccessObject {
 
     private AlertMessage alertMessage = new AlertMessage();
-    private Connection con = MyConnection.getConnect();
+    // private Connection con = MyConnection.getConnect();
     private PreparedStatement ps = null;
     private String sql = null;
-
     private String rent_id;
     private int qty;
     private double adj_fee;
@@ -105,7 +103,8 @@ public class AdjustmentModel implements DataAccessObject {
     public int saveData() throws SQLException, ParseException {
         try {
             sql = "call adjustment_Insert(?, ?, ?, ?, ?);";
-            ps = con.prepareStatement(sql);
+            // ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, getRent_id());
             ps.setInt(2, getQty());
             ps.setDouble(3, getAdj_fee());
@@ -115,11 +114,9 @@ public class AdjustmentModel implements DataAccessObject {
         } catch (Exception e) {
             alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             return 0;
-        } 
-        // finally {
-        //     ps.close();
-        //     con.close();
-        // }
+        } finally {
+            // ps.close();
+        }
 
     }
 

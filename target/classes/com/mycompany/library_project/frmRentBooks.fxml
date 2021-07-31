@@ -49,7 +49,7 @@
                                     </TableView>
                                     <AnchorPane layoutX="28.0" layoutY="9.0" prefHeight="229.0" prefWidth="1329.0" style="-fx-border-color: #362E6D; -fx-border-radius: 0.4em;" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="9.0">
                                        <children>
-                                          <JFXButton id="btClick" fx:id="btSave" alignment="CENTER" buttonType="RAISED" focusTraversable="false" layoutX="536.0" layoutY="177.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE" AnchorPane.bottomAnchor="20.0">
+                                          <JFXButton id="btClick" fx:id="btSave" alignment="CENTER" buttonType="RAISED" focusTraversable="false" layoutX="791.0" layoutY="176.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE" AnchorPane.bottomAnchor="21.0">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
@@ -64,7 +64,7 @@
                                                 <Insets left="-2.0" />
                                              </padding>
                                           </JFXButton>
-                                          <JFXButton id="btClick" fx:id="btCancel" alignment="CENTER" buttonType="RAISED" focusTraversable="false" layoutX="660.0" layoutY="177.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE" AnchorPane.bottomAnchor="20.0">
+                                          <JFXButton id="btClick" fx:id="btCancel" alignment="CENTER" buttonType="RAISED" focusTraversable="false" layoutX="596.0" layoutY="176.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE" AnchorPane.bottomAnchor="21.0">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>

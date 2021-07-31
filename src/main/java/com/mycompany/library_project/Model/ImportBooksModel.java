@@ -3,12 +3,12 @@ package com.mycompany.library_project.Model;
 import java.sql.*;
 import java.text.ParseException;
 
-import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.Controller.HomeController;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 
 class ImportBook implements DataAccessObject {
 
-    protected Connection con = MyConnection.getConnect();
+    // protected Connection con = MyConnection.getConnect();
     protected PreparedStatement ps = null;
     protected String sql = null;
 
@@ -93,7 +93,7 @@ class ImportBook implements DataAccessObject {
         int result = 0;
         try {
             sql = "call inertImport(:importid, :qty_total, :price_total, :import_in)";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, getImport_id());
             ps.setInt(2, getQty_total());
             ps.setDouble(3, getPrice_total());
@@ -150,7 +150,7 @@ public class ImportBooksModel extends ImportBook {
     public int saveImportDetail() throws SQLException {
         int result = 0;
         sql = "call inertImport_Detail(:importid, :bookid, :book_qty, :book_price);";
-        ps = con.prepareStatement(sql);
+        ps = HomeController.con.prepareStatement(sql);
         ps.setString(1, getImport_id());
         ps.setString(2, getBook_id());
         ps.setInt(3, getQty());

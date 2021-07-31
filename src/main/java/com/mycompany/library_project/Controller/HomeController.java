@@ -3,10 +3,10 @@ package com.mycompany.library_project.Controller;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import com.mycompany.library_project.App;
+import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 import com.mycompany.library_project.ModelShow.*;
-import com.mycompany.library_project.config.CreateLogFile;
 
 import javafx.application.Platform;
 import javafx.event.*;
@@ -23,6 +23,7 @@ import javafx.stage.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,22 +33,20 @@ import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
 
-
-    public Stage homeStage = null;
+    public static Connection con = MyConnection.getConnect();
     public static String[] summaryValue = new String[10];
-
-    private boolean max_min = false;
-    private Rectangle2D bounds = null;
     private HamburgerSlideCloseTransition hamburgerTransition = null;
-    private boolean fragMenu = false;
-    private Node node;
-    private Parent rootMenu = null;
-    private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = new DialogMessage();
-    private ResultSet rs = null;
     private ShowRentSendModel showRentSendModel = new ShowRentSendModel();
     private ListBookModel listbook = null;
     private MyDate mydate = new MyDate();
+    private Rectangle2D bounds = null;
+    public Stage homeStage = null;
+    private Node node = null;
+    private Parent rootMenu = null;
+    private ResultSet rs = null;
+    private boolean fragMenu = false;
+    private boolean max_min = false;
 
     @FXML
     private StackPane stackPane;
@@ -128,9 +127,7 @@ public class HomeController implements Initializable {
             final Parent subroot = loader.load();
             bpDisplay.setCenter(subroot);
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            CreateLogFile config = new CreateLogFile();
-            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: " + subForm, e);
+            dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການເປີດຟອມ", e);
         }
     }
 
@@ -161,21 +158,8 @@ public class HomeController implements Initializable {
 
                 @Override
                 public void handle(Event event) {
-                    SummaryData catg = new SummaryData("call sumCategory();", "ThreadingCatg");
-                    catg.start();
-
-                    SummaryData type = new SummaryData("call sumType();", "ThreadingType");
-                    type.start();
-
-                    SummaryData book = new SummaryData("call sumBook();", "ThreadingBook");
-                    book.start();
-
-                    SummaryData booklost = new SummaryData("call sumBookLost();", "ThreadingBookLost");
-                    booklost.start();
-
-                    SummaryData tablelog = new SummaryData("call sumTableLog();", "ThreadingTableLog");
-                    tablelog.start();
-
+                    SummaryData books = new SummaryData("call getAllBookData();", "books");
+                    books.start();
                     showSubFrom("frmManageBook.fxml");
                 }
             });
@@ -184,17 +168,8 @@ public class HomeController implements Initializable {
 
                 @Override
                 public void handle(Event event) {
-                    SummaryData member = new SummaryData("call sumMember();", "ThreadingMember");
-                    member.start();
-
-                    SummaryData employee = new SummaryData("call sumEmployee();", "ThreadingEmployee");
-                    employee.start();
-
-                    SummaryData author = new SummaryData("call sumAuthor();", "ThreadingAuthor");
-                    author.start();
-
-                    SummaryData dep = new SummaryData("call sumDepartment();", "ThreadingDep");
-                    dep.start();
+                    SummaryData person = new SummaryData("call getAllPersonData();", "person");
+                    person.start();
                     showSubFrom("frmManagePersonal.fxml");
                 }
             });
@@ -222,8 +197,7 @@ public class HomeController implements Initializable {
                             SettingController.settingStage.show();
                         }
                     } catch (Exception e) {
-                        alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4,
-                                Pos.BOTTOM_RIGHT);
+                        dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການເປີດຟອມຈັດການຂໍ້ມູນຄ່າປັບໃຫມ", e);
                     }
                 }
             });
@@ -388,7 +362,6 @@ public class HomeController implements Initializable {
                     pnItems.getChildren().clear();
                     rs = showRentSendModel.findByRentOutOfDate(Date.valueOf(LocalDate.now()), "ກຳລັງຢືມ");
                     while (rs.next()) {
-
                         // Todo: Cancalar Date
                         int outdate = mydate.cancalarDate(rs.getDate("date_send").toLocalDate());
                         listbook = new ListBookModel(number, rs.getString("rent_id"), rs.getString("barcode"),
@@ -407,8 +380,8 @@ public class HomeController implements Initializable {
                     }
                     textTotalList.setText(pnItems.getChildren().size() + " ລາຍການ");
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage("Load rent book out of Error", "Error: " + e.getMessage(), 4,
-                            Pos.BOTTOM_RIGHT);
+                    dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການໂຫຼດຂໍ້ມູນຢືມປຶ້ມກາຍກຳນົດ", e);
+                    e.printStackTrace();
                 }
             };
         });
@@ -428,7 +401,7 @@ public class HomeController implements Initializable {
                         StaticCostPrice.LostCost = rs.getDouble("cost_lost");
                     }
                 } catch (SQLException e) {
-                    alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                    dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນຄ່າປັບໃຫມ", e);
                 }
 
             }

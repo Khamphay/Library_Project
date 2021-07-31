@@ -4,7 +4,7 @@ import java.sql.*;
 import java.text.ParseException;
 import java.util.List;
 
-import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.Controller.HomeController;
 import com.mycompany.library_project.ControllerDAOModel.*;
 
 public class BookLostModel implements DataAccessObject {
@@ -12,7 +12,7 @@ public class BookLostModel implements DataAccessObject {
     private DialogMessage dialog = new DialogMessage();
     private PreparedStatement ps = null;
     private ResultSet rs = null;
-    private Connection con = MyConnection.getConnect();
+    // private Connection con = MyConnection.getConnect();
     private String sql = null;
 
     private int lost_id;
@@ -262,7 +262,7 @@ public class BookLostModel implements DataAccessObject {
     public ResultSet findAll() throws SQLException {
         try {
             sql = "select * from vwshowbooklost order by date_pay desc;";
-            rs = con.createStatement().executeQuery(sql);
+            rs = HomeController.con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນປຶ້ມເສຍ", e);
@@ -279,7 +279,7 @@ public class BookLostModel implements DataAccessObject {
     public ResultSet findByDate(Date date) throws SQLException {
         try {
             sql = "select * from vwshowbooklost where date_pay=?;";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setDate(1, date);
             rs = ps.executeQuery();
             return rs;
@@ -292,7 +292,7 @@ public class BookLostModel implements DataAccessObject {
     public ResultSet findRentBookByMemderID(String member_Id, String book_status) throws SQLException {
         try {
             sql = "call sendBook_ShowByMemberID(?, ?);";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, member_Id);
             ps.setString(2, book_status);
             rs = ps.executeQuery();
@@ -325,7 +325,8 @@ public class BookLostModel implements DataAccessObject {
          * 
          * Java Code: ==>(sql =
          * "INSERT INTO dblibrary.tbbooks_lost (member_id, total_qty, total_cost, date_pay) VALUES(?, ?, ?, ?);"
-         * ; ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+         * ; ps = HomeController.con.prepareStatement(sql,
+         * Statement.RETURN_GENERATED_KEYS);
          * 
          * 
          * ps.executeUpdate(); rs = ps.getGeneratedKeys();)<==
@@ -338,7 +339,7 @@ public class BookLostModel implements DataAccessObject {
          * return last auto max id;
          * 
          * Java Code: ==>(sql = "call book_lost_Insert(?, ?, ?, ?)"; ps =
-         * con.prepareStatement(sql);
+         * HomeController.con.prepareStatement(sql);
          * 
          * 
          * ps.executeUpdate(); rs = ps.executeQuery();)<==
@@ -346,7 +347,7 @@ public class BookLostModel implements DataAccessObject {
 
         try {
             sql = "INSERT INTO dblibrary.tbbooks_lost (member_id, total_qty, total_cost, date_pay) VALUES(?, ?, ?, ?);";
-            ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps = HomeController.con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, getMemberId());
             ps.setInt(2, getQty());
             ps.setDouble(3, getPrice());
@@ -362,8 +363,8 @@ public class BookLostModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນປຶ້ມເສຍ", e);
             return 0;
         } finally {
-            ps.close();
-            // con.close();
+            // ps.close();
+            // HomeController.con.close();
         }
 
     }
@@ -372,20 +373,20 @@ public class BookLostModel implements DataAccessObject {
             throws SQLException {
         // Todo: Don't use try...catch
         // sql = "call book_lostdetail_Insert(?, ?, ?)";
-        // ps = con.prepareStatement(sql);
+        // ps = HomeController.con.prepareStatement(sql);
         // ps.setInt(1, lost_id);
         // ps.setString(2, barcode);
         // ps.setDouble(3, price);
         // int result = ps.executeUpdate();
-        // ps.close();
-        // // con.close();
+        // //ps.close();
+        // // HomeController.con.close();
         // return result;
 
         try {
             int result = 0;
-            sql = "INSERT INTO dblibrary.tbbooks_lost_detail (lost_id, barcode, book_price) VALUES(id, Barcode, Price)";
-            ps = con.prepareStatement(sql);
-            con.commit();
+            sql = "INSERT INTO dblibrary.tbbooks_lost_detail (lost_id, barcode, book_price) VALUES(?, ?, ?)";
+            ps = HomeController.con.prepareStatement(sql);
+            HomeController.con.commit();
             for (BookLostModel val : list) {
                 ps.setInt(1, val.getLost_id());
                 ps.setString(2, val.getBarcode());
@@ -394,7 +395,7 @@ public class BookLostModel implements DataAccessObject {
                 result++;
                 if (result % 100 == 0 || result == list.size()) {
                     ps.executeBatch();
-                    con.commit();
+                    HomeController.con.commit();
                     result++;
                 }
             }
@@ -402,6 +403,8 @@ public class BookLostModel implements DataAccessObject {
         } catch (Exception e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນລາຍລະອຽດປຶ້ມເສຍ", e);
             return 0;
+        } finally {
+            // ps.close();
         }
     }
 
@@ -409,7 +412,7 @@ public class BookLostModel implements DataAccessObject {
     public int updateData() throws SQLException, ParseException {
         try {
             sql = "call book_lost_Update(?, ?, ?, ?, ?)";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, getRentId());
             ps.setString(2, getMemberId());
             ps.setInt(3, getQty());
@@ -420,8 +423,7 @@ public class BookLostModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນປຶ້ມເສຍ", e);
             return 0;
         } finally {
-            ps.close();
-            // con.close();
+            // ps.close();
         }
     }
 
@@ -429,15 +431,14 @@ public class BookLostModel implements DataAccessObject {
     public int deleteData(String id) throws SQLException {
         try {
             sql = "call book_lost_Delete(?);";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, getRentId());
             return ps.executeUpdate();
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນປຶ້ມເສຍ", e);
             return 0;
         } finally {
-            ps.close();
-            // con.close();
+            // ps.close();
         }
 
     }
@@ -445,7 +446,7 @@ public class BookLostModel implements DataAccessObject {
     public int deleeLostDetail(int lostid, String barcode, double price) throws SQLException {
         try {
             sql = "call book_lostdetail_Delete(?, ?, ?)";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setInt(1, lostid);
             ps.setString(2, barcode);
             ps.setDouble(3, price);
@@ -454,8 +455,7 @@ public class BookLostModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນປຶ້ມເສຍ" + lostid, e);
             return 0;
         } finally {
-            ps.close();
-            // con.close();
+            // ps.close();
         }
     }
 

@@ -1,13 +1,12 @@
 package com.mycompany.library_project.Model;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 import com.jfoenix.controls.JFXButton;
-import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.Controller.HomeController;
 import com.mycompany.library_project.ControllerDAOModel.*;
 
 
@@ -15,7 +14,7 @@ public class TableLogModel implements DataAccessObject {
 
     private DialogMessage dialog = new DialogMessage();
     private PreparedStatement ps = null;
-    private Connection con = MyConnection.getConnect();
+    // private Connection con = MyConnection.getConnect();
     private ResultSet rs = null;
     private String query = "";
 
@@ -113,27 +112,22 @@ public class TableLogModel implements DataAccessObject {
     public ResultSet findAll() throws SQLException {
         try {
             query = "call table_Show();";
-            rs = con.createStatement().executeQuery(query);
+            rs = HomeController.con.createStatement().executeQuery(query);
             return rs;
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນຕູ້", e);
             return null;
-        } finally {
-            // con.close();
         }
-
     }
 
     public ResultSet findTable(String id) throws SQLException {
         try {
             query = "call table_ShowByID('" + id + "');";
-            rs = con.createStatement().executeQuery(query);
+            rs = HomeController.con.createStatement().executeQuery(query);
             return rs;
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນຕູ້", e);
             return null;
-        } finally {
-            // con.close();
         }
     }
 
@@ -141,20 +135,18 @@ public class TableLogModel implements DataAccessObject {
     public ResultSet findById(String id) throws SQLException {
         try {
             query = "call  tablelog_ShowById('" + id + "');";
-            rs = con.createStatement().executeQuery(query);
+            rs = HomeController.con.createStatement().executeQuery(query);
             return rs;
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນລ໋ອກຕູ້", e);
             return null;
-        } finally {
-            // con.close();
         }
     }
 
     public String findTableId(String tableLogId) throws SQLException {
         try {
             query = "Select tableid From tbtablelog Where tablelog='" + tableLogId + "'";
-            rs = con.createStatement().executeQuery(query);
+            rs = HomeController.con.createStatement().executeQuery(query);
             if (rs.next()) {
                 return rs.getString("tableid");
             } else {
@@ -163,8 +155,6 @@ public class TableLogModel implements DataAccessObject {
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນຕູ້", e);
             return "";
-        } finally {
-            // con.close();
         }
     }
 
@@ -183,7 +173,7 @@ public class TableLogModel implements DataAccessObject {
     public int saveTable(String id, int qty) throws SQLException {
         try {
             query = "call  table_Insert(?, ?);";
-            ps = con.prepareStatement(query);
+            ps = HomeController.con.prepareStatement(query);
             ps.setString(1, id);
             ps.setInt(2, qty);
             return ps.executeUpdate();
@@ -191,8 +181,7 @@ public class TableLogModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນຕູ້", e);
             return 0;
         } finally {
-            ps.close();
-            // con.close();
+            //ps.close();
         }
     }
 
@@ -200,20 +189,20 @@ public class TableLogModel implements DataAccessObject {
     public int saveData() throws SQLException {
         // Todo: Don't use try...catch'
         query = "call  tablelog_Insert(?, ?) ";
-        ps = con.prepareStatement(query);
+        ps = HomeController.con.prepareStatement(query);
         ps.setString(1, getTableId());
         ps.setString(2, getTableLog());
         int result = ps.executeUpdate();
-        ps.close();
+        //ps.close();
         return result;
     }
 
-    public int saveTableLog(List<TableLogModel> list, String id) {
+    public int saveTableLog(List<TableLogModel> list, String id) throws SQLException {
         try {
             // query = "call tablelog_Insert(?,?)";
             query = "insert into tbtablelog values(?, ?)";
-            ps = con.prepareStatement(query);
-            con.setAutoCommit(false);
+            ps = HomeController.con.prepareStatement(query);
+            HomeController.con.setAutoCommit(false);
             int result = 0, count = 0;
             for (TableLogModel tableLog : list) {
                 ps.setString(1, tableLog.getTableId());
@@ -222,7 +211,7 @@ public class TableLogModel implements DataAccessObject {
                 count++;
                 if (count % 100 == 0 || count == list.size()) {
                     ps.executeBatch();
-                    con.commit();
+                    HomeController.con.commit();
                     result = 1;
                 }
             }
@@ -234,6 +223,8 @@ public class TableLogModel implements DataAccessObject {
             }
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນລ໋ອກຕູ້", e);
             return 0;
+        } finally {
+            //ps.close();
         }
     }
 
@@ -241,7 +232,7 @@ public class TableLogModel implements DataAccessObject {
     public int updateData() throws SQLException {
         try {
             query = "call  table_Update(?, ?) ";
-            ps = con.prepareStatement(query);
+            ps = HomeController.con.prepareStatement(query);
             ps.setString(1, getTableId());
             ps.setInt(2, getLogQty());
             return ps.executeUpdate();
@@ -249,23 +240,21 @@ public class TableLogModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນລ໋ອກຕູ້", e);
             return 0;
         } finally {
-            ps.close();
-            // con.close();
+            //ps.close();
         }
     }
 
     public int updateTableQty(String id) throws SQLException {
         try {
             query = "call table_UpdateQty(?);";
-            ps = con.prepareStatement(query);
+            ps = HomeController.con.prepareStatement(query);
             ps.setString(1, id);
             return ps.executeUpdate();
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຈຳນວນລ໋ອກຕູ້", e);
             return 0;
         } finally {
-            ps.close();
-            // con.close();
+            //ps.close();
         }
     }
 
@@ -273,22 +262,21 @@ public class TableLogModel implements DataAccessObject {
     public int deleteData(String id) throws SQLException {
         try {
             query = "call tablelog_Delete(?);";
-            ps = con.prepareStatement(query);
+            ps = HomeController.con.prepareStatement(query);
             ps.setString(1, id);
             return ps.executeUpdate();
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນລ໋ອກຕູ້", e);
             return 0;
         } finally {
-            ps.close();
-            // con.close();
+            //ps.close();
         }
     }
 
     public int deleteTable(String id) throws SQLException {
         try {
             query = "call table_Delete(?);";
-            ps = con.prepareStatement(query);
+            ps = HomeController.con.prepareStatement(query);
             ps.setString(1, id);
             return ps.executeUpdate();
 
@@ -296,8 +284,7 @@ public class TableLogModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນຕູ້", e);
             return 0;
         } finally {
-            ps.close();
-            // con.close();
+            //ps.close();
         }
     }
 }

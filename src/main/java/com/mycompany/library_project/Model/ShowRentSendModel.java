@@ -3,18 +3,14 @@ package com.mycompany.library_project.Model;
 import java.sql.*;
 import java.text.ParseException;
 
-import com.mycompany.library_project.MyConnection;
-import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
+import com.mycompany.library_project.Controller.HomeController;
+import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
-import com.mycompany.library_project.config.CreateLogFile;
-
-import javafx.geometry.Pos;
 
 public class ShowRentSendModel implements DataAccessObject {
 
-    private AlertMessage alertMessage = new AlertMessage();
-    private CreateLogFile logfile = new CreateLogFile();
-    private Connection con = MyConnection.getConnect();
+    private DialogMessage dialog = new DialogMessage();
+    // private Connection con = MyConnection.getConnect();
     private ResultSet rs = null;
     private PreparedStatement ps = null;
     private String sql = "";
@@ -158,67 +154,57 @@ public class ShowRentSendModel implements DataAccessObject {
     public ResultSet findAll() throws SQLException {
         try {
             sql = "select * from showRent_SendBook order by date_rent desc;";
-            rs = con.createStatement().executeQuery(sql);
+            rs = HomeController.con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Rent and Send Book Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການໂຫຼດຂໍ້ມູນຢືມປຶ້ມ-ສົ່ງປຶ້ມ", e);
             return null;
-        } finally {
-            //con.close();
         }
     }
 
     public ResultSet findByRent(String status) throws SQLException {
         try {
             sql = "select * from showRent_SendBook Where book_status=?;";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, status);
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Rent and Send Book By Status Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການໂຫຼດຂໍ້ມູນຢືມປຶ້ມ-ສົ່ງປຶ້ມ", e);
             return null;
         } finally {
-            ps.close();
-            //con.close();
+            // ps.close();
         }
     }
 
     public ResultSet findByRentOutOfDate(Date date, String status) throws SQLException {
         try {
             sql = "select * from showRent_SendBook Where date_send<? and book_status=?;";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setDate(1, date);
             ps.setString(2, status);
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load rent book out of error", "Error: " + e.getMessage(), 4,
-                    Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Renting Book Out Of Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການໂຫຼດຂໍ້ມູນຢືມປຶ້ມກາຍກຳນົດ", e);
             return null;
         } finally {
-            ps.close();
-            //con.close();
+            // ps.close();
         }
     }
 
     public ResultSet findBySend(String status) throws SQLException {
         try {
             sql = "select * from showRent_SendBook Where book_status=? order by date_rent desc;";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, status);
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Load Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Load Sended Book Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການໂຫຼດຂໍ້ມູນຢືມປຶ້ມ-ສົ່ງປຶ້ມ", e);
             return null;
         } finally {
-            ps.close();
-            //con.close();
+            // ps.close();
         }
     }
 
@@ -256,18 +242,16 @@ public class ShowRentSendModel implements DataAccessObject {
     public int deleteData(String id) throws SQLException {
         try {
             sql = "call rentbook_Delete(?, ?, ?);";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, getRentId());
             ps.setString(2, getBarcode());
             ps.setString(3, getStatus());
             return ps.executeUpdate();
         } catch (SQLException e) {
-            alertMessage.showErrorMessage("Delete Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("Delete Sended Book Error", e);
+            dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການລົບຂໍ້ມູນຢືມປຶ້ມ-ສົ່ງປຶ້ມ", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            // ps.close();
         }
     }
 

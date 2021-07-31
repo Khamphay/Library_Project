@@ -1,20 +1,18 @@
 package com.mycompany.library_project.Model;
 
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.List;
 
-import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.Controller.HomeController;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
 
 public class ImportModel implements DataAccessObject {
 
-    private Connection con = MyConnection.getConnect();
+    // private Connection con = MyConnection.getConnect();
     private String sql = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
@@ -28,6 +26,7 @@ public class ImportModel implements DataAccessObject {
     private int bookpage;
     private String bookcategory;
     private String booktype;
+    private String writeYear;
     private String tableid;
     private String tbalelog;
     private int qty, totalQty;
@@ -52,17 +51,20 @@ public class ImportModel implements DataAccessObject {
     }
 
     public ImportModel(String bookid, String bookname, String bookisbn, int bookpage, String bookcategory,
-            String booktype, String tableid, String tbalelog, int qty, double price) {
+            String booktype, String writeYear, String tableid, String tbalelog, int qty, double price,
+            Double totalPrice) {
         this.bookid = bookid;
         this.bookname = bookname;
         this.bookisbn = bookisbn;
         this.bookpage = bookpage;
         this.bookcategory = bookcategory;
         this.booktype = booktype;
+        this.writeYear = writeYear;
         this.tableid = tableid;
         this.tbalelog = tbalelog;
         this.qty = qty;
         this.price = price;
+        this.totalPrice = totalPrice;
     }
 
     public String getImportid() {
@@ -119,6 +121,14 @@ public class ImportModel implements DataAccessObject {
 
     public void setBooktype(String booktype) {
         this.booktype = booktype;
+    }
+
+    public String getWriteYear() {
+        return writeYear;
+    }
+
+    public void setWriteYear(String writeYear) {
+        this.writeYear = writeYear;
     }
 
     public String getTableid() {
@@ -204,38 +214,46 @@ public class ImportModel implements DataAccessObject {
     @Override
     public int saveData() throws SQLException, ParseException {
         try {
-            sql = "call import_Insert(:id, :qty, :price, :imdate);";
-            ps = con.prepareStatement(sql);
+            sql = "call import_Insert(?, ?, ?, ?);";
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, getImportid());
             ps.setInt(2, getTotalQty());
             ps.setDouble(3, getTotalPrice());
+            ps.setDate(4, getImportDate());
             return ps.executeUpdate();
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນນຳປຶ້ມເຂົ້າ", e);
             return 0;
+        } finally {
+            // ps.close();
         }
     }
 
-    public int saveDataImportDetail(List<ImportModel> list) throws SQLException, ParseException {
+    public int saveDataImportDetail(/* List<ImportModel> list */ String impID) throws SQLException, ParseException {
         try {
-            sql = "Insert into tbimport_book_detail values(?, ?, ?, ?)";
-            ps = con.prepareStatement(sql);
-            int result = 0;
-            for (ImportModel importModel : list) {
-                ps.setString(1, importModel.getImportid());
-                ps.setString(2, importModel.getBookid());
-                ps.setInt(3, importModel.getQty());
-                ps.setDouble(4, importModel.getPrice());
-                ps.addBatch();
-                if (result % 100 == 0 || result == list.size()) {
-                    ps.executeBatch();
-                    result = 1;
-                }
-            }
-            return result;
+
+            sql = "call inertImport_Detail(?, ?, ?, ?);";
+            ps = HomeController.con.prepareStatement(sql);
+            ps.setString(1, getImportid());
+            ps.setString(2, getBookid());
+            ps.setInt(3, getQty());
+            ps.setDouble(4, getPrice());
+            return ps.executeUpdate();
+
+            /*
+             * sql = "Insert into tbimport_book_detail values(?, ?, ?, ?)"; // ps =
+             * HomeController.con.prepareStatement(sql); int result = 0; for (ImportModel
+             * importModel : list) { ps.setString(1, importModel.getImportid());
+             * ps.setString(2, importModel.getBookid()); ps.setInt(3, importModel.getQty());
+             * ps.setDouble(4, importModel.getPrice()); ps.addBatch(); if (result % 100 == 0
+             * || result == list.size()) { ps.executeBatch(); result = 1; } } return result;
+             */
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນລາຍລະອຽດນຳປຶ້ມເຂົ້າ", e);
+            this.deleteData(impID);
             return 0;
+        } finally {
+            // ps.close();
         }
     }
 
@@ -254,9 +272,12 @@ public class ImportModel implements DataAccessObject {
     public String getMaxID() {
         try {
             sql = "Select Max(import_id) as maxid From tbimport_book;";
-            rs = con.createStatement().executeQuery(sql);
-            String id = rs.getString("maxid");
-            return id;
+            rs = HomeController.con.createStatement().executeQuery(sql);
+            if (rs.next()) {
+                return rs.getString("maxid");
+            } else {
+                return null;
+            }
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາຈັດການລະຫັດການນຳປຶ້ມເຂົ້າ", e);
             return null;

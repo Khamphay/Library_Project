@@ -21,11 +21,14 @@ public class CreateLogFile {
         return jsonFile.exists();
     }
 
-    public boolean createFileConfig(String host, String port, String userName, String password) {
+    public boolean createFileConfig(String driver, String dbtype, String host, String port, String userName,
+            String password) {
         try {
             // FileWriter fileWriter = new FileWriter();
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(path_config + fileConfig));
             JsonObject server = new JsonObject();
+            server.put("driver", driver);
+            server.put("type", dbtype);
             server.put("host", host);
             server.put("port", port);
             server.put("userName", userName);
@@ -34,21 +37,23 @@ public class CreateLogFile {
             writer.close();
             return true;
         } catch (Exception e) {
-            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການກວດສອບຂໍ້ມູນການເຊື່ອມຕໍ່", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທິກກາຮຕັ້ງຄ່າ", e);
             return false;
         }
     }
 
     public String[] getServerInfor() {
         try {
-            String server[] = new String[4];
+            String server[] = new String[6];
             // FileReader fileReader = new FileReader(path + fileConfig);
             BufferedReader reader = Files.newBufferedReader(Paths.get(path_config+fileConfig));
             JsonObject parser = (JsonObject) Jsoner.deserialize(reader);
-            server[0] = (String) parser.get("host");
-            server[1] = (String) parser.get("port");
-            server[2] = (String) parser.get("userName");
-            server[3] = (String) parser.get("password");
+            server[0] = (String) parser.get("driver");
+            server[1] = (String) parser.get("type");
+            server[2] = (String) parser.get("host");
+            server[3] = (String) parser.get("port");
+            server[4] = (String) parser.get("userName");
+            server[5] = (String) parser.get("password");
 
             reader.close();
             return server;

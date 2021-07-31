@@ -102,10 +102,13 @@ public class BarcodeController implements Initializable {
                                 cmbTabLog_id.getSelectionModel().getSelectedItem(),
                                 cmbStatus.getSelectionModel().getSelectedItem()));
                         if (addBarcode.saveBookBarCode(list, null) > 0) {
-                            alertMessage.showCompletedMessage("Saved", "Save data completed", 4, Pos.BOTTOM_RIGHT);
-                            clearText();
-                            showBarcode(bookid);
-                            bookController.showData();
+                            if (addBarcode.updateBookQty(bookid, 1) > 0) {
+                                alertMessage.showCompletedMessage("Saved", "Save data successfully", 4,
+                                        Pos.BOTTOM_RIGHT);
+                                clearText();
+                                showBarcode(bookid);
+                                bookController.showData();
+                            }
                         } else {
                             alertMessage.showWarningMessage("Save Warning", "Save data fail", 4, Pos.BOTTOM_RIGHT);
                         }
@@ -416,18 +419,17 @@ public class BarcodeController implements Initializable {
                                         // addBarcode = new BookDetailModel();
                                         if (addBarcode.deleteBarcode(bookid,
                                                 tableBarcode.getItems().get(getIndex()).getBarcode()) > 0) {
-                                            dialog.closeDialog();
-                                            alertMessage.showCompletedMessage("Deleted", "Delete data successfully.", 4,
-                                                    Pos.BOTTOM_RIGHT);
-                                            showBarcode(bookid);
                                             if (addBarcode.updateBookQty(bookid) > 0) {
+                                                alertMessage.showCompletedMessage("Deleted",
+                                                        "Delete data successfully.", 4, Pos.BOTTOM_RIGHT);
+                                                showBarcode(bookid);
                                                 clearText();
                                                 bookController.showData();
                                             }
                                         }
                                     } catch (Exception ex) {
-                                        alertMessage.showErrorMessage("Delete", "Error: " + ex.getMessage(), 4,
-                                                Pos.BOTTOM_RIGHT);
+                                        dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນ", ex);
+                                        ex.printStackTrace();
                                     }
                             }
                         });

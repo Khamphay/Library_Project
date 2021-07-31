@@ -139,9 +139,19 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch">
+		<band height="41" splitType="Stretch">
 			<line>
 				<reportElement x="3" y="0" width="797" height="1" uuid="08218689-7f2b-4894-8579-4c2610919bd2"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="4" width="215" height="37" uuid="4bf0054f-a2d4-4f5c-94f8-9731567e8868"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ລາຍລະອຽດກ່ຽວກັບຂໍ້ມູນຢືມ - ສົ່ງປຶ້ມ:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="33" width="798" height="1" uuid="b84b03fc-05cf-43f3-9001-e05564105a1c"/>
 			</line>
 		</band>
 	</pageHeader>
@@ -357,8 +367,42 @@
 			</line>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="122">
+			<staticText>
+				<reportElement x="550" y="49" width="180" height="30" uuid="0a395357-5d90-489a-8d67-1887c280ab26">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ລາຍເຊັນພະນັກງານ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="550" y="82" width="180" height="30" uuid="bc6ac669-60c1-4841-8c06-ddf887ab12e5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[......................................]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="550" y="19" width="40" height="30" uuid="85613c85-c1b6-4a82-94f1-8a8b822416aa"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ວັນທີ:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="590" y="19" width="140" height="30" uuid="1283521b-e9e3-47ac-8634-282cfc33ca21"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
 	<pageFooter>
-		<band height="35" splitType="Stretch">
+		<band height="32" splitType="Stretch">
 			<textField>
 				<reportElement x="1" y="0" width="799" height="30" uuid="6e552d53-6577-48e8-a809-25ffa3f32671"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -369,38 +413,8 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="129" splitType="Stretch">
+		<band height="40" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<staticText>
-				<reportElement x="550" y="50" width="180" height="30" uuid="0a395357-5d90-489a-8d67-1887c280ab26">
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Phetsarath OT" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[ລາຍເຊັນພະນັກງານ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="550" y="83" width="180" height="30" uuid="bc6ac669-60c1-4841-8c06-ddf887ab12e5"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Phetsarath OT" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[......................................]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="550" y="20" width="40" height="30" uuid="85613c85-c1b6-4a82-94f1-8a8b822416aa"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Phetsarath OT" size="12" isBold="false"/>
-				</textElement>
-				<text><![CDATA[ວັນທີ:]]></text>
-			</staticText>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="590" y="20" width="140" height="30" uuid="1283521b-e9e3-47ac-8634-282cfc33ca21"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Phetsarath OT" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
 		</band>
 	</summary>
 </jasperReport>

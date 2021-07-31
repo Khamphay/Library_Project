@@ -152,6 +152,4 @@ public class ListBookModel {
     public void setDatePay(Date datePay) {
         this.datePay = datePay;
     }
-
-    
 }

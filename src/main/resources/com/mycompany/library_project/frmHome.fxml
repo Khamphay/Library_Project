@@ -9,6 +9,7 @@
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -19,6 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <StackPane fx:id="stackPane" prefHeight="783.0" prefWidth="1392.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.HomeController">
@@ -59,6 +61,13 @@
                                  </image>
                               </ImageView>
                            </graphic>
+                           <tooltip>
+                              <Tooltip text="ຕັ້ງຄ່າການເຊື່ອມຕໍ່ຖານຂໍ້ມູນ">
+                                 <font>
+                                    <Font name="Phetsarath OT" size="12.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip>
                         </JFXButton>
                      </children>
                   </HBox>

@@ -61,6 +61,9 @@
 		<property name="com.jaspersoft.studio.field.tree.path" value="showbooks"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<variable name="sum" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{qty}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -108,9 +111,19 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch">
+		<band height="41" splitType="Stretch">
 			<line>
 				<reportElement x="1" y="4" width="800" height="1" uuid="fb19bc48-9af2-47d5-a23c-44e9cf4cffe4"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="4" width="215" height="37" uuid="238d458b-e383-4e28-a390-2a7fb79b9324"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ລາຍລະອຽດກ່ຽວກັບຂໍ້ມູນປຶ້ມ:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="33" width="798" height="1" uuid="ccc44e8e-ea16-4430-976a-e04c0dfc719f"/>
 			</line>
 		</band>
 	</pageHeader>
@@ -303,7 +316,7 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="120" splitType="Stretch">
+		<band height="126" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
 				<reportElement x="630" y="90" width="154" height="30" uuid="099f4c25-865e-4dda-98f1-9cd84bfa5d81"/>
@@ -347,6 +360,24 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="39" splitType="Stretch"/>
+		<band height="58" splitType="Stretch">
+			<textField pattern="## ຫົວ">
+				<reportElement x="630" y="10" width="119" height="30" uuid="fe6da6ad-944f-419e-9e50-53a240f0ba31"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sum}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="480" y="10" width="147" height="30" uuid="6488c6dc-757a-4b6d-9a4c-51698568d05e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ລວມຈຳນວນປຶ້ມທັງໝົດ:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="6" width="800" height="1" uuid="6bb4b32d-20a1-414f-b535-44a47e306335"/>
+			</line>
+		</band>
 	</summary>
 </jasperReport>

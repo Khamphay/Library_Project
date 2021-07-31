@@ -739,3 +739,92 @@ java.sql.SQLIntegrityConstraintViolationException: (conn=32) Cannot add or updat
 	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
 	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:174)
 	at java.base/java.lang.Thread.run(Thread.java:829)
+
+=======25/07/2021 00:07:30 (Load Renting Book Out Of Error)===============================
+Summary: (conn=5) Socket error
+java.sql.SQLNonTransientConnectionException: (conn=5) Socket error
+	at org.mariadb.jdbc.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:222)
+	at org.mariadb.jdbc.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:261)
+	at org.mariadb.jdbc.client.ClientImpl.sendQuery(ClientImpl.java:432)
+	at org.mariadb.jdbc.client.ClientImpl.execute(ClientImpl.java:543)
+	at org.mariadb.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:70)
+	at org.mariadb.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:246)
+	at com.mycompany.library_project.Model.ShowRentSendModel.findByRentOutOfDate(ShowRentSendModel.java:192)
+	at com.mycompany.library_project.Controller.HomeController$7.run(HomeController.java:367)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:447)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:446)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:96)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:174)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: java.net.SocketException: Software caused connection abort: socket write error
+	at java.base/java.net.SocketOutputStream.socketWrite0(Native Method)
+	at java.base/java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:110)
+	at java.base/java.net.SocketOutputStream.write(SocketOutputStream.java:150)
+	at org.mariadb.jdbc.client.socket.PacketWriter.writeSocket(PacketWriter.java:790)
+	at org.mariadb.jdbc.client.socket.PacketWriter.flush(PacketWriter.java:659)
+	at org.mariadb.jdbc.message.client.QueryWithParametersPacket.encode(QueryWithParametersPacket.java:62)
+	at org.mariadb.jdbc.client.ClientImpl.sendQuery(ClientImpl.java:412)
+	... 12 more
+
+=======26/07/2021 13:33:54 (Load Renting Book Out Of Error)===============================
+Summary: (conn=5) Socket error
+java.sql.SQLNonTransientConnectionException: (conn=5) Socket error
+	at org.mariadb.jdbc.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:222)
+	at org.mariadb.jdbc.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:261)
+	at org.mariadb.jdbc.client.ClientImpl.sendQuery(ClientImpl.java:432)
+	at org.mariadb.jdbc.client.ClientImpl.execute(ClientImpl.java:543)
+	at org.mariadb.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:70)
+	at org.mariadb.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:246)
+	at com.mycompany.library_project.Model.ShowRentSendModel.findByRentOutOfDate(ShowRentSendModel.java:192)
+	at com.mycompany.library_project.Controller.HomeController$7.run(HomeController.java:367)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:447)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:446)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:96)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:174)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: java.net.SocketException: Software caused connection abort: socket write error
+	at java.base/java.net.SocketOutputStream.socketWrite0(Native Method)
+	at java.base/java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:110)
+	at java.base/java.net.SocketOutputStream.write(SocketOutputStream.java:150)
+	at org.mariadb.jdbc.client.socket.PacketWriter.writeSocket(PacketWriter.java:790)
+	at org.mariadb.jdbc.client.socket.PacketWriter.flush(PacketWriter.java:659)
+	at org.mariadb.jdbc.message.client.QueryWithParametersPacket.encode(QueryWithParametersPacket.java:62)
+	at org.mariadb.jdbc.client.ClientImpl.sendQuery(ClientImpl.java:412)
+	... 12 more
+
+=======27/07/2021 01:22:56 (Load Renting Book Out Of Error)===============================
+Summary: (conn=196) Socket error
+java.sql.SQLNonTransientConnectionException: (conn=196) Socket error
+	at org.mariadb.jdbc.util.exceptions.ExceptionFactory.createException(ExceptionFactory.java:222)
+	at org.mariadb.jdbc.util.exceptions.ExceptionFactory.create(ExceptionFactory.java:261)
+	at org.mariadb.jdbc.client.ClientImpl.readPacket(ClientImpl.java:712)
+	at org.mariadb.jdbc.client.ClientImpl.readResults(ClientImpl.java:638)
+	at org.mariadb.jdbc.client.ClientImpl.readResponse(ClientImpl.java:563)
+	at org.mariadb.jdbc.client.ClientImpl.execute(ClientImpl.java:544)
+	at org.mariadb.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:70)
+	at org.mariadb.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:246)
+	at com.mycompany.library_project.Model.ShowRentSendModel.findByRentOutOfDate(ShowRentSendModel.java:192)
+	at com.mycompany.library_project.Controller.HomeController$7.run(HomeController.java:367)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:447)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:446)
+	at com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:96)
+	at com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:174)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: java.net.SocketException: Software caused connection abort: recv failed
+	at java.base/java.net.SocketInputStream.socketRead0(Native Method)
+	at java.base/java.net.SocketInputStream.socketRead(SocketInputStream.java:115)
+	at java.base/java.net.SocketInputStream.read(SocketInputStream.java:168)
+	at java.base/java.net.SocketInputStream.read(SocketInputStream.java:140)
+	at java.base/java.io.FilterInputStream.read(FilterInputStream.java:133)
+	at org.mariadb.jdbc.client.socket.ReadAheadBufferedStream.fillbuf(ReadAheadBufferedStream.java:104)
+	at org.mariadb.jdbc.client.socket.ReadAheadBufferedStream.read(ReadAheadBufferedStream.java:77)
+	at org.mariadb.jdbc.client.socket.PacketReader.readPacket(PacketReader.java:73)
+	at org.mariadb.jdbc.message.client.ClientMessage.readPacket(ClientMessage.java:65)
+	at org.mariadb.jdbc.client.ClientImpl.readPacket(ClientImpl.java:690)
+	... 14 more

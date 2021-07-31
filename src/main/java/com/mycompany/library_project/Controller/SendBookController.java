@@ -146,7 +146,7 @@ public class SendBookController implements Initializable {
         colDateSend.setCellValueFactory(new PropertyValueFactory<>("sendDate"));
         colOutDate.setCellValueFactory(new PropertyValueFactory<>("outDate"));
         colPrice.setCellValueFactory(new PropertyValueFactory<>("pricePerBook"));
-        colRentId.setVisible(true);
+        colRentId.setVisible(false);
 
         // Todo: Add column number
         final TableColumn<RentBookModel, RentBookModel> colNumber = new TableColumn<RentBookModel, RentBookModel>(
@@ -295,9 +295,11 @@ public class SendBookController implements Initializable {
                 if (allPrice > 0 && qtyOutOfDate > 0)
                     showPay(rent_id, qtyOutOfDate, allPrice);
                 else {
-                    if (sendBook() > 0)
+                    if (sendBook() > 0) {
                         alertMessage.showCompletedMessage("Saved", "Send Book successfully", 4, Pos.BOTTOM_RIGHT);
-                    else
+                        clearText();
+                        tableSendBooks.getItems().clear();
+                    } else
                         alertMessage.showWarningMessage("Saved", "Can not send book", 4, Pos.BOTTOM_RIGHT);
                 }
             }

@@ -277,12 +277,28 @@ public class AddBookController implements Initializable {
         });
     }
 
+    private String newBarcodeID(String id, int increment) {
+        String idStr = "";
+        char[] arr = id.toCharArray();
+        // Todo: Sub only the String
+        for (char c : arr) {
+            if (!Character.toString(c).matches("\\d*")) {
+                idStr += c;
+            }
+        }
+        String idInt = id.substring(idStr.length()); // Todo: Sub only the numeric
+        // int idAdd = Integer.parseInt(idInt) + 1; // Todo: convert to Int and
+        // increment by 1
+        String newMaxID = idStr + idInt.substring(0, idInt.length() - Integer.toString(increment).length()) + increment;
+        return newMaxID;
+    }
+
     private void generatedBarcode() {
         try {
             txtBarcode.clear();
             if (!txtId.getText().equals("") && !txtQty.getText().equals("")) {
                 for (int i = 1; i <= Integer.parseInt(txtQty.getText()); i++) {
-                    txtBarcode.appendText(txtId.getText() + "000" + i + "\n");
+                    txtBarcode.appendText(newBarcodeID(txtId.getText() + "0000", i) + "\n");
                 }
             }
         } catch (Exception e) {
@@ -665,7 +681,7 @@ public class AddBookController implements Initializable {
                 // Todo: Set author id
                 setAuthoID(5, cmbAuthor5.getSelectionModel().getSelectedItem());
             } else {
-                arr_author[3] = null;
+                arr_author[5] = null;
             }
         });
     }
@@ -775,7 +791,6 @@ public class AddBookController implements Initializable {
             final Stage stage = (Stage) borderPane.getScene().getWindow();
             stage.close();
         }
-
     }
 
     @Override

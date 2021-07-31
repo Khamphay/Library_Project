@@ -4,6 +4,7 @@ import com.jfoenix.controls.*;
 
 import javafx.beans.value.*;
 import javafx.collections.*;
+import javafx.concurrent.Task;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
@@ -21,8 +22,9 @@ import javafx.util.Callback;
 import java.io.*;
 
 import com.mycompany.library_project.Model.*;
-import com.mycompany.library_project.config.CreateLogFile;
+import com.mycompany.library_project.Report.CreateReport;
 
+import org.controlsfx.control.MaskerPane;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 import org.imgscalr.Scalr;
@@ -37,6 +39,8 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
@@ -47,13 +51,14 @@ public class RegisterController implements Initializable {
 
     private ValidationSupport validRules = new ValidationSupport();
     private MemberController memberController = null;
-    private CreateLogFile logfile = new CreateLogFile();
-    public MemberModel memberModel = null;
+    public MemberModel memberModel = new MemberModel();
     private DepartmentModel depertment = new DepartmentModel();
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = new DialogMessage();
     private MyDate dateFormat = new MyDate();
     private DateTimeFormatter formater = DateTimeFormatter.ofPattern("yy");
+    private MaskerPane masker = new MaskerPane();
+    private Task<Void> task = null;
 
     private BufferedImage resizeImg = null;
     private ByteArrayOutputStream byteStrem = null;
@@ -231,8 +236,7 @@ public class RegisterController implements Initializable {
                 byimg = byteStrem.toByteArray();
             }
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Choose Image", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("ເກີດບັນຫາໃນການເລືອກຮູບພາບ", e);
+            dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການສະແດງຮູບພາບ", e);
         }
     }
 
@@ -331,7 +335,6 @@ public class RegisterController implements Initializable {
                 else
                     localDateExit = LocalDate.of(year, 8, 31);
             }
-            System.out.println(localDateExit + "");
         });
         birtDate.setDayCellFactory(d -> new DateCell() {
             @Override
@@ -464,18 +467,12 @@ public class RegisterController implements Initializable {
     @FXML
     private void Save(ActionEvent event) {
         try {
-            gender = (rdbMale.isSelected()) ? rdbMale.getText() : rdbFemale.getText();
+            gender = (rdbMale.isSelected() ? rdbMale.getText() : rdbFemale.getText());
             if (index > -1 && !txtStudentId.getText().equals("") && !txtFName.getText().equals("")
                     && !txtLName.getText().equals("") && !txtTel.getText().equals("") && !txtVill.getText().equals("")
                     && !txtDist.getText().equals("") && !txtProv.getText().equals("") && gender != ""
                     && !birtDate.getValue().equals(null) && cmbYears.getSelectionModel().getSelectedItem() != null
                     && !dateRegister.getValue().equals(null) && !dateEnd.getValue().equals(null)) {
-
-                if (memberModel.findById(getMemberId(txtStudentId.getText())).next()) {
-                    dialog.showWarningDialog(null,
-                            "ລະຫັດສະມາຊິກຊ້ຳກັບຂໍ້ມູນທີ່ມີຢູ່ໃນລະບົບກະລຸນາກວດສອບຂໍ້ມູນ ແລ້ວລອງບັນທຶກໃຫມ່ອີກຄັ້ງ");
-                    return;
-                }
 
                 if (txtTel.getText().length() < 7 || txtTel.getText().length() > 11) {
                     dialog.showWarningDialog(null, "ເບີໂທລະສັບຕ້ອງຢູ່ລະຫວ່າງ 7 ຫາ 11 ຕົວເລກເທົ່ານັ້ນ.");
@@ -491,9 +488,50 @@ public class RegisterController implements Initializable {
                         Date.valueOf(localDateExit), byimg, costPrice, memberid_edit);
 
                 if (memberid_edit == "") {
+                    ResultSet rs = memberModel.findById(getMemberId(txtStudentId.getText()));
+                    if (rs.next()) {
+                        dialog.showWarningDialog(null,
+                                "ລະຫັດສະມາຊິກຊ້ຳກັບຂໍ້ມູນທີ່ມີຢູ່ໃນລະບົບກະລຸນາກວດສອບຂໍ້ມູນ ແລ້ວລອງບັນທຶກໃຫມ່ອີກຄັ້ງ");
+                        return;
+                    }
+
                     // Todo: Insert (if save memberid_edit if null)
                     if (memberModel.saveData() > 0) {
                         alertMessage.showCompletedMessage("Saved", "Saved data successfully.", 4, Pos.BOTTOM_RIGHT);
+                        task = new Task<Void>() {
+
+                            @Override
+                            protected Void call() throws Exception {
+                                masker.setVisible(true);
+                                masker.setProgressVisible(true);
+
+                                InputStream imgInputStream = this.getClass().getResourceAsStream("bin/Logo.png");
+                                CreateReport printCard = new CreateReport();
+                                Map<String, Object> map = new HashMap<String, Object>();
+                                map.put("memberid", memberModel.getMemberId());
+                                map.put("logo", imgInputStream);
+                                printCard.showReport(map, "printCardById.jrxml", "Print Member Card Error");
+                                return null;
+                            }
+
+                            @Override
+                            protected void succeeded() {
+                                super.succeeded();
+                                masker.setProgressVisible(false);
+                                masker.setVisible(false);
+                            }
+
+                            @Override
+                            protected void failed() {
+                                super.failed();
+                                masker.setProgressVisible(false);
+                                masker.setVisible(false);
+                                dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການພີມບັດສະມາຊິກ",
+                                        task.getException());
+                            }
+                        };
+                        new Thread(task).start();
+
                         clearValues();
                         if (memberController != null)
                             memberController.showData();
@@ -513,6 +551,7 @@ public class RegisterController implements Initializable {
             }
         } catch (Exception e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກຂໍ້ມູນ", e);
+            e.printStackTrace();
         }
     }
 
@@ -523,6 +562,11 @@ public class RegisterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        masker.setVisible(false);
+        masker.setText("ກຳລັງໂຫລດຂໍ້ມູນ, ກະລຸນາລໍຖ້າ...");
+        masker.setStyle("-fx-font-family: BoonBaan;");
+        stackPane.getChildren().add(masker);
 
         birtDate = dateFormat.formateDatePicker(birtDate);
         dateRegister = dateFormat.formateDatePicker(dateRegister);

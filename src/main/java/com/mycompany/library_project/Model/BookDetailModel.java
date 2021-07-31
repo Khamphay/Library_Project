@@ -4,15 +4,15 @@ import java.sql.*;
 import java.text.ParseException;
 import java.util.List;
 
-import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.Controller.HomeController;
 import com.mycompany.library_project.ControllerDAOModel.*;
+
 public class BookDetailModel implements DataAccessObject {
 
     private DialogMessage dialog = new DialogMessage();
-    private Connection con = MyConnection.getConnect();
+    // public Connection con = null;
     private ResultSet rs = null;
     private PreparedStatement ps = null;
-
 
     private String sql = null;
     private String bookId;
@@ -62,21 +62,6 @@ public class BookDetailModel implements DataAccessObject {
         this.tableId = tableId;
         this.write_year = write_year;
         this.detail = detail;
-    }
-
-    public BookDetailModel(String bookId, String bookName, String ISBN, Integer page, Integer qty, String catgId,
-            String typeId, String tableId, String write_year, String detail, Connection con) {
-        this.bookId = bookId;
-        this.bookName = bookName;
-        this.ISBN = ISBN;
-        this.page = page;
-        this.qty = qty;
-        this.catgId = catgId;
-        this.typeId = typeId;
-        this.tableId = tableId;
-        this.write_year = write_year;
-        this.detail = detail;
-        this.con = con;
     }
 
     public String getBookId() {
@@ -188,21 +173,43 @@ public class BookDetailModel implements DataAccessObject {
     public ResultSet findAll() throws SQLException {
         try {
             sql = "select * from showbooks;";
-            rs = con.createStatement().executeQuery(sql);
+            rs = HomeController.con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນປຶ້ມ", e);
             return null;
-        } finally {
-            //con.close();
         }
     }
 
     @Override
     public ResultSet findById(String id) throws SQLException {
-        sql = "call book_detail_ShowById('" + id + "');";
-        rs = con.createStatement().executeQuery(sql);
-        return rs;
+        try {
+            sql = "select * from showbooks where book_id = ?;";
+            ps = HomeController.con.prepareStatement(sql);
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການກວດສອບຂໍ້ມູນປຶ້ມ", e);
+            return null;
+        } finally {
+            // ps.close();
+        }
+    }
+
+    public ResultSet getMaxBarcodeID(String id) throws SQLException {
+        try {
+            sql = "call showMaxBarcodeId(?);";
+            ps = HomeController.con.prepareStatement(sql);
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການກວດສອບຂໍ້ມູນປຶ້ມ", e);
+            return null;
+        } finally {
+            // ps.close();
+        }
     }
 
     @Override
@@ -217,13 +224,13 @@ public class BookDetailModel implements DataAccessObject {
             sql = "select * from showbooks Where book_id like concat('" + values + "','%') or book_name like concat('"
                     + values + "','%') or catg_name like concat('" + values + "','%') or type_name like concat('"
                     + values + "','%');";
-            rs = con.createStatement().executeQuery(sql);
+            rs = HomeController.con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການຄົ້ນຫາຂໍ້ມູນປຶ້ມ", e);
             return null;
         } finally {
-            //con.close();
+            // HomeController.con.close();
         }
     }
 
@@ -231,7 +238,7 @@ public class BookDetailModel implements DataAccessObject {
     public int saveData() throws SQLException, ParseException {
         try {
             sql = "call book_detail_Insert(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, getBookId());
             ps.setString(2, getBookName());
             ps.setString(3, getISBN());
@@ -247,8 +254,8 @@ public class BookDetailModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນປຶ້ມ", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            // ps.close();
+            // HomeController.con.close();
         }
 
     }
@@ -257,7 +264,7 @@ public class BookDetailModel implements DataAccessObject {
     public int updateData() throws SQLException, ParseException {
         try {
             sql = "call book_detail_Update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, getBookId());
             ps.setString(2, getBookName());
             ps.setString(3, getISBN());
@@ -273,24 +280,35 @@ public class BookDetailModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນປຶ້ມ", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            // ps.close();
         }
-
     }
 
-    public int updateBookQty(String book_id) throws SQLException {
+    public int updateBookQty(String book_id, int qty) throws SQLException {
         try {
-            sql = "Update tbbooks_detail set qty=qty-1 Where book_id=?";
-            ps = con.prepareStatement(sql);
+            sql = "Update tbbooks_detail set qty=qty+" + qty + " Where book_id=?";
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, book_id);
             return ps.executeUpdate();
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຈຳນວນປຶ້ມ", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            // ps.close();
+        }
+    }
+
+    public int updateBookQty(String book_id) throws SQLException {
+        try {
+            sql = "Update tbbooks_detail set qty=qty-1 Where book_id=?";
+            ps = HomeController.con.prepareStatement(sql);
+            ps.setString(1, book_id);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຈຳນວນປຶ້ມ", e);
+            return 0;
+        } finally {
+            // ps.close();
         }
     }
 
@@ -298,15 +316,15 @@ public class BookDetailModel implements DataAccessObject {
     public int deleteData(String id) throws SQLException {
         try {
             sql = "call book_detail_Delete(?);";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, id);
             return ps.executeUpdate();
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນປຶ້ມ", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            // ps.close();
+            // HomeController.con.close();
         }
     }
 
@@ -314,32 +332,32 @@ public class BookDetailModel implements DataAccessObject {
     public ResultSet findBookByBarcode(String barcode) throws SQLException {
         try {
             sql = "call book_detail_ShowByBarcode('" + barcode + "');";
-            rs = con.createStatement().executeQuery(sql);
-            //con.close();
+            rs = HomeController.con.createStatement().executeQuery(sql);
+            // HomeController.con.close();
             return rs;
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນປຶ້ມ", e);
             return null;
         } finally {
-            //con.close();
+            // HomeController.con.close();
         }
     }
 
     public ResultSet showBarcode(String book_id) throws SQLException {
         // Todo: Don't use try...catch'
-            sql = "call book_ShowByBookId(?);";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, book_id);
-            rs = ps.executeQuery();
-            ps.close();
-            //con.close();
-            return rs;
+        sql = "call book_ShowByBookId(?);";
+        ps = HomeController.con.prepareStatement(sql);
+        ps.setString(1, book_id);
+        rs = ps.executeQuery();
+        // ps.close();
+        // HomeController.con.close();
+        return rs;
     }
 
     public int saveBookBarCode(List<BookDetailModel> list, String id) throws SQLException {
         try {
             // sql = "call book_Insert(?, ?, ?, ?);";
-            // ps = con.prepareStatement(sql);
+            // ps = HomeController.con.prepareStatement(sql);
             // ps.setString(1, barcode);
             // ps.setString(2, bookid);
             // ps.setString(3, table_log_id);
@@ -347,8 +365,8 @@ public class BookDetailModel implements DataAccessObject {
             // return ps.executeUpdate();
 
             sql = "INSERT INTO tbbook (barcode, book_id, table_log_id, status) VALUES(?, ?, ?, ?)";
-            ps = con.prepareStatement(sql);
-            con.setAutoCommit(false);
+            ps = HomeController.con.prepareStatement(sql);
+            HomeController.con.setAutoCommit(false);
             int result = 0, count = 0;
             for (BookDetailModel item : list) {
                 ps.setString(1, item.getBarcode());
@@ -359,7 +377,7 @@ public class BookDetailModel implements DataAccessObject {
                 count++;
                 if (count % 100 == 0 || count == list.size()) {
                     ps.executeBatch();
-                    con.commit();
+                    HomeController.con.commit();
                     result = 1;
                 }
 
@@ -374,8 +392,8 @@ public class BookDetailModel implements DataAccessObject {
 
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            // ps.close();
+            // HomeController.con.close();
         }
 
     }
@@ -385,7 +403,7 @@ public class BookDetailModel implements DataAccessObject {
 
         try {
             sql = "call book_Update(?, ?, ?, ?, ?);";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, old_barcode);
             ps.setString(2, new_book_barcode);
             ps.setString(3, book_id);
@@ -396,8 +414,8 @@ public class BookDetailModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນປຶ້ມ", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            // ps.close();
+            // HomeController.con.close();
         }
 
     }
@@ -406,7 +424,7 @@ public class BookDetailModel implements DataAccessObject {
 
         try {
             sql = "call book_Delete(?,?);";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, book_id);
             ps.setString(2, barcode);
             return ps.executeUpdate();
@@ -414,8 +432,8 @@ public class BookDetailModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນບາໂຄດປຶ້ມ", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            // ps.close();
+            // HomeController.con.close();
         }
     }
 
@@ -423,13 +441,13 @@ public class BookDetailModel implements DataAccessObject {
     public ResultSet showWrite(String book_id) throws SQLException {
         try {
             sql = "call  write_Show('" + book_id + "');";
-            rs = con.createStatement().executeQuery(sql);
+            rs = HomeController.con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນແຕ່ງປຶ້ມ", e);
             return null;
         } finally {
-            //con.close();
+            // HomeController.con.close();
         }
     }
 
@@ -437,8 +455,8 @@ public class BookDetailModel implements DataAccessObject {
         try {
             int result = 0, count = 0;
             sql = "INSERT INTO dblibrary.tbwrite (book_id, author_id) VALUES(?, ?)";
-            ps = con.prepareStatement(sql);
-            con.setAutoCommit(false);
+            ps = HomeController.con.prepareStatement(sql);
+            HomeController.con.setAutoCommit(false);
             for (BookDetailModel val : list) {
                 ps.setString(1, val.getBookId());
                 ps.setString(2, val.getStatus()); // Todo: use variable 'status' for get the 'author id' (ໃຊ້ຕົວປ່ຽນ
@@ -447,7 +465,7 @@ public class BookDetailModel implements DataAccessObject {
                 count++;
                 if (count % 100 == 0 || count == list.size()) {
                     ps.executeBatch();
-                    con.commit();
+                    HomeController.con.commit();
                     result = 1;
                 }
             }
@@ -456,21 +474,19 @@ public class BookDetailModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນແຕ່ງປຶ້ມ", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            // ps.close();
         }
     }
 
     public int updateWrite(String book_id, String newauthor_id, String oldauthor_id) throws SQLException {
         // TODO: Don't use try...catch
         sql = "call write_Update(?, ?, ?);";
-        ps = con.prepareStatement(sql);
+        ps = HomeController.con.prepareStatement(sql);
         ps.setString(1, book_id);
         ps.setString(2, newauthor_id);
         ps.setString(3, oldauthor_id);
         int result = ps.executeUpdate();
-        ps.close();
-        //con.close();
+        // ps.close();
         return result;
 
     }
@@ -480,10 +496,10 @@ public class BookDetailModel implements DataAccessObject {
             int result = 0;
             // sql = " call book_UpdateStatus(?, ?);";
             // sql = "update tbbook set status=? where barcode=?";
-            // ps = con.prepareStatement(sql);
+            // ps = HomeController.con.prepareStatement(sql);
             for (BookDetailModel val : list) {
                 sql = " call book_UpdateStatus(?, ?);";
-                ps = con.prepareStatement(sql);
+                ps = HomeController.con.prepareStatement(sql);
                 ps.setString(1, val.getBarcode());
                 ps.setString(2, val.getStatus());
                 result = ps.executeUpdate();
@@ -493,20 +509,21 @@ public class BookDetailModel implements DataAccessObject {
             }
             return result;
         } catch (BatchUpdateException e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການປ່ຽນແປ່ງສະຖານະປຶ້ມ", e);
             if (rentId != null) {
                 RentBookModel rent = new RentBookModel();
                 rent.deleteData(rentId);
             }
             return 0;
         } finally {
-            ps.close();
+            // ps.close();
         }
     }
 
     public int deleteWrite(String book_id, String authorId) throws SQLException {
         try {
             sql = "call write_Delete(?, ?);";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, book_id);
             ps.setString(2, authorId);
             return ps.executeUpdate();
@@ -514,8 +531,7 @@ public class BookDetailModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນແຕ່ງປຶ້ມ", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            // ps.close();
         }
     }
 }

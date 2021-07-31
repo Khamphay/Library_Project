@@ -4,14 +4,14 @@ import java.sql.*;
 import java.text.ParseException;
 import java.util.List;
 
-import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.Controller.HomeController;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.ControllerDAOModel.DataAccessObject;
 
 public class RentBookModel implements DataAccessObject {
 
     private DialogMessage dialog = new DialogMessage();
-    private Connection con = MyConnection.getConnect();
+    // private Connection con = MyConnection.getConnect();
     private ResultSet rs = null;
     private PreparedStatement ps = null;
     private String sql = "";
@@ -209,13 +209,13 @@ public class RentBookModel implements DataAccessObject {
 
         try {
             sql = "";
-            rs = con.createStatement().executeQuery(sql);
+            rs = HomeController.con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນຢືມປື້ມ", e);
             return null;
         } finally {
-            //con.close();
+            // HomeController.con.close();
         }
 
     }
@@ -223,13 +223,13 @@ public class RentBookModel implements DataAccessObject {
     public ResultSet findByMemberId(String memver_id) throws SQLException {
         try {
             sql = "";
-            rs = con.createStatement().executeQuery(sql);
+            rs = HomeController.con.createStatement().executeQuery(sql);
             return rs;
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນຢືມປື້ມ", e);
             return null;
         } finally {
-            //con.close();
+            // HomeController.con.close();
         }
     }
 
@@ -237,15 +237,15 @@ public class RentBookModel implements DataAccessObject {
 
         try {
             sql = "";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
 
             return ps.executeUpdate();
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກຂໍ້ມູນຢືມປື້ມ", e);
             return 0;
         } finally {
-            ps.close();
-            //con.close();
+            // ps.close();
+            // HomeController.con.close();
         }
     }
 
@@ -271,7 +271,7 @@ public class RentBookModel implements DataAccessObject {
     public int saveData() throws SQLException, ParseException {
         try {
             sql = "call rentbook_detail_Insert(?, ?, ?, ?, ?);";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, getRentId());
             ps.setString(2, getMember());
             ps.setInt(3, getQty());
@@ -282,7 +282,7 @@ public class RentBookModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກຂໍ້ມູນຢືມປື້ມ", e);
             return 0;
         } finally {
-            ps.close();
+            // ps.close();
         }
 
     }
@@ -291,8 +291,8 @@ public class RentBookModel implements DataAccessObject {
         try {
             int result = 0, count = 0;
             sql = "INSERT INTO dblibrary.tbrent_book (rent_id, barcode, status) VALUES(?, ?, ?)";
-            ps = con.prepareStatement(sql);
-            con.setAutoCommit(false);
+            ps = HomeController.con.prepareStatement(sql);
+            HomeController.con.setAutoCommit(false);
             for (RentBookModel val : list) {
                 ps.setString(1, val.getRentId());
                 ps.setString(2, val.getBarcode());
@@ -301,7 +301,7 @@ public class RentBookModel implements DataAccessObject {
                 result++;
                 if (count % 100 == 0 || count == list.size()) {
                     ps.executeBatch();
-                    con.commit();
+                    HomeController.con.commit();
                     result = 1;
                 }
             }
@@ -311,7 +311,7 @@ public class RentBookModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກຂໍ້ມູນລາຍລະອຽດຢືມປື້ມ", e);
             return 0;
         } finally {
-            ps.close();
+            // ps.close();
         }
     }
 
@@ -325,21 +325,21 @@ public class RentBookModel implements DataAccessObject {
     public int deleteData(String id) throws SQLException {
         try {
             sql = "call rentbook_detail_Delete(?);";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, id);
             return ps.executeUpdate();
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນຢືມປື້ມ", e);
             return 0;
         } finally {
-            ps.close();
+            // ps.close();
         }
     }
 
     public String getMaxID() throws SQLException {
         try {
             sql = "select max(rent_id) as max_id From tbrent_detail;";
-            rs = con.createStatement().executeQuery(sql);
+            rs = HomeController.con.createStatement().executeQuery(sql);
             if (rs.next()) {
                 return rs.getString("max_id");
             } else {
@@ -349,14 +349,14 @@ public class RentBookModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດລະຫັດຢືມປື້ມ", e);
             return null;
         } finally {
-            ps.close();
+            // ps.close();
         }
     }
 
     public ResultSet chackMemberRentBook(String memberid, String book_status) throws SQLException {
         try {
             sql = "call rentBook_Check(?, ?);";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, memberid);
             ps.setString(2, book_status);
             rs = ps.executeQuery();
@@ -365,7 +365,7 @@ public class RentBookModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການກວດສອບຂໍ້ມູນຢືມປື້ມ", e);
             return null;
         } finally {
-            ps.close();
+            // ps.close();
         }
 
     }
@@ -373,7 +373,7 @@ public class RentBookModel implements DataAccessObject {
     public ResultSet getSendBook(String book_barcode, String book_status) throws SQLException {
         try {
             sql = "call sendBook_ShowByBarcode(?,?)";
-            ps = con.prepareStatement(sql);
+            ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, book_barcode);
             ps.setString(2, book_status);
             rs = ps.executeQuery();
@@ -382,7 +382,7 @@ public class RentBookModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນຢືມປື້ມ", e);
             return null;
         } finally {
-            ps.close();
+            // ps.close();
         }
     }
 
@@ -391,7 +391,7 @@ public class RentBookModel implements DataAccessObject {
             int result = 0;
             for (RentBookModel val : list) {
                 sql = " call sendBook(?, ?, ?);";
-                ps = con.prepareStatement(sql);
+                ps = HomeController.con.prepareStatement(sql);
                 ps.setString(1, val.getRentId());
                 ps.setString(2, val.getBarcode());
                 ps.setString(3, val.getStatus());
@@ -405,7 +405,7 @@ public class RentBookModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການສົ່ງປື້ມ", e);
             return 0;
         } finally {
-            ps.close();
+            // ps.close();
         }
     }
 }

@@ -25,7 +25,6 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -36,7 +35,7 @@ public class LoginController implements Initializable {
     private Stage loginSatge = null;// Seted object when open form 'Login' in class 'DesktopController.java'
     private ValidationSupport validRules = new ValidationSupport();;
     private DialogMessage dialog = new DialogMessage();
-    private Connection con = null;
+    // private Connection con = null;
     private CreateLogFile server = null;
     private EmployeeModel user = null;
     private AlertMessage alertMessage = new AlertMessage();
@@ -267,11 +266,12 @@ public class LoginController implements Initializable {
                 if (server.chackFileConfig() == true) {
                     String[] infor = server.getServerInfor();
                     if (infor != null) {
-                        MyConnection.server = infor[0] + ":" + infor[1];
-                        MyConnection.userName = infor[2];
-                        MyConnection.password = infor[3];
-                        con = MyConnection.getConnect();
-                        if (con == null)
+                        MyConnection.driver = infor[0];
+                        MyConnection.dbtype = infor[1];
+                        MyConnection.host = infor[2] + ":" + infor[3];
+                        MyConnection.userName = infor[4];
+                        MyConnection.password = infor[5];
+                        if (HomeController.con == null)
                             checkConnection();
                     } else
                         checkConnection();

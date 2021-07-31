@@ -1,10 +1,9 @@
 
 package com.mycompany.library_project.Report;
 
-import java.sql.Connection;
 import java.util.Map;
 
-import com.mycompany.library_project.MyConnection;
+import com.mycompany.library_project.Controller.HomeController;
 import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -22,7 +21,7 @@ public class CreateReport {
     public JasperReport report;
     public JasperViewer viewer;
     public JasperPrint print;
-    public Connection con = MyConnection.getConnect();
+    // public Connection MyConnection.Cont(). = MyConnection.getConnect();
     private String url_report = "bin/";
 
     public CreateReport() {
@@ -33,7 +32,7 @@ public class CreateReport {
         try {
             design = JRXmlLoader.load(url_report + reportName);
             report = JasperCompileManager.compileReport(design);
-            print = JasperFillManager.fillReport(report, map, con);
+            print = JasperFillManager.fillReport(report, map, HomeController.con);
             viewer = new JasperViewer(print, false);
             viewer.setVisible(true);
         } catch (JRException e) {

@@ -259,7 +259,6 @@ public class BookLostController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                String message = null;
                 try {
                     booklostModel = new BookLostModel(txtMemberId.getText(), tableLost.getItems().size(), totalPrice,
                             Date.valueOf(LocalDate.now()));
@@ -287,7 +286,8 @@ public class BookLostController implements Initializable {
                                 if (rentBook.sendBook(listSendBook) > 0)
                                     if (bookDetail.updateStatus(listBarcode, null) > 0)
                                         if (adjustmentModel.saveData() > 0) {
-                                            alertMessage.showCompletedMessage("Saved", message, 4, Pos.BOTTOM_RIGHT);
+                                            alertMessage.showCompletedMessage("Saved", "Save data successfully", 4,
+                                                    Pos.BOTTOM_RIGHT);
                                             printBin(id);// Todo: Print Bin
                                             clearText();
                                             sendBookController.refreshRentOutOfDate();
@@ -298,12 +298,11 @@ public class BookLostController implements Initializable {
 
                         } catch (SQLException e) {
                             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກລາຍລະອຽດຂໍ້ມູນປຶ້ມເສຍ", e);
-                            message = null;
                             return;
                         }
                     }
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                    dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກລາຍລະອຽດຂໍ້ມູນປຶ້ມເສຍ", e);
                 }
             }
         });

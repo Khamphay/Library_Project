@@ -46,17 +46,17 @@
                                           <TableColumn fx:id="colPrice" prefWidth="140.0" styleClass="tablecolumn" text="ຄ່າປັບໃໝ" />
                                       </columns>
                                     </TableView>
-                                    <TextField fx:id="txtSearch" layoutX="1084.0" layoutY="22.0" prefHeight="30.0" prefWidth="291.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular">
+                                    <TextField fx:id="txtSearch" layoutX="1084.0" layoutY="22.0" prefHeight="30.0" prefWidth="291.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular" AnchorPane.rightAnchor="28.0">
                                        <padding>
                                           <Insets left="40.0" />
                                        </padding>
                                     </TextField>
-                                    <ImageView fitHeight="23.0" fitWidth="27.0" layoutX="1091.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="23.0" fitWidth="27.0" layoutX="1091.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="289.0">
                                        <image>
                                           <Image url="@Icon/search_50px.png" />
                                        </image>
                                     </ImageView>
-                                    <Separator layoutX="1118.0" layoutY="26.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="0.0" />
+                                    <Separator layoutX="1118.0" layoutY="26.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="0.0" AnchorPane.rightAnchor="279.0" />
                                  </children>
                               </AnchorPane>
                            </children>

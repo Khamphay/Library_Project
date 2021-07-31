@@ -3,6 +3,7 @@ package com.mycompany.library_project.Controller;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.*;
 import javafx.collections.*;
+import javafx.concurrent.Task;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
@@ -12,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -21,17 +23,24 @@ import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
 import java.net.URL;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.App;
+import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
+import com.mycompany.library_project.Report.CreateReport;
 
+import org.controlsfx.control.MaskerPane;
 import org.controlsfx.validation.Severity;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
@@ -49,16 +58,20 @@ public class ImportController implements Initializable {
     private BookDetailModel addBook = new BookDetailModel();
     private ImportModel importBook = new ImportModel();
     private ArrayList<AuthorModel> author_id = null;
-    private ArrayList<String> arr_type, arr_category;
+    private ArrayList<TypeModel> arr_type;
+    private ArrayList<CategoryModel> arr_category;
     private ObservableList<String> status = FXCollections.observableArrayList("ຫວ່າງ", "ກຳລ້ງຢືມ", "ເສຍ");
     private ObservableList<String> items = null, author_items = null;
+    private MaskerPane masker = new MaskerPane();
+    private Task<Void> task = null;
+    private CreateReport printbill = new CreateReport();
 
     private String[] arr_author = new String[6];
-
-    private int index_type, index_category;
+    private ArrayList<String[]> listAuthor = new ArrayList<>();
     private String _bookid = "";
     private Double _totalPrice = 0.0;
     private int _totalQty = 0;
+    private String categoryId = "", typeId = "";
 
     /*
      * Todo: Use from class BookController for both form can communicate or use for
@@ -73,6 +86,9 @@ public class ImportController implements Initializable {
             }
         });
     }
+
+    @FXML
+    private StackPane stackPane;
 
     @FXML
     private BorderPane borderPane;
@@ -96,13 +112,49 @@ public class ImportController implements Initializable {
     private TableView<ImportModel> tableHistoryImportBook;
 
     @FXML
-    private TableColumn<ImportModel, String> bookid, bookname, bookisbn, bppkcategory, bppktype, tableid, tbalelog;
+    private TableColumn<ImportModel, String> colBookid, colBookname, colBookisbn, colBookcategory, colBooktype, colYear,
+            colTable, colLog;
 
     @FXML
-    private TableColumn<ImportModel, Integer> bookpage, bookqty;
+    private TableColumn<ImportModel, Integer> colBookpage, colBookqty;
 
     @FXML
-    private TableColumn<ImportModel, Double> bookPrice;
+    private TableColumn<ImportModel, Double> colBookPrice, colTotalPrice;
+
+    private void printBin(String importID) {
+
+        task = new Task<Void>() {
+
+            @Override
+            protected Void call() throws Exception {
+                masker.setVisible(true);
+                masker.setProgressVisible(true);
+
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("importid", importID);
+                map.put("logo", Paths.get("bin/Logo.png").toAbsolutePath().toString());
+                printbill.showReport(map, "billImport.jrxml", "Error print bin");
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                super.succeeded();
+                masker.setVisible(false);
+                masker.setProgressVisible(false);
+            }
+
+            @Override
+            protected void failed() {
+                super.failed();
+                masker.setVisible(false);
+                masker.setProgressVisible(false);
+                dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການພີມໃບບິນ", task.getException());
+            }
+
+        };
+        new Thread(task).start();
+    }
 
     private String getMaxImportId() {
         try {
@@ -111,7 +163,7 @@ public class ImportController implements Initializable {
                 new_id = "IMP1";
             else {
                 String id = maxId.substring(maxId.indexOf('P') + 1);
-                new_id = "IMP" + Integer.parseInt(id) + 1;
+                new_id = "IMP" + (Integer.parseInt(id) + 1);
             }
             return new_id;
         } catch (Exception e) {
@@ -121,34 +173,58 @@ public class ImportController implements Initializable {
     }
 
     private void initTable() {
-        bookid.setCellValueFactory(new PropertyValueFactory<>("bookid"));
-        bookname.setCellValueFactory(new PropertyValueFactory<>("bookname"));
-        bookisbn.setCellValueFactory(new PropertyValueFactory<>("bookisbn"));
-        bookid.setCellValueFactory(new PropertyValueFactory<>("bookpage"));
-        bookid.setCellValueFactory(new PropertyValueFactory<>("bookcategory"));
-        bookid.setCellValueFactory(new PropertyValueFactory<>("booktype"));
-        bookid.setCellValueFactory(new PropertyValueFactory<>("tableid"));
-        bookid.setCellValueFactory(new PropertyValueFactory<>("tbalelog"));
-        bookid.setCellValueFactory(new PropertyValueFactory<>("qty"));
-        bookid.setCellValueFactory(new PropertyValueFactory<>("price"));
+        colBookid.setCellValueFactory(new PropertyValueFactory<>("bookid"));
+        colBookname.setCellValueFactory(new PropertyValueFactory<>("bookname"));
+        colBookisbn.setCellValueFactory(new PropertyValueFactory<>("bookisbn"));
+        colBookpage.setCellValueFactory(new PropertyValueFactory<>("bookpage"));
+        colBookcategory.setCellValueFactory(new PropertyValueFactory<>("bookcategory"));
+        colBooktype.setCellValueFactory(new PropertyValueFactory<>("booktype"));
+        colYear.setCellValueFactory(new PropertyValueFactory<>("writeYear"));
+        colTable.setCellValueFactory(new PropertyValueFactory<>("tableid"));
+        colLog.setCellValueFactory(new PropertyValueFactory<>("tbalelog"));
+        colBookqty.setCellValueFactory(new PropertyValueFactory<>("qty"));
+        colBookPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        colTotalPrice.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
 
         // Todo: Add column number
-        final TableColumn<ImportBooksModel, ImportBooksModel> colNumber = new TableColumn<ImportBooksModel, ImportBooksModel>(
-                "ລຳດັບ");
+        final TableColumn<ImportModel, ImportModel> colNumber = new TableColumn<ImportModel, ImportModel>("ລຳດັບ");
         colNumber.setMinWidth(50);
         colNumber.setMaxWidth(120);
         colNumber.setPrefWidth(60);
         colNumber.setId("colCenter");
         colNumber.setCellValueFactory(
-                new Callback<CellDataFeatures<ImportBooksModel, ImportBooksModel>, ObservableValue<ImportBooksModel>>() {
+                new Callback<CellDataFeatures<ImportModel, ImportModel>, ObservableValue<ImportModel>>() {
 
                     @Override
-                    public ObservableValue<ImportBooksModel> call(
-                            CellDataFeatures<ImportBooksModel, ImportBooksModel> param) {
-                        return new ReadOnlyObjectWrapper<ImportBooksModel>(param.getValue());
+                    public ObservableValue<ImportModel> call(CellDataFeatures<ImportModel, ImportModel> param) {
+                        return new ReadOnlyObjectWrapper<ImportModel>(param.getValue());
                     }
 
                 });
+        colNumber.setCellFactory(
+                new Callback<TableColumn<ImportModel, ImportModel>, TableCell<ImportModel, ImportModel>>() {
+
+                    @Override
+                    public TableCell<ImportModel, ImportModel> call(TableColumn<ImportModel, ImportModel> param) {
+                        return new TableCell<ImportModel, ImportModel>() {
+                            @Override
+                            protected void updateItem(ImportModel item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty)
+                                    setText("");
+                                else if (this.getTableRow() != null && item != null)
+                                    setText(Integer.toString(this.getTableRow().getIndex() + 1));
+
+                            }
+                        };
+                    }
+
+                });
+        colNumber.setSortable(true);
+        tableHistoryImportBook.getColumns().add(0, colNumber);
+
+        // Todo: Add column Button
+        addButtonToTable();
     }
 
     private void initRules() {
@@ -156,7 +232,8 @@ public class ImportController implements Initializable {
         validRules.registerValidator(txtId, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນລະຫັດປຶ້ມ"));
         validRules.registerValidator(txtName, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຊື່ປຶ້ມ"));
         validRules.registerValidator(txtPage, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຈຳນວນໜ້າ"));
-        validRules.registerValidator(txtQty, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຈຳປື້ມ"));
+        validRules.registerValidator(txtQty, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນຈຳນວນປື້ມ"));
+        validRules.registerValidator(txtPrice, false, Validator.createEmptyValidator("ກະລຸນາປ້ອນລາຄາປື້ມ"));
 
         validRules.registerValidator(txtISBN, false,
                 Validator.createEmptyValidator("ກະລຸນາປ້ອນເລກ ISBN (ຖ້າມີ)", Severity.WARNING));
@@ -263,6 +340,9 @@ public class ImportController implements Initializable {
         txtISBN.clear();
         txtPage.clear();
         txtQty.clear();
+        txtYear.clear();
+        txtPrice.clear();
+        txtTotalPrice.clear();
         cmbCagtegory.getSelectionModel().clearSelection();
         cmbType.getSelectionModel().clearSelection();
         cmbTable.getSelectionModel().clearSelection();
@@ -282,9 +362,19 @@ public class ImportController implements Initializable {
         cmbAuthor5.setVisible(false);
         cmbAuthor6.setVisible(false);
 
-        _bookid = "";
         arr_author = new String[6];
 
+    }
+
+    private void clearAllVal() {
+        categoryId = "";
+        typeId = "";
+        _totalPrice = 0.0;
+        _totalQty = 0;
+        _bookid = "";
+        listAuthor.clear();
+        tableHistoryImportBook.getItems().clear();
+        // btSave.setDisable(true);
     }
 
     private void showAddAuthor() {
@@ -310,8 +400,24 @@ public class ImportController implements Initializable {
 
     private void initKeyEvents() {
         txtId.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ENTER)
+            if (keyEvent.getCode() == KeyCode.ENTER) {
                 txtName.requestFocus();
+                if (!txtId.getText().equals("")) {
+                    try {
+                        final ResultSet rs = addBook.findById(txtId.getText());
+                        if (rs.next()) {
+                            txtName.setText(rs.getString("book_name"));
+                            txtISBN.setText(rs.getString("ISBN"));
+                            txtPage.setText(rs.getString("page"));
+                            txtYear.setText(rs.getString("write_year"));
+                            cmbCagtegory.getSelectionModel().select(rs.getString("catg_name"));
+                            cmbType.getSelectionModel().select(rs.getString("type_name"));
+                            cmbTable.getSelectionModel().select(rs.getString("table_id"));
+                        }
+                    } catch (Exception e) {
+                    }
+                }
+            }
         });
         txtName.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER)
@@ -331,27 +437,7 @@ public class ImportController implements Initializable {
         });
         txtQty.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER)
-                cmbCagtegory.requestFocus();
-        });
-        cmbCagtegory.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ENTER)
-                cmbType.requestFocus();
-        });
-        cmbType.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ENTER)
-                cmbStatus.requestFocus();
-        });
-        cmbStatus.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ENTER)
-                cmbTable.requestFocus();
-        });
-        cmbTable.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ENTER)
-                cmbtableLog.requestFocus();
-        });
-        cmbtableLog.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ENTER)
-                txtId.requestFocus();
+                txtPrice.requestFocus();
         });
 
     }
@@ -411,6 +497,20 @@ public class ImportController implements Initializable {
 
         });
 
+        txtQty.setOnKeyTyped(e -> {
+            txtTotalPrice.clear();
+            if (!txtQty.getText().equals("") && !txtPrice.getText().equals(""))
+                txtTotalPrice.setText(
+                        Double.toString(Integer.parseInt(txtQty.getText()) * Double.parseDouble(txtPrice.getText())));
+        });
+
+        txtPrice.setOnKeyTyped(e -> {
+            txtTotalPrice.clear();
+            if (!txtQty.getText().equals("") && !txtPrice.getText().equals(""))
+                txtTotalPrice.setText(
+                        Double.toString(Integer.parseInt(txtQty.getText()) * Double.parseDouble(txtPrice.getText())));
+        });
+
         txtId.setOnKeyTyped(e -> {
             generatedBarcode();
         });
@@ -421,21 +521,14 @@ public class ImportController implements Initializable {
     }
 
     public void fillType() {
-
-        // Todo: set event to combo box
-        cmbType.setOnAction(e -> {
-            index_type = cmbType.getSelectionModel().getSelectedIndex();
-        });
-
         // Todo: set value
         try {
             arr_type = new ArrayList<>();
             items = FXCollections.observableArrayList();
-            // type = new TypeModel();
             ResultSet rs = type.findAll();
             while (rs.next()) {
-                items.add(rs.getString(2));
-                arr_type.add(rs.getString(1));
+                items.add(rs.getString("type_name"));
+                arr_type.add(new TypeModel(rs.getString("type_id"), rs.getString("type_name")));
             }
             cmbType.setItems(items);
         } catch (Exception e) {
@@ -444,20 +537,14 @@ public class ImportController implements Initializable {
     }
 
     public void fillCategory() {
-        // Todo: set event to combo box
-        cmbCagtegory.setOnAction(e -> {
-            index_category = cmbCagtegory.getSelectionModel().getSelectedIndex();
-        });
-
         // Todo: set value
         try {
             arr_category = new ArrayList<>();
             items = FXCollections.observableArrayList();
-            // category = new CategoryModel();
             ResultSet rs = category.findAll();
             while (rs.next()) {
-                arr_category.add(rs.getString(1));
-                items.add(rs.getString(2));
+                items.add(rs.getString("catg_name"));
+                arr_category.add(new CategoryModel(rs.getString("catg_id"), rs.getString("catg_name")));
             }
             cmbCagtegory.setItems(items);
         } catch (Exception e) {
@@ -628,86 +715,175 @@ public class ImportController implements Initializable {
                 // Todo: Set author id
                 setAuthoID(5, cmbAuthor5.getSelectionModel().getSelectedItem());
             } else {
-                arr_author[3] = null;
+                arr_author[5] = null;
             }
         });
     }
 
-    @FXML
-    private void addBook(ActionEvent event) {
+    private String newBarcodeID(String id, int increment) {
+        String idStr = "";
+        char[] arr = id.toCharArray();
 
-        tableHistoryImportBook.getItems().add(new ImportModel(txtId.getText(), txtName.getText(), txtISBN.getText(),
-                Integer.parseInt(txtPage.getText()), cmbCagtegory.getSelectionModel().getSelectedItem().toString(),
-                cmbType.getSelectionModel().getSelectedItem().toString(), arr_category.get(index_category),
-                arr_type.get(index_type), Integer.parseInt(txtQty.getText()),
-                Double.parseDouble(txtTotalPrice.getText())));
+        // Todo: Sub only the String
+        for (char c : arr) {
+            if (!Character.toString(c).matches("\\d*")) {
+                idStr += c;
+            }
+        }
+
+        String idInt = id.substring(idStr.length()); // Todo: Sub only the numeric
+        // int idAdd = Integer.parseInt(idInt) + 1; // Todo: convert to Int and
+        // increment by 1
+        return idStr + idInt.substring(0, idInt.length() - Integer.toString(increment).length()) + increment;
     }
 
     @FXML
-    private void btSave(ActionEvent event) {
+    private void addBook(ActionEvent event) {
         if (!txtId.getText().equals("") && !txtName.getText().equals("") && !txtPage.getText().equals("")
                 && !txtQty.getText().equals("") && !cmbCagtegory.getSelectionModel().getSelectedItem().equals(null)
                 && !cmbType.getSelectionModel().getSelectedItem().equals(null)
                 && !cmbTable.getSelectionModel().getSelectedItem().equals(null)) {
-            // cmbType.g
-            String msg = null;
-            try {
-                if (tableHistoryImportBook.getItems().size() > 0) {
-                    String maxid = getMaxImportId();
 
-                    importBook = new ImportModel(maxid, _totalQty, _totalPrice, Date.valueOf(LocalDate.now()));
-                    if (importBook.saveData() > 0) {
-                        ArrayList<ImportModel> list = new ArrayList<>();
-                        for (int i = 0; i < tableHistoryImportBook.getItems().size(); i++) {
-                            list.add(new ImportModel(maxid, tableHistoryImportBook.getItems().get(i).getBookid(),
-                                    tableHistoryImportBook.getItems().get(i).getQty(),
-                                    tableHistoryImportBook.getItems().get(i).getPrice()));
-                        }
-                        if (importBook.saveDataImportDetail(list) > 0)
-                            alertMessage.showCompletedMessage("Saved", "Saved data successfully.", 4,
-                                    Pos.BASELINE_LEFT);
-                    }
+            tableHistoryImportBook.getItems().add(new ImportModel(txtId.getText(), txtName.getText(), txtISBN.getText(),
+                    Integer.parseInt(txtPage.getText()), cmbCagtegory.getSelectionModel().getSelectedItem().toString(),
+                    cmbType.getSelectionModel().getSelectedItem().toString(), txtYear.getText(),
+                    cmbTable.getSelectionModel().getSelectedItem().toString(),
+                    cmbtableLog.getSelectionModel().getSelectedItem().toString(), Integer.parseInt(txtQty.getText()),
+                    Double.parseDouble(txtPrice.getText()), Double.parseDouble(txtTotalPrice.getText())));
 
-                    addBook = new BookDetailModel(txtId.getText(), txtName.getText(), txtISBN.getText(),
-                            Integer.parseInt(txtPage.getText()), Integer.parseInt(txtQty.getText()),
-                            arr_category.get(index_category), arr_type.get(index_type),
-                            cmbTable.getSelectionModel().getSelectedItem().toString(), txtYear.getText(), "");
+            _totalPrice += Double.parseDouble(txtPrice.getText());
+            _totalQty += Double.parseDouble(txtQty.getText());
 
-                    String barcode = txtId.getText() + "000";
-                    final ArrayList<BookDetailModel> list = new ArrayList<>();
-                    for (int i = 1; i <= Integer.parseInt(txtQty.getText()); i++) {
-                        list.add(new BookDetailModel(barcode + i, txtId.getText(),
-                                cmbtableLog.getSelectionModel().getSelectedItem().toString(), "ຫວ່າງ"));
-                    }
-
-                    final ArrayList<BookDetailModel> listWrite = new ArrayList<>();
-                    for (String val : arr_author) {
-                        if (val != null) {
-                            listWrite.add(new BookDetailModel(txtId.getText(), val));
-                        }
-                    }
-
-                    if (_bookid == "") {
-                        if (addBook.saveData() > 0) {
-                            // Todo: Save Barcode
-                            if (addBook.saveBookBarCode(list, txtId.getText()) > 0) {
-                                // Todo: Save Write
-                                if (addBook.saveWrite(listWrite) > 0) {
-                                    alertMessage.showCompletedMessage("Saved", "Save data successfully.", 4,
-                                            Pos.BOTTOM_RIGHT);
-                                }
-                            }
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            }
+            listAuthor.add(arr_author);
+            // btSave.setDisable(false);
+            clearText();
         } else {
             validRules.setErrorDecorationEnabled(true);
             alertMessage.showWarningMessage("Save Warning", "Please chack your information and try again.", 4,
                     Pos.BOTTOM_RIGHT);
         }
+    }
+
+    @FXML
+    private void btSave(ActionEvent event) {
+        try {
+            String importid = getMaxImportId(), result = null;
+            importBook = new ImportModel(importid, _totalQty, _totalPrice, Date.valueOf(LocalDate.now()));
+
+            if (importBook.saveData() > 0) {
+
+                int index = 0;
+                for (ImportModel model : tableHistoryImportBook.getItems()) {
+
+                    importBook = new ImportModel(importid, model.getBookid(), model.getQty(), model.getPrice());
+                    addBook = new BookDetailModel(model.getBookid(), model.getBookname(), model.getBookisbn(),
+                            model.getBookpage(), model.getQty(), categoryId, typeId, model.getTableid(),
+                            model.getWriteYear(), "");
+
+                    final ResultSet rs = addBook.getMaxBarcodeID(model.getBookid());
+                    String idSub = "0";
+                    if (rs.next()) {
+                        _bookid = rs.getString("book_id");
+                        char[] arr = rs.getString("maxbarcodeid").toCharArray();
+                        // Todo: Sub only the String
+
+                        for (char c : arr) {
+                            if (Character.toString(c).matches("\\d*")) {
+                                idSub += c;
+                            }
+                        }
+                    }
+
+                    final ArrayList<BookDetailModel> listBarcode = new ArrayList<>();
+                    for (int i = 1; i <= model.getQty(); i++) {
+                        listBarcode.add(new BookDetailModel(
+                                newBarcodeID(model.getBookid() + "0000", Integer.parseInt(idSub) + i),
+                                model.getBookid(), model.getTbalelog(), "ຫວ່າງ"));
+                    }
+
+                    // Todo: Add Write Book
+                    final ArrayList<BookDetailModel> listWrite = new ArrayList<>();
+                    for (String val : listAuthor.get(index)) {
+                        if (val != null) {
+                            listWrite.add(new BookDetailModel(model.getBookid(), val));
+                            System.out.println("All: " + listAuthor.get(index).length + " => Author ID: " + val);
+                        } else {
+                            System.out.println(" => Author ID: " + val);
+                        }
+                    }
+
+                    // Todo: find the category id
+                    for (CategoryModel val : arr_category) {
+                        if (val.getCatgName().equals(model.getBookcategory())) {
+                            categoryId = val.getCatgId();
+                            break;
+                        }
+                    }
+
+                    // Todo: find the type id
+                    for (TypeModel val : arr_type) {
+                        if (val.getTypeName().equals(model.getBooktype())) {
+                            typeId = val.getTypeId();
+                            break;
+                        }
+                    }
+
+                    // Todo: Save All Data
+                    if (importBook.saveDataImportDetail(importid) > 0) {
+                        if (_bookid == "") {
+                            // Todo: Save New Book Data
+                            if (addBook.saveData() > 0) {
+                                // Todo: Save Barcode
+                                if (addBook.saveBookBarCode(listBarcode, txtId.getText()) > 0) {
+                                    // Todo: Save Write
+                                    if (addBook.saveWrite(listWrite) > 0) {
+                                        result = "Save successfully";
+                                    }
+                                } else {
+                                    result = null;
+                                    return;
+                                }
+                            } else {
+                                result = null;
+                                return;
+                            }
+                        } else {
+                            // Todo: Update Qty Of Books
+                            if (addBook.updateBookQty(model.getBookid(), model.getQty()) > 0) {
+                                // Todo: Save Barcode
+                                if (addBook.saveBookBarCode(listBarcode, null) > 0) {
+                                    result = "Save successfully";
+                                    _bookid = "";
+                                } else {
+                                    result = null;
+                                    return;
+                                }
+                            } else {
+                                result = null;
+                                return;
+                            }
+                        }
+                    } else {
+                        result = null;
+                        return;
+                    }
+                    System.out.println("Successfully: " + model.getWriteYear());
+                    index++;
+                }
+            } else {
+                result = null;
+            }
+            if (result != null) {
+                alertMessage.showCompletedMessage("Saved", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
+                printBin(importid);
+                clearAllVal();
+            }
+
+        } catch (Exception e) {
+            dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການບັນທືກຂໍ້ມູນນຳປຶ້ມເຂົ້າລະບົບ", e);
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
@@ -726,6 +902,12 @@ public class ImportController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        masker.setVisible(false);
+        masker.setText("ກຳລັງໂຫລດຂໍ້ມູນ, ກະລຸນາລໍຖ້າ...");
+        masker.setStyle("-fx-font-family: BoonBaan;");
+        stackPane.getChildren().add(masker);
+
         cmbStatus.setItems(status);
         cmbStatus.getSelectionModel().select(0);
         initRules();
@@ -741,5 +923,49 @@ public class ImportController implements Initializable {
         fillCategory();
         fillTable();
         fillAuthor();
+    }
+
+    private void addButtonToTable() {
+        TableColumn<ImportModel, Void> colAction = new TableColumn<>("Action");
+        colAction.setPrefWidth(100);
+        Callback<TableColumn<ImportModel, Void>, TableCell<ImportModel, Void>> cellFactory = new Callback<TableColumn<ImportModel, Void>, TableCell<ImportModel, Void>>() {
+
+            @Override
+            public TableCell<ImportModel, Void> call(TableColumn<ImportModel, Void> param) {
+                final TableCell<ImportModel, Void> cell = new TableCell<ImportModel, Void>() {
+                    final JFXButton delete = new JFXButton("ຍົກເລີກ");
+                    {
+                        final ImageView imgView = new ImageView();
+                        imgView.setImage(new Image("/com/mycompany/library_project/Icon/bin.png"));
+                        imgView.setFitWidth(20);
+                        imgView.setFitHeight(20);
+                        delete.setGraphic(imgView);
+                        delete.setStyle(Style.buttonStyle);
+                        delete.setOnAction(e -> {
+                            Optional<ButtonType> result = dialog.showComfirmDialog("Comfirmed", null,
+                                    "ຕ້ອງການຍົກເລີກ ຫຼື ບໍ?");
+                            if (result.get() == ButtonType.YES) {
+                                _totalPrice -= tableHistoryImportBook.getItems().get(getIndex()).getPrice();
+                                _totalQty -= tableHistoryImportBook.getItems().get(getIndex()).getQty();
+                                tableHistoryImportBook.getItems().remove(getIndex());
+                                listAuthor.remove(getIndex());
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty)
+                            setGraphic(null);
+                        else
+                            setGraphic(delete);
+                    }
+                };
+                return cell;
+            }
+        };
+        colAction.setCellFactory(cellFactory);
+        tableHistoryImportBook.getColumns().add(colAction);
     }
 }

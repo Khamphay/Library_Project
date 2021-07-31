@@ -53,7 +53,7 @@
                                     </TableView>
                                     <AnchorPane layoutX="24.0" layoutY="31.0" prefHeight="251.0" prefWidth="1258.0" style="-fx-border-color: #362E6D; -fx-border-radius: 0.4em;" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="28.0">
                                        <children>
-                                          <JFXButton id="btClick" fx:id="btSave" alignment="CENTER" buttonType="RAISED" layoutX="566.0" layoutY="199.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE" AnchorPane.bottomAnchor="20.0">
+                                          <JFXButton id="btClick" fx:id="btSave" alignment="CENTER" buttonType="RAISED" layoutX="517.0" layoutY="200.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE" AnchorPane.bottomAnchor="21.0">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
@@ -68,7 +68,7 @@
                                                 <Insets left="-2.0" />
                                              </padding>
                                           </JFXButton>
-                                          <JFXButton id="btClick" fx:id="btBookLost" alignment="CENTER" buttonType="RAISED" layoutX="706.0" layoutY="199.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ປຶ້ມເສຍ" textFill="WHITE" AnchorPane.bottomAnchor="20.0">
+                                          <JFXButton id="btClick" fx:id="btBookLost" alignment="CENTER" buttonType="RAISED" layoutX="892.0" layoutY="198.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ປຶ້ມເສຍ" textFill="WHITE" AnchorPane.bottomAnchor="23.0">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
@@ -83,7 +83,7 @@
                                                 <Insets left="-2.0" />
                                              </padding>
                                           </JFXButton>
-                                          <JFXButton id="btClick" fx:id="btCancel" alignment="CENTER" buttonType="RAISED" layoutX="842.0" layoutY="199.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE" AnchorPane.bottomAnchor="20.0">
+                                          <JFXButton id="btClick" fx:id="btCancel" alignment="CENTER" buttonType="RAISED" layoutX="705.0" layoutY="199.0" prefHeight="30.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE" AnchorPane.bottomAnchor="22.0">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>

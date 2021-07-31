@@ -6,7 +6,7 @@
 	<parameter name="logo" class="java.lang.String"/>
 	<parameter name="lostid" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[select  * from dblibrary.vwshowbooklost where lost_id= $P{lostid} ]]>
+		<![CDATA[select  * from dblibrary.vwshowbooklost where lost_id= $P{lostid}]]>
 	</queryString>
 	<field name="lost_id" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="lost_id"/>
@@ -151,7 +151,7 @@
 				<textElement verticalAlignment="Middle">
 					<font fontName="Phetsarath OT" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA["ລະຫັດສະມາຊິກ: "+$F{member_id}+ " ຊື່ ແລະ ນາມສະກຸນ: "+$F{full_name} + $F{sur_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ລະຫັດສະມາຊິກ: "+$F{member_id}+ " ຊື່ ແລະ ນາມສະກຸນ: "+$F{full_name} +" "+ $F{sur_name}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="1" y="0" width="553" height="1" uuid="4fb6d7ae-3dc0-4ef0-b541-21ee976ecbdf"/>

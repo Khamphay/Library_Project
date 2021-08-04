@@ -52,6 +52,10 @@
   -fx-font-weight: bold;
   -fx-font-size: 16;
 }
+.BoonBaan-size-16-Regular {
+  -fx-font-family: "BoonBaan";
+  -fx-font-size: 16;
+}
 
 .BoonBaan-size-20 {
   -fx-font-family: "BoonBaan";
@@ -59,6 +63,10 @@
   -fx-font-size: 20;
 }
 
+.BoonBaan-size-20-Regular {
+  -fx-font-family: "BoonBaan";
+  -fx-font-size: 20;
+}
 /*-------------------Notifications-----------------*/
 /* .notification-bar>.pane {
     -fx-background-color: red, yellow, blue;

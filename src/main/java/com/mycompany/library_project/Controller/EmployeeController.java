@@ -45,7 +45,7 @@ public class EmployeeController implements Initializable {
     private ValidationSupport validRules = new ValidationSupport();
     private ValidationSupport validRulePass = new ValidationSupport();
     private ValidationSupport validPassLengt = new ValidationSupport();
-    private ManagePersonalCotroller personalCotroller = null;
+    ManageBookController manageBookController = null;
     private EmployeeModel employee = new EmployeeModel();
     private ResultSet rs = null;
     private String gender = "";
@@ -54,8 +54,8 @@ public class EmployeeController implements Initializable {
     private ArrayList<EmployeeModel> user = null;
     private ObservableList<EmployeeModel> data = null;
 
-    public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
-        this.personalCotroller = managePersonalCotroller;
+    public void initConstructor(ManageBookController manageBookController) {
+        this.manageBookController = manageBookController;
     }
 
     @FXML
@@ -320,7 +320,7 @@ public class EmployeeController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                personalCotroller.showMainMenuPerson();
+                manageBookController.showMainMenuBooks();
             }
 
         });

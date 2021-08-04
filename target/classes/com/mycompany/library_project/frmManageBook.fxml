@@ -3,9 +3,11 @@
 <?import com.jfoenix.controls.JFXBadge?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -17,65 +19,147 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="bpManageBook" prefHeight="727.0" prefWidth="1398.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.ManageBookController">
+<BorderPane fx:id="bpManageBook" prefHeight="954.0" prefWidth="1398.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.ManageBookController">
    <center>
-      <ScrollPane fx:id="scrollMenu" fitToHeight="true" fitToWidth="true" prefHeight="701.0" prefWidth="1398.0">
+      <ScrollPane fx:id="scrollMenu" fitToHeight="true" fitToWidth="true" prefHeight="966.0" prefWidth="1398.0">
          <content>
             <JFXBadge prefHeight="725.0" prefWidth="1372.0">
                <children>
-                  <AnchorPane fx:id="anchorMenu" maxWidth="-Infinity" prefHeight="725.0" prefWidth="1386.0">
+                  <AnchorPane fx:id="anchorMenu" maxWidth="-Infinity" prefHeight="985.0" prefWidth="1386.0">
                      <children>
-                        <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" layoutX="72.0" layoutY="49.0" onAction="#btBookType_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປະເພດປຶ້ມ" textFill="#ffeded">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@Icon/books_type.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXButton>
-                        <Text fx:id="txtType" fill="WHITE" layoutX="134.0" layoutY="112.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="2 ປະເພດ" />
-                        <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" layoutX="601.0" layoutY="49.0" onAction="#btBooks_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປຶ້ມ" textFill="#ffeded">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@Icon/books_50px.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXButton>
-                        <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" layoutX="344.0" layoutY="49.0" onAction="#btBookCategory_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນໝວດປຶ້ມ" textFill="#ffeded">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@Icon/bookCategory.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXButton>
-                        <Text fx:id="txtBook" fill="WHITE" layoutX="657.0" layoutY="112.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນ 4850 ຫົວ" />
-                        <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" layoutX="863.0" layoutY="49.0" onAction="#btBookLost_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປຶ້ມເສຍ" textFill="#ffeded">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@Icon/book_lost.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXButton>
-                        <Text fx:id="txtBookLost" fill="WHITE" layoutX="922.0" layoutY="112.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນ 50 ຫົວ" />
-                        <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" layoutX="1117.0" layoutY="49.0" onAction="#btBookTableLog_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນລ໋ອກຕູ້" textFill="#ffeded">
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@Icon/tablelog.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXButton>
-                        <Text fx:id="txtTableLog" fill="WHITE" layoutX="1173.0" layoutY="110.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນ 40 ຕູ້ ແລະ 160 ລ໋ອກຕູ້" wrappingWidth="106.55000305175781" />
-                        <Text fx:id="txtCategory" fill="WHITE" layoutX="401.0" layoutY="112.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="4 ຫວດໝູ່" />
-                        <AnchorPane layoutX="48.0" layoutY="185.0" minHeight="-Infinity" prefHeight="512.0" prefWidth="1298.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 5px 5px 5px 5px;" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="185.0">
+                        <AnchorPane layoutX="57.0" layoutY="38.0" prefHeight="100.0" prefWidth="190.0">
+                           <children>
+                              <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" layoutX="15.0" layoutY="11.0" onAction="#btBookType_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປະເພດປຶ້ມ" textFill="#ffeded" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/books_type.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <Text fx:id="txtType" fill="WHITE" layoutX="77.0" layoutY="59.76666259765625" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="2 ປະເພດ" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="50.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="586.0" layoutY="38.0" prefHeight="100.0" prefWidth="190.0">
+                           <children>
+                              <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" layoutX="15.0" layoutY="11.0" onAction="#btBooks_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປຶ້ມ" textFill="#ffeded" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/books_50px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <Text fx:id="txtBook" fill="WHITE" layoutX="71.0" layoutY="59.76666259765625" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນ 4850 ຫົວ" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="50.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="329.0" layoutY="38.0" prefHeight="100.0" prefWidth="190.0">
+                           <children>
+                              <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" layoutX="15.0" layoutY="11.0" onAction="#btBookCategory_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນໝວດປຶ້ມ" textFill="#ffeded" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/bookCategory.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <Text fx:id="txtCategory" fill="WHITE" layoutX="72.0" layoutY="59.76666259765625" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="4 ຫວດໝູ່" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="50.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="848.0" layoutY="38.0" prefHeight="100.0" prefWidth="190.0">
+                           <children>
+                              <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" layoutX="15.0" layoutY="11.0" onAction="#btBookLost_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນປຶ້ມເສຍ" textFill="#ffeded" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/book_lost.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <Text fx:id="txtBookLost" fill="WHITE" layoutX="74.0" layoutY="59.76666259765625" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນ 50 ຫົວ" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="50.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="1102.0" layoutY="38.0" prefHeight="100.0" prefWidth="190.0">
+                           <children>
+                              <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" layoutX="15.0" layoutY="11.0" onAction="#btBookTableLog_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນລ໋ອກຕູ້" textFill="#ffeded" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/tablelog.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <Text fx:id="txtTableLog" fill="WHITE" layoutX="71.0" layoutY="57.76666259765625" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນ 40 ຕູ້ ແລະ 160 ລ໋ອກຕູ້" wrappingWidth="106.55000305175781" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="50.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="57.0" layoutY="175.0" prefHeight="100.0" prefWidth="190.0">
+                           <children>
+                              <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" layoutX="8.0" layoutY="10.0" onAction="#btMember_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນສະມາຊິກ" textAlignment="CENTER" textFill="#ffeded" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
+                                 <graphic>
+                                    <ImageView fitHeight="44.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/member_50px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <Text fx:id="txtMember" fill="WHITE" layoutX="73.0" layoutY="73.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="253400 ຄົນ" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="50.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="329.0" layoutY="175.0" prefHeight="100.0" prefWidth="190.0">
+                           <children>
+                              <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" layoutX="8.0" layoutY="6.0" onAction="#btEmployee_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນພະນັກງານ" textFill="#ffeded" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/management_50px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <Text fx:id="txtEmployee" fill="WHITE" layoutX="65.0" layoutY="64.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="2 ຄົນ" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="50.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="586.0" layoutY="175.0" prefHeight="100.0" prefWidth="190.0">
+                           <children>
+                              <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" layoutX="8.0" layoutY="11.0" onAction="#btAncthor_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນຜູ້ແຕ່ງປຶ້ມ" textFill="#ffeded" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/user_typing_using_typewriter_50px.png" />
+                                       </image>
+                                       <viewport>
+                                          <Rectangle2D />
+                                       </viewport>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <Text fx:id="txtAuthor" fill="WHITE" layoutX="67.0" layoutY="74.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="428 ຄົນ" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="50.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="848.0" layoutY="175.0" prefHeight="100.0" prefWidth="190.0">
+                           <children>
+                              <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" graphicTextGap="10.0" layoutX="7.0" layoutY="11.0" onAction="#btDepartment_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນພາກວິຊາ" textFill="#ffeded" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
+                                 <graphic>
+                                    <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/department.png" />
+                                       </image>
+                                       <viewport>
+                                          <Rectangle2D />
+                                       </viewport>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <Text fx:id="txtDep" fill="WHITE" layoutX="56.0" layoutY="62.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="5 ພາກວິຊາ" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="50.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="34.0" layoutY="330.0" prefHeight="280.0" prefWidth="1313.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 5px 5px 5px 5px;" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="330.0">
                            <effect>
                               <DropShadow height="18.03" offsetX="1.0" offsetY="1.0" radius="8.515" width="18.03">
                                  <color>
@@ -84,21 +168,76 @@
                               </DropShadow>
                            </effect>
                            <children>
-                              <Line endX="1196.2928466796875" endY="3.0994415283203125E-6" layoutX="102.70710754394531" layoutY="34.707122802734375" startX="-100.0" stroke="#1d0054" AnchorPane.topAnchor="104.0" />
-                              <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="2.0" layoutY="36.0" prefHeight="403.0" prefWidth="1297.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="107.0">
+                              <HBox fx:id="hbox1" alignment="CENTER_LEFT" layoutY="54.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="1308.0" AnchorPane.topAnchor="54.0">
+                                 <cursor>
+                                    <Cursor fx:constant="DEFAULT" />
+                                 </cursor>
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລຳດັບ" textAlignment="CENTER" wrappingWidth="80.79999923706055">
+                                       <HBox.margin>
+                                          <Insets left="4.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລະຫັດສະມາຊິກ" wrappingWidth="151.79999923706055">
+                                       <HBox.margin>
+                                          <Insets left="4.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊື່ສະມາຊິກ" wrappingWidth="188.79999923706055" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ນາມສະກຸນ" wrappingWidth="189.79999923706055" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຮຽນປີທີ" wrappingWidth="211.79999923706055" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ພາກວິຊາ" wrappingWidth="202.79999923706055" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ວັນທີລົງທະບຽນ" textAlignment="CENTER" wrappingWidth="126.79999923706055" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ວັນທີໝົດອາຍຸ" textAlignment="CENTER" wrappingWidth="126.79999923706055" />
+                                 </children>
+                              </HBox>
+                              <Line endX="1209.2928466796875" endY="1.292877197265625" layoutX="102.70710754394531" layoutY="87.0" startX="-100.0" stroke="#1d0054" />
+                              <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="2.0" layoutY="88.0" prefHeight="205.0" prefWidth="1309.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="88.0">
                                  <content>
-                                    <VBox fx:id="pnItems" minWidth="-Infinity" prefHeight="386.0" prefWidth="1081.0">
+                                    <VBox fx:id="pnItemsPerson" minWidth="-Infinity" prefHeight="244.0" prefWidth="1307.0">
                                        <children>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-16" text="ບໍ່ມີຂໍ້ມູນ" textAlignment="CENTER" wrappingWidth="1297.13671875">
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-16" text="ບໍ່ມີຂໍ້ມູນ" textAlignment="CENTER" wrappingWidth="1304.13671875">
                                              <VBox.margin>
-                                                <Insets top="200.0" />
+                                                <Insets top="100.0" />
                                              </VBox.margin>
                                           </Text>
                                        </children>
                                     </VBox>
                                  </content>
                               </ScrollPane>
-                              <HBox fx:id="hbox" alignment="CENTER_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="1291.0" AnchorPane.topAnchor="67.0">
+                              <Label styleClass="BoonBaan-size-16" text="ການແຈ້ງບັດສະມາຊິດໝົດອາຍຸ" AnchorPane.leftAnchor="56.0" AnchorPane.topAnchor="6.0" />
+                              <Text fx:id="textTotalListPerson" layoutX="58.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="0 ລາຍການ" AnchorPane.leftAnchor="58.0" AnchorPane.topAnchor="28.766666412353516" />
+                              <ImageView fitHeight="47.0" fitWidth="47.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="9.0">
+                                 <image>
+                                    <Image url="@Icon/notification_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="34.0" layoutY="647.0" minHeight="-Infinity" prefHeight="275.0" prefWidth="1318.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 5px 5px 5px 5px;" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="647.0">
+                           <effect>
+                              <DropShadow height="18.03" offsetX="1.0" offsetY="1.0" radius="8.515" width="18.03">
+                                 <color>
+                                    <Color green="0.1411764770746231" blue="0.29019609093666077" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                           <children>
+                              <Line endX="1209.2928466796875" endY="-1.0138750076293945E-4" layoutX="102.70710754394531" layoutY="83.7072081565857" startX="-100.0" stroke="#1d0054" AnchorPane.topAnchor="83.0" />
+                              <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="2.0" layoutY="85.0" prefHeight="229.0" prefWidth="1309.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="85.0">
+                                 <content>
+                                    <VBox fx:id="pnItemsBook" alignment="CENTER" minWidth="-Infinity" prefHeight="386.0" prefWidth="1081.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-16" text="ບໍ່ມີຂໍ້ມູນ" textAlignment="CENTER" wrappingWidth="1297.13671875">
+                                             <VBox.margin>
+                                                <Insets top="30.0" />
+                                             </VBox.margin>
+                                          </Text>
+                                       </children>
+                                    </VBox>
+                                 </content>
+                              </ScrollPane>
+                              <HBox fx:id="hbox" alignment="CENTER_LEFT" layoutY="52.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="1291.0" AnchorPane.topAnchor="52.0">
                                  <cursor>
                                     <Cursor fx:constant="DEFAULT" />
                                  </cursor>
@@ -125,8 +264,8 @@
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ວັນທີ" textAlignment="CENTER" wrappingWidth="108.79999923706055" />
                                  </children>
                               </HBox>
-                              <Label styleClass="BoonBaan-size-20" text="ການແຈ້ງຂໍ້ມູນປຶ້ມເສຍ" AnchorPane.leftAnchor="56.0" AnchorPane.topAnchor="6.0" />
-                              <Text fx:id="textTotalList" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="0 ລາຍການ" AnchorPane.leftAnchor="58.0" AnchorPane.topAnchor="35.766666412353516" />
+                              <Label styleClass="BoonBaan-size-16" text="ການແຈ້ງຂໍ້ມູນປຶ້ມເສຍ" AnchorPane.leftAnchor="56.0" AnchorPane.topAnchor="6.0" />
+                              <Text fx:id="textTotalListBook" layoutX="58.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="0 ລາຍການ" AnchorPane.leftAnchor="58.0" AnchorPane.topAnchor="28.766666412353516" />
                               <ImageView fitHeight="47.0" fitWidth="47.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="9.0">
                                  <image>
                                     <Image url="@Icon/notification_50px.png" />
@@ -134,6 +273,8 @@
                               </ImageView>
                            </children>
                         </AnchorPane>
+                        <Separator layoutY="297.0" prefHeight="0.0" prefWidth="1255.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <Separator layoutY="632.0" prefHeight="0.0" prefWidth="1255.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </children>

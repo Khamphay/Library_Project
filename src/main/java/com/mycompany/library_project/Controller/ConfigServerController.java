@@ -92,8 +92,7 @@ public class ConfigServerController implements Initializable {
 
                 if (!txtHost.getText().equals("") && !txtPort.getText().equals("")) {
                     if (config.createFileConfig(driver, dbtype, txtHost.getText(), txtPort.getText(),
-                            txtUserName.getText(),
-                            txtPassword.getText()) == true) {
+                            txtUserName.getText(), txtPassword.getText()) == true) {
                         MyConnection.driver = driver;
                         MyConnection.dbtype = dbtype;
                         MyConnection.host = txtHost.getText() + ":" + txtPort.getText();
@@ -128,6 +127,10 @@ public class ConfigServerController implements Initializable {
     }
 
     private void testConnection() {
+        if (txtHost.getText().equals("") || txtPort.getText().equals("") || txtUserName.getText().equals("")) {
+            validRules.setErrorDecorationEnabled(true);
+            return;
+        }
         masker.setText("ກຳລັງທົດສອບການເຊື່ອມຕໍ່, ກະລຸນາລໍຖ້າ...");
         task = new Task<Void>() {
 
@@ -142,8 +145,8 @@ public class ConfigServerController implements Initializable {
                 MyConnection.userName = txtUserName.getText();
                 MyConnection.password = txtPassword.getText();
                 if (HomeController.con != null) {
-                }
 
+                }
                 return null;
             }
 
@@ -184,13 +187,13 @@ public class ConfigServerController implements Initializable {
         });
 
         comboxDB.setOnAction(e -> {
-                if (comboxDB.getSelectionModel().getSelectedItem().equals("MariaDB")) {
-                    driver = "org.mariadb.jdbc.Driver";
-                    dbtype = "mariadb";
-                } else {
-                    driver = "com.mysql.cj.jdbc.Driver";
-                    dbtype = "mysql";
-                }
+            if (comboxDB.getSelectionModel().getSelectedItem().equals("MariaDB")) {
+                driver = "org.mariadb.jdbc.Driver";
+                dbtype = "mariadb";
+            } else {
+                driver = "com.mysql.cj.jdbc.Driver";
+                dbtype = "mysql";
+            }
         });
 
         btSave.setOnAction(new EventHandler<ActionEvent>() {
@@ -290,8 +293,8 @@ public class ConfigServerController implements Initializable {
                 txtPort.setText(server_infor[3]);
                 txtUserName.setText(server_infor[4]);
                 txtPassword.setText(server_infor[5]);
+            }
         }
-    }
 
         masker.setVisible(false);
         masker.setPrefWidth(50.0);
@@ -300,6 +303,5 @@ public class ConfigServerController implements Initializable {
         stackPane.getChildren().add(masker);
 
     }
-
 
 }

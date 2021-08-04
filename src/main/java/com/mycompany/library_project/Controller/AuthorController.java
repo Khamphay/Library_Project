@@ -37,7 +37,6 @@ import javafx.util.Callback;
 public class AuthorController implements Initializable {
 
     private ValidationSupport validRules = new ValidationSupport();
-    private ManagePersonalCotroller personalCotroller = null;
     private AddBookController addBookController = null;
     private AuthorModel author = new AuthorModel();
     private ResultSet rs = null;
@@ -49,14 +48,13 @@ public class AuthorController implements Initializable {
     private ImportController importController = null;
     double x, y;
 
-    public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
-        this.personalCotroller = managePersonalCotroller;
+    public void initConstructor(ManageBookController manageBookController) {
 
         btClose.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                personalCotroller.showMainMenuPerson();
+                manageBookController.showMainMenuBooks();
             }
 
         });

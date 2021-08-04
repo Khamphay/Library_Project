@@ -7,15 +7,14 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import com.mycompany.library_project.App;
-import com.mycompany.library_project.ControllerDAOModel.AlertMessage;
+import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
 import com.mycompany.library_project.Model.BookLostModel;
 import com.mycompany.library_project.Model.ListBookModel;
-import com.mycompany.library_project.config.*;
+import com.mycompany.library_project.Model.MemberModel;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
-import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -24,14 +23,15 @@ import javafx.scene.text.Text;
 
 public class ManageBookController implements Initializable {
 
-    private AlertMessage alertMessage = new AlertMessage();
+    private DialogMessage dialog = new DialogMessage();
     public static BorderPane mainBorder = null;
     private BookLostModel booklost = new BookLostModel();
+    private MemberModel memberModel = new MemberModel();
     private ResultSet rs = null;
     private ListBookModel listbook = null;
 
     @FXML
-    private Text txtType, txtCategory, txtBook, txtBookLost, txtTableLog;
+    private Text txtType, txtCategory, txtBook, txtBookLost, txtTableLog, txtMember, txtEmployee, txtAuthor, txtDep;
 
     @FXML
     private BorderPane bpManageBook;
@@ -39,18 +39,28 @@ public class ManageBookController implements Initializable {
     @FXML
     private ScrollPane scrollMenu;
 
+    // Todo: Books
     @FXML
-    private Text textTotalList;
+    private Text textTotalListBook;
 
     @FXML
-    private VBox pnItems;
+    private VBox pnItemsBook;
+
+    // Todo: Personals
+
+    @FXML
+    private VBox pnItemsPerson;
+
+    @FXML
+    private Text textTotalListPerson;
 
     public void showMainMenuBooks() {
         bpManageBook.setCenter(scrollMenu);
     }
 
+    // Todo: Book List
     private void showBookLostList() {
-        pnItems.getChildren().clear();
+        pnItemsBook.getChildren().clear();
         Platform.runLater(new Runnable() {
 
             @Override
@@ -69,15 +79,49 @@ public class ManageBookController implements Initializable {
                         final BookLostListController bookLostListController = loader.getController();
                         bookLostListController.initConstructor(listbook);
                         final Node node = listRoot;
-                        pnItems.getChildren().add(node);
+                        pnItemsBook.getChildren().add(node);
 
                         number++;
                     }
-                    textTotalList.setText(pnItems.getChildren().size() + " ລາຍການ");
+                    textTotalListBook.setText(pnItemsBook.getChildren().size() + " ລາຍການ");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    dialog.showExcectionDialog("Error", null, "ມີບັນຫາໃນການໂຫຼດຂໍ້ມູນປຶ້ມເສຍ", e);
                 }
             }
+        });
+    }
+
+    // Todo: Personals List
+    private void showMemberEnd() {
+        pnItemsPerson.getChildren().clear();
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    int number = 1;
+                    rs = memberModel.findMemberEndOfDate(Date.valueOf(LocalDate.now()));
+                    while (rs.next()) {
+
+                        memberModel = new MemberModel(number, rs.getString("member_id"), rs.getString("full_name"),
+                                rs.getString("sur_name"), rs.getString("study_year"), rs.getString("dep_name"),
+                                rs.getDate("date_register"), rs.getDate("date_end"));
+
+                        final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmMemberExitList.fxml"));
+                        final Parent root = loader.load();
+                        MemberListController memberController = loader.getController();
+                        memberController.initConstructor(memberModel);
+
+                        final Node node = root;
+                        pnItemsPerson.getChildren().add(node);
+                        number++;
+                    }
+                    textTotalListPerson.setText(pnItemsPerson.getChildren().size() + " ລາຍການ");
+                } catch (Exception e) {
+                    dialog.showExcectionDialog("Error", null, "ມີບັນຫາໃນການໂຫຼດຂໍ້ມູນບັດສະມາຊິກໝົດອາຍຸ", e);
+                }
+            }
+
         });
     }
 
@@ -90,9 +134,7 @@ public class ManageBookController implements Initializable {
             bookTypeController.initConstructor(this);
             bpManageBook.setCenter(subForm);
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            CreateLogFile config = new CreateLogFile();
-            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Book Type", e);
+            dialog.showExcectionDialog("Error", null, "ມີບັນຫາໃນການເປີດຟອມຈັດການຂໍ້ມູນປະເພດປຶ້ມ", e);
         }
     }
 
@@ -105,9 +147,7 @@ public class ManageBookController implements Initializable {
             bookCategoryController.initConstructor(this);
             bpManageBook.setCenter(subForm);
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            CreateLogFile config = new CreateLogFile();
-            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Book Category", e);
+            dialog.showExcectionDialog("Error", null, "ມີບັນຫາໃນການເປີດຟອມຈັດການຂໍ້ມູນໝວດປຶ້ມ", e);
         }
     }
 
@@ -120,9 +160,7 @@ public class ManageBookController implements Initializable {
             tableLogController.initConstructor(this);
             bpManageBook.setCenter(subForm);
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            CreateLogFile config = new CreateLogFile();
-            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Table Log", e);
+            dialog.showExcectionDialog("Error", null, "ມີບັນຫາໃນການເປີດຟອມຈັດການຂໍ້ມູນລ໋ອກຕູ້", e);
         }
     }
 
@@ -135,9 +173,7 @@ public class ManageBookController implements Initializable {
             bookController.initConstructor(this);
             bpManageBook.setCenter(subForm);
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            CreateLogFile config = new CreateLogFile();
-            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Book", e);
+            dialog.showExcectionDialog("Error", null, "ມີບັນຫາໃນການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມ", e);
         }
     }
 
@@ -150,9 +186,61 @@ public class ManageBookController implements Initializable {
             booklostController.initConstructor(this);
             bpManageBook.setCenter(subForm);
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Open Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            CreateLogFile config = new CreateLogFile();
-            config.createLogFile("ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ: Form Book", e);
+            dialog.showExcectionDialog("Error", null, "ມີບັນຫາໃນການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມເສຍ", e);
+        }
+    }
+
+    // Todo: Personal Event
+
+    @FXML
+    private void btEmployee_Click(ActionEvent event) {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmEmployee.fxml"));
+            final Parent subForm = loader.load();
+            EmployeeController employeeController = loader.getController();
+            employeeController.initConstructor(this);
+            bpManageBook.setCenter(subForm);
+        } catch (Exception e) {
+            dialog.showExcectionDialog("Error", null, "ມີບັນຫາໃນການເປີດຟອມຈັດການຂໍ້ມູນພະນັກງານ", e);
+        }
+    }
+
+    @FXML
+    private void btMember_Click(ActionEvent event) {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmMember.fxml"));
+            final Parent subForm = loader.load();
+            MemberController memberController = loader.getController();
+            memberController.initConstructor(this);
+            bpManageBook.setCenter(subForm);
+        } catch (Exception e) {
+            dialog.showExcectionDialog("Error", null, "ມີບັນຫາໃນການເປີດຟອມຈັດການຂໍ້ມູນສະມາຊິກ", e);
+        }
+    }
+
+    @FXML
+    private void btAncthor_Click(ActionEvent event) {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmAuthor.fxml"));
+            final Parent subForm = loader.load();
+            AuthorController authorController = loader.getController();
+            authorController.initConstructor(this);
+            bpManageBook.setCenter(subForm);
+        } catch (Exception e) {
+            dialog.showExcectionDialog("Error", null, "ມີບັນຫາໃນການເປີດຟອມຈັດການຂໍ້ມູນນັກແຕ່ງ", e);
+        }
+    }
+
+    @FXML
+    private void btDepartment_Click(ActionEvent event) {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmDepartment.fxml"));
+            final Parent subForm = loader.load();
+            DepartmentController departmentController = loader.getController();
+            departmentController.initConstructor(this);
+            bpManageBook.setCenter(subForm);
+        } catch (Exception e) {
+            dialog.showExcectionDialog("Error", null, "ມີບັນຫາໃນການເປີດຟອມຈັດການຂໍ້ມູນພາກວິຊາ", e);
         }
     }
 
@@ -167,7 +255,13 @@ public class ManageBookController implements Initializable {
         txtTableLog.setText("ຈຳນວນ " + HomeController.summaryValue[4] + " ຕູ້ ແລະ "
                 + ((HomeController.summaryValue[5] != null) ? HomeController.summaryValue[5] : "0") + " ລ໋ອກຕູ້");
 
+        txtMember.setText(HomeController.summaryValue[6] + " ຄົນ");
+        txtEmployee.setText(HomeController.summaryValue[7] + " ຄົນ");
+        txtAuthor.setText(HomeController.summaryValue[8] + " ຄົນ");
+        txtDep.setText(HomeController.summaryValue[9] + " ພາກວິຊາ");
+
         showBookLostList();
+        showMemberEnd();
     }
 
 }

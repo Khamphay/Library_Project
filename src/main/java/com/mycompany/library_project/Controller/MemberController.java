@@ -41,7 +41,7 @@ import javafx.util.Callback;
 
 public class MemberController implements Initializable {
 
-    private ManagePersonalCotroller personalCotroller = null;
+    private ManageBookController manageBookController = null;
     private ObservableList<MemberModel> data = null;
     private AlertMessage alertMessage = new AlertMessage();
     private MemberModel memberModel = new MemberModel();
@@ -53,8 +53,8 @@ public class MemberController implements Initializable {
     public static boolean add = false;
     private CreateLogFile logfile = new CreateLogFile();
 
-    public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
-        this.personalCotroller = managePersonalCotroller;
+    public void initConstructor(ManageBookController manageBookController) {
+        this.manageBookController = manageBookController;
     }
 
     @FXML
@@ -103,8 +103,7 @@ public class MemberController implements Initializable {
             addMemberStage.show();
 
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Open New Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            logfile.createLogFile("ເກີດບັນຫາໃນການເປືດຟອມລົງທະບຽນ", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປືດຟອມລົງທະບຽນ", e);
         }
     }
 
@@ -420,7 +419,7 @@ public class MemberController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                personalCotroller.showMainMenuPerson();
+                manageBookController.showMainMenuBooks();
             }
 
         });

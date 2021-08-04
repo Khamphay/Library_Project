@@ -7,6 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Text?>
 
 <StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.AdjustmentController">
    <children>
@@ -22,12 +23,12 @@
                   <Label layoutX="42.0" layoutY="80.0" styleClass="BoonBaan-size-14-Regular" text="ເລືອກວັນທີທີ່ຕ້ອງການລາຍງານ" />
                </children>
             </AnchorPane>
-            <Label layoutX="53.0" layoutY="12.0" style="-fx-background-color: #F4F4F4;" styleClass="BoonBaan-size-20" text="ລາຍງານຂໍ້ມູນການປັບໃຫມ" />
             <ImageView fitHeight="43.0" fitWidth="65.0" layoutX="4.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Icon/edit_pie_chart_report_100px.png" />
                </image>
             </ImageView>
+            <Text fx:id="txtName" layoutX="57.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-20" text="ລາຍງານຂໍ້ມູນການປັບໃຫມ" />
          </children>
       </AnchorPane>
    </children>

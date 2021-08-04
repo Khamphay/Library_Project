@@ -30,7 +30,7 @@ public class MenuController1 implements Initializable {
     private Map<String, Object> map = null;
 
     @FXML
-    private JFXButton btHome, btManageBook, btManagePerson, btImport, btSetting;
+    private JFXButton btHome, btManage, btRegister, btImport, btSearch, btRentSend;
 
     @FXML
     private TitledPane titleReport;
@@ -73,6 +73,15 @@ public class MenuController1 implements Initializable {
 
         });
 
+        btReportImport.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                reportAbjust_Import("Import");
+            }
+
+        });
+
         btReportBookLost.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -109,21 +118,28 @@ public class MenuController1 implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                try {
-                    final Parent root = FXMLLoader.load(App.class.getResource("frmReportAbjustment.fxml"));
-                    final Scene scene = new Scene(root);
-                    final Stage stage = new Stage();
-                    stage.setScene(scene);
-                    stage.setResizable(false);
-                    stage.setTitle("Report Adjustment");
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.show();
-                } catch (Exception e) {
-                    dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລາຍງານ", e);
-                }
+                reportAbjust_Import("Adjustment");
             }
 
         });
+    }
+
+    private void reportAbjust_Import(String rpname) {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmReportAbjustment.fxml"));
+            final Parent root = loader.load();
+            final Scene scene = new Scene(root);
+            final Stage stage = new Stage();
+            AdjustmentController report = loader.getController();
+            report.initConstructor(rpname);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setTitle("Report Adjustment");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        } catch (Exception e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລາຍງານ", e);
+        }
     }
 
     @Override

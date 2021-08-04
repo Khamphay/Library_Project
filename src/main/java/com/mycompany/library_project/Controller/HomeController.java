@@ -121,6 +121,30 @@ public class HomeController implements Initializable {
         }
     }
 
+    private void show__Register() {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmRegister.fxml"));
+            final Parent subroot = loader.load();
+            RegisterController registerController = loader.getController();
+            registerController.initConstructor1(this);
+            bpDisplay.setCenter(subroot);
+        } catch (Exception e) {
+            dialog.showExcectionDialog("Error", null, "ການເປີດຟອມລົງທະບຽນມີບັນຫາ", e);
+        }
+    }
+
+    private void show_SearchBook() {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmSearch.fxml"));
+            final Parent subroot = loader.load();
+            SearchController searchController = loader.getController();
+            searchController.initConstructor(this);
+            bpDisplay.setCenter(subroot);
+        } catch (Exception e) {
+            dialog.showExcectionDialog("Error", null, "ການເປີດຟອມຄົ້ນຫາປຶ້ມມີບັນຫາ", e);
+        }
+    }
+
     private void showSubFrom(String subForm) {
         try {
             final FXMLLoader loader = new FXMLLoader(App.class.getResource(subForm));
@@ -154,23 +178,21 @@ public class HomeController implements Initializable {
                 }
             });
 
-            node.lookup("#btManageBook").setOnMouseClicked(new EventHandler<Event>() {
+            node.lookup("#btManage").setOnMouseClicked(new EventHandler<Event>() {
 
                 @Override
                 public void handle(Event event) {
-                    SummaryData books = new SummaryData("call getAllBookData();", "books");
+                    SummaryData books = new SummaryData();
                     books.start();
                     showSubFrom("frmManageBook.fxml");
                 }
             });
 
-            node.lookup("#btManagePerson").setOnMouseClicked(new EventHandler<Event>() {
+            node.lookup("#btRegister").setOnMouseClicked(new EventHandler<Event>() {
 
                 @Override
                 public void handle(Event event) {
-                    SummaryData person = new SummaryData("call getAllPersonData();", "person");
-                    person.start();
-                    showSubFrom("frmManagePersonal.fxml");
+                    show__Register();
                 }
             });
 
@@ -182,22 +204,14 @@ public class HomeController implements Initializable {
                 }
             });
 
-            node.lookup("#btSetting").setOnMouseClicked(new EventHandler<Event>() {
+            node.lookup("#btSearch").setOnMouseClicked(new EventHandler<Event>() {
 
                 @Override
                 public void handle(Event event) {
                     try {
-                        if (SettingController.settingStage == null) {
-                            Parent settingParent = FXMLLoader.load(App.class.getResource("frmSetting.fxml"));
-                            Scene settingScene = new Scene(settingParent);
-                            settingScene.setFill(Color.TRANSPARENT);
-                            SettingController.settingStage = new Stage(StageStyle.TRANSPARENT);
-                            SettingController.settingStage.setScene(settingScene);
-                            SettingController.settingStage.setTitle("FNS Library Management System - Setting");
-                            SettingController.settingStage.show();
-                        }
+                        show_SearchBook();
                     } catch (Exception e) {
-                        dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການເປີດຟອມຈັດການຂໍ້ມູນຄ່າປັບໃຫມ", e);
+                        dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການເປີດຟອມຄົ້ນຫາຂໍ້ມູນ", e);
                     }
                 }
             });
@@ -297,28 +311,12 @@ public class HomeController implements Initializable {
 
     @FXML
     private void buttonRegister_Action(ActionEvent event) throws Exception {
-        try {
-            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmRegister.fxml"));
-            final Parent subroot = loader.load();
-            RegisterController registerController = loader.getController();
-            registerController.initConstructor1(this);
-            bpDisplay.setCenter(subroot);
-        } catch (Exception e) {
-            dialog.showExcectionDialog("Error", null, "ການເປີດຟອມລົງທະບຽນມີບັນຫາ", e);
-        }
+        show__Register();
     }
 
     @FXML
     private void buttonSearch_Action(ActionEvent event) throws Exception {
-        try {
-            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmSearch.fxml"));
-            final Parent subroot = loader.load();
-            SearchController searchController = loader.getController();
-            searchController.initConstructor(this);
-            bpDisplay.setCenter(subroot);
-        } catch (Exception e) {
-            dialog.showExcectionDialog("Error", null, "ການເປີດຟອມຄົ້ນຫາປຶ້ມມີບັນຫາ", e);
-        }
+        show_SearchBook();
     }
 
     @FXML

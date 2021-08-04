@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="acPaneMenu" accessibleRole="DATE_PICKER" prefHeight="738.0" prefWidth="57.0" style="-fx-background-color: #101D3D;" styleClass="button-color" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.MenuController2">
+<AnchorPane fx:id="acPaneMenu" accessibleRole="DATE_PICKER" prefHeight="824.0" prefWidth="74.0" style="-fx-background-color: #101D3D;" styleClass="button-color" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.MenuController2">
    <children>
       <JFXButton id="btHome" fx:id="btHome" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutY="33.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
          <cursor>
@@ -37,14 +37,14 @@
             </Tooltip>
          </tooltip>
       </JFXButton>
-      <JFXButton id="btManageBook" fx:id="btManageBook" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutY="74.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="84.0">
+      <JFXButton id="btManage" fx:id="btManage" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutY="74.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="84.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="24.0">
                <image>
-                  <Image url="@Icon/books_50px.png" />
+                  <Image url="@Icon/product_management_50px.png" />
                </image>
             </ImageView>
          </graphic>
@@ -52,21 +52,21 @@
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
          </padding>
          <tooltip>
-            <Tooltip autoHide="true" text="ຈັດການຂໍ້ມູນປື້ມ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+            <Tooltip autoHide="true" text="ຈັດການຂໍ້ມູນພື້ນຖານ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
                <font>
                   <Font name="Phetsarath OT" size="12.0" />
                </font>
             </Tooltip>
          </tooltip>
       </JFXButton>
-      <JFXButton id="btManagePerson" fx:id="btManagePerson" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutY="123.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="133.0">
+      <JFXButton id="btRegister" fx:id="btRegister" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutY="123.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="133.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="24.0">
                <image>
-                  <Image url="@Icon/management_50px.png" />
+                  <Image url="@Icon/add_user_male_50px.png" />
                </image>
             </ImageView>
          </graphic>
@@ -74,7 +74,7 @@
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
          </padding>
          <tooltip>
-            <Tooltip autoHide="true" text="ຈັດການຂໍ້ມູນບຸກຄົນ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+            <Tooltip autoHide="true" text="ລົງທະບຽນ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
                <font>
                   <Font name="Phetsarath OT" size="12.0" />
                </font>
@@ -103,14 +103,14 @@
             </Tooltip>
          </tooltip>
       </JFXButton>
-      <JFXButton id="btSetting" fx:id="btSetting" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutY="254.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="231.0">
+      <JFXButton id="btSearch" fx:id="btSearch" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutY="254.0" lineSpacing="2.0" prefHeight="40.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="231.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="24.0">
                <image>
-                  <Image url="@Icon/settings_50px.png" />
+                  <Image url="@Icon/search_folder_50px.png" />
                </image>
             </ImageView>
          </graphic>
@@ -118,26 +118,36 @@
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
          </padding>
          <tooltip>
-            <Tooltip autoHide="true" text="ຈັດການຄ່າປັບໃຫມ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+            <Tooltip autoHide="true" text="ຄົ້ນຫາຂໍ້ມູນ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
                <font>
                   <Font name="Phetsarath OT" size="12.0" />
                </font>
             </Tooltip>
          </tooltip>
       </JFXButton>
-      <JFXButton id="btLogOut" alignment="CENTER" cache="true" cacheHint="QUALITY" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="22.0" layoutY="687.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="31.0" pickOnBounds="false" prefHeight="31.0" prefWidth="31.0" style="-fx-background-radius: 15px 15px 15px 15px; -fx-background-color: #fff;" styleClass="button-color" stylesheets="@Style/buttonFont.css" AnchorPane.bottomAnchor="20.0">
+      <JFXButton id="btRentSend" fx:id="btRentSend" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutX="10.0" layoutY="264.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="48.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="281.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
          <graphic>
-            <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="24.0" fitWidth="24.0">
                <image>
-                  <Image url="@Icon/shutdown_100pxColor.png" />
+                  <Image url="@Icon/send_job_list_50px.png" />
                </image>
             </ImageView>
          </graphic>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
          <tooltip>
-            <Tooltip anchorLocation="CONTENT_TOP_RIGHT" contentDisplay="TOP" text="ອອກຈາກລະບົບ" />
+            <Tooltip autoHide="true" text="ຢືມປື້ມ-ສົ່ງປຶ້ມ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+               <font>
+                  <Font name="Phetsarath OT" size="12.0" />
+               </font>
+            </Tooltip>
          </tooltip>
       </JFXButton>
-      <Accordion layoutX="-7.0" layoutY="280.0" prefHeight="324.0" prefWidth="81.0" AnchorPane.topAnchor="280.0">
+      <Accordion layoutX="-7.0" layoutY="280.0" prefHeight="324.0" prefWidth="81.0" AnchorPane.topAnchor="331.0">
          <panes>
             <TitledPane fx:id="titleReport" alignment="CENTER" cache="true" contentDisplay="CENTER" graphicTextGap="15.0" prefHeight="303.0" prefWidth="81.0" styleClass="BoonBaan-size-14-Regular" textFill="WHITE">
                <graphic>
@@ -275,7 +285,7 @@
                               </Tooltip>
                            </tooltip>
                         </JFXButton>
-                        <JFXButton id="btReport" fx:id="btReportAdjustment" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
+                        <JFXButton id="btReport" fx:id="btReportAdjustment" alignment="CENTER" contentDisplay="CENTER" disable="true" focusTraversable="false" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE" visible="false">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -316,6 +326,18 @@
             </TitledPane>
          </panes>
       </Accordion>
+      <JFXButton id="btLogOut" alignment="CENTER" cache="true" cacheHint="QUALITY" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="22.0" layoutY="687.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="31.0" pickOnBounds="false" prefHeight="31.0" prefWidth="31.0" style="-fx-background-radius: 15px 15px 15px 15px; -fx-background-color: #fff;" styleClass="button-color" stylesheets="@Style/buttonFont.css" AnchorPane.bottomAnchor="20.0">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="25.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Icon/shutdown_100pxColor.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip anchorLocation="CONTENT_TOP_RIGHT" contentDisplay="TOP" text="ອອກຈາກລະບົບ" />
+         </tooltip>
+      </JFXButton>
    </children>
    <effect>
       <DropShadow height="0.0" radius="2.525" width="12.1" />

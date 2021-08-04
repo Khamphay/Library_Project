@@ -37,7 +37,7 @@
                                        </placeholder>
                                        <columns>
                                           <TableColumn id="colCenter" fx:id="colId" maxWidth="3000.0" prefWidth="152.0" text="ລະຫັດປະເພດ" />
-                                          <TableColumn fx:id="colName" prefWidth="414.0" text="ປະເພດປຶ້ມ" />
+                                          <TableColumn fx:id="colName" editable="false" prefWidth="414.0" text="ປະເພດປຶ້ມ" />
                                        </columns>
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

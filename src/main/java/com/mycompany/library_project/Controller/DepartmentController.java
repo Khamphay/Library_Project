@@ -44,12 +44,12 @@ public class DepartmentController implements Initializable {
     private RegisterController registerController = null;
     double x, y;
 
-    public void initConstructor(ManagePersonalCotroller managePersonalCotroller) {
+    public void initConstructor(ManageBookController manageBookController) {
         btClose.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                managePersonalCotroller.showMainMenuPerson();
+                manageBookController.showMainMenuBooks();
             }
 
         });

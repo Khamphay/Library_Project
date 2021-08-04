@@ -867,7 +867,6 @@ public class ImportController implements Initializable {
                         result = null;
                         return;
                     }
-                    System.out.println("Successfully: " + model.getWriteYear());
                     index++;
                 }
             } else {

@@ -425,7 +425,8 @@ public class RentBookController implements Initializable {
         LocalDate dateRent = rentDate.getValue();
         DayOfWeek days = dateRent.getDayOfWeek();
 
-        if (days.getDisplayName(TextStyle.FULL, Locale.getDefault()).equals("Sunday")) {
+        if (days.getDisplayName(TextStyle.FULL, Locale.getDefault()).equals("Sunday")|| days
+                .getDisplayName(TextStyle.FULL, Locale.getDefault()).equals("Saturday")) {
             rentDate.setValue(null);
             return;
         } else {

@@ -88,6 +88,15 @@
                                                       </ImageView>
                                                    </graphic>
                                                 </MenuItem>
+                                                <MenuItem fx:id="menuPrintBarcode" mnemonicParsing="false" text="ຟີມບາໂຄດປຶ້ມ">
+                                                   <graphic>
+                                                      <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@Icon/label_printer_50px.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </MenuItem>
                                               <MenuItem fx:id="menuEdit" mnemonicParsing="false" text="ແກ້ໄຂຂໍ້ມູນ">
                                                    <graphic>
                                                       <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">

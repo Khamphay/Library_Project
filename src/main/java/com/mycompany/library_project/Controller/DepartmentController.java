@@ -154,7 +154,7 @@ public class DepartmentController implements Initializable {
             if (e.getClickCount() >= 2 && tableDepartment.getSelectionModel().getSelectedItem() != null) {
 
                 btEdit.setDisable(false);
-                txtId.setDisable(true);
+                txtId.setEditable(false);
                 btSave.setDisable(true);
 
                 depertment = tableDepartment.getSelectionModel().getSelectedItem();
@@ -236,8 +236,7 @@ public class DepartmentController implements Initializable {
         validRules.setErrorDecorationEnabled(false);
         txtId.clear();
         txtName.clear();
-        if (txtId.isDisable())
-            txtId.setDisable(false);
+        txtId.setEditable(true);
         if (btSave.isDisable())
             btSave.setDisable(false);
         if (!btEdit.isDisable())

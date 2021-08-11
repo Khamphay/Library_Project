@@ -12,32 +12,26 @@ import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.EmployeeModel;
 
 import org.controlsfx.validation.Severity;
-import org.controlsfx.validation.ValidationResult;
-import org.controlsfx.validation.ValidationSupport;
-import org.controlsfx.validation.Validator;
+import org.controlsfx.validation.*;
 
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.*;
 import javafx.collections.*;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
+import javafx.collections.transformation.*;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.stage.*;
 import javafx.util.Callback;
 
 public class EmployeeController implements Initializable {
@@ -45,7 +39,7 @@ public class EmployeeController implements Initializable {
     private ValidationSupport validRules = new ValidationSupport();
     private ValidationSupport validRulePass = new ValidationSupport();
     private ValidationSupport validPassLengt = new ValidationSupport();
-    ManageBookController manageBookController = null;
+    private ManageBookController manageBookController = null;
     private EmployeeModel employee = new EmployeeModel();
     private ResultSet rs = null;
     private String gender = "";
@@ -178,9 +172,8 @@ public class EmployeeController implements Initializable {
         rdbMale.setSelected(true);
         txtPassword.setDisable(false);
         txtRepassword.setDisable(false);
+        txtId.setEditable(true);
 
-        if (txtId.isDisable())
-            txtId.setDisable(false);
         if (btSave.isDisable())
             btSave.setDisable(false);
         if (!btSave.isDisable())
@@ -262,12 +255,11 @@ public class EmployeeController implements Initializable {
 
                     } else {
                         validRules.setErrorDecorationEnabled(true);
-                        alertMessage.showWarningMessage("Save Warning",
-                                "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
+                        alertMessage.showWarningMessage("Save Warning", "Please chack your information and try again.",
+                                4, Pos.BOTTOM_RIGHT);
                     }
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4,
-                            Pos.BOTTOM_RIGHT);
+                    alertMessage.showErrorMessage("Save Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
                 }
             }
         });
@@ -292,17 +284,15 @@ public class EmployeeController implements Initializable {
                         if (employee.updateData() > 0) {
                             showData();
                             clearText();
-                            alertMessage.showCompletedMessage("Edited", "Edit data successfully.", 4,
-                                    Pos.BOTTOM_RIGHT);
+                            alertMessage.showCompletedMessage("Edited", "Edit data successfully.", 4, Pos.BOTTOM_RIGHT);
                         }
                     } else {
                         validRules.setErrorDecorationEnabled(true);
-                        alertMessage.showWarningMessage("Edit Warning",
-                                "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
+                        alertMessage.showWarningMessage("Edit Warning", "Please chack your information and try again.",
+                                4, Pos.BOTTOM_RIGHT);
                     }
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage("Edit Error", "Error: " + e.getMessage(), 4,
-                            Pos.BOTTOM_RIGHT);
+                    alertMessage.showErrorMessage("Edit Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
                 }
             }
         });
@@ -351,7 +341,7 @@ public class EmployeeController implements Initializable {
 
                     btEdit.setDisable(false);
                     btSave.setDisable(true);
-                    txtId.setDisable(true);
+                    txtId.setEditable(false);
                     txtPassword.setDisable(true);
                     txtRepassword.setDisable(true);
 
@@ -434,8 +424,7 @@ public class EmployeeController implements Initializable {
                     tableEmployee.setItems(sorted);
 
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage("Load Data", "Error" + e.getMessage(), 4,
-                            Pos.BOTTOM_RIGHT);
+                    alertMessage.showErrorMessage("Load Data", "Error" + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
                 }
             }
 

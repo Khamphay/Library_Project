@@ -36,7 +36,7 @@
                                           <Label text="ບໍ່ມີຂໍ້ມູນ" />
                                        </placeholder>
                                        <columns>
-                                          <TableColumn id="colCenter" fx:id="colId" maxWidth="3000.0" prefWidth="152.0" text="ລະຫັດປະເພດ" />
+                                          <TableColumn id="colCenter" fx:id="colId" maxWidth="3000.0" prefWidth="152.0" text="ລະຫັດປະເພດ" visible="false" />
                                           <TableColumn fx:id="colName" editable="false" prefWidth="414.0" text="ປະເພດປຶ້ມ" />
                                        </columns>
                                        <columnResizePolicy>

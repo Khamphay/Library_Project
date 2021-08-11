@@ -197,9 +197,8 @@ public class AuthorController implements Initializable {
         txtLname.clear();
         txtTel.clear();
         txtEmail.clear();
-        txtId.setDisable(false);
+        txtId.setEditable(true);
         gender = "";
-
         if (btSave.isDisable())
             btSave.setDisable(false);
         if (!btEdit.isDisable())
@@ -347,7 +346,7 @@ public class AuthorController implements Initializable {
 
                     btEdit.setDisable(false);
                     btSave.setDisable(true);
-                    txtId.setDisable(true);
+                    txtId.setEditable(false);
 
                     txtId.setText(tableAuthor.getSelectionModel().getSelectedItem().getAuthor_id());
                     txtFname.setText(tableAuthor.getSelectionModel().getSelectedItem().getFull_name());

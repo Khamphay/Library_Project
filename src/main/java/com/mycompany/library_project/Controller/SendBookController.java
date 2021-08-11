@@ -49,10 +49,6 @@ public class SendBookController implements Initializable {
     int page = 0, qtyOutOfDate = 0;
     double price = 0.0, allPrice = 0.0;
 
-    public void initConstructor(HomeController homeController) {
-        this.homeController = homeController;
-    }
-
     @FXML
     private StackPane stackPane;
     @FXML
@@ -62,7 +58,7 @@ public class SendBookController implements Initializable {
     private DatePicker dateRent, dateSend;
 
     @FXML
-    private JFXButton btSave, btBookLost, btCancel, btClose;
+    private JFXButton btSave, btBookLost, btCancel;
 
     @FXML
     public TableView<RentBookModel> tableSendBooks;
@@ -274,6 +270,9 @@ public class SendBookController implements Initializable {
                                             txtMemberName.getText(), Date.valueOf(dateRent.getValue()),
                                             Date.valueOf(dateSend.getValue()), txtOutDate.getText(),
                                             dcFormat.format(price * dateout)));
+
+                            if (tableSendBooks.getItems().size() > 0)
+                                btSave.setDisable(false);
                         }
                     } else {
                         validRules.setErrorDecorationEnabled(true);
@@ -299,6 +298,7 @@ public class SendBookController implements Initializable {
                         alertMessage.showCompletedMessage("Saved", "Send Book successfully", 4, Pos.BOTTOM_RIGHT);
                         clearText();
                         tableSendBooks.getItems().clear();
+                        btSave.setDisable(true);
                     } else
                         alertMessage.showWarningMessage("Saved", "Can not send book", 4, Pos.BOTTOM_RIGHT);
                 }
@@ -319,14 +319,6 @@ public class SendBookController implements Initializable {
             public void handle(ActionEvent event) {
                 clearTextField();
             }
-        });
-        btClose.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                homeController.showMainMenuHome();
-            }
-
         });
     }
 
@@ -378,6 +370,7 @@ public class SendBookController implements Initializable {
         initTable();
         initEvents();
         initRules();
+        btSave.setDisable(true);
         price = StaticCostPrice.OutOfDateCost;
         txtPrice.setText(dcFormat.format(price));
     }
@@ -406,6 +399,8 @@ public class SendBookController implements Initializable {
                         delete.setStyle(Style.buttonStyle);
                         delete.setOnAction(e -> {
                             tableSendBooks.getItems().remove(getIndex());
+                            if (tableSendBooks.getItems().size() == 0)
+                                btSave.setDisable(true);
                         });
                     }
 

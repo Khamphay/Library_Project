@@ -170,9 +170,7 @@ public class BookTypeController implements Initializable {
 
         txtTypeId.setText("");
         txtTypeName.setText("");
-
-        if (txtTypeId.isDisable())
-            txtTypeId.setDisable(false);
+        txtTypeId.setEditable(true);
         if (btSave.isDisable())
             btSave.setDisable(false);
         if (!btEdit.isDisable())
@@ -240,7 +238,7 @@ public class BookTypeController implements Initializable {
 
             btEdit.setDisable(false);
             btSave.setDisable(true);
-            txtTypeId.setDisable(true);
+            txtTypeId.setEditable(false);
 
             type = tableType.getSelectionModel().getSelectedItem();
             txtTypeId.setText(type.getTypeId());

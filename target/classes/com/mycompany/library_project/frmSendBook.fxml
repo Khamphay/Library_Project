@@ -10,7 +10,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -137,45 +136,12 @@
                </children>
             </StackPane>
          </center>
-         <top>
-            <AnchorPane id="acHeaderPane" prefHeight="34.0" prefWidth="1158.0" BorderPane.alignment="CENTER">
-               <children>
-                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="1127.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="23.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
-                     <graphic>
-                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Icon/no_50px.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <font>
-                        <Font size="1.0" />
-                     </font>
-                     <tooltip>
-                        <Tooltip anchorLocation="CONTENT_TOP_RIGHT" autoHide="true" text="ປິດຟອມ" />
-                     </tooltip>
-                  </JFXButton>
-                  <Label graphicTextGap="10.0" layoutX="14.0" layoutY="10.0" prefHeight="32.0" prefWidth="161.0" styleClass="label-size-16" text="ສົ່ງປື້ມ" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="1.0" AnchorPane.topAnchor="2.0">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0">
-                           <image>
-                              <Image url="@Icon/sendBooks.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Label>
-               </children>
-            </AnchorPane>
-         </top>
          <effect>
             <DropShadow />
          </effect>
          <StackPane.margin>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            <Insets />
          </StackPane.margin>
-         <padding>
-            <Insets bottom="4.0" left="2.0" right="2.0" />
-         </padding>
       </BorderPane>
    </children>
 </StackPane>

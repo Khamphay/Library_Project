@@ -517,11 +517,11 @@
   -fx-font-family: "BoonBaan";
 }
 
-.tab-pane {
+/* .tab-pane {
   -fx-border-color: #101d3d;
   -fx-background-color: #f3f3f3;
   -fx-font-family: "BoonBaan";
-}
+} */
 
 #acHeaderPane {
   -fx-background-color: #d1d1d1;

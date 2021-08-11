@@ -2,34 +2,33 @@ package com.mycompany.library_project.Controller;
 
 import javafx.beans.value.*;
 import javafx.collections.*;
+import javafx.concurrent.Task;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.stage.*;
 
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.mycompany.library_project.App;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
+import com.mycompany.library_project.Report.CreateReport;
 
-import org.controlsfx.validation.Severity;
-import org.controlsfx.validation.ValidationSupport;
-import org.controlsfx.validation.Validator;
+import org.controlsfx.control.MaskerPane;
+import org.controlsfx.validation.*;
 
 public class AddBookController implements Initializable {
 
@@ -43,6 +42,9 @@ public class AddBookController implements Initializable {
     private AuthorModel author = new AuthorModel();
     private DialogMessage dialog = new DialogMessage();
     private BookDetailModel addBook = new BookDetailModel();
+    private Task<Void> task = null;
+    private MaskerPane masker = new MaskerPane();
+
     private ArrayList<AuthorModel> author_id = null;
     private ArrayList<String> arr_type, arr_category;
     private ObservableList<String> status = FXCollections.observableArrayList("ຫວ່າງ", "ກຳລ້ງຢືມ", "ເສຍ");;
@@ -151,6 +153,8 @@ public class AddBookController implements Initializable {
         }
     }
 
+    @FXML
+    private StackPane stackPane;
     @FXML
     private BorderPane borderPane;
 
@@ -312,7 +316,9 @@ public class AddBookController implements Initializable {
         txtName.clear();
         txtISBN.clear();
         txtPage.clear();
+        txtYear.clear();
         txtQty.clear();
+        txtQty.setEditable(true);
         txtBarcode.clear();
         txtDetail.clear();
         cmbCagtegory.getSelectionModel().clearSelection();
@@ -686,6 +692,37 @@ public class AddBookController implements Initializable {
         });
     }
 
+    private void printBarcode(String book_id) {
+        task = new Task<Void>() {
+
+            @Override
+            protected Void call() throws Exception {
+                masker.setVisible(true);
+                masker.setProgressVisible(true);
+                final CreateReport printBarcode = new CreateReport();
+                final Map<String, Object> map = new HashMap<String, Object>();
+
+                map.put("bookid", book_id);
+                printBarcode.showReport(map, "printBarcodeByBookId.jrxml", "Print Barcode Error");
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                masker.setVisible(false);
+                masker.setProgressVisible(false);
+            }
+
+            @Override
+            protected void failed() {
+                masker.setVisible(false);
+                masker.setProgressVisible(false);
+                dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການພິມບາໂຄດ", task.getException());
+            }
+        };
+        new Thread(task).start();
+    }
+
     @FXML
     private void btSave(ActionEvent event) {
         // cmbType.g
@@ -696,7 +733,7 @@ public class AddBookController implements Initializable {
                     && !cmbType.getSelectionModel().getSelectedItem().equals(null)
                     && !cmbTable.getSelectionModel().getSelectedItem().equals(null)) {
 
-                if (addBook.findById(txtId.getText()).next()) {
+                if (bookid == "" && addBook.findById(txtId.getText()).next()) {// Todo: chack if insert new book
                     dialog.showWarningDialog(null,
                             "ລະຫັດປຶ້ມຊ້ຳກັບຂໍ້ມູນທີ່ມີຢູ່ໃນລະບົບກະລຸນາກວດສອບຂໍ້ມູນ ແລ້ວລອງບັນທຶກໃຫມ່ອີກຄັ້ງ");
                     return;
@@ -730,6 +767,7 @@ public class AddBookController implements Initializable {
                             // Todo: Save Write
                             if (addBook.saveWrite(listWrite) > 0) {
                                 msg = "Save data successfully.";
+                                printBarcode(txtId.getText());
                             }
                         }
                     } else {
@@ -795,6 +833,12 @@ public class AddBookController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        masker.setVisible(false);
+        masker.setText("ກຳລັງໂຫລດຂໍ້ມູນ, ກະລຸນາລໍຖ້າ...");
+        masker.setStyle("-fx-font-family: BoonBaan;");
+        stackPane.getChildren().add(masker);
+
         cmbStatus.setItems(status);
         cmbStatus.getSelectionModel().select(0);
         initRules();

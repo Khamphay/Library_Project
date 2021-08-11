@@ -36,7 +36,6 @@ public class RentBookController implements Initializable {
 
     private ValidationSupport validRules = new ValidationSupport();
     private ValidationSupport dateRules = new ValidationSupport();
-    private HomeController homeController = null;
     private MemberModel member = new MemberModel();
     private BookDetailModel book = new BookDetailModel();
     private RentBookModel rentBook = new RentBookModel();
@@ -51,10 +50,6 @@ public class RentBookController implements Initializable {
      * has renting in db
      */
     private int qty_can_rent = 0, bookInRent = 0;
-
-    public void initConstructor(HomeController homeController) {
-        this.homeController = homeController;
-    }
 
     @FXML
     private BorderPane borderPane;
@@ -117,6 +112,11 @@ public class RentBookController implements Initializable {
 
     private void addToRentBook() {
 
+        if (rentDate.getValue() == null || sendDate.getValue() == null) {
+            dialog.showWarningDialog(null, "ກະລຸນາເລືອກວັນທີຢືມ ແລະ ສົ່ງປຶ້ມ.");
+            return;
+        }
+
         LocalDate dateRent = rentDate.getValue();
         DayOfWeek days = dateRent.getDayOfWeek();
 
@@ -128,10 +128,6 @@ public class RentBookController implements Initializable {
                 && !txtBookId.getText().equals("") && !txtBookName.getText().equals("") && !txtCatg.getText().equals("")
                 && !txtType.getText().equals("")) {
             try {
-                if (rentDate.getValue() == null || sendDate.getValue() == null) {
-                    dialog.showWarningDialog(null, "ກະລຸນາເລືອກວັນທີຢືມ ແລະ ສົ່ງປຶ້ມ.");
-                    return;
-                }
 
                 if (status.equals("ກຳລັງຢືມ")) {
                     dialog.showWarningDialog(null, "ປື້ມຫົວນີ້ຖຶກຢືມໄປແລ້ວ, ດັັ່ງນັ້ນບໍ່ສາມາດຢືມໄດ້");
@@ -162,6 +158,8 @@ public class RentBookController implements Initializable {
                         page = "";
                         table = "";
                         tableLog = "";
+                        if (tableRentBook.getItems().size() > 0)
+                            btSave.setDisable(false);
 
                     } else
                         dialog.showWarningDialog(null, "ບັດນີ້ສາມາດຢືມປຶ້ມໄດ້ຫຼາຍສຸດ " + qty_can_rent
@@ -382,6 +380,7 @@ public class RentBookController implements Initializable {
                                     alertMessage.showCompletedMessage("Rent Book Successfully", result, 4,
                                             Pos.BOTTOM_RIGHT);
                                     tableRentBook.getItems().clear();
+                                    btSave.setDisable(true);
                                     clearText();
                                 }
                             }
@@ -401,14 +400,6 @@ public class RentBookController implements Initializable {
             }
 
         });
-        btClose.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                homeController.showMainMenuHome();
-            }
-
-        });
     }
 
     @Override
@@ -420,6 +411,7 @@ public class RentBookController implements Initializable {
         initTable();
         initRules();
         initEvents();
+        btSave.setDisable(true);
         // cancalarDate();
         rentDate.setValue(LocalDate.now());
         LocalDate dateRent = rentDate.getValue();
@@ -453,6 +445,8 @@ public class RentBookController implements Initializable {
                         delete.setStyle(Style.buttonStyle);
                         delete.setOnAction(e -> {
                             tableRentBook.getItems().remove(getIndex());
+                            if (tableRentBook.getItems().size() == 0)
+                                btSave.setDisable(true);
                         });
                     }
 

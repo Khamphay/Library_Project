@@ -32,7 +32,7 @@
                                     <Label text="ບໍ່ມີຂໍ້ມູນ" />
                                  </placeholder>
                                  <columns>
-                                    <TableColumn fx:id="colId" maxWidth="3000.0" text="ລະຫັດ" />
+                                    <TableColumn fx:id="colId" maxWidth="3000.0" text="ລະຫັດ" visible="false" />
                                     <TableColumn fx:id="colFname" prefWidth="223.0" text="ຊື່ນັກແຕ່ງປຶ້ມ" />
                                     <TableColumn fx:id="colSname" prefWidth="180.0" text="ນາມສະກຸນ" />
                                     <TableColumn fx:id="colGender" maxWidth="2000.0" prefWidth="74.0" text="ເພດ" />

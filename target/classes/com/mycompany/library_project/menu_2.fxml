@@ -172,10 +172,10 @@
                               </ImageView>
                            </graphic>
                            <padding>
-                              <Insets bottom="1.0" left="4.0" right="1.0" top="1.0" />
+                              <Insets left="4.0" />
                            </padding>
                            <VBox.margin>
-                              <Insets left="6.0" />
+                              <Insets left="14.0" />
                            </VBox.margin>
                            <tooltip>
                               <Tooltip autoHide="true" text="ລາຍງານຂໍ້ມູນປຶ້ມ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
@@ -197,10 +197,10 @@
                               </ImageView>
                            </graphic>
                            <padding>
-                              <Insets bottom="1.0" left="4.0" right="1.0" top="1.0" />
+                              <Insets left="4.0" />
                            </padding>
                            <VBox.margin>
-                              <Insets left="6.0" />
+                              <Insets left="14.0" />
                            </VBox.margin>
                            <tooltip>
                               <Tooltip autoHide="true" text="ລາຍງານຂໍ້ມູນຢືມປຶ້ມ-ສົ່ງປຶ້ມ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
@@ -222,10 +222,10 @@
                               </ImageView>
                            </graphic>
                            <padding>
-                              <Insets bottom="1.0" left="4.0" right="1.0" top="1.0" />
+                              <Insets left="4.0" />
                            </padding>
                            <VBox.margin>
-                              <Insets left="6.0" />
+                              <Insets left="14.0" />
                            </VBox.margin>
                            <tooltip>
                               <Tooltip autoHide="true" text="ລາຍງານຂໍ້ມູນນຳປຶ້ມເຂົ້າ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
@@ -247,10 +247,10 @@
                               </ImageView>
                            </graphic>
                            <padding>
-                              <Insets bottom="1.0" left="4.0" right="1.0" top="1.0" />
+                              <Insets left="4.0" />
                            </padding>
                            <VBox.margin>
-                              <Insets left="6.0" />
+                              <Insets left="14.0" />
                            </VBox.margin>
                            <tooltip>
                               <Tooltip autoHide="true" text="ລາຍງານຂໍ້ມູນປຶ້ມເສຍ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
@@ -272,10 +272,10 @@
                               </ImageView>
                            </graphic>
                            <padding>
-                              <Insets bottom="1.0" left="4.0" right="1.0" top="1.0" />
+                              <Insets left="4.0" />
                            </padding>
                            <VBox.margin>
-                              <Insets left="6.0" />
+                              <Insets left="14.0" />
                            </VBox.margin>
                            <tooltip>
                               <Tooltip autoHide="true" text="ລາຍງານຂໍ້ມູນສະມາຊິກ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">

@@ -8,8 +8,6 @@ import java.util.ResourceBundle;
 
 import com.mycompany.library_project.App;
 import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
-import com.mycompany.library_project.Model.BookLostModel;
-import com.mycompany.library_project.Model.ListBookModel;
 import com.mycompany.library_project.Model.MemberModel;
 
 import javafx.application.Platform;
@@ -17,18 +15,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
 public class ManageBookController implements Initializable {
 
     private DialogMessage dialog = new DialogMessage();
     public static BorderPane mainBorder = null;
-    private BookLostModel booklost = new BookLostModel();
+    // private BookLostModel booklost = new BookLostModel();
     private MemberModel memberModel = new MemberModel();
     private ResultSet rs = null;
-    private ListBookModel listbook = null;
+    // private ListBookModel listbook = null;
 
     @FXML
     private Text txtType, txtCategory, txtBook, txtBookLost, txtTableLog, txtMember, txtEmployee, txtAuthor, txtDep;
@@ -59,37 +56,28 @@ public class ManageBookController implements Initializable {
     }
 
     // Todo: Book List
-    private void showBookLostList() {
-        pnItemsBook.getChildren().clear();
-        Platform.runLater(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    int number = 1;
-                    rs = booklost.findByDate(Date.valueOf(LocalDate.now()));
-                    while (rs.next()) {
-
-                        listbook = new ListBookModel(number, rs.getString("barcode"), rs.getString("book_name"),
-                                rs.getString("catg_name"), rs.getString("type_name"), rs.getString("tableid"),
-                                rs.getString("tablelog"), rs.getDate("date_pay"));
-
-                        final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmBookLostList.fxml"));
-                        final Parent listRoot = loader.load();
-                        final BookLostListController bookLostListController = loader.getController();
-                        bookLostListController.initConstructor(listbook);
-                        final Node node = listRoot;
-                        pnItemsBook.getChildren().add(node);
-
-                        number++;
-                    }
-                    textTotalListBook.setText(pnItemsBook.getChildren().size() + " ລາຍການ");
-                } catch (Exception e) {
-                    dialog.showExcectionDialog("Error", null, "ມີບັນຫາໃນການໂຫຼດຂໍ້ມູນປຶ້ມເສຍ", e);
-                }
-            }
-        });
-    }
+    /*
+     * private void showBookLostList() { pnItemsBook.getChildren().clear();
+     * Platform.runLater(new Runnable() {
+     * 
+     * @Override public void run() { try { int number = 1; rs =
+     * booklost.findByDate(Date.valueOf(LocalDate.now())); while (rs.next()) {
+     * 
+     * listbook = new ListBookModel(number, rs.getString("barcode"),
+     * rs.getString("book_name"), rs.getString("catg_name"),
+     * rs.getString("type_name"), rs.getString("tableid"), rs.getString("tablelog"),
+     * rs.getDate("date_pay"));
+     * 
+     * final FXMLLoader loader = new
+     * FXMLLoader(App.class.getResource("frmBookLostList.fxml")); final Parent
+     * listRoot = loader.load(); final BookLostListController bookLostListController
+     * = loader.getController(); bookLostListController.initConstructor(listbook);
+     * final Node node = listRoot; pnItemsBook.getChildren().add(node);
+     * 
+     * number++; } textTotalListBook.setText(pnItemsBook.getChildren().size() +
+     * " ລາຍການ"); } catch (Exception e) { dialog.showExcectionDialog("Error", null,
+     * "ມີບັນຫາໃນການໂຫຼດຂໍ້ມູນປຶ້ມເສຍ", e); } } }); }
+     */
 
     // Todo: Personals List
     private void showMemberEnd() {
@@ -260,7 +248,7 @@ public class ManageBookController implements Initializable {
         txtAuthor.setText(HomeController.summaryValue[8] + " ຄົນ");
         txtDep.setText(HomeController.summaryValue[9] + " ພາກວິຊາ");
 
-        showBookLostList();
+        // showBookLostList();
         showMemberEnd();
     }
 

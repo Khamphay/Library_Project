@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="tabRentBook" prefHeight="725.0" prefWidth="1365.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.RentSendController">
+   <children>
+      <BorderPane id="borderContent" prefHeight="200.0" prefWidth="200.0">
+         <center>
+            <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" styleClass="BoonBaan-size-14-Regular" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+              <tabs>
+                <Tab fx:id="tabRent" text="ຢືມປຶ້ມ" />
+                <Tab fx:id="tabSend" text="ສົ່ງປຶ້ມ" />
+                  <Tab fx:id="tabIinforHistory" text="ຂໍ້ມູນຢືມປຶ້ມ - ສົ່ງປຶ້ມ" />
+              </tabs>
+            </TabPane>
+         </center>
+         <top>
+            <AnchorPane id="acHeaderPane" prefHeight="32.0" prefWidth="1158.0" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="1127.0" layoutY="4.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icon/no_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="1.0" />
+                     </font>
+                     <tooltip>
+                        <Tooltip anchorLocation="CONTENT_TOP_RIGHT" autoHide="true" text="ປິດຟອມ" />
+                     </tooltip>
+                  </JFXButton>
+                  <Label graphicTextGap="10.0" layoutX="14.0" layoutY="15.0" prefHeight="32.0" prefWidth="161.0" styleClass="label-size-16" text="ຢືມ-ສົ່ງປື້ມ" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="1.0" AnchorPane.topAnchor="2.0">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0">
+                           <image>
+                              <Image url="@Icon/study_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </top>
+         <StackPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </StackPane.margin>
+         <effect>
+            <DropShadow />
+         </effect>
+      </BorderPane>
+   </children>
+</StackPane>

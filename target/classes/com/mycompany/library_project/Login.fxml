@@ -5,6 +5,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
@@ -27,7 +28,7 @@
                         <Image url="@Icon/reading.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="137.0" layoutY="77.0" styleClass="label-size-20" text="Login" textFill="#051336" />
+                  <Label alignment="CENTER" layoutX="1.0" layoutY="83.0" prefHeight="29.0" prefWidth="343.0" styleClass="label-size-20" text="ເຂົ້າສູ່ລະບົບ" textFill="#051336" />
                   <TextField id="text-user" fx:id="txtUsername" layoutX="56.0" layoutY="150.0" prefHeight="30.0" prefWidth="250.0" promptText="ຊື່ຜູ້ໃຊ້">
                      <padding>
                         <Insets left="30.0" />
@@ -82,7 +83,7 @@
                         <Image url="@Icon/secure_50px.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="76.0" fitWidth="106.0" layoutX="125.0" layoutY="7.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="76.0" fitWidth="106.0" layoutX="135.0" layoutY="3.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Icon/userLogin.png" />
                      </image>
@@ -140,14 +141,18 @@
             </AnchorPane>
             <AnchorPane layoutX="37.0" layoutY="41.0" prefHeight="519.0" prefWidth="320.0" style="-fx-background-color: #051336; -fx-background-radius: 8px 0px 0px 8px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label layoutX="50.0" layoutY="31.0" styleClass="label-size-20" text="Welcom To FNS Library" textFill="WHITE" />
-                  <ImageView fitHeight="241.0" fitWidth="237.0" layoutX="43.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="31.0" prefHeight="29.0" prefWidth="320.0" styleClass="label-size-20" text="ຍິນດິຕ້ອນຮັບເຂົ້າສູ່ຫໍສະໝຸດ ຄວທ" textFill="WHITE" />
+                  <ImageView fitHeight="237.0" fitWidth="267.0" layoutX="44.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Icon/Logo_FNS.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="50.0" layoutY="376.0" styleClass="label-size-16" text="ຫໍສະໝຸດ ຄະນະວິທະຍາສາດທຳມະຊາດ" textFill="WHITE" />
-                  <Label layoutX="85.0" layoutY="350.0" styleClass="label-size-16" text="ຄະນະວິທະຍາສາດທຳມະຊາດ" textFill="WHITE" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="376.0" prefHeight="23.0" prefWidth="320.0" styleClass="label-size-16" text="ຫໍສະໝຸດ ຄະນະວິທະຍາສາດທຳມະຊາດ" textFill="WHITE" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="2.0" layoutY="350.0" prefHeight="23.0" prefWidth="320.0" styleClass="label-size-16" text="ຄະນະວິທະຍາສາດທຳມະຊາດ" textFill="WHITE" />
+                  <Label contentDisplay="CENTER" layoutX="44.0" layoutY="422.0" prefHeight="23.0" prefWidth="130.0" styleClass="label-size-16" text="ພັດທະນາໂດຍ:" textFill="WHITE" />
+                  <Label contentDisplay="CENTER" layoutX="61.0" layoutY="452.0" prefHeight="23.0" prefWidth="250.0" styleClass="label-size-16" text="ທ້າວ ຄຳໄຟ ເສຍລິມົວ" textFill="WHITE" />
+                  <Label contentDisplay="CENTER" layoutX="61.0" layoutY="475.0" prefHeight="23.0" prefWidth="237.0" styleClass="label-size-16" text="ທ້າວ ເຢີ ຊົ່ງ" textFill="WHITE" />
+                  <Separator layoutX="15.0" layoutY="416.0" prefHeight="1.0" prefWidth="296.0" />
                </children>
             </AnchorPane>
             <!-- <JFXSpinner layoutX="262.0" layoutY="64.0" prefHeight="103.0" prefWidth="104.0" style="-fx-background-color: #0000;" /> -->

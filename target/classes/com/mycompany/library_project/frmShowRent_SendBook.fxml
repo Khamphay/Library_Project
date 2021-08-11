@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -9,7 +8,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -17,41 +15,10 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.Color?>
-<?import javafx.scene.text.Font?>
 
 <StackPane fx:id="stackPane" prefHeight="741.0" prefWidth="1405.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.ShowRentSendController">
    <children>
       <BorderPane id="borderContent" prefHeight="701.0" prefWidth="1330.0">
-         <top>
-            <AnchorPane id="acHeaderPane" fx:id="acHeaderPane" prefHeight="34.0" prefWidth="999.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label graphicTextGap="10.0" prefHeight="32.0" prefWidth="161.0" styleClass="BoonBaan-size-16" text="ຂໍ້ມູນຢືມ-ສົ່ງປຶ້ມ" textAlignment="CENTER" textFill="WHITE">
-                     <graphic>
-                        <ImageView fitHeight="24.0" fitWidth="24.0">
-                           <image>
-                              <Image url="@Icon/checklist.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Label>
-                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
-                     <graphic>
-                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@Icon/no_50px.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <font>
-                        <Font size="1.0" />
-                     </font>
-                     <tooltip>
-                        <Tooltip anchorLocation="CONTENT_TOP_RIGHT" autoHide="true" text="ປິດຟອມ" />
-                     </tooltip>
-                  </JFXButton>
-               </children>
-            </AnchorPane>
-         </top>
          <center>
             <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <content>
@@ -121,11 +88,8 @@
             <DropShadow />
          </effect>
          <StackPane.margin>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            <Insets />
          </StackPane.margin>
-         <padding>
-            <Insets bottom="4.0" left="2.0" right="2.0" />
-         </padding>
       </BorderPane>
    </children>
 </StackPane>

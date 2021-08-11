@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane id="stackPane" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.AddBookController">
+<StackPane id="stackPane" fx:id="stackPane" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.AddBookController">
    <children>
       <BorderPane id="borderContent" fx:id="borderPane" prefHeight="704.0" prefWidth="1149.0">
          <center>
@@ -177,7 +177,7 @@
                         <Font size="1.0" />
                      </font>
                   </JFXButton>
-                  <Label graphicTextGap="10.0" layoutX="14.0" layoutY="12.0" prefHeight="32.0" prefWidth="161.0" styleClass="label-size-16" text="ນຳປຶ້ມເຂົ້າ" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="1.0" AnchorPane.topAnchor="1.0">
+                  <Label graphicTextGap="10.0" layoutX="14.0" layoutY="12.0" prefHeight="32.0" prefWidth="161.0" styleClass="label-size-16" text="ເພີ່ມຂໍ້ມູນປຶ້ມ" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="1.0" AnchorPane.topAnchor="1.0">
                      <graphic>
                         <ImageView fitHeight="26.0" fitWidth="26.0">
                            <image>

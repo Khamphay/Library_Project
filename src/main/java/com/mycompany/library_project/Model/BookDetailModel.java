@@ -458,7 +458,7 @@ public class BookDetailModel implements DataAccessObject {
             ps = HomeController.con.prepareStatement(sql);
             HomeController.con.setAutoCommit(false);
             for (BookDetailModel val : list) {
-                ps.setString(1, val.getBookId());
+                ps.setString(1, val.getBarcode());// Todo: Use 'barcode' for get the 'book id'
                 ps.setString(2, val.getStatus()); // Todo: use variable 'status' for get the 'author id' (ໃຊ້ຕົວປ່ຽນ
                                                   // status ເກັບຂໍ້ມູນລະຫັດນັກແຕ່ງ )
                 ps.addBatch();
@@ -471,7 +471,7 @@ public class BookDetailModel implements DataAccessObject {
             }
             return result;
         } catch (SQLException e) {
-            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນແຕ່ງປຶ້ມ", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນການແຕ່ງປຶ້ມ", e);
             return 0;
         } finally {
             // ps.close();

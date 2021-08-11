@@ -19,7 +19,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="bpManageBook" prefHeight="954.0" prefWidth="1398.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.ManageBookController">
+<BorderPane fx:id="bpManageBook" prefHeight="741.0" prefWidth="1398.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.ManageBookController">
    <center>
       <ScrollPane fx:id="scrollMenu" fitToHeight="true" fitToWidth="true" prefHeight="966.0" prefWidth="1398.0">
          <content>
@@ -159,7 +159,7 @@
                               <Text fx:id="txtDep" fill="WHITE" layoutX="56.0" layoutY="62.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="5 ພາກວິຊາ" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="50.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="34.0" layoutY="330.0" prefHeight="280.0" prefWidth="1313.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 5px 5px 5px 5px;" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="330.0">
+                        <AnchorPane layoutX="34.0" layoutY="330.0" prefHeight="382.0" prefWidth="1318.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 5px 5px 5px 5px;" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="330.0">
                            <effect>
                               <DropShadow height="18.03" offsetX="1.0" offsetY="1.0" radius="8.515" width="18.03">
                                  <color>
@@ -214,67 +214,7 @@
                               </ImageView>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="34.0" layoutY="647.0" minHeight="-Infinity" prefHeight="275.0" prefWidth="1318.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 5px 5px 5px 5px;" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="647.0">
-                           <effect>
-                              <DropShadow height="18.03" offsetX="1.0" offsetY="1.0" radius="8.515" width="18.03">
-                                 <color>
-                                    <Color green="0.1411764770746231" blue="0.29019609093666077" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                           <children>
-                              <Line endX="1209.2928466796875" endY="-1.0138750076293945E-4" layoutX="102.70710754394531" layoutY="83.7072081565857" startX="-100.0" stroke="#1d0054" AnchorPane.topAnchor="83.0" />
-                              <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="2.0" layoutY="85.0" prefHeight="229.0" prefWidth="1309.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="85.0">
-                                 <content>
-                                    <VBox fx:id="pnItemsBook" alignment="CENTER" minWidth="-Infinity" prefHeight="386.0" prefWidth="1081.0">
-                                       <children>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-16" text="ບໍ່ມີຂໍ້ມູນ" textAlignment="CENTER" wrappingWidth="1297.13671875">
-                                             <VBox.margin>
-                                                <Insets top="30.0" />
-                                             </VBox.margin>
-                                          </Text>
-                                       </children>
-                                    </VBox>
-                                 </content>
-                              </ScrollPane>
-                              <HBox fx:id="hbox" alignment="CENTER_LEFT" layoutY="52.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="1291.0" AnchorPane.topAnchor="52.0">
-                                 <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
-                                 </cursor>
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລຳດັບ" textAlignment="CENTER" wrappingWidth="65.79999923706055">
-                                       <HBox.margin>
-                                          <Insets left="4.0" />
-                                       </HBox.margin>
-                                    </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລະຫັດ Barcode" wrappingWidth="144.79999923706055">
-                                       <HBox.margin>
-                                          <Insets left="4.0" />
-                                       </HBox.margin>
-                                    </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊື່ປຶ້ມ" wrappingWidth="279.79999923706055">
-                                       <HBox.margin>
-                                          <Insets left="4.0" />
-                                       </HBox.margin>
-                                    </Text>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ໝວດປຶ້ມ" wrappingWidth="237.79999923706055" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ປະເພດປຶ້ມ" wrappingWidth="236.79999923706055" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ເລກຕູ້" textAlignment="CENTER" wrappingWidth="99.79999923706055" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລ໋ອກຕູ້" textAlignment="CENTER" wrappingWidth="99.79999923706055" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ວັນທີ" textAlignment="CENTER" wrappingWidth="108.79999923706055" />
-                                 </children>
-                              </HBox>
-                              <Label styleClass="BoonBaan-size-16" text="ການແຈ້ງຂໍ້ມູນປຶ້ມເສຍ" AnchorPane.leftAnchor="56.0" AnchorPane.topAnchor="6.0" />
-                              <Text fx:id="textTotalListBook" layoutX="58.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="0 ລາຍການ" AnchorPane.leftAnchor="58.0" AnchorPane.topAnchor="28.766666412353516" />
-                              <ImageView fitHeight="47.0" fitWidth="47.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="9.0">
-                                 <image>
-                                    <Image url="@Icon/notification_50px.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </AnchorPane>
                         <Separator layoutY="297.0" prefHeight="0.0" prefWidth="1255.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                        <Separator layoutY="632.0" prefHeight="0.0" prefWidth="1255.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </children>

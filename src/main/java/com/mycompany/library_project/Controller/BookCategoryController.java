@@ -183,8 +183,7 @@ public class BookCategoryController implements Initializable {
 
         txtcatgId.setText("");
         txtcatgName.setText("");
-        if (txtcatgId.isDisable())
-            txtcatgId.setDisable(false);
+        txtcatgId.setEditable(true);
         if (btSave.isDisable())
             btSave.setDisable(false);
         if (!btEdite.isDisable())
@@ -199,7 +198,7 @@ public class BookCategoryController implements Initializable {
 
             btEdite.setDisable(false);
             btSave.setDisable(true);
-            txtcatgId.setDisable(true);
+            txtcatgId.setEditable(false);
 
             CategoryModel selectCatg = tableCategory.getSelectionModel().getSelectedItem();
             txtcatgId.setText(selectCatg.getCatgId());

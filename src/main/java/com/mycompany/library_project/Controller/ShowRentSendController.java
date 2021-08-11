@@ -19,7 +19,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
 import javafx.collections.transformation.*;
 import javafx.concurrent.Task;
-import javafx.event.*;
 import javafx.fxml.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -31,7 +30,6 @@ import javafx.util.Callback;
 
 public class ShowRentSendController implements Initializable {
 
-    private HomeController homeController = null;
     private AlertMessage alertMessage = new AlertMessage();
     private MaskerPane masker = new MaskerPane();
     // private DialogMessage dialog = null;
@@ -43,9 +41,6 @@ public class ShowRentSendController implements Initializable {
     private DialogMessage dialog = new DialogMessage();
     private ArrayList<String> autobarcode = null;
 
-    public void initConstructor(HomeController homeController) {
-        this.homeController = homeController;
-    }
 
     @FXML
     private StackPane stackPane;
@@ -56,8 +51,6 @@ public class ShowRentSendController implements Initializable {
     @FXML
     private TextField txtSearch;
 
-    @FXML
-    private JFXButton btClose;
 
     @FXML
     private TableView<ShowRentSendModel> tableShow;
@@ -240,14 +233,6 @@ public class ShowRentSendController implements Initializable {
         });
         rdbSend.setOnAction(event -> {
             showData();
-        });
-
-        btClose.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                homeController.showMainMenuHome();
-            }
         });
     }
 

@@ -21,6 +21,8 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -28,7 +30,7 @@ import com.jfoenix.controls.*;
 import com.mycompany.library_project.*;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.BookDetailModel;
-import com.mycompany.library_project.config.CreateLogFile;
+import com.mycompany.library_project.Report.CreateReport;
 
 import org.controlsfx.control.MaskerPane;
 
@@ -42,8 +44,8 @@ public class BookController implements Initializable {
     private BookDetailModel bookDetail = new BookDetailModel();
     private ObservableList<BookDetailModel> data = null;
     private AlertMessage alertMessage = new AlertMessage();
-    private CreateLogFile logfile = new CreateLogFile();
     private MaskerPane masker = new MaskerPane();
+    private Task<Void> task = null;
     private DialogMessage dialog = new DialogMessage();
     public static Stage addNewBook = null;
     public static Stage addBarcode = null;
@@ -69,7 +71,7 @@ public class BookController implements Initializable {
     private JFXButton btAddNewBook, btClose;
 
     @FXML
-    private MenuItem menuList, menuEdit;
+    private MenuItem menuList, menuPrintBarcode, menuEdit;
 
     @FXML
     private TableView<BookDetailModel> tableBook;
@@ -105,7 +107,7 @@ public class BookController implements Initializable {
             addBarcode.initModality(Modality.APPLICATION_MODAL);
             addBarcode.show();
         } catch (Exception e) {
-            // TODO: handle exception
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມລາຍລະອຽດຂໍ້ມູນປຶ້ມ", e);
         }
     }
 
@@ -121,6 +123,43 @@ public class BookController implements Initializable {
             }
 
         });
+
+        menuPrintBarcode.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                task = new Task<Void>() {
+
+                    @Override
+                    protected Void call() throws Exception {
+                        masker.setVisible(true);
+                        masker.setProgressVisible(true);
+                        final CreateReport printBarcode = new CreateReport();
+                        final Map<String, Object> map = new HashMap<String, Object>();
+
+                        map.put("bookid", tableBook.getSelectionModel().getSelectedItem().getBookId());
+                        printBarcode.showReport(map, "printBarcodeByBookId.jrxml", "Print Barcode Error");
+                        return null;
+                    }
+
+                    @Override
+                    protected void succeeded() {
+                        masker.setVisible(false);
+                        masker.setProgressVisible(false);
+                    }
+
+                    @Override
+                    protected void failed() {
+                        masker.setVisible(false);
+                        masker.setProgressVisible(false);
+                        dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການພິມບາໂຄດ", task.getException());
+                    }
+                };
+                new Thread(task).start();
+            }
+
+        });
+
         menuEdit.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -129,9 +168,7 @@ public class BookController implements Initializable {
                     try {
                         showAddBook(tableBook.getSelectionModel().getSelectedItem());
                     } catch (Exception e) {
-                        alertMessage.showErrorMessage("Open New Form", "Error: " + e.getMessage(), 4,
-                                Pos.BOTTOM_RIGHT);
-                        logfile.createLogFile("Open Form Edit Book Error", e);
+                        dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມ", e);
                     }
 
                 } else {
@@ -174,64 +211,52 @@ public class BookController implements Initializable {
             addNewBook.initModality(Modality.APPLICATION_MODAL);
             addNewBook.show();
         } catch (IOException e) {
-            alertMessage.showErrorMessage("Open New Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມ", e);
         }
     }
 
     public void showData() {
 
-        Task<Void> task = new Task<Void>() {
+        task = new Task<Void>() {
 
             @Override
             protected Void call() throws Exception {
                 masker.setVisible(true);
                 masker.setProgressVisible(true);
-                // Platform.runLater(new Runnable() {
 
-                // @Override
-                // public void run() {
-                try {
-                    data = FXCollections.observableArrayList();
-                    rs = bookDetail.findAll();
-                    while (rs.next()) {
-                        data.add(new BookDetailModel(rs.getString("book_id"), rs.getString("book_name"),
-                                rs.getString("ISBN"), rs.getInt("page"), rs.getInt("qty"), rs.getString("catg_name"),
-                                rs.getString("type_name"), rs.getString("table_id"), rs.getString("write_year"),
-                                rs.getString("detail")));
-                    }
-
-                    // tableBook.setItems(data); //Todo: if you don't filter to Search data bellow:
-                    // Todo: Search data
-                    FilteredList<BookDetailModel> filterBook = new FilteredList<BookDetailModel>(data, b -> true);
-                    txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
-                        filterBook.setPredicate(searchBook -> {
-                            if (newValue.isEmpty())
-                                return true;
-                            if ((searchBook.getBookId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                                    || searchBook.getBookName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                                    || searchBook.getISBN().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                                    || searchBook.getCatgId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                                    || searchBook.getTypeId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                                    || searchBook.getTableId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                                    || searchBook.getDetail().toLowerCase().indexOf(newValue.toLowerCase()) != -1))
-                                return true;
-                            else
-                                return false;
-                        });
-                    });
-
-                    SortedList<BookDetailModel> sorted = new SortedList<>(filterBook);
-                    sorted.comparatorProperty().bind(tableBook.comparatorProperty());
-                    tableBook.setItems(sorted);
-
-                } catch (Exception e) {
-                    alertMessage.showErrorMessage("Load data", "Error: " + e.getMessage(), 4,
-                            Pos.BOTTOM_RIGHT);
-                } finally {
-                    rs.close();
+                data = FXCollections.observableArrayList();
+                rs = bookDetail.findAll();
+                while (rs.next()) {
+                    data.add(new BookDetailModel(rs.getString("book_id"), rs.getString("book_name"),
+                            rs.getString("ISBN"), rs.getInt("page"), rs.getInt("qty"), rs.getString("catg_name"),
+                            rs.getString("type_name"), rs.getString("table_id"), rs.getString("write_year"),
+                            rs.getString("detail")));
                 }
-                // }
-                // });
+
+                // tableBook.setItems(data); //Todo: if you don't filter to Search data bellow:
+                // Todo: Search data
+                FilteredList<BookDetailModel> filterBook = new FilteredList<BookDetailModel>(data, b -> true);
+                txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                    filterBook.setPredicate(searchBook -> {
+                        if (newValue.isEmpty())
+                            return true;
+                        if ((searchBook.getBookId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                || searchBook.getBookName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                || searchBook.getISBN().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                || searchBook.getCatgId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                || searchBook.getTypeId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                || searchBook.getTableId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                                || searchBook.getDetail().toLowerCase().indexOf(newValue.toLowerCase()) != -1))
+                            return true;
+                        else
+                            return false;
+                    });
+                });
+
+                SortedList<BookDetailModel> sorted = new SortedList<>(filterBook);
+                sorted.comparatorProperty().bind(tableBook.comparatorProperty());
+                tableBook.setItems(sorted);
+
                 return null;
             }
 
@@ -247,7 +272,7 @@ public class BookController implements Initializable {
                 super.failed();
                 masker.setProgressVisible(false);
                 masker.setVisible(false);
-                alertMessage.showErrorMessage("Load Data", "Load Data Failed", 4, Pos.BOTTOM_RIGHT);
+                dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນ", task.getException());
             }
 
         };
@@ -365,8 +390,7 @@ public class BookController implements Initializable {
                                             showData();
                                         }
                                     } catch (Exception ex) {
-                                        alertMessage.showErrorMessage("Delete", "Error: " + ex.getMessage(), 4,
-                                                Pos.BOTTOM_RIGHT);
+                                        dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນ", ex);
                                     }
                             }
                         });

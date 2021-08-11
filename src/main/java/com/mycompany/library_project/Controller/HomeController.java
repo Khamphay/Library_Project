@@ -145,6 +145,18 @@ public class HomeController implements Initializable {
         }
     }
 
+    private void show_RentSendBook() {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmRentSendBooks.fxml"));
+            final Parent subroot = loader.load();
+            final RentSendController rentSendController = loader.getController();
+            rentSendController.initConstructor(this);
+            bpDisplay.setCenter(subroot);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
     private void showSubFrom(String subForm) {
         try {
             final FXMLLoader loader = new FXMLLoader(App.class.getResource(subForm));
@@ -216,6 +228,18 @@ public class HomeController implements Initializable {
                 }
             });
 
+            node.lookup("#btRentSend").setOnMouseClicked(new EventHandler<Event>() {
+
+                @Override
+                public void handle(Event event) {
+                    try {
+                        show_RentSendBook();
+                    } catch (Exception e) {
+                        dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການເປີດຟອມຢືມ-ສົ່ງປຶ້ມ", e);
+                    }
+                }
+            });
+
             node.lookup("#btLogOut").setOnMouseClicked(new EventHandler<Event>() {
 
                 @Override
@@ -275,37 +299,9 @@ public class HomeController implements Initializable {
         try {
             final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmShowRent_SendBook.fxml"));
             final Parent subroot = loader.load();
-            ShowRentSendController showRent_SendBookController = loader.getController();
-            showRent_SendBookController.initConstructor(this);
             bpDisplay.setCenter(subroot);
         } catch (Exception e) {
             dialog.showExcectionDialog("Error", null, "ການເປີດຟອມຈັດການຂໍ້ມູນປຶ້ມມີບັນຫາ", e);
-        }
-    }
-
-    @FXML
-    private void buttonRentBook_Action(ActionEvent event) throws Exception {
-        try {
-            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmRentBooks.fxml"));
-            final Parent subroot = loader.load();
-            RentBookController rentBookController = loader.getController();
-            rentBookController.initConstructor(this);
-            bpDisplay.setCenter(subroot);
-        } catch (Exception e) {
-            dialog.showExcectionDialog("Error", null, "ການເປີດຟອມຢືມປຶ້ມມີບັນຫາ", e);
-        }
-    }
-
-    @FXML
-    private void buttonSendBook_Action(ActionEvent event) throws Exception {
-        try {
-            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmSendBook.fxml"));
-            final Parent subroot = loader.load();
-            SendBookController sendBookController = loader.getController();
-            sendBookController.initConstructor(this);
-            bpDisplay.setCenter(subroot);
-        } catch (Exception e) {
-            dialog.showExcectionDialog("Error", null, "ການເປີດຟອມສົ່ງປຶ້ມມີບັນຫາ", e);
         }
     }
 

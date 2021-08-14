@@ -33,7 +33,8 @@
                                           <Label text="ບໍ່ມີຂໍ້ມູນ" />
                                        </placeholder>
                                        <columns>
-                                        <TableColumn fx:id="colBookId" prefWidth="104.0" styleClass="tablecolumn" text="ລະຫັດປຶ້ມ" />
+                                          <TableColumn fx:id="colRentID" prefWidth="95.0" styleClass="tablecolumn" text="ລະຫັດການຢືມ" visible="false" />
+                                        <TableColumn fx:id="colBookId" prefWidth="149.0" styleClass="tablecolumn" text="ລະຫັດປຶ້ມ" />
                                           <TableColumn fx:id="colBarcode" prefWidth="140.0" styleClass="tablecolumn" text="ລະຫັດ Barcode" />
                                         <TableColumn fx:id="colBookName" prefWidth="240.0" styleClass="tablecolumn" text="ຊື່ປຶ້ມ" />
                                           <TableColumn fx:id="colPage" prefWidth="88.0" styleClass="tablecolumn" text="ຈຳນວນໜ້າ" />

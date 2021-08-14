@@ -3,7 +3,6 @@ package com.mycompany.library_project.Controller;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import com.mycompany.library_project.App;
-import com.mycompany.library_project.MyConnection;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 import com.mycompany.library_project.ModelShow.*;
@@ -33,7 +32,7 @@ import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
 
-    public static Connection con = MyConnection.getConnect();
+    public static Connection con = null;
     public static String[] summaryValue = new String[10];
     private HamburgerSlideCloseTransition hamburgerTransition = null;
     private DialogMessage dialog = new DialogMessage();
@@ -274,6 +273,7 @@ public class HomeController implements Initializable {
 
     public void showMainMenuHome() {
         bpDisplay.setCenter(sclSubHome);
+        showRentBookOutOfDate();
     }
 
     @FXML

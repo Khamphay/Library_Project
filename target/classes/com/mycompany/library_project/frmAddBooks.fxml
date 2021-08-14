@@ -38,7 +38,6 @@
                                     <ComboBox fx:id="cmbStatus" layoutX="478.0" layoutY="197.0" prefHeight="31.0" prefWidth="257.0" promptText="ສະຖານະ" AnchorPane.leftAnchor="477.0" AnchorPane.topAnchor="198.0" />
                                     <ComboBox fx:id="cmbTable" layoutX="476.0" layoutY="274.0" prefHeight="31.0" prefWidth="85.0" promptText="ເລກຕູ້" AnchorPane.topAnchor="274.0" />
                                     <ComboBox fx:id="cmbtableLog" layoutX="581.0" layoutY="274.0" prefHeight="31.0" prefWidth="98.0" promptText="ລ໋ອກຕູ້" AnchorPane.topAnchor="274.0" />
-                                    <TextArea fx:id="txtBarcode" editable="false" layoutX="31.0" layoutY="124.0" prefHeight="328.0" prefWidth="161.0" promptText="ບາໂຄດປຶ້ມ" styleClass="BoonBaan-size-14-Regular" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="125.0" />
                                     <JFXButton alignment="CENTER" focusTraversable="false" layoutX="401.0" layoutY="518.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#btSave" prefHeight="35.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
@@ -73,7 +72,6 @@
                                        </padding>
                                     </JFXButton>
                                     <TextField fx:id="txtISBN" layoutX="214.0" layoutY="124.0" prefHeight="31.0" prefWidth="238.0" promptText="ISBN" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="124.0" />
-                                    <TextArea fx:id="txtDetail" layoutX="217.0" layoutY="342.0" prefHeight="112.0" prefWidth="517.0" promptText="ລາຍລະອຽດ" AnchorPane.leftAnchor="216.0" />
                                     <Label layoutX="77.0" layoutY="38.0" styleClass="BoonBaan-size-14" text="ລະຫັດປຶ້ມ" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="28.0" />
                                     <Label layoutX="214.0" layoutY="33.0" styleClass="BoonBaan-size-14" text="ຊື່ປຶ້ມ" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="28.0" />
                                     <Label layoutX="211.0" layoutY="104.0" styleClass="BoonBaan-size-14" text="ເລກ ISBN" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="103.0" />
@@ -153,6 +151,8 @@
                                           <Label layoutX="111.0" layoutY="-21.0" styleClass="BoonBaan-size-14" text="ແຕ່ງໂດຍ:" />
                                        </children>
                                     </AnchorPane>
+                                    <TextArea fx:id="txtBarcode" editable="false" layoutX="27.0" layoutY="130.0" prefHeight="325.0" prefWidth="167.0" promptText="ບາໂຄດປຶ້ມ" />
+                                    <TextArea fx:id="txtDetail" layoutX="216.0" layoutY="341.0" prefHeight="114.0" prefWidth="515.0" promptText="ລາຍລະອຽດ" />
                                  </children>
                               </AnchorPane>
                            </children>

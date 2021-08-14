@@ -269,18 +269,18 @@ public class ImportModel implements DataAccessObject {
         return 0;
     }
 
-    public String getMaxID() {
+    public int getMaxID() {
         try {
-            sql = "Select Max(import_id) as maxid From tbimport_book;";
+            sql = "select max(cast((substring(import_id,4,length(import_id))) as int)) as maxid from tbimport_book;";
             rs = HomeController.con.createStatement().executeQuery(sql);
             if (rs.next()) {
-                return rs.getString("maxid");
+                return rs.getInt("maxid");
             } else {
-                return null;
+                return 0;
             }
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາຈັດການລະຫັດການນຳປຶ້ມເຂົ້າ", e);
-            return null;
+            return 0;
         }
     }
 

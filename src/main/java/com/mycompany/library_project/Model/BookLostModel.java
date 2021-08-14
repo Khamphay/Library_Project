@@ -61,6 +61,7 @@ public class BookLostModel implements DataAccessObject {
     // Todo: Call by show book lost by member rentId
     public BookLostModel(String bookId, String barcode, String bookName, String page, String catg, String type,
             String table, String tableLog, String outDate, String pricePerBook) {
+
         this.bookId = bookId;
         this.barcode = barcode;
         this.bookName = bookName;
@@ -74,8 +75,10 @@ public class BookLostModel implements DataAccessObject {
     }
 
     // Todo: Call by show book lost by member rentId of date
-    public BookLostModel(String bookId, String barcode, String bookName, String page, String catg, String type,
+    public BookLostModel(String rentId, String bookId, String barcode, String bookName, String page, String catg,
+            String type,
             String table, String tableLog, Date rentDate, Date sendDate, String outDate, String pricePerBook) {
+        this.rentId = rentId;
         this.bookId = bookId;
         this.barcode = barcode;
         this.bookName = bookName;
@@ -386,7 +389,7 @@ public class BookLostModel implements DataAccessObject {
             int result = 0;
             sql = "INSERT INTO dblibrary.tbbooks_lost_detail (lost_id, barcode, book_price) VALUES(?, ?, ?)";
             ps = HomeController.con.prepareStatement(sql);
-            HomeController.con.commit();
+            HomeController.con.setAutoCommit(false);
             for (BookLostModel val : list) {
                 ps.setInt(1, val.getLost_id());
                 ps.setString(2, val.getBarcode());
@@ -432,7 +435,7 @@ public class BookLostModel implements DataAccessObject {
         try {
             sql = "call book_lost_Delete(?);";
             ps = HomeController.con.prepareStatement(sql);
-            ps.setString(1, getRentId());
+            ps.setInt(1, Integer.parseInt(id));
             return ps.executeUpdate();
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນປຶ້ມເສຍ", e);

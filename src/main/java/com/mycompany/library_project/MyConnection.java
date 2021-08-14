@@ -7,7 +7,6 @@ import com.mycompany.library_project.ControllerDAOModel.DialogMessage;
 public class MyConnection {
 
     public static String driver = "", dbtype = "", host = "", userName = "", password = "";
-
     public static Connection getConnect() {
         try {
             if (driver == null || dbtype == "" || dbtype == null || dbtype == "")
@@ -20,6 +19,7 @@ public class MyConnection {
         } catch (ClassNotFoundException | SQLException e) {
             DialogMessage dialog = new DialogMessage();
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເຊື່ອມຕໍ່ຖານຂໍ້ມູນ", e);
+            e.printStackTrace();
             return null;
         }
     }

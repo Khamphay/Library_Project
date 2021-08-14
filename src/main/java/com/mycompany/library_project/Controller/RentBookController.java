@@ -500,10 +500,10 @@ public class RentBookController implements Initializable {
 
     private String autoMaxID() {
         try {
-            String id = rentBook.getMaxID(), new_id = "";
-            if (id != null) {
-                int max_id = Integer.parseInt(id.substring(id.indexOf("T") + 1));
-                max_id = max_id + 1;
+            int id = rentBook.getMaxID();
+            String new_id = "";
+            if (id > 0) {
+                int max_id = id + 1;
                 new_id = "RT" + max_id;
             } else {
                 new_id = "RT" + 1;

@@ -18,7 +18,6 @@ public class MemberModel implements DataAccessObject {
     private int number;
     private String memberId;
     private String studentId;
-    private String oldmemberId;
     private String firstName;
     private String sureName;
     private String gender;
@@ -52,8 +51,7 @@ public class MemberModel implements DataAccessObject {
 
     public MemberModel(String memberId, String studentId, String firstName, String sureName, String gender, String tel,
             String village, String district, String province, Date birdate, String study_year, String detp,
-            Date dateRegister, Date dateRegisterEnd, Date dateExit, byte[] byimg, double costRegister,
-            String oldmemberId) {
+            Date dateRegister, Date dateRegisterEnd, Date dateExit, byte[] byimg, double costRegister) {
         this.memberId = memberId;
         this.studentId = studentId;
         this.firstName = firstName;
@@ -71,7 +69,6 @@ public class MemberModel implements DataAccessObject {
         this.dateExit = dateExit;
         this.byimg = byimg;
         this.costRegister = costRegister;
-        this.oldmemberId = oldmemberId;
     }
 
     public MemberModel(String memberId, String studentId, String firstName, String sureName, String gender, String tel,
@@ -238,14 +235,6 @@ public class MemberModel implements DataAccessObject {
         this.costRegister = costRegister;
     }
 
-    public String getOldmemberId() {
-        return oldmemberId;
-    }
-
-    public void setOldmemberId(String oldmemberId) {
-        this.oldmemberId = oldmemberId;
-    }
-
     @Override
     public ResultSet findAll() throws SQLException {
         try {
@@ -359,7 +348,7 @@ public class MemberModel implements DataAccessObject {
                 query = "call  member_Update(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
                 ps = HomeController.con.prepareStatement(query);
             }
-            ps.setString(1, getOldmemberId());
+            ps.setString(1, getMemberId());
             ps.setString(2, getStudentId());
             ps.setString(3, getFirstName());
             ps.setString(4, getSureName());

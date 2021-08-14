@@ -158,12 +158,12 @@ public class ImportController implements Initializable {
 
     private String getMaxImportId() {
         try {
-            String maxId = importBook.getMaxID(), new_id = "";
-            if (maxId == null || maxId == "")
+            int maxId = importBook.getMaxID();
+            String new_id = "";
+            if (maxId <= 0)
                 new_id = "IMP1";
             else {
-                String id = maxId.substring(maxId.indexOf('P') + 1);
-                new_id = "IMP" + (Integer.parseInt(id) + 1);
+                new_id = "IMP" + (maxId + 1);
             }
             return new_id;
         } catch (Exception e) {
@@ -806,9 +806,6 @@ public class ImportController implements Initializable {
                     for (String val : listAuthor.get(index)) {
                         if (val != null) {
                             listWrite.add(new BookDetailModel(model.getBookid(), val));
-                            System.out.println("All: " + listAuthor.get(index).length + " => Author ID: " + val);
-                        } else {
-                            System.out.println(" => Author ID: " + val);
                         }
                     }
 

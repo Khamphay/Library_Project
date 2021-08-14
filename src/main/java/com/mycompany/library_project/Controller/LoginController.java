@@ -25,12 +25,14 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
+    private Connection con = null;
     private double x, y;
     private Stage loginSatge = null;// Seted object when open form 'Login' in class 'DesktopController.java'
     private ValidationSupport validRules = new ValidationSupport();;
@@ -271,8 +273,11 @@ public class LoginController implements Initializable {
                         MyConnection.host = infor[2] + ":" + infor[3];
                         MyConnection.userName = infor[4];
                         MyConnection.password = infor[5];
-                        if (HomeController.con == null)
+                        con = MyConnection.getConnect();
+                        if (con == null)
                             checkConnection();
+                        else
+                            HomeController.con = con;
                     } else
                         checkConnection();
                 } else

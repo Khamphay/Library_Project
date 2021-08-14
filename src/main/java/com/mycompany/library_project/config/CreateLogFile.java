@@ -37,7 +37,7 @@ public class CreateLogFile {
             writer.close();
             return true;
         } catch (Exception e) {
-            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທິກກາຮຕັ້ງຄ່າ", e);
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກການຕັ້ງຄ່າ", e);
             return false;
         }
     }
@@ -54,7 +54,6 @@ public class CreateLogFile {
             server[3] = (String) parser.get("port");
             server[4] = (String) parser.get("userName");
             server[5] = (String) parser.get("password");
-
             reader.close();
             return server;
         } catch (Exception e) {

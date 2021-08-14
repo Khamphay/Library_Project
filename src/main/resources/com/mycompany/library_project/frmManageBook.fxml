@@ -159,7 +159,7 @@
                               <Text fx:id="txtDep" fill="WHITE" layoutX="56.0" layoutY="62.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="5 ພາກວິຊາ" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="50.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="34.0" layoutY="330.0" prefHeight="382.0" prefWidth="1318.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 5px 5px 5px 5px;" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="34.0" AnchorPane.topAnchor="330.0">
+                        <AnchorPane layoutX="34.0" layoutY="330.0" prefHeight="382.0" prefWidth="1318.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 5px 5px 5px 5px;" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="330.0">
                            <effect>
                               <DropShadow height="18.03" offsetX="1.0" offsetY="1.0" radius="8.515" width="18.03">
                                  <color>
@@ -205,8 +205,8 @@
                                     </VBox>
                                  </content>
                               </ScrollPane>
-                              <Label styleClass="BoonBaan-size-16" text="ການແຈ້ງບັດສະມາຊິດໝົດອາຍຸ" AnchorPane.leftAnchor="56.0" AnchorPane.topAnchor="6.0" />
-                              <Text fx:id="textTotalListPerson" layoutX="58.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="0 ລາຍການ" AnchorPane.leftAnchor="58.0" AnchorPane.topAnchor="28.766666412353516" />
+                              <Label styleClass="BoonBaan-size-16" text="ການແຈ້ງເຕືອນບັດສະມາຊິດໝົດອາຍຸ" AnchorPane.leftAnchor="56.0" AnchorPane.topAnchor="6.0" />
+                              <Text fx:id="textTotalListPerson" layoutX="58.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="0 ລາຍການ" AnchorPane.leftAnchor="58.0" AnchorPane.topAnchor="30.766666412353516" />
                               <ImageView fitHeight="47.0" fitWidth="47.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="9.0">
                                  <image>
                                     <Image url="@Icon/notification_50px.png" />

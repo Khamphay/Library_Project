@@ -336,18 +336,18 @@ public class RentBookModel implements DataAccessObject {
         }
     }
 
-    public String getMaxID() throws SQLException {
+    public int getMaxID() throws SQLException {
         try {
-            sql = "select max(rent_id) as max_id From tbrent_detail;";
+            sql = "select  max(cast((substring(rent_id,3,length(rent_id))) as int)) as max_id from tbrent_detail;";
             rs = HomeController.con.createStatement().executeQuery(sql);
             if (rs.next()) {
-                return rs.getString("max_id");
+                return rs.getInt("max_id");
             } else {
-                return null;
+                return 0;
             }
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດລະຫັດຢືມປື້ມ", e);
-            return null;
+            return 0;
         } finally {
             // ps.close();
         }
@@ -390,12 +390,14 @@ public class RentBookModel implements DataAccessObject {
         try {
             int result = 0;
             for (RentBookModel val : list) {
-                sql = " call sendBook(?, ?, ?);";
+                sql = "call sendBook(?, ?, ?);";
                 ps = HomeController.con.prepareStatement(sql);
                 ps.setString(1, val.getRentId());
                 ps.setString(2, val.getBarcode());
                 ps.setString(3, val.getStatus());
                 result = ps.executeUpdate();
+                System.out
+                        .println(val.getRentId() + " " + val.getBarcode() + " " + val.getStatus() + " RES: " + result);
                 if (result <= 0) {
                     return result;
                 }

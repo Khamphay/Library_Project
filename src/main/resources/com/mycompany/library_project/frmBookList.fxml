@@ -14,12 +14,12 @@
          </HBox.margin>
       </Text>
       <Text fx:id="barcode" strokeType="OUTSIDE" strokeWidth="0.0" text="ລະຫັດ Barcode" wrappingWidth="119.2166690826416" />
-      <Text fx:id="bookName" strokeType="OUTSIDE" strokeWidth="0.0" text="ຊື່ປຶ້ມ" wrappingWidth="289.2166690826416">
+      <Text fx:id="bookName" strokeType="OUTSIDE" strokeWidth="0.0" text="ຊື່ປຶ້ມ" wrappingWidth="263.2166690826416">
          <HBox.margin>
             <Insets left="4.0" />
          </HBox.margin>
       </Text>
-      <Text fx:id="memberId" strokeType="OUTSIDE" strokeWidth="0.0" text="ລະຫັດສະມາຊິດ" wrappingWidth="90.2166690826416">
+      <Text fx:id="memberId" strokeType="OUTSIDE" strokeWidth="0.0" text="ລະຫັດສະມາຊິດ" wrappingWidth="119.2166690826416">
          <HBox.margin>
             <Insets left="4.0" />
          </HBox.margin>

@@ -31,16 +31,15 @@
                            <children>
                               <AnchorPane layoutX="3.0" layoutY="36.0" minHeight="0.0" minWidth="0.0" prefHeight="597.0" prefWidth="974.0" style="-fx-border-color: #101D3D; -fx-border-radius: 0.5em;">
                                  <children>
-                                    <TextField fx:id="txtFName" layoutX="27.0" layoutY="111.0" prefHeight="31.0" prefWidth="271.0" promptText="ຊື່" viewOrder="1.0" />
-                                    <TextField fx:id="txtStudentId" layoutX="27.0" layoutY="41.0" prefHeight="31.0" prefWidth="271.0" promptText="ລະຫັດນັກສຶກສາ" viewOrder="1.0" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="41.0" />
-                                    <TextField fx:id="txtLName" layoutX="27.0" layoutY="179.0" prefHeight="25.0" prefWidth="271.0" promptText="ນາມສະກຸນ" viewOrder="1.0" />
-                                    <TextField fx:id="txtTel" layoutX="27.0" layoutY="394.0" prefHeight="25.0" prefWidth="271.0" promptText="ເບີໂທ" viewOrder="1.0" AnchorPane.topAnchor="394.0" />
-                                    <TextField fx:id="txtVill" layoutX="352.0" layoutY="41.0" prefHeight="25.0" prefWidth="271.0" promptText="ບ້ານ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.leftAnchor="352.0" AnchorPane.topAnchor="41.0" />
-                                    <TextField fx:id="txtProv" layoutX="352.0" layoutY="180.0" prefHeight="25.0" prefWidth="271.0" promptText="ແຂວງ" viewOrder="1.0" AnchorPane.leftAnchor="352.0" />
-                                    <TextField fx:id="txtDist" layoutX="352.0" layoutY="111.0" prefHeight="31.0" prefWidth="271.0" promptText="ເມືອງ" viewOrder="1.0" AnchorPane.leftAnchor="352.0" />
-                                    <DatePicker fx:id="birtDate" cache="true" editable="false" layoutX="27.0" layoutY="321.0" prefHeight="28.0" prefWidth="271.0" promptText="ວ.ດ.ປ ເກີດ" showWeekNumbers="true" AnchorPane.topAnchor="321.0" />
-                                    <ComboBox fx:id="cmbDept" layoutX="352.0" layoutY="245.0" prefHeight="31.0" prefWidth="219.0" promptText="ຮຽນພາກວີຊາ" AnchorPane.leftAnchor="352.0" AnchorPane.topAnchor="245.0" />
-                                    <ComboBox fx:id="cmbYears" layoutX="352.0" layoutY="322.0" prefHeight="27.0" prefWidth="271.0" promptText="ຮຽນປີ" AnchorPane.leftAnchor="352.0" AnchorPane.topAnchor="322.0" />
+                                    <TextField fx:id="txtFName" layoutX="35.0" layoutY="178.0" prefHeight="31.0" prefWidth="271.0" promptText="ຊື່" viewOrder="1.0" />
+                                    <TextField fx:id="txtStudentId" layoutX="35.0" layoutY="111.0" prefHeight="31.0" prefWidth="271.0" promptText="ລະຫັດນັກສຶກສາ" viewOrder="1.0" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="111.0" />
+                                    <TextField fx:id="txtLName" layoutX="35.0" layoutY="246.0" prefHeight="25.0" prefWidth="271.0" promptText="ນາມສະກຸນ" viewOrder="1.0" />
+                                    <TextField fx:id="txtTel" layoutX="35.0" layoutY="464.0" prefHeight="25.0" prefWidth="271.0" promptText="ເບີໂທ" viewOrder="1.0" AnchorPane.topAnchor="464.0" />
+                                    <TextField fx:id="txtVill" layoutX="352.0" layoutY="41.0" prefHeight="25.0" prefWidth="290.0" promptText="ບ້ານ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.leftAnchor="352.0" AnchorPane.topAnchor="41.0" />
+                                    <TextField fx:id="txtProv" layoutX="352.0" layoutY="180.0" prefHeight="25.0" prefWidth="290.0" promptText="ແຂວງ" viewOrder="1.0" AnchorPane.leftAnchor="352.0" />
+                                    <TextField fx:id="txtDist" layoutX="352.0" layoutY="111.0" prefHeight="31.0" prefWidth="290.0" promptText="ເມືອງ" viewOrder="1.0" AnchorPane.leftAnchor="352.0" />
+                                    <ComboBox fx:id="cmbDept" layoutX="354.0" layoutY="247.0" prefHeight="31.0" prefWidth="234.0" promptText="ຮຽນພາກວີຊາ" AnchorPane.leftAnchor="353.0" AnchorPane.topAnchor="246.0" />
+                                    <ComboBox fx:id="cmbYears" layoutX="352.0" layoutY="322.0" prefHeight="27.0" prefWidth="290.0" promptText="ຮຽນປີ" AnchorPane.leftAnchor="352.0" AnchorPane.topAnchor="322.0" />
                                     <JFXButton id="btClick" alignment="CENTER" focusTraversable="false" layoutX="386.0" layoutY="542.0" minHeight="-Infinity" onAction="#Save" prefHeight="32.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
@@ -86,14 +85,14 @@
                                           <Insets left="-2.0" />
                                        </padding>
                                     </JFXButton>
-                                    <Label layoutX="29.0" layoutY="159.0" styleClass="BoonBaan-size-14" text="ນາມສະກຸນ" />
-                                    <Label layoutX="27.0" layoutY="373.0" styleClass="BoonBaan-size-14" text="ເບີໂທລະສັບ" AnchorPane.topAnchor="373.0" />
+                                    <Label layoutX="37.0" layoutY="226.0" styleClass="BoonBaan-size-14" text="ນາມສະກຸນ" />
+                                    <Label layoutX="35.0" layoutY="443.0" styleClass="BoonBaan-size-14" text="ເບີໂທລະສັບ" AnchorPane.topAnchor="443.0" />
                                     <Label layoutX="352.0" layoutY="20.0" styleClass="BoonBaan-size-14" text="ບ້ານຢູ່ປັດຈຸບັນ" AnchorPane.leftAnchor="352.0" AnchorPane.topAnchor="20.0" />
                                     <Label layoutX="351.0" layoutY="90.0" prefHeight="10.0" prefWidth="27.0" styleClass="BoonBaan-size-14" text="ເມືອງ" />
                                     <Label layoutX="352.0" layoutY="159.0" styleClass="BoonBaan-size-14" text="ແຂວງ" AnchorPane.leftAnchor="352.0" />
                                     <Label layoutX="352.0" layoutY="224.0" styleClass="BoonBaan-size-14" text="ຮຽນພາກວີຊາ" AnchorPane.leftAnchor="352.0" />
                                     <Label layoutX="352.0" layoutY="302.0" styleClass="BoonBaan-size-14" text="ນັກສຶກສາປື" AnchorPane.leftAnchor="352.0" AnchorPane.topAnchor="302.0" />
-                                    <AnchorPane layoutX="27.0" layoutY="235.0" minHeight="0.0" minWidth="0.0" prefHeight="41.0" prefWidth="271.0" style="-fx-border-color: #101D3D; -fx-border-radius: 0.5em;">
+                                    <AnchorPane layoutX="35.0" layoutY="313.0" minHeight="0.0" minWidth="0.0" prefHeight="41.0" prefWidth="271.0" style="-fx-border-color: #101D3D; -fx-border-radius: 0.5em;">
                                        <children>
                                           <JFXRadioButton fx:id="rdbMale" layoutX="48.0" layoutY="14.0" style="-jfx-selected-color: #0a1eff;" styleClass="BoonBaan-size-14-Regular" text="ຊາຍ">
                                              <font>
@@ -114,12 +113,12 @@
                                        </children>
                                     </AnchorPane>
                                     <Label layoutX="782.0" layoutY="20.0" prefWidth="44.0" styleClass="BoonBaan-size-14" text="ຮູບ 3x4" AnchorPane.topAnchor="20.0" />
-                                    <Text layoutX="27.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊື່ສະມາຊີກ" wrappingWidth="55.13671875" />
-                                    <Text layoutX="27.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລະຫັດນັກສຶກສາ" wrappingWidth="97.13671875" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="19.766666412353516" />
-                                    <Text layoutX="27.0" layoutY="316.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ວັນເດືອນປືເກີດ" wrappingWidth="83.13671875" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="301.7666664123535" />
-                                    <TextField fx:id="txtCostRegister" editable="false" layoutX="28.0" layoutY="468.0" prefHeight="31.0" prefWidth="271.0" promptText="ຄ່າລົງທະບຽນ" viewOrder="1.0" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="468.0" />
-                                    <Text layoutX="28.0" layoutY="461.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຄ່າລົງທະບຽນ" wrappingWidth="88.13671875" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="446.7666664123535" />
-                                    <JFXButton fx:id="btAddDepartment" focusTraversable="false" layoutX="572.0" layoutY="245.0" prefHeight="31.0" prefWidth="52.0" ripplerFill="#3d62e8" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" styleClass="BoonBaan-size-14-Regular" text="ເພີ່ມ" AnchorPane.topAnchor="245.0">
+                                    <Text layoutX="35.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊື່ສະມາຊີກ" wrappingWidth="55.13671875" />
+                                    <Text layoutX="35.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລະຫັດນັກສຶກສາ" wrappingWidth="97.13671875" AnchorPane.leftAnchor="35.0" AnchorPane.topAnchor="89.76666641235352" />
+                                    <Text layoutX="38.0" layoutY="386.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ວັນເດືອນປືເກີດ" wrappingWidth="83.13671875" AnchorPane.leftAnchor="38.0" AnchorPane.topAnchor="371.7666664123535" />
+                                    <TextField fx:id="txtCostRegister" editable="false" layoutX="355.0" layoutY="467.0" prefHeight="31.0" prefWidth="290.0" promptText="ຄ່າລົງທະບຽນ" viewOrder="1.0" AnchorPane.leftAnchor="354.0" AnchorPane.topAnchor="466.0" />
+                                    <Text layoutX="353.0" layoutY="458.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຄ່າລົງທະບຽນ" wrappingWidth="88.13671875" AnchorPane.leftAnchor="353.0" AnchorPane.topAnchor="443.7666664123535" />
+                                    <JFXButton fx:id="btAddDepartment" focusTraversable="false" layoutX="592.0" layoutY="246.0" prefHeight="31.0" prefWidth="52.0" ripplerFill="#3d62e8" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" styleClass="BoonBaan-size-14-Regular" text="ເພີ່ມ" AnchorPane.topAnchor="246.0">
                                        <graphic>
                                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
@@ -131,10 +130,13 @@
                                           <Insets left="-4.0" />
                                        </padding>
                                     </JFXButton>
-                                    <DatePicker fx:id="dateRegister" cache="true" editable="false" layoutX="353.0" layoutY="389.0" prefHeight="28.0" prefWidth="271.0" promptText="ວ.ດ.ປ ລົງທະບຽນ" showWeekNumbers="true" AnchorPane.topAnchor="394.0" />
-                                    <Text layoutX="351.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ວັນເດືອນປືລົງທະບຽນ" wrappingWidth="116.13671875" AnchorPane.topAnchor="373.0" />
-                                    <DatePicker fx:id="dateEnd" cache="true" editable="false" layoutX="352.0" layoutY="467.0" prefHeight="28.0" prefWidth="271.0" promptText="ວ.ດ.ປ ໝົດອາຍຸ" showWeekNumbers="true" AnchorPane.topAnchor="468.0" />
-                                    <Text layoutX="351.0" layoutY="461.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ວັນເດືອນປືໝົດອາຍຸ" wrappingWidth="115.13671875" />
+                                    <Text layoutX="353.0" layoutY="385.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ວັນເດືອນປືລົງທະບຽນ" wrappingWidth="116.13671875" AnchorPane.topAnchor="370.7666664123535" />
+                                    <DatePicker fx:id="dateEnd" cache="true" editable="false" layoutX="513.0" layoutY="396.0" prefHeight="31.0" prefWidth="131.0" promptText="ວ.ດ.ປ ໝົດອາຍຸ" showWeekNumbers="true" AnchorPane.topAnchor="395.0" />
+                                    <Text layoutX="512.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ວັນເດືອນປືໝົດອາຍຸ" wrappingWidth="115.13671875" />
+                                    <TextField fx:id="txtMemberId" layoutX="35.0" layoutY="41.0" prefHeight="31.0" prefWidth="271.0" promptText="ລະຫັດສະມາຊິກ" viewOrder="1.0" />
+                                    <Text layoutX="35.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລະຫັດສະມາຊິກ" wrappingWidth="97.13671875" />
+                                    <DatePicker fx:id="dateRegister" cache="true" editable="false" layoutX="350.0" layoutY="395.0" prefHeight="31.0" prefWidth="151.0" promptText="ວ.ດ.ປ ລົງທະບຽນ" showWeekNumbers="true" AnchorPane.topAnchor="395.0" />
+                                    <DatePicker fx:id="birtDate" cache="true" editable="false" layoutX="36.0" layoutY="396.0" prefHeight="31.0" prefWidth="269.0" promptText="ວ.ດ.ປ ເກີດ" showWeekNumbers="true" />
                                  </children>
                               </AnchorPane>
                            </children>

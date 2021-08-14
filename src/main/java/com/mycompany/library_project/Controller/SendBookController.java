@@ -49,6 +49,10 @@ public class SendBookController implements Initializable {
     int page = 0, qtyOutOfDate = 0;
     double price = 0.0, allPrice = 0.0;
 
+    public void initConstructor(HomeController homeController) {
+        this.homeController = homeController;
+    }
+
     @FXML
     private StackPane stackPane;
     @FXML

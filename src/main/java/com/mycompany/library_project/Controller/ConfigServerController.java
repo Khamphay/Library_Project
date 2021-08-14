@@ -82,6 +82,10 @@ public class ConfigServerController implements Initializable {
 
     private void saveData() {
 
+        if (txtHost.getText().equals("") || txtPort.getText().equals("") || txtUserName.getText().equals("")) {
+            validRules.setErrorDecorationEnabled(true);
+            return;
+        }
         masker.setText("ກຳລັງບັນທືກຂໍ້ມູນ, ກະລຸນາລໍຖ້າ...");
         task = new Task<Void>() {
 
@@ -284,10 +288,10 @@ public class ConfigServerController implements Initializable {
             if (server_infor != null) {
                 driver = server_infor[0];
                 dbtype = server_infor[1];
-                if (dbtype == "mariadb")
-                    comboxDB.getSelectionModel().select(0);
+                if (dbtype == "mariadb" || dbtype.equals("mariadb"))
+                    comboxDB.getSelectionModel().select("MariaDB");
                 else
-                    comboxDB.getSelectionModel().select(1);
+                    comboxDB.getSelectionModel().select("MySQL");
 
                 txtHost.setText(server_infor[2]);
                 txtPort.setText(server_infor[3]);

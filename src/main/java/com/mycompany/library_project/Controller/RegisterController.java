@@ -56,7 +56,7 @@ public class RegisterController implements Initializable {
     private AlertMessage alertMessage = new AlertMessage();
     private DialogMessage dialog = new DialogMessage();
     private MyDate dateFormat = new MyDate();
-    private DateTimeFormatter formater = DateTimeFormatter.ofPattern("yy");
+    private DateTimeFormatter formater = DateTimeFormatter.ofPattern("dMyy");
     private MaskerPane masker = new MaskerPane();
     private Task<Void> task = null;
 
@@ -113,7 +113,9 @@ public class RegisterController implements Initializable {
         if (memberModel != null) {
 
             // Todo: if by edit from 'Form Member'
+            txtMemberId.setEditable(false);
             memberid_edit = memberModel.getMemberId();
+            txtMemberId.setText(memberModel.getMemberId());
             txtStudentId.setText(memberModel.getStudentId());
             txtFName.setText(memberModel.getFirstName());
             txtLName.setText(memberModel.getSureName());
@@ -135,19 +137,8 @@ public class RegisterController implements Initializable {
             localDateExit = memberModel.getDateExit().toLocalDate();
 
             // TODO: Show Image
-            if (memberModel.getByimg() != null) {
-                try {
-                    outStrem = new FileOutputStream(new File("img.png"));
-                    try {
-                        outStrem.write(memberModel.getByimg());
-                        imgPic.setImage(new Image("file:img.png"));
-                    } catch (IOException e) {
-                        alertMessage.showErrorMessage("Read Image", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-                    }
-                } catch (FileNotFoundException e) {
-                    alertMessage.showErrorMessage("Write Image", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-                }
-            }
+            convertByteToImage(memberModel.getByimg());
+
             memberModel = null;
         }
     }
@@ -165,7 +156,7 @@ public class RegisterController implements Initializable {
     private JFXButton btClose, btAddDepartment;
 
     @FXML
-    private TextField txtStudentId, txtFName, txtLName, txtTel, txtVill, txtDist, txtProv, txtCostRegister;
+    private TextField txtMemberId, txtStudentId, txtFName, txtLName, txtTel, txtVill, txtDist, txtProv, txtCostRegister;
     @FXML
     private ComboBox<String> cmbDept, cmbYears;
 
@@ -177,6 +168,22 @@ public class RegisterController implements Initializable {
 
     @FXML
     private ImageView imgPic;
+
+    private void convertByteToImage(byte[] value) {
+        if (value != null) {
+            try {
+                outStrem = new FileOutputStream(new File("img.png"));
+                try {
+                    outStrem.write(value);
+                    imgPic.setImage(new Image("file:img.png"));
+                } catch (IOException e) {
+                    alertMessage.showErrorMessage("Read Image", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+                }
+            } catch (FileNotFoundException e) {
+                alertMessage.showErrorMessage("Write Image", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            }
+        }
+    }
 
     public void getDateRegisterEnd() {
         if (!dateRegister.getValue().equals(null)) {
@@ -347,9 +354,49 @@ public class RegisterController implements Initializable {
     }
 
     private void initKeyEvents() {
+        txtMemberId.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                txtStudentId.requestFocus();
+                try {
+                    if (memberid_edit != "")
+                        return;
+
+                    ResultSet rs = memberModel.findById(txtMemberId.getText());
+                    if (rs.next()) {
+                        memberid_edit = rs.getString("student_id");
+                        txtStudentId.setText(rs.getString("student_id"));
+                        txtFName.setText(rs.getString("full_name"));
+                        txtLName.setText(rs.getString("sur_name"));
+                        txtTel.setText(rs.getString("tel"));
+                        if (rs.getString("gender").equals("ຊາຍ"))
+                            rdbMale.setSelected(true);
+                        else
+                            rdbFemale.setSelected(true);
+
+                        txtVill.setText(rs.getString("village"));
+                        txtDist.setText(rs.getString("district"));
+                        txtProv.setText(rs.getString("province"));
+                        cmbDept.getSelectionModel().select(rs.getString("dep_name"));
+                        birtDate.setValue(rs.getDate("birthdate").toLocalDate());
+                        cmbYears.getSelectionModel().select(rs.getString("study_year"));
+                        dateRegister.setValue(rs.getDate("date_register").toLocalDate());
+
+                        // Todo: Show image
+                        convertByteToImage(rs.getBytes("img"));
+
+                    }
+                } catch (SQLException e) {
+                    e.getNextException();
+                }
+            }
+        });
+
         txtStudentId.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ENTER)
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                if (txtMemberId.getText().equals(""))
+                    txtMemberId.setText(getMemberId(txtStudentId.getText()));
                 txtFName.requestFocus();
+            }
         });
         txtFName.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER)
@@ -422,7 +469,14 @@ public class RegisterController implements Initializable {
 
     private String getMemberId(String studentid) {
         try {
-            int startIndex = studentid.indexOf("S") + 1, endIndex;
+            int startIndex = 0, endIndex;
+            if (studentid.indexOf('S') > 0)
+                startIndex = studentid.indexOf('S') + 1;
+            else if (studentid.indexOf('N') > 0)
+                startIndex = studentid.indexOf('N') + 1;
+            else if (studentid.indexOf('Q') > 0)
+                startIndex = studentid.indexOf('Q') + 1;
+
             if (studentid.indexOf(".") > 0)
                 endIndex = studentid.indexOf('.');
             else if (studentid.indexOf("/") > 0)
@@ -432,18 +486,18 @@ public class RegisterController implements Initializable {
             String stid = "FNSLM" + studentid.substring(startIndex, endIndex) + "/" + formater.format(LocalDate.now());
             return stid;
         } catch (Exception e) {
-            e.printStackTrace();
             return studentid;
         }
     }
 
     private void clearValues() {
-
         validRules.setErrorDecorationEnabled(false);
-
         memberid_edit = "";
         byimg = null;
         index = -1;
+        if (txtMemberId.isEditable() == false)
+            txtMemberId.setEditable(true);
+        txtMemberId.clear();
         txtStudentId.clear();
         txtFName.clear();
         txtLName.clear();
@@ -479,22 +533,20 @@ public class RegisterController implements Initializable {
                     txtTel.requestFocus();
                     return;
                 }
-
-                memberModel = new MemberModel(getMemberId(txtStudentId.getText()), txtStudentId.getText(),
-                        txtFName.getText(), txtLName.getText(), gender, txtTel.getText(), txtVill.getText(),
-                        txtDist.getText(), txtProv.getText(), Date.valueOf(birtDate.getValue()),
+                memberModel = new MemberModel(txtMemberId.getText(), txtStudentId.getText(), txtFName.getText(),
+                        txtLName.getText(), gender, txtTel.getText(), txtVill.getText(), txtDist.getText(),
+                        txtProv.getText(), Date.valueOf(birtDate.getValue()),
                         cmbYears.getSelectionModel().getSelectedItem(), depIdList.get(index),
                         Date.valueOf(dateRegister.getValue()), Date.valueOf(dateEnd.getValue()),
-                        Date.valueOf(localDateExit), byimg, costPrice, memberid_edit);
+                        Date.valueOf(localDateExit), byimg, costPrice);
 
                 if (memberid_edit == "") {
-                    ResultSet rs = memberModel.findById(getMemberId(txtStudentId.getText()));
+                    ResultSet rs = memberModel.findById(txtMemberId.getText());
                     if (rs.next()) {
                         dialog.showWarningDialog(null,
                                 "ລະຫັດສະມາຊິກຊ້ຳກັບຂໍ້ມູນທີ່ມີຢູ່ໃນລະບົບກະລຸນາກວດສອບຂໍ້ມູນ ແລ້ວລອງບັນທຶກໃຫມ່ອີກຄັ້ງ");
                         return;
                     }
-
                     // Todo: Insert (if save memberid_edit if null)
                     if (memberModel.saveData() > 0) {
                         alertMessage.showCompletedMessage("Saved", "Saved data successfully.", 4, Pos.BOTTOM_RIGHT);
@@ -537,13 +589,16 @@ public class RegisterController implements Initializable {
                             memberController.showData();
                     }
                 } else {
+                    System.out.println("Out 3");
                     if (memberModel.updateData() > 0) {
                         alertMessage.showCompletedMessage("Edited", "Edited data successfully.", 4, Pos.BOTTOM_RIGHT);
                         clearValues();
-                        memberController.showData();
+                        if (memberController != null)
+                            memberController.showData();
+                    } else {
+                        System.out.println("Out 4");
                     }
                 }
-
             } else {
                 validRules.setErrorDecorationEnabled(true);
                 alertMessage.showWarningMessage("Save Warning", "Please chack your information and try again.", 4,

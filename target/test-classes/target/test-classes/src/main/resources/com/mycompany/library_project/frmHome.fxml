@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXBadge?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import io.github.gleidson28.GNAvatarView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane fx:id="stackPane" prefHeight="696.0" prefWidth="1392.0" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.HomeController">
+   <children>
+      <BorderPane fx:id="bpDisplay" minWidth="700.0" pickOnBounds="false" prefHeight="200.0" prefWidth="200.0">
+         <top>
+            <AnchorPane fx:id="acHomePaneToolbar" prefHeight="60.0" prefWidth="1143.0" style="-fx-background-color: #101D3D;" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER_LEFT" layoutX="241.0" layoutY="-16.0" prefHeight="60.0" prefWidth="453.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <JFXHamburger fx:id="humberger" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="45.0" />
+                        <ImageView fitHeight="55.0" fitWidth="73.0">
+                           <image>
+                              <Image url="@Icon/Logo_FNS.png" />
+                           </image>
+                        </ImageView>
+                        <VBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="318.0">
+                           <children>
+                              <Label contentDisplay="CENTER" prefHeight="25.0" prefWidth="305.0" styleClass="label-size-16" text="FNS Library Management System" textAlignment="CENTER" textFill="WHITE" />
+                              <Label contentDisplay="CENTER" prefHeight="25.0" prefWidth="316.0" styleClass="label-size-16" text="ລະບົບຈັດການ ຫໍສະໝຸດ ຄະນະວິທະຍາສາດທຳມະຊາດ" textAlignment="CENTER" textFill="WHITE" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutX="673.0" layoutY="7.0" prefHeight="56.0" prefWidth="333.0" spacing="10.0" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
+                     <children>
+                        <GNAvatarView prefHeight="40.0" prefWidth="40.0" type="CIRCLE">
+                           <image>
+                              <Image url="@Icon/male_user_100px.png" />
+                           </image>
+                        </GNAvatarView>
+                        <Text fx:id="txtEmplName" boundsType="LOGICAL_VERTICAL_CENTER" fill="WHITE" lineSpacing="4.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-16" text="User Name" textOrigin="CENTER" wrappingWidth="177.2166748046875" />
+                        <JFXButton fx:id="btSaveMoney" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#buttonSetting_Action" prefHeight="33.0" prefWidth="33.0" ripplerFill="WHITE" style="-fx-background-radius: 2em;">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Icon/maintenance_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="ຄ່າລົງທະບຽນ ແລະ ຄ່າປັບໃຫມ່">
+                                 <font>
+                                    <Font name="Phetsarath OT" size="12.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip>
+                        </JFXButton>
+                        <JFXButton fx:id="btConfig" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#openConfigSer" prefHeight="33.0" prefWidth="33.0" ripplerFill="WHITE" style="-fx-background-radius: 2em;" HBox.hgrow="NEVER">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Icon/settings_50px.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="ຕັ້ງຄ່າການເຊື່ອມຕໍ່ຖານຂໍ້ມູນ">
+                                 <font>
+                                    <Font name="Phetsarath OT" size="12.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip>
+                        </JFXButton>
+                     </children>
+                  </HBox>
+               </children>
+               <effect>
+                  <DropShadow height="12.1" radius="2.525" width="0.0">
+                     <color>
+                        <Color red="0.062745101749897" green="0.11372549086809158" blue="0.239215686917305" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </AnchorPane>
+         </top>
+         <center>
+            <ScrollPane fx:id="sclSubHome" fitToHeight="true" fitToWidth="true" pannable="true" prefHeight="502.0" prefWidth="938.0" BorderPane.alignment="CENTER">
+               <content>
+                  <JFXBadge>
+                     <children>
+                        <AnchorPane maxWidth="-Infinity" minHeight="600.0" minWidth="-Infinity" prefHeight="701.0" prefWidth="1388.0">
+                           <children>
+                              <Line endX="1255.0" layoutX="115.0" layoutY="184.0" startX="-100.0" stroke="#1d0054" AnchorPane.leftAnchor="14.5" AnchorPane.rightAnchor="17.5" />
+                              <Accordion layoutX="112.0" layoutY="318.0" />
+                              <HBox alignment="CENTER" layoutX="14.0" layoutY="23.0" prefHeight="164.0" prefWidth="664.0" spacing="100.0" AnchorPane.topAnchor="23.0">
+                                 <children>
+                                    <JFXButton fx:id="btShowRent_Send" alignment="CENTER" contentDisplay="TOP" focusTraversable="false" onAction="#buttonShowRent_SendBook_Action" prefHeight="93.0" prefWidth="131.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.4em;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນຢືມ-ສົ່ງປຶ້ມ" textFill="WHITE" viewOrder="2.0">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="47.0" fitWidth="47.0">
+                                             <image>
+                                                <Image url="@Icon/listRentBook.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </JFXButton>
+                                    <JFXButton fx:id="btRegister" alignment="CENTER" contentDisplay="TOP" focusTraversable="false" onAction="#buttonRegister_Action" prefHeight="93.0" prefWidth="131.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.4em;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="ລົງທະບຽນ" textFill="WHITE" viewOrder="2.0">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="47.0" fitWidth="47.0">
+                                             <image>
+                                                <Image url="@Icon/add_user_male_50px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </JFXButton>
+                                    <JFXButton alignment="CENTER" contentDisplay="TOP" focusTraversable="false" onAction="#buttonSearch_Action" prefHeight="93.0" prefWidth="131.0" style="-fx-background-color: #101D3D; -fx-background-radius: 0.4em;" styleClass="button-size-16-bold" stylesheets="@Style/buttonFont.css" text="ຄົ້ນຫາ" textFill="WHITE" viewOrder="2.0">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <graphic>
+                                          <ImageView fitHeight="47.0" fitWidth="47.0">
+                                             <image>
+                                                <Image url="@Icon/search_100px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </JFXButton>
+                                 </children>
+                              </HBox>
+                              <AnchorPane layoutX="14.0" layoutY="207.0" prefHeight="486.0" prefWidth="1354.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 5px 5px 5px 5px;" AnchorPane.bottomAnchor="28.0" AnchorPane.topAnchor="207.0">
+                                 <effect>
+                                    <DropShadow height="18.03" offsetX="1.0" offsetY="1.0" radius="8.515" width="18.03">
+                                       <color>
+                                          <Color green="0.1411764770746231" blue="0.29019609093666077" />
+                                       </color>
+                                    </DropShadow>
+                                 </effect>
+                                 <children>
+                                    <Line endX="1247.2928466796875" endY="-0.707122802734375" layoutX="101.0" layoutY="104.0" startX="-100.0" stroke="#1d0054" />
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="2.0" layoutY="107.0" prefHeight="376.0" prefWidth="1350.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="107.0">
+                                       <content>
+                                          <VBox fx:id="pnItems" prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-16" text="ບໍ່ມີຂໍ້ມູນ" textAlignment="CENTER" wrappingWidth="1345.13671875">
+                                                   <VBox.margin>
+                                                      <Insets top="200.0" />
+                                                   </VBox.margin>
+                                                </Text>
+                                             </children></VBox>
+                                       </content>
+                                    </ScrollPane>
+                                    <HBox fx:id="book" alignment="CENTER_LEFT" layoutX="1.0" layoutY="67.0" prefHeight="34.0" prefWidth="1350.0" styleClass="BoonBaan-size-14-Regular" AnchorPane.topAnchor="67.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລຳດັບ" textAlignment="CENTER" wrappingWidth="44.2166690826416" />
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລະຫັດຢືມປຶ້ມ" wrappingWidth="111.2166690826416">
+                                             <HBox.margin>
+                                                <Insets left="4.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລະຫັດ Barcode" wrappingWidth="119.2166690826416" />
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊື່ປຶ້ມ" wrappingWidth="263.2166690826416">
+                                             <HBox.margin>
+                                                <Insets left="4.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ລະຫັດສະມາຊິກ" wrappingWidth="119.2166690826416">
+                                             <HBox.margin>
+                                                <Insets left="4.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊື່ ແລະ ນາມສະກຸນ" wrappingWidth="186.2166690826416">
+                                             <HBox.margin>
+                                                <Insets left="4.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ວັນທີຢືມປຶ້ມ" textAlignment="CENTER" wrappingWidth="116.2166690826416">
+                                             <HBox.margin>
+                                                <Insets left="4.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ວັນທີສົ່ງປຶ້ມ" textAlignment="CENTER" wrappingWidth="115.2166690826416" />
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ສະຖານະການຢຶ້ມ" textAlignment="CENTER" wrappingWidth="98.2166690826416">
+                                             <HBox.margin>
+                                                <Insets left="4.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຈຳນວນວັນທີຢືມກາຍກຳນົດ" textAlignment="CENTER" wrappingWidth="141.2166690826416">
+                                             <HBox.margin>
+                                                <Insets left="4.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <Label layoutX="56.0" layoutY="6.0" styleClass="BoonBaan-size-16" text="ການແຈ້ງເຕືອນຢືມປຶ້ມກາຍກຳນົດ" AnchorPane.leftAnchor="56.0" AnchorPane.topAnchor="6.0" />
+                                    <Text fx:id="textTotalList" layoutX="58.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="0 ລາຍການ" AnchorPane.leftAnchor="58.0" AnchorPane.topAnchor="29.766666412353516" />
+                                    <ImageView fitHeight="47.0" fitWidth="47.0" layoutX="3.0" layoutY="9.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="9.0">
+                                       <image>
+                                          <Image url="@Icon/notification_50px.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </AnchorPane>
+                              <Line endX="-100.0" endY="99.0" layoutX="853.0" layoutY="75.0" startX="-100.0" startY="-68.0" />
+                              <Line endX="-100.0" endY="99.0" layoutX="1177.0" layoutY="76.0" startX="-100.0" startY="-16.0" />
+                              <Text layoutX="772.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-16" text="      ໂປຣແກຣມ &quot;ລະບົບຈັດການຫໍສະໝຸດ ຄວທ&quot; ແມ່ນບົດໂຄງການຈົບຊັ້ນປະລິນຍາຕິຂອງນັກສຶກສາ ພາກວິຊາວິທະຍາສາດຄອມພິວເຕີ, ສາຂາວິທະຍາສາດຄອມພິວເຕີ ລຸ້ນທີ XXI." wrappingWidth="608.13671875" />
+                              <Text layoutX="1126.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-20" text="ນຳພາໂດຍ:" underline="true" />
+                              <Text layoutX="1145.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-16" text="ຊອ.ປທ ຈິດນາວັນ ພອນຄຳມາ" wrappingWidth="180.13671875" />
+                              <Text layoutX="844.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-16" text="ທ້າວ ຄຳໄຟ ເສຍລິມົວ" wrappingWidth="180.13671875" />
+                              <Text layoutX="844.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-16" text="ທ້າວ ເຢີ ຊົ່ງ" wrappingWidth="180.13671875" />
+                              <Text layoutX="830.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-20" text="ພັດທະນາໂດຍ:" underline="true" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </JFXBadge>
+               </content>
+            </ScrollPane>
+         </center>
+      </BorderPane>
+   </children>
+</StackPane>

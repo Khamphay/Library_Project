@@ -67,7 +67,7 @@ public class MemberController implements Initializable {
     private StackPane stackPane;
 
     @FXML
-    private JFXButton btAddUser, btClose;
+    private JFXButton btEdit, btClose;
 
     @FXML
     private MenuItem menuEdit, menuReport, menuDelete, menuPrintCard;
@@ -85,28 +85,23 @@ public class MemberController implements Initializable {
     @FXML
     private TextField txtSearch;
 
-    private void showAddRegister() {
-        try {
-            add = true;
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("frmRegister.fxml"));
-            final Parent root = loader.load();
-            final Scene scene = new Scene(root);
-            scene.setFill(Color.TRANSPARENT);
-            registerController = loader.getController();
-            addMemberStage = new Stage();
-            addMemberStage.setScene(scene);
-            addMemberStage.initStyle(StageStyle.TRANSPARENT);
-            registerController.initConstructor2(this, addMemberStage);
-            // addMemberStage.setAlwaysOnTop(true);
-            addMemberStage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
-            addMemberStage.initModality(Modality.APPLICATION_MODAL);
-            addMemberStage.show();
-
-        } catch (Exception e) {
-            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປືດຟອມລົງທະບຽນ", e);
-        }
-    }
-
+    /*
+     * private void showAddRegister() { try { add = true; FXMLLoader loader = new
+     * FXMLLoader(App.class.getResource("frmRegister.fxml")); final Parent root =
+     * loader.load(); final Scene scene = new Scene(root);
+     * scene.setFill(Color.TRANSPARENT); registerController =
+     * loader.getController(); addMemberStage = new Stage();
+     * addMemberStage.setScene(scene);
+     * addMemberStage.initStyle(StageStyle.TRANSPARENT);
+     * registerController.initConstructor2(this, addMemberStage); //
+     * addMemberStage.setAlwaysOnTop(true); addMemberStage.getIcons().add(new
+     * Image("/com/mycompany/library_project/Icon/icon.png"));
+     * addMemberStage.initModality(Modality.APPLICATION_MODAL);
+     * addMemberStage.show();
+     * 
+     * } catch (Exception e) { dialog.showExcectionDialog("Error", null,
+     * "ເກີດບັນຫາໃນການເປືດຟອມລົງທະບຽນ", e); } }
+     */
     private void showEditeMembers() {
         try {
             if (addMemberStage != null) {
@@ -293,11 +288,16 @@ public class MemberController implements Initializable {
     }
 
     private void initEvents() {
-        btAddUser.setOnAction(new EventHandler<ActionEvent>() {
+        btEdit.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                showAddRegister();
+                // showAddRegister();
+                if (tableMember.getSelectionModel().getSelectedItem() != null) {
+                    showEditeMembers();
+                } else {
+                    dialog.showWarningDialog("Warning", "ກະລຸນາເລືອກຂໍ້ມູນທີ່ຕ້ອງການແກ້ໄຂ");
+                }
             }
         });
 
@@ -390,8 +390,7 @@ public class MemberController implements Initializable {
                 if (tableMember.getSelectionModel().getSelectedItem() != null) {
                     showEditeMembers();
                 } else {
-                    alertMessage.showWarningMessage("Edit", "Please selecte the data and try again", 4,
-                            Pos.BOTTOM_RIGHT);
+                    dialog.showWarningDialog("Warning", "ກະລຸນາເລືອກຂໍ້ມູນທີ່ຕ້ອງການແກ້ໄຂ");
                 }
             }
         });
@@ -404,13 +403,11 @@ public class MemberController implements Initializable {
                         if (memberModel
                                 .deleteData(tableMember.getSelectionModel().getSelectedItem().getMemberId()) > 0) {
                             showData();
-                            dialog.closeDialog();
                             alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4,
                                     Pos.BOTTOM_RIGHT);
                         }
                     } catch (Exception ex) {
-                        alertMessage.showErrorMessage("Delete", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
-
+                        dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນ", ex);
                     }
             }
         });
@@ -465,13 +462,12 @@ public class MemberController implements Initializable {
                                     if (memberModel
                                             .deleteData(tableMember.getItems().get(getIndex()).getMemberId()) > 0) {
                                         showData();
-                                        dialog.closeDialog();
+                                        
                                         alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4,
                                                 Pos.BOTTOM_RIGHT);
                                     }
                                 } catch (Exception ex) {
-                                    alertMessage.showErrorMessage("Delete", "Error: " + ex.getMessage(), 4,
-                                            Pos.BOTTOM_RIGHT);
+                                    dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນ", ex);
                                 }
                         });
                     }

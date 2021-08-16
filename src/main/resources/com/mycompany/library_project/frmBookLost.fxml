@@ -37,14 +37,14 @@
                                         <TableColumn fx:id="colBookId" prefWidth="149.0" styleClass="tablecolumn" text="ລະຫັດປຶ້ມ" />
                                           <TableColumn fx:id="colBarcode" prefWidth="140.0" styleClass="tablecolumn" text="ລະຫັດ Barcode" />
                                         <TableColumn fx:id="colBookName" prefWidth="240.0" styleClass="tablecolumn" text="ຊື່ປຶ້ມ" />
-                                          <TableColumn fx:id="colPage" prefWidth="88.0" styleClass="tablecolumn" text="ຈຳນວນໜ້າ" />
+                                          <TableColumn id="colCenter" fx:id="colPage" prefWidth="88.0" styleClass="tablecolumn" text="ຈຳນວນໜ້າ" />
                                           <TableColumn fx:id="colCatg" prefWidth="152.0" styleClass="tablecolumn" text="ໝວດປຶ້ມ" />
                                           <TableColumn fx:id="colType" prefWidth="193.0" styleClass="tablecolumn" text="ປະເພດປຶ້ມ" />
-                                          <TableColumn fx:id="colTable" styleClass="tablecolumn" text="ເລກຕູ້" />
-                                          <TableColumn fx:id="colTableLog" prefWidth="96.0" styleClass="tablecolumn" text="ເລກລ໋ອກຕູ້" />
-                                          <TableColumn fx:id="colDateRent" prefWidth="126.0" styleClass="tablecolumn" text="ວັນທີຢືມ" />
-                                          <TableColumn fx:id="colDateSend" prefWidth="115.0" styleClass="tablecolumn" text="ວັນທີສົ່ງ" />
-                                          <TableColumn fx:id="colOutDate" prefWidth="140.0" styleClass="tablecolumn" text="ຈຳນວນມື້ທີ່ຢືມກາຍກຳນົດ" />
+                                          <TableColumn id="colCenter" fx:id="colTable" styleClass="tablecolumn" text="ເລກຕູ້" />
+                                          <TableColumn id="colCenter" fx:id="colTableLog" prefWidth="96.0" styleClass="tablecolumn" text="ເລກລ໋ອກຕູ້" />
+                                          <TableColumn id="colCenter" fx:id="colDateRent" prefWidth="126.0" styleClass="tablecolumn" text="ວັນທີຢືມ" />
+                                          <TableColumn id="colCenter" fx:id="colDateSend" prefWidth="115.0" styleClass="tablecolumn" text="ວັນທີສົ່ງ" />
+                                          <TableColumn id="colCenter" fx:id="colOutDate" prefWidth="140.0" styleClass="tablecolumn" text="ຈຳນວນມື້ທີ່ຢືມກາຍກຳນົດ" />
                                           <TableColumn fx:id="colPrice" prefWidth="140.0" styleClass="tablecolumn" text="ຄ່າປັບໃໝ" />
                                       </columns>
                                     </TableView>

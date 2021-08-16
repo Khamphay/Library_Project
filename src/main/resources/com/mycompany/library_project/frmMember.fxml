@@ -16,10 +16,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <StackPane stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.MemberController">
    <children>
@@ -31,7 +29,7 @@
                      <content>
                         <AnchorPane prefHeight="563.0" prefWidth="815.0">
                            <children>
-                              <TableView fx:id="tableMember" layoutX="9.0" layoutY="114.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="437.0" prefWidth="1176.0" style="-fx-background-color: transparent;" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="114.0">
+                              <TableView fx:id="tableMember" layoutX="9.0" layoutY="68.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="1176.0" style="-fx-background-color: transparent;" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="68.0">
                                 <placeholder>
                                     <Label text="ບໍ່ມີຂໍ້ມູນ" />
                                  </placeholder>
@@ -94,14 +92,14 @@
                                     </ContextMenu>
                                  </contextMenu>
                               </TableView>
-                              <JFXButton id="btClick" fx:id="btAddUser" alignment="CENTER" buttonType="RAISED" focusTraversable="false" layoutX="808.0" layoutY="69.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE" AnchorPane.rightAnchor="358.0">
+                              <JFXButton id="btClick" fx:id="btEdit" alignment="CENTER" buttonType="RAISED" focusTraversable="false" layoutX="794.0" layoutY="24.0" minHeight="-Infinity" prefHeight="32.0" prefWidth="80.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ແກ້ໄຂ" textFill="WHITE" AnchorPane.rightAnchor="358.0">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                                  <graphic>
                                     <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@Icon/add.png" />
+                                          <Image url="@Icon/edit.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -109,33 +107,17 @@
                                     <Insets left="-6.0" />
                                  </padding>
                               </JFXButton>
-                              <TextField fx:id="txtSearch" layoutX="927.0" layoutY="70.0" prefHeight="30.0" prefWidth="291.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular" AnchorPane.rightAnchor="28.0">
+                              <TextField fx:id="txtSearch" layoutX="913.0" layoutY="25.0" prefHeight="30.0" prefWidth="291.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular" AnchorPane.rightAnchor="28.0">
                                  <padding>
                                     <Insets left="40.0" />
                                  </padding>
                               </TextField>
-                              <ImageView fitHeight="23.0" fitWidth="27.0" layoutX="935.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="288.0">
+                              <ImageView fitHeight="23.0" fitWidth="27.0" layoutX="921.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="288.0">
                                  <image>
                                     <Image url="@Icon/search_50px.png" />
                                  </image>
                               </ImageView>
-                              <Pane layoutX="14.0" layoutY="21.0" prefHeight="73.0" prefWidth="252.0" style="-fx-background-color: #D4D4F7; -fx-background-radius: 0.5em; -fx-border-color: #101D3D; -fx-border-width: 0px 0px 2px 0px;" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="28.0">
-                                 <children>
-                                    <Text layoutX="15.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ສະມາຊິກທັງໝົດມີ 259 ຄົນ" wrappingWidth="231.13671875" />
-                                    <Text layoutX="14.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ສະມາຊິກທີ່ຍັງບໍ່ໄດ້ຕໍ່ບັດມີ 24 ຄົນ" wrappingWidth="233.13671875" />
-                                    <Text layoutX="14.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ໝົດສິດເປັນສະມາຊິກມີ 24 ຄົນ" wrappingWidth="233.13671875" />
-                                 </children>
-                              </Pane>
-                              <Pane layoutX="329.0" layoutY="28.0" prefHeight="73.0" prefWidth="383.0" style="-fx-background-color: #D4D4F7; -fx-background-radius: 0.5em; -fx-border-color: #101D3D; -fx-border-width: 0px 0px 2px 0px;" AnchorPane.topAnchor="28.0">
-                                 <children>
-                                    <Text layoutX="8.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ວິທະຍາສາດຄອມພິວເຕີມີ 120 ຄົນ " wrappingWidth="200.13671875" />
-                                    <Text layoutX="8.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ເຄມີສາດມີ 120 ຄົນ " wrappingWidth="222.13671875" />
-                                    <Text layoutX="8.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຄະນິດສາດມີ 120 ຄົນ " wrappingWidth="231.13671875" />
-                                    <Text layoutX="231.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຟີຊິກສາດມີ 120 ຄົນ " wrappingWidth="138.13671875" />
-                                    <Text layoutX="231.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="ຊິວະສາດມີ 120 ຄົນ " wrappingWidth="144.13671875" />
-                                 </children>
-                              </Pane>
-                              <Separator layoutX="961.0" layoutY="74.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="0.0" AnchorPane.rightAnchor="279.0" />
+                              <Separator layoutX="947.0" layoutY="29.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="0.0" AnchorPane.rightAnchor="279.0" />
                            </children>
                         </AnchorPane>
                      </content>

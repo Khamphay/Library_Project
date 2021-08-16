@@ -766,7 +766,8 @@ public class AddBookController implements Initializable {
                         if (addBook.saveBookBarCode(list, txtId.getText()) > 0) {
                             // Todo: Save Write
                             if (addBook.saveWrite(listWrite) > 0) {
-                                msg = "Save data successfully.";
+                                alertMessage.showCompletedMessage("Saved", "Save data successfully.", 4,
+                                        Pos.BOTTOM_RIGHT);
                                 printBarcode(txtId.getText());
                             }
                         }
@@ -800,14 +801,19 @@ public class AddBookController implements Initializable {
                         }
                         msg = "Edit data successfully.";
                     }
+
+                    if (msg != null) {
+                        alertMessage.showCompletedMessage("Edit", msg, 4, Pos.BOTTOM_RIGHT);
+
+                        if (bookcontroller != null)
+                            bookcontroller.showData();
+                        if (bookid != "")
+                            closeForm();
+
+                        clearText();
+                    }
                 }
 
-                if (msg != null) {
-                    alertMessage.showCompletedMessage("Saved", msg, 4, Pos.BOTTOM_RIGHT);
-                    clearText();
-                    if (bookcontroller != null)
-                        bookcontroller.showData();
-                }
             } else {
                 validRules.setErrorDecorationEnabled(true);
                 alertMessage.showWarningMessage("Save Warning", "Please chack your information and try again.", 4,

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="8" />
+    <option name="CUSTOM_SCOPE_NAME" value="All Places" />
+  </component>
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Library_Project:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="BuildServerSettings">
+    <treeState key="project">
+      <selectedPath>
+        <pathElement>
+          <option name="myNodeId" value="helperText" />
+          <option name="myNodeType" value="jetbrains.buildServer.tree.descriptors.LinkedTextDescriptor" />
+        </pathElement>
+      </selectedPath>
+    </treeState>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1d5287c5-e038-4c2d-9b93-fa7a6be4d37b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/bin/billImport.jrxml" beforeDir="false" afterPath="$PROJECT_DIR$/bin/billImport.jrxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img.png" beforeDir="false" afterPath="$PROJECT_DIR$/img.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/library_project/Controller/AddBookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/library_project/Controller/AddBookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/library_project/Controller/BookCategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/library_project/Controller/BookCategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/library_project/Controller/BookTypeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/library_project/Controller/BookTypeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/library_project/Controller/ImportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/library_project/Controller/ImportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/library_project/Controller/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/library_project/Controller/MemberController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/library_project/Controller/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/library_project/Controller/RegisterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/mycompany/library_project/frmBookLost.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/mycompany/library_project/frmBookLost.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/mycompany/library_project/frmBooks.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/mycompany/library_project/frmBooks.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/mycompany/library_project/frmMember.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/mycompany/library_project/frmMember.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/AddBookController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/AddBookController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/BookCategoryController$7$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/BookCategoryController$7$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/BookCategoryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/BookCategoryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/BookTypeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/BookTypeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/ImportController$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/ImportController$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/ImportController$11$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/ImportController$11$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/ImportController$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/ImportController$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/ImportController$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/ImportController$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/ImportController$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/ImportController$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/ImportController$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/ImportController$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/ImportController$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/ImportController$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/ImportController$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/ImportController$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/ImportController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/ImportController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$10$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$10$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$3$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$3$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/MemberController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/RegisterController$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/RegisterController$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/RegisterController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/Controller/RegisterController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/frmBookLost.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/frmBookLost.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/frmBooks.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/frmBooks.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/frmMember.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mycompany/library_project/frmMember.fxml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="module-info" />
+        <option value="FxmlFile" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\plugins\maven\lib\maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1lKIVf0c9Og3K3zu0XONJFZ7Zlo" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/bin" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.24109589" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Information4cs2_1\Final_Project\Library_Project\bin" />
+      <recent name="D:\Library_Project\src\main\java\com\mycompany\library_project" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Information4cs2_1\Final_Project\Library_Project" />
+      <recent name="D:\Library_Project\src\main\java" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn javafx:jlink" />
+      <command value="mvn install" />
+      <command value="mvn deploy" />
+      <command value="mvn clean" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.App">
+    <configuration name="App" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.mycompany.library_project.App" />
+      <module name="Library_Project" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-15.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RunApp" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.mycompany.library_project.FakeApp" />
+      <module name="Library_Project" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-16\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.mycompany.library_project.FakeApp" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Program Files\Java\javafx-sdk-16\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1d5287c5-e038-4c2d-9b93-fa7a6be4d37b" name="Default Changelist" comment="" />
+      <created>1607339387375</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1607339387375</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.bat" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="586" y="198" key="#Inspections" timestamp="1621744387404">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="586" y="198" key="#Inspections/0.0.1920.1040/1920.108.1600.860@0.0.1920.1040" timestamp="1621744387404" />
+    <state x="440" y="94" key="#Project_Structure" timestamp="1622721587885">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="440" y="94" key="#Project_Structure/0.0.1920.1040/1920.108.1600.860@0.0.1920.1040" timestamp="1622721587885" />
+    <state x="414" y="175" width="1350" height="763" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1621847246161">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="414" y="175" width="1350" height="763" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/1920.108.1600.860@0.0.1920.1040" timestamp="1621847246161" />
+    <state x="689" y="322" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1628828267727">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="689" y="322" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040/1920.108.1600.860@0.0.1920.1040" timestamp="1621780533645" />
+    <state x="689" y="322" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1628828267727" />
+    <state x="640" y="255" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1628839968946">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="640" y="255" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1040/1920.0.1520.680@0.0.1920.1040" timestamp="1628839968946" />
+    <state x="640" y="255" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1625819106750" />
+    <state x="640" y="255" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1625213595320" />
+    <state x="690" y="274" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1621745689999">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="274" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.0.1920.1040/1920.108.1600.860@0.0.1920.1040" timestamp="1621745689999" />
+    <state x="707" y="238" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1625819506300">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="707" y="238" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1625819506300" />
+    <state x="740" y="261" key="FileChooserDialogImpl" timestamp="1625819504527">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="261" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1625819504527" />
+    <state x="740" y="261" key="FileChooserDialogImpl/0.0.1920.1040/1920.108.1600.860@0.0.1920.1040" timestamp="1621742561875" />
+    <state width="1482" height="194" key="GridCell.Tab.0.bottom" timestamp="1628829848796">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1483" height="474" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1625819550636" />
+    <state width="1486" height="475" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.108.1600.860@0.0.1920.1040" timestamp="1623995876194" />
+    <state width="1482" height="194" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1628829848796" />
+    <state width="1482" height="194" key="GridCell.Tab.0.center" timestamp="1628829848796">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1483" height="474" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1625819550636" />
+    <state width="1486" height="475" key="GridCell.Tab.0.center/0.0.1920.1040/1920.108.1600.860@0.0.1920.1040" timestamp="1623995876194" />
+    <state width="1482" height="194" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1628829848796" />
+    <state width="1482" height="194" key="GridCell.Tab.0.left" timestamp="1628829848796">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1483" height="474" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1625819550636" />
+    <state width="1486" height="475" key="GridCell.Tab.0.left/0.0.1920.1040/1920.108.1600.860@0.0.1920.1040" timestamp="1623995876194" />
+    <state width="1482" height="194" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1628829848796" />
+    <state width="1482" height="194" key="GridCell.Tab.0.right" timestamp="1628829848796">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1483" height="474" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1600.860@0.0.1920.1040" timestamp="1625819550636" />
+    <state width="1486" height="475" key="GridCell.Tab.0.right/0.0.1920.1040/1920.108.1600.860@0.0.1920.1040" timestamp="1623995876194" />
+    <state width="1482" height="194" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1628829848796" />
+    <state width="1590" height="213" key="GridCell.Tab.1.bottom" timestamp="1621754394630">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1204" height="154" key="GridCell.Tab.1.bottom/0.0.1920.1040/1920.108.1600.860@0.0.1920.1040" timestamp="1621742862282" />
+    <state width="1590" height="213" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1621754394630" />
+    <state width="1590" height="213" key="GridCell.Tab.1.center" timestamp="1621754394630">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1204" height="154" key="GridCell.Tab.1.center/0.0.1920.1040/1920.108.1600.860@0.0.1920.1040" timestamp="1621742862282" />
+    <state width="1590" height="213" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1621754394630" />
+    <state width="1590" height="213" key="GridCell.Tab.1.left" timestamp="1621754394630">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1204" height="154" key="GridCell.Tab.1.left/0.0.1920.1040/1920.108.1600.860@0.0.1920.1040" timestamp="1621742862282" />
+    <state width="1590" height="213" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1621754394630" />
+    <state width="1590" height="213" key="GridCell.Tab.1.right" timestamp="1621754394630">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1204" height="154" key="GridCell.Tab.1.right/0.0.1920.1040/1920.108.1600.860@0.0.1920.1040" timestamp="1621742862282" />
+    <state width="1590" height="213" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1621754394630" />
+    <state x="75" y="1" width="1735" height="852" key="SettingsEditor" timestamp="1628828273744">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="75" y="1" width="1799" height="1034" key="SettingsEditor/0.0.1920.1040/1920.108.1600.860@0.0.1920.1040" timestamp="1621745983830" />
+    <state x="75" y="1" width="1735" height="852" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1628828273744" />
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1621752769856">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1621752769856" />
+    <state x="501" y="255" width="917" height="630" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1621744553480">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="501" y="255" width="917" height="630" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1920.1040/1920.108.1600.860@0.0.1920.1040" timestamp="1621744553480" />
+    <state x="616" y="240" width="672" height="677" key="run.anything.popup" timestamp="1621744468614">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" width="672" height="677" key="run.anything.popup/0.0.1920.1040/1920.108.1600.860@0.0.1920.1040" timestamp="1621744468614" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NoClassDefFoundError" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.SecurityException" package="java.lang" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Library_Project$.ic" NAME=" Coverage Results" MODIFIED="1607346800147" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Library_Project$App.ic" NAME="App Coverage Results" MODIFIED="1617965779462" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Library_Project$Library_Project_jar.ic" NAME="Library_Project.jar Coverage Results" MODIFIED="1619713823418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>

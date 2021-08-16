@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXBadge?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane id="stackPane" fx:id="stackPane" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.AddBookController">
+   <children>
+      <BorderPane id="borderContent" fx:id="borderPane" prefHeight="704.0" prefWidth="1149.0">
+         <center>
+            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="497.0" prefWidth="779.0">
+               <content>
+                  <JFXBadge prefHeight="666.0" prefWidth="1185.0">
+                     <children>
+                        <AnchorPane maxWidth="-Infinity" prefHeight="548.0" prefWidth="1064.0">
+                           <children>
+                              <AnchorPane layoutX="-1.0" layoutY="34.0" prefHeight="605.0" prefWidth="1062.0" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="28.0">
+                                 <children>
+                                    <TextField fx:id="txtName" layoutX="215.0" layoutY="53.0" prefHeight="27.0" prefWidth="238.0" promptText="ຊື່ປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="49.0" />
+                                    <TextField fx:id="txtId" layoutX="77.0" layoutY="58.0" prefHeight="27.0" prefWidth="161.0" promptText="ລະຫັດປຶ້ມ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="49.0" />
+                                    <TextField fx:id="txtPage" alignment="CENTER" layoutX="215.0" layoutY="274.0" prefHeight="31.0" prefWidth="114.0" promptText="ຈຳນວນໜ້າ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="274.0" />
+                                    <TextField fx:id="txtQty" alignment="CENTER" layoutX="349.0" layoutY="275.0" prefHeight="31.0" prefWidth="104.0" promptText="ຈຳນວນຫົວ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.topAnchor="274.0" />
+                                    <ComboBox fx:id="cmbCagtegory" layoutX="477.0" layoutY="51.0" prefHeight="31.0" prefWidth="205.0" promptText="ໝວດ" AnchorPane.leftAnchor="476.0" AnchorPane.topAnchor="49.0" />
+                                    <ComboBox fx:id="cmbType" layoutX="477.0" layoutY="122.0" prefHeight="31.0" prefWidth="205.0" promptText="ປະເພດ" AnchorPane.leftAnchor="476.0" AnchorPane.topAnchor="124.0" />
+                                    <ComboBox fx:id="cmbStatus" layoutX="478.0" layoutY="197.0" prefHeight="31.0" prefWidth="257.0" promptText="ສະຖານະ" AnchorPane.leftAnchor="477.0" AnchorPane.topAnchor="198.0" />
+                                    <ComboBox fx:id="cmbTable" layoutX="476.0" layoutY="274.0" prefHeight="31.0" prefWidth="85.0" promptText="ເລກຕູ້" AnchorPane.topAnchor="274.0" />
+                                    <ComboBox fx:id="cmbtableLog" layoutX="581.0" layoutY="274.0" prefHeight="31.0" prefWidth="98.0" promptText="ລ໋ອກຕູ້" AnchorPane.topAnchor="274.0" />
+                                    <JFXButton alignment="CENTER" focusTraversable="false" layoutX="401.0" layoutY="518.0" maxHeight="-Infinity" minHeight="-Infinity" onAction="#btSave" prefHeight="35.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ບັນທືກ" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@Icon/checked.png" />
+                                             </image>
+                                             <rotationAxis>
+                                                <Point3D />
+                                             </rotationAxis>
+                                          </ImageView>
+                                       </graphic>
+                                       <padding>
+                                          <Insets left="-2.0" />
+                                       </padding>
+                                    </JFXButton>
+                                    <JFXButton alignment="CENTER" focusTraversable="false" layoutX="551.0" layoutY="518.0" onAction="#btClearText" prefHeight="35.0" prefWidth="85.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ" textFill="WHITE">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@Icon/cancel.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <padding>
+                                          <Insets left="-5.0" />
+                                       </padding>
+                                    </JFXButton>
+                                    <TextField fx:id="txtISBN" layoutX="214.0" layoutY="124.0" prefHeight="31.0" prefWidth="238.0" promptText="ISBN" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="124.0" />
+                                    <Label layoutX="77.0" layoutY="38.0" styleClass="BoonBaan-size-14" text="ລະຫັດປຶ້ມ" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="28.0" />
+                                    <Label layoutX="214.0" layoutY="33.0" styleClass="BoonBaan-size-14" text="ຊື່ປຶ້ມ" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="28.0" />
+                                    <Label layoutX="211.0" layoutY="104.0" styleClass="BoonBaan-size-14" text="ເລກ ISBN" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="103.0" />
+                                    <Label layoutX="77.0" layoutY="104.0" styleClass="BoonBaan-size-14" text="ເລກບາໂຄດປຶ້ມ (Barcode)" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="103.0" />
+                                    <Label layoutX="214.0" layoutY="254.0" styleClass="BoonBaan-size-14" text="ຈຳນວນໜ້າ" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="254.0" />
+                                    <Label layoutX="349.0" layoutY="254.0" styleClass="BoonBaan-size-14" text="ຈຳນວນປຶ້ມ" AnchorPane.topAnchor="254.0" />
+                                    <Label layoutX="477.0" layoutY="254.0" styleClass="BoonBaan-size-14" text="ເລກຕູ້" AnchorPane.topAnchor="254.0" />
+                                    <Label layoutX="581.0" layoutY="254.0" styleClass="BoonBaan-size-14" text="ລ໋ອກຕູ້" AnchorPane.topAnchor="254.0" />
+                                    <Label layoutX="480.0" layoutY="98.0" styleClass="BoonBaan-size-14" text="ປະເພດປຶ້ມ" AnchorPane.leftAnchor="475.0" AnchorPane.topAnchor="103.0" />
+                                    <Label layoutX="474.0" layoutY="29.0" prefWidth="60.0" styleClass="BoonBaan-size-14" text="ໝວດໝູ່ປຶ້ມ" AnchorPane.leftAnchor="475.0" />
+                                    <Label layoutX="476.0" layoutY="177.0" styleClass="BoonBaan-size-14" text="ສະຖານະຂອງປຶ້ມ" AnchorPane.leftAnchor="475.0" AnchorPane.topAnchor="177.0" />
+                                    <Label layoutX="217.0" layoutY="177.0" styleClass="BoonBaan-size-14" text="ແຕ່ງຂຶ້ນໃນປີ" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="177.0" />
+                                    <Label layoutX="216.0" layoutY="322.0" styleClass="BoonBaan-size-14" text="ລາຍລະອຽດເພີ່ມຕື່ມ" AnchorPane.leftAnchor="216.0" />
+                                    <TextField fx:id="txtYear" layoutX="217.0" layoutY="197.0" prefHeight="31.0" prefWidth="235.0" promptText="ແຕ່ງຂຶ້ນໃນປີ" style="-fx-text-fill: #0a1eff;" viewOrder="1.0" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="198.0" />
+                                    <JFXButton fx:id="btAddTableLog" buttonType="RAISED" focusTraversable="false" layoutX="680.0" layoutY="274.0" prefHeight="31.0" prefWidth="52.0" ripplerFill="#3d62e8" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" styleClass="BoonBaan-size-14-Regular" text="ເພີ່ມ" AnchorPane.topAnchor="274.0">
+                                       <graphic>
+                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@Icon/add_30px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <padding>
+                                          <Insets left="-4.0" />
+                                       </padding>
+                                    </JFXButton>
+                                    <JFXButton fx:id="btAddType" buttonType="RAISED" focusTraversable="false" layoutX="683.0" layoutY="122.0" prefHeight="31.0" prefWidth="52.0" ripplerFill="#3d62e8" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" styleClass="BoonBaan-size-14-Regular" text="ເພີ່ມ" AnchorPane.topAnchor="124.0">
+                                       <graphic>
+                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@Icon/add_30px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <padding>
+                                          <Insets left="-4.0" />
+                                       </padding>
+                                    </JFXButton>
+                                    <JFXButton fx:id="btAddCategory" buttonType="RAISED" focusTraversable="false" layoutX="683.0" layoutY="50.0" prefHeight="31.0" prefWidth="52.0" ripplerFill="#3d62e8" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" styleClass="BoonBaan-size-14-Regular" text="ເພີ່ມ" AnchorPane.topAnchor="49.0">
+                                       <graphic>
+                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@Icon/add_30px.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                       <padding>
+                                          <Insets left="-4.0" />
+                                       </padding>
+                                    </JFXButton>
+                                    <AnchorPane layoutX="772.0" layoutY="49.0" prefHeight="407.0" prefWidth="269.0" style="-fx-border-color: #101D3D; -fx-border-radius: 0.4em;" AnchorPane.topAnchor="48.0">
+                                       <children>
+                                          <ComboBox fx:id="cmbAuthor1" layoutX="11.0" layoutY="32.0" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
+                                          <ComboBox fx:id="cmbAuthor2" layoutX="11.0" layoutY="84.0" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
+                                          <ComboBox fx:id="cmbAuthor3" layoutX="11.0" layoutY="135.0" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
+                                          <ComboBox fx:id="cmbAuthor4" layoutX="11.0" layoutY="190.0" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
+                                          <ComboBox fx:id="cmbAuthor5" layoutX="11.0" layoutY="244.0" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
+                                          <ComboBox fx:id="cmbAuthor6" layoutX="11.0" layoutY="298.0" prefHeight="31.0" prefWidth="242.0" promptText="ຊື່ຜູ້ແຕ່ງ" />
+                                          <JFXButton fx:id="btAddNewAuthor" alignment="CENTER" focusTraversable="false" layoutX="111.0" layoutY="361.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="70.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 15px 15px 15px 15px;" stylesheets="@Style/buttonFont.css" text="ເພີ່ມ" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                             <graphic>
+                                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@Icon/add.png" />
+                                                   </image>
+                                                   <rotationAxis>
+                                                      <Point3D />
+                                                   </rotationAxis>
+                                                </ImageView>
+                                             </graphic>
+                                             <padding>
+                                                <Insets left="-2.0" />
+                                             </padding>
+                                          </JFXButton>
+                                          <Label layoutX="111.0" layoutY="-21.0" styleClass="BoonBaan-size-14" text="ແຕ່ງໂດຍ:" />
+                                       </children>
+                                    </AnchorPane>
+                                    <TextArea fx:id="txtBarcode" editable="false" layoutX="27.0" layoutY="130.0" prefHeight="325.0" prefWidth="167.0" promptText="ບາໂຄດປຶ້ມ" />
+                                    <TextArea fx:id="txtDetail" layoutX="216.0" layoutY="341.0" prefHeight="114.0" prefWidth="515.0" promptText="ລາຍລະອຽດ" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </JFXBadge>
+               </content>
+            </ScrollPane>
+         </center>
+         <top>
+            <AnchorPane id="acHeaderPane" fx:id="acHeaderPane" prefHeight="34.0" prefWidth="978.0" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" layoutX="735.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="23.0" prefWidth="23.0" style="-fx-background-radius: 15px 15px 15px 15px;" visible="false" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icon/no_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="1.0" />
+                     </font>
+                  </JFXButton>
+                  <Label graphicTextGap="10.0" layoutX="14.0" layoutY="12.0" prefHeight="32.0" prefWidth="161.0" styleClass="label-size-16" text="ເພີ່ມຂໍ້ມູນປຶ້ມ" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="1.0" AnchorPane.topAnchor="1.0">
+                     <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="26.0">
+                           <image>
+                              <Image url="@Icon/import_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0" ripplerFill="RED" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icon/no_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="1.0" />
+                     </font>
+                  </JFXButton>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </AnchorPane>
+         </top>
+         <effect>
+            <DropShadow />
+         </effect>
+         <StackPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </StackPane.margin>
+         <padding>
+            <Insets bottom="8.0" left="2.0" right="2.0" />
+         </padding>
+      </BorderPane>
+   </children>
+</StackPane>

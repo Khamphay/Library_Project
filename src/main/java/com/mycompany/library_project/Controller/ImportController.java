@@ -225,6 +225,28 @@ public class ImportController implements Initializable {
 
         // Todo: Add column Button
         addButtonToTable();
+
+        tableHistoryImportBook.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                txtId.setText(tableHistoryImportBook.getSelectionModel().getSelectedItem().getBookid());
+                txtName.setText(tableHistoryImportBook.getSelectionModel().getSelectedItem().getBookname());
+                txtPage.setText(
+                        Integer.toString(tableHistoryImportBook.getSelectionModel().getSelectedItem().getBookpage()));
+                txtISBN.setText(tableHistoryImportBook.getSelectionModel().getSelectedItem().getBookisbn());
+                cmbCagtegory.getSelectionModel()
+                        .select(tableHistoryImportBook.getSelectionModel().getSelectedItem().getBookcategory());
+                cmbType.getSelectionModel()
+                        .select(tableHistoryImportBook.getSelectionModel().getSelectedItem().getBooktype());
+                txtYear.setText(tableHistoryImportBook.getSelectionModel().getSelectedItem().getWriteYear());
+                cmbTable.getSelectionModel()
+                        .select(tableHistoryImportBook.getSelectionModel().getSelectedItem().getTableid());
+                txtPrice.setText(
+                        Double.toString(tableHistoryImportBook.getSelectionModel().getSelectedItem().getPrice()));
+                txtQty.setText(Integer.toString(tableHistoryImportBook.getSelectionModel().getSelectedItem().getQty()));
+                txtTotalPrice.setText(
+                        Double.toString(tableHistoryImportBook.getSelectionModel().getSelectedItem().getTotalPrice()));
+            }
+        });
     }
 
     private void initRules() {
@@ -759,7 +781,7 @@ public class ImportController implements Initializable {
             clearText();
         } else {
             validRules.setErrorDecorationEnabled(true);
-            alertMessage.showWarningMessage("Save Warning", "Please chack your information and try again.", 4,
+            alertMessage.showWarningMessage("Add Warning", "Please chack your information and try again.", 4,
                     Pos.BOTTOM_RIGHT);
         }
     }
@@ -776,17 +798,13 @@ public class ImportController implements Initializable {
                 for (ImportModel model : tableHistoryImportBook.getItems()) {
 
                     importBook = new ImportModel(importid, model.getBookid(), model.getQty(), model.getPrice());
-                    addBook = new BookDetailModel(model.getBookid(), model.getBookname(), model.getBookisbn(),
-                            model.getBookpage(), model.getQty(), categoryId, typeId, model.getTableid(),
-                            model.getWriteYear(), "");
 
                     final ResultSet rs = addBook.getMaxBarcodeID(model.getBookid());
                     String idSub = "0";
-                    if (rs.next()) {
+                    if (rs.next() && rs.getString("book_id") != null) {
                         _bookid = rs.getString("book_id");
                         char[] arr = rs.getString("maxbarcodeid").toCharArray();
-                        // Todo: Sub only the String
-
+                        // Todo: Sub only the Int
                         for (char c : arr) {
                             if (Character.toString(c).matches("\\d*")) {
                                 idSub += c;
@@ -824,14 +842,16 @@ public class ImportController implements Initializable {
                             break;
                         }
                     }
-
+                    addBook = new BookDetailModel(model.getBookid(), model.getBookname(), model.getBookisbn(),
+                            model.getBookpage(), model.getQty(), categoryId, typeId, model.getTableid(),
+                            model.getWriteYear(), "");
                     // Todo: Save All Data
-                    if (importBook.saveDataImportDetail(importid) > 0) {
-                        if (_bookid == "") {
-                            // Todo: Save New Book Data
-                            if (addBook.saveData() > 0) {
-                                // Todo: Save Barcode
-                                if (addBook.saveBookBarCode(listBarcode, txtId.getText()) > 0) {
+                    if (_bookid == "") {
+                        // Todo: Save New Book Data
+                        if (addBook.saveData() > 0) {
+                            // Todo: Save Barcode
+                            if (addBook.saveBookBarCode(listBarcode, txtId.getText()) > 0) {
+                                if (importBook.saveDataImportDetail(importid) > 0) {
                                     // Todo: Save Write
                                     if (addBook.saveWrite(listWrite) > 0) {
                                         result = "Save successfully";
@@ -845,7 +865,12 @@ public class ImportController implements Initializable {
                                 return;
                             }
                         } else {
-                            // Todo: Update Qty Of Books
+                            result = null;
+                            return;
+                        }
+                    } else {
+                        // Todo: Update Qty Of Books
+                        if (importBook.saveDataImportDetail(importid) > 0) {
                             if (addBook.updateBookQty(model.getBookid(), model.getQty()) > 0) {
                                 // Todo: Save Barcode
                                 if (addBook.saveBookBarCode(listBarcode, null) > 0) {
@@ -860,21 +885,17 @@ public class ImportController implements Initializable {
                                 return;
                             }
                         }
-                    } else {
-                        result = null;
-                        return;
                     }
                     index++;
                 }
+                if (result != null) {
+                    alertMessage.showCompletedMessage("Saved", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
+                    printBin(importid);
+                    clearAllVal();
+                }
             } else {
-                result = null;
+                alertMessage.showWarningMessage("Save Warning", "Please add book before save", 4, Pos.BOTTOM_RIGHT);
             }
-            if (result != null) {
-                alertMessage.showCompletedMessage("Saved", "Save data successfully.", 4, Pos.BOTTOM_RIGHT);
-                printBin(importid);
-                clearAllVal();
-            }
-
         } catch (Exception e) {
             dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການບັນທືກຂໍ້ມູນນຳປຶ້ມເຂົ້າລະບົບ", e);
             e.printStackTrace();

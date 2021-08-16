@@ -1,0 +1,55 @@
+.button {
+  -fx-background-color: #101d3d;
+  -fx-background-radius: 2em;
+  -fx-font-family: "BoonBaan";
+  -fx-font-size: 16;
+  -fx-text-fill: #fff;
+}
+
+.button-color {
+  -fx-font-family: "BoonBaan";
+  /* -fx-font-family: 'Noto Sans Lao'; */
+  /* -fx-font-size: 14; */
+  -fx-text-fill: #101d3d;
+}
+
+.button-size-16 {
+  -fx-font-family: "BoonBaan";
+  /* -fx-font-family: 'Noto Sans Lao'; */
+  -fx-font-size: 18;
+}
+
+.button-size-16-bold {
+  -fx-font-family: "BoonBaan";
+  /* -fx-font-family: 'Noto Sans Lao'; */
+  -fx-font-size: 16;
+  -fx-font-weight: bold;
+}
+
+.button:hover {
+  -fx-background-color: derive(#0b2e80, 10%);
+}
+
+/* Todo: Use FontAwesomeIcon */
+/* .ikonli-font-icon {
+  -fx-icon-size: 20;
+  -fx-icon-color: #ffff;
+}
+
+#buttoLogin .ikonli-font-icon {
+  -fx-icon-code: "fas-user";
+}
+
+#buttonCancel .ikonli-font-icon {
+  -fx-icon-code: "fas-times-circle";
+}
+ */
+
+#buttons {
+  -fx-background-color: #fff;
+  -fx-border-color: #101d3d;
+  -fx-border-radius: 2em;
+  -fx-font-family: "BoonBaan";
+  -fx-font-size: 16;
+  -fx-text-fill: #101d3d;
+}

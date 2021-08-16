@@ -563,6 +563,11 @@ public class RegisterController implements Initializable {
                                 map.put("memberid", memberModel.getMemberId());
                                 map.put("logo", imgInputStream);
                                 printCard.showReport(map, "printCardById.jrxml", "Print Member Card Error");
+
+                                map.put("memberid", memberModel.getMemberId());
+                                map.put("logo", imgInputStream);
+                                printCard.showReport(map, "billRegister.jrxml", "Print Bill Error");
+
                                 return null;
                             }
 
@@ -584,19 +589,17 @@ public class RegisterController implements Initializable {
                         };
                         new Thread(task).start();
 
+
                         clearValues();
                         if (memberController != null)
                             memberController.showData();
                     }
                 } else {
-                    System.out.println("Out 3");
                     if (memberModel.updateData() > 0) {
                         alertMessage.showCompletedMessage("Edited", "Edited data successfully.", 4, Pos.BOTTOM_RIGHT);
                         clearValues();
                         if (memberController != null)
                             memberController.showData();
-                    } else {
-                        System.out.println("Out 4");
                     }
                 }
             } else {

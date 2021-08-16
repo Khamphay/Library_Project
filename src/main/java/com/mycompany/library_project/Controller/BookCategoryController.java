@@ -241,7 +241,7 @@ public class BookCategoryController implements Initializable {
             }
 
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Save", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            dialog.showExcectionDialog("Saved Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນປະເພດປຶ້ມ", e);
         }
     }
 
@@ -267,7 +267,7 @@ public class BookCategoryController implements Initializable {
                         "Please chack your information and try again.", 4, Pos.BOTTOM_RIGHT);
             }
         } catch (Exception e) {
-            alertMessage.showErrorMessage("Edit", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            dialog.showExcectionDialog("Edited Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂຂໍ້ມູນປະເພດປຶ້ມ", e);
         }
     }
 
@@ -371,8 +371,8 @@ public class BookCategoryController implements Initializable {
                                             importController.fillCategory();
                                     }
                                 } catch (Exception ex) {
-                                    alertMessage.showErrorMessage("Delete", "Error: " + ex.getMessage(), 4,
-                                            Pos.BOTTOM_RIGHT);
+                                    dialog.showExcectionDialog("Deleted Error", null,
+                                            "ເກີດບັນຫາໃນການລົບຂໍ້ມູນປະເພດປຶ້ມ", ex);
                                 }
                         });
                     }

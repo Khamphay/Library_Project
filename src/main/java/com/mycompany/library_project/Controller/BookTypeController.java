@@ -250,6 +250,11 @@ public class BookTypeController implements Initializable {
     private void Save(ActionEvent actionEvent) throws SQLException {
         try {
             if (!txtTypeId.getText().equals("") && !txtTypeName.getText().equals("")) {
+                if (type.findById(txtTypeId.getText()).next()) {
+                    dialog.showWarningDialog(null,
+                            "ລະຫັດປະເພດປຶ້ມຊ້ຳກັບຂໍ້ມູນທີ່ມີຢູ່ໃນລະບົບກະລຸນາກວດສອບຂໍ້ມູນ ແລ້ວລອງບັນທຶກໃຫມ່ອີກຄັ້ງ");
+                    return;
+                }
                 type = new TypeModel(txtTypeId.getText(), txtTypeName.getText());
                 if (type.saveData() == 1) {
                     ShowData();
@@ -277,11 +282,6 @@ public class BookTypeController implements Initializable {
         try {
             if (!txtTypeId.getText().equals("") && !txtTypeName.getText().equals("")) {
 
-                if (type.findById(txtTypeId.getText()).next()) {
-                    dialog.showWarningDialog(null,
-                            "ລະຫັດປະເພດປຶ້ມຊ້ຳກັບຂໍ້ມູນທີ່ມີຢູ່ໃນລະບົບກະລຸນາກວດສອບຂໍ້ມູນ ແລ້ວລອງບັນທຶກໃຫມ່ອີກຄັ້ງ");
-                    return;
-                }
                 type = new TypeModel(txtTypeId.getText(), txtTypeName.getText());
                 if (type.updateData() == 1) {
                     ShowData();

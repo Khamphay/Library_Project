@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Text?>
+
+<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="864.0" style="-fx-background-color: transparent;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.ConfigServerController">
+   <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 0.7em; -fx-border-radius: 0.7em; -fx-background-color: #fff;">
+         <top>
+            <AnchorPane fx:id="acTopBar" prefHeight="99.0" prefWidth="864.0" style="-fx-background-color: #101D3D; -fx-background-radius: 7px 7px 0px 0px; -fx-border-radius: 7px 7px 0px 0px;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label layoutX="340.0" layoutY="35.0" styleClass="BoonBaan-size-20" text="ກຳນົດການເຊື່ອມຕໍ່ຖານຂໍ້ມູນ" textFill="WHITE" />
+                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutX="829.0" layoutY="4.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" ripplerFill="#f80000" stylesheets="@Style/buttonFont.css">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icon/no_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </AnchorPane>
+         </top>
+         <center>
+            <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="8.0" left="8.0" right="8.0" />
+               </BorderPane.margin>
+               <children>
+                  <TextField fx:id="txtHost" layoutX="328.0" layoutY="97.0" prefHeight="31.0" prefWidth="227.0" promptText="ປ້ອນ Host" />
+                  <TextField fx:id="txtPort" layoutX="328.0" layoutY="153.0" prefHeight="31.0" prefWidth="227.0" promptText="ປ້ອນ Port" />
+                  <TextField fx:id="txtUserName" layoutX="328.0" layoutY="213.0" prefHeight="31.0" prefWidth="227.0" promptText="ປ້ອນ User ເຂົ້າໃສ່ຖານຂໍ້ມູນ" />
+                  <Label alignment="CENTER_RIGHT" layoutX="228.0" layoutY="101.0" styleClass="BoonBaan-size-16" text="Host Name:" textAlignment="JUSTIFY" />
+                  <Label alignment="CENTER_RIGHT" layoutX="227.0" layoutY="157.0" styleClass="BoonBaan-size-16" text="Port:" textAlignment="JUSTIFY" />
+                  <Label alignment="CENTER_RIGHT" layoutX="227.0" layoutY="217.0" styleClass="BoonBaan-size-16" text="User Name:" textAlignment="JUSTIFY" />
+                  <TextField fx:id="txtPassword" layoutX="328.0" layoutY="271.0" prefHeight="31.0" prefWidth="227.0" promptText="ປ້ອນ Password ເຂົ້າໃສ່ຖານຂໍ້ມູນ" />
+                  <Label alignment="CENTER_RIGHT" layoutX="225.0" layoutY="275.0" styleClass="BoonBaan-size-16" text="Password:" textAlignment="JUSTIFY" />
+                  <JFXButton fx:id="btSave" focusTraversable="false" graphicTextGap="8.0" layoutX="364.0" layoutY="374.0" prefHeight="33.0" prefWidth="96.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ບັນທືກ">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icon/checked.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btCancel" focusTraversable="false" graphicTextGap="8.0" layoutX="478.0" layoutY="374.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ຍົກເລີກ">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icon/cancel.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btTest" focusTraversable="false" graphicTextGap="0.0" layoutX="199.0" layoutY="374.0" prefHeight="35.0" prefWidth="143.0" ripplerFill="WHITE" stylesheets="@Style/buttonFont.css" text="ທົດສອບການເຊື່ອມຕໍ່" />
+                  <Text fx:id="textResualt" layoutX="225.0" layoutY="338.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14-Regular" wrappingWidth="461.13671875" />
+                  <ComboBox fx:id="comboxDB" layoutX="328.0" layoutY="37.0" prefHeight="31.0" prefWidth="227.0" promptText="ເລືອກລະບົບຖານຂໍ້ມູນ" />
+                  <Label alignment="CENTER_RIGHT" layoutX="227.0" layoutY="41.0" styleClass="BoonBaan-size-16" text="ລະບົບຖານຂໍ້ມູນ:" textAlignment="JUSTIFY" />
+               </children>
+            </Pane>
+         </center>
+      </BorderPane>
+   </children>
+</StackPane>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXBadge?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.ShowBookLostController">
+   <children>
+      <BorderPane id="borderContent" prefHeight="592.0" prefWidth="1405.0" stylesheets="@Style/appstyle.css">
+         <center>
+            <StackPane fx:id="stackPane">
+               <children>
+                  <ScrollPane fitToHeight="true" fitToWidth="true">
+                     <content>
+                        <JFXBadge prefHeight="628.0" prefWidth="189.0">
+                           <children>
+                              <AnchorPane prefHeight="647.0" prefWidth="1403.0">
+                                 <children>
+                                    <TableView fx:id="tableLost" layoutX="12.0" layoutY="58.0" prefHeight="469.0" prefWidth="1347.0" style="-fx-background-color: #f3f3f3;" styleClass="table" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="58.0">
+                                      <placeholder>
+                                          <Label text="ບໍ່ມີຂໍ້ມູນ" />
+                                       </placeholder>
+                                       <columns>
+                                        <TableColumn fx:id="colBookId" prefWidth="104.0" styleClass="tablecolumn" text="ລະຫັດປຶ້ມ" />
+                                          <TableColumn fx:id="colBarcode" prefWidth="140.0" styleClass="tablecolumn" text="ລະຫັດ Barcode" />
+                                        <TableColumn fx:id="colBookName" prefWidth="240.0" styleClass="tablecolumn" text="ຊື່ປຶ້ມ" />
+                                          <TableColumn id="colCenter" fx:id="colPage" prefWidth="88.0" styleClass="tablecolumn" text="ຈຳນວນໜ້າ" />
+                                          <TableColumn fx:id="colCatg" prefWidth="152.0" styleClass="tablecolumn" text="ໝວດປຶ້ມ" />
+                                          <TableColumn fx:id="colType" prefWidth="193.0" styleClass="tablecolumn" text="ປະເພດປຶ້ມ" />
+                                          <TableColumn id="colCenter" fx:id="colTable" styleClass="tablecolumn" text="ເລກຕູ້" />
+                                          <TableColumn id="colCenter" fx:id="colTableLog" prefWidth="96.0" styleClass="tablecolumn" text="ເລກລ໋ອກຕູ້" />
+                                          <TableColumn id="colCenter" fx:id="colDatePay" prefWidth="115.0" styleClass="tablecolumn" text="ວັນທີປັບໃຫມ" />
+                                          <TableColumn fx:id="colPrice" prefWidth="140.0" styleClass="tablecolumn" text="ຄ່າປັບໃໝ" />
+                                      </columns>
+                                    </TableView>
+                                    <TextField fx:id="txtSearch" layoutX="1084.0" layoutY="22.0" prefHeight="30.0" prefWidth="291.0" promptText="ຄົ້ນຫາ" style="-fx-border-radius: 2em; -fx-background-color: transparent; -fx-border-color: #101D3D; -fx-border-width: 1px;" styleClass="BoonBaan-size-12-Regular" AnchorPane.rightAnchor="28.0">
+                                       <padding>
+                                          <Insets left="40.0" />
+                                       </padding>
+                                    </TextField>
+                                    <ImageView fitHeight="23.0" fitWidth="27.0" layoutX="1091.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="289.0">
+                                       <image>
+                                          <Image url="@Icon/search_50px.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Separator layoutX="1118.0" layoutY="26.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="0.0" AnchorPane.rightAnchor="279.0" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </JFXBadge>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </StackPane>
+         </center>
+         <top>
+            <AnchorPane id="acHeaderPane" fx:id="acHeaderPane" prefHeight="34.0" prefWidth="1158.0" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton fx:id="btClose" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="1127.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="23.0" prefWidth="24.0" style="-fx-background-radius: 15px 15px 15px 15px;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="5.0">
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Icon/no_50px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="1.0" />
+                     </font>
+                  </JFXButton>
+                  <Label graphicTextGap="10.0" layoutX="14.0" layoutY="10.0" prefHeight="32.0" prefWidth="161.0" styleClass="label-size-16" text="ຂໍ້ມູນປຶ້ມເສຍ" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="1.0" AnchorPane.topAnchor="2.0">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0">
+                           <image>
+                              <Image url="@Icon/booklost.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </top>
+         <effect>
+            <DropShadow />
+         </effect>
+         <StackPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </StackPane.margin>
+      </BorderPane>
+   </children>
+</StackPane>

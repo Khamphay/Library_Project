@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Text?>
+
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.AdjustmentController">
+   <children>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="569.0" stylesheets="@Style/appstyle.css">
+         <children>
+            <AnchorPane layoutX="21.0" layoutY="75.0" prefHeight="299.0" prefWidth="533.0" style="-fx-border-color: #2D3955; -fx-border-radius: 0.5em;" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="28.0" AnchorPane.topAnchor="75.0">
+               <children>
+                  <Label alignment="CENTER" layoutX="6.0" layoutY="-14.0" prefHeight="23.0" prefWidth="177.0" style="-fx-background-color: #F4F4F4;" styleClass="BoonBaan-size-16" text="ເລືອກວັນທີທີ່ຕ້ອງການລາຍງານ" />
+                  <JFXButton fx:id="btReport" layoutX="205.0" layoutY="200.0" prefHeight="31.0" prefWidth="81.0" stylesheets="@Style/buttonFont.css" text="ລາຍງານ" />
+                  <DatePicker fx:id="dateSatrt" layoutX="42.0" layoutY="101.0" prefHeight="31.0" prefWidth="177.0" />
+                  <Label layoutX="235.0" layoutY="107.0" styleClass="BoonBaan-size-14" text="ຫາວັນທີ" />
+                  <DatePicker fx:id="dateEnd" layoutX="294.0" layoutY="101.0" prefHeight="31.0" prefWidth="177.0" />
+                  <Label layoutX="42.0" layoutY="80.0" styleClass="BoonBaan-size-14-Regular" text="ເລືອກວັນທີທີ່ຕ້ອງການລາຍງານ" />
+               </children>
+            </AnchorPane>
+            <ImageView fitHeight="43.0" fitWidth="65.0" layoutX="4.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Icon/edit_pie_chart_report_100px.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="txtName" layoutX="57.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-20" text="ລາຍງານຂໍ້ມູນການປັບໃຫມ" />
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

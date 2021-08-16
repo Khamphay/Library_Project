@@ -2,15 +2,19 @@ package com.mycompany.library_project.Controller;
 
 import java.net.URL;
 import java.nio.file.Paths;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.*;
 import com.mycompany.library_project.ControllerDAOModel.*;
+import com.mycompany.library_project.Model.BookDetailModel;
 import com.mycompany.library_project.Report.CreateReport;
 
 import org.controlsfx.control.MaskerPane;
+import org.controlsfx.control.textfield.TextFields;
 
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -23,10 +27,11 @@ import javafx.scene.layout.StackPane;
 public class ReportBookController implements Initializable {
 
     private DialogMessage dialog = new DialogMessage();
-    private CreateReport report = null;
+    private CreateReport report = new CreateReport();
     Map<String, Object> map = null;
     private Task<Void> task = null;
     private MaskerPane masker = new MaskerPane();
+    private BookDetailModel books = new BookDetailModel();
     String logo = Paths.get("bin/Logo.png").toAbsolutePath().toString();
 
     @FXML
@@ -40,6 +45,25 @@ public class ReportBookController implements Initializable {
 
     @FXML
     private JFXButton btReport;
+
+    private void autoComplete() {
+        try {
+            final ArrayList<String> bookId = new ArrayList<String>();
+            final ArrayList<String> bookName = new ArrayList<String>();
+            final ResultSet rs = books.findAll();
+            while (rs.next()) {
+                bookId.add(rs.getString("book_id"));
+                bookName.add(rs.getString("book_name"));
+            }
+            TextFields.bindAutoCompletion(txtBookId, bookId).getAutoCompletionPopup()
+                    .setStyle("-fx-font-family: 'BoonBaan';  -fx-font-size: 14;");
+            TextFields.bindAutoCompletion(txtBookId, bookName).getAutoCompletionPopup()
+                    .setStyle("-fx-font-family: 'BoonBaan';  -fx-font-size: 14;");
+            // -fx-font-size: 14;");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void initEvents() {
 
@@ -121,5 +145,6 @@ public class ReportBookController implements Initializable {
         stackPane.getChildren().add(masker);
 
         initEvents();
+        autoComplete();
     }
 }

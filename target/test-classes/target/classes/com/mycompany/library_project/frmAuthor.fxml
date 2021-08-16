@@ -35,7 +35,7 @@
                                     <TableColumn fx:id="colId" maxWidth="3000.0" text="ລະຫັດ" visible="false" />
                                     <TableColumn fx:id="colFname" prefWidth="223.0" text="ຊື່ນັກແຕ່ງປຶ້ມ" />
                                     <TableColumn fx:id="colSname" prefWidth="180.0" text="ນາມສະກຸນ" />
-                                    <TableColumn fx:id="colGender" maxWidth="2000.0" prefWidth="74.0" text="ເພດ" />
+                                    <TableColumn id="colCenter" fx:id="colGender" maxWidth="2000.0" prefWidth="74.0" text="ເພດ" />
                                     <TableColumn fx:id="colTel" maxWidth="4000.0" prefWidth="108.0" text="ເບີໂທ" />
                                     <TableColumn fx:id="colEmail" prefWidth="300.0" text="ອີເມວ (Email)" />
                                  </columns>

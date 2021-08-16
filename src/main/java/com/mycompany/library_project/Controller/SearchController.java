@@ -1,7 +1,9 @@
 package com.mycompany.library_project.Controller;
 
+import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -9,6 +11,7 @@ import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 
 import org.controlsfx.control.MaskerPane;
+import org.controlsfx.control.textfield.TextFields;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -19,6 +22,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 
 public class SearchController implements Initializable {
@@ -58,6 +62,32 @@ public class SearchController implements Initializable {
 
     @FXML
     private TreeView<String> treeViewShowBook;
+
+    private void autoComplete() {
+        try {
+            final ArrayList<String> bookId = new ArrayList<String>();
+            final ArrayList<String> bookName = new ArrayList<String>();
+            final ArrayList<String> catg_name = new ArrayList<String>();
+            final ArrayList<String> type_name = new ArrayList<String>();
+            final ResultSet rs = bookDetailModel.findAll();
+            while (rs.next()) {
+                bookId.add(rs.getString("book_id"));
+                bookName.add(rs.getString("book_name"));
+                catg_name.add(rs.getString("catg_name"));
+                type_name.add(rs.getString("type_name"));
+            }
+            TextFields.bindAutoCompletion(txtSearch, bookId).getAutoCompletionPopup()
+                    .setStyle("-fx-font-family: 'BoonBaan';  -fx-font-size: 14;");
+            TextFields.bindAutoCompletion(txtSearch, bookName).getAutoCompletionPopup()
+                    .setStyle("-fx-font-family: 'BoonBaan';  -fx-font-size: 14;");
+            TextFields.bindAutoCompletion(txtSearch, catg_name).getAutoCompletionPopup()
+                    .setStyle("-fx-font-family: 'BoonBaan';  -fx-font-size: 14;");
+            TextFields.bindAutoCompletion(txtSearch, type_name).getAutoCompletionPopup()
+                    .setStyle("-fx-font-family: 'BoonBaan';  -fx-font-size: 14;");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void showData(String value) {
         Task<Void> task = new Task<Void>() {
@@ -167,14 +197,25 @@ public class SearchController implements Initializable {
         stackPane.getChildren().add(masker);
 
         showData(null);
+        autoComplete();
 
         btSearch.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                if (!txtSearch.getText().equals("")) {
+                if (!txtSearch.getText().equals(""))
                     showData(txtSearch.getText());
-                } else
+                else
+                    alertMessage.showWarningMessage("Search Books", "Please enter data of you want to search...!", 4,
+                            Pos.BOTTOM_RIGHT);
+            }
+        });
+
+        txtSearch.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                if (!txtSearch.getText().equals(""))
+                    showData(txtSearch.getText());
+                else
                     alertMessage.showWarningMessage("Search Books", "Please enter data of you want to search...!", 4,
                             Pos.BOTTOM_RIGHT);
             }

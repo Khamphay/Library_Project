@@ -28,6 +28,7 @@ import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 
+import org.controlsfx.control.textfield.TextFields;
 import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
@@ -76,6 +77,29 @@ public class RentBookController implements Initializable {
     private TableColumn<RentBookModel, String> colId, colName, colPage, colTable, colTableLog, colCatg, colType;
     @FXML
     private TableColumn<RentBookModel, Date> colDateRent, colDateSend;
+
+    private void autoComplete() {
+        try {
+
+            final ArrayList<String> memberId = new ArrayList<String>();
+            rs = member.findAll();
+            while (rs.next()) {
+                memberId.add(rs.getString("member_id"));
+            }
+            TextFields.bindAutoCompletion(txtMemberId, memberId).getAutoCompletionPopup()
+                    .setStyle("-fx-font-family: 'BoonBaan';  -fx-font-size: 12;");
+
+            final ArrayList<String> barcode = new ArrayList<String>();
+            rs = book.showAllBarcode();
+            while (rs.next()) {
+                barcode.add(rs.getString("barcode"));
+            }
+            TextFields.bindAutoCompletion(txtBookId, barcode).getAutoCompletionPopup()
+                    .setStyle("-fx-font-family: 'BoonBaan';  -fx-font-size: 12;");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void initRules() {
         validRules.setErrorDecorationEnabled(false);
@@ -230,6 +254,31 @@ public class RentBookController implements Initializable {
         addButtonToTable();
     }
 
+    private void fiilBooks() {
+        try {
+            rs = book.findBookByBarcode(txtBookId.getText());
+            if (rs.next()) {
+                txtBookName.setText(rs.getString("book_name"));
+                page = rs.getInt("page") + " ໜ້າ";
+                txtCatg.setText(rs.getString("catg_name"));
+                txtType.setText(rs.getString("type_name"));
+                table = rs.getString("tableid");
+                tableLog = rs.getString("table_log_id");
+                status = rs.getString("status");
+            } else {
+                txtBookName.clear();
+                txtCatg.clear();
+                txtType.clear();
+                // dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
+                // "ບໍ່ມີຂໍ້ມູນບັດໃນລະບົບ, ກະລຸນາກວດສອບແລ້ວລອງໃຫມ່່ອິກຄັ້ງ",
+                // DialogTransition.CENTER, buttons,
+                // false);
+                // dialog.showDialog();
+            }
+        } catch (Exception e) {
+            alertMessage.showErrorMessage("Load Book Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+        }
+    }
     private void initEvents() {
 
         rentDate.setDayCellFactory(new Callback<DatePicker, DateCell>() {
@@ -312,39 +361,21 @@ public class RentBookController implements Initializable {
         });
 
         txtBookId.setOnKeyTyped(keytype -> {
-            try {
-                rs = book.findBookByBarcode(txtBookId.getText());
-                if (rs.next()) {
-                    txtBookName.setText(rs.getString("book_name"));
-                    page = rs.getInt("page") + " ໜ້າ";
-                    txtCatg.setText(rs.getString("catg_name"));
-                    txtType.setText(rs.getString("type_name"));
-                    table = rs.getString("tableid");
-                    tableLog = rs.getString("table_log_id");
-                    status = rs.getString("status");
-                } else {
-                    txtBookName.clear();
-                    txtCatg.clear();
-                    txtType.clear();
-                    // dialog = new DialogMessage(stackPane, "ຄຳເຕືອນ",
-                    // "ບໍ່ມີຂໍ້ມູນບັດໃນລະບົບ, ກະລຸນາກວດສອບແລ້ວລອງໃຫມ່່ອິກຄັ້ງ",
-                    // DialogTransition.CENTER, buttons,
-                    // false);
-                    // dialog.showDialog();
-                }
-            } catch (Exception e) {
-                alertMessage.showErrorMessage("Load Book Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
-            }
+            fiilBooks();
         });
 
         txtBookId.setOnKeyPressed(keyEnter -> {
             if (keyEnter.getCode() == KeyCode.ENTER) {
+                if (txtBookName.getText().equals("")) {
+                    fiilBooks();
+                }
                 addToRentBook();
 
             }
         });
 
         rentDate.setOnAction(e -> cancalarDate());
+        sendDate.setOnAction(e -> cancalarDate());
 
         btAdd.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -359,7 +390,6 @@ public class RentBookController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                String result = "";
                 int qty = tableRentBook.getItems().size();
                 rent_id = autoMaxID();
                 try {
@@ -377,7 +407,7 @@ public class RentBookController implements Initializable {
                         if (rentBook.saveData() > 0) {
                             if (rentBook.saveRentBook(list) > 0) {
                                 if (book.updateStatus(listBarcode, rent_id) > 0) {
-                                    alertMessage.showCompletedMessage("Rent Book Successfully", result, 4,
+                                    alertMessage.showCompletedMessage("Saved", "Rent Book Successfully", 4,
                                             Pos.BOTTOM_RIGHT);
                                     tableRentBook.getItems().clear();
                                     btSave.setDisable(true);
@@ -424,6 +454,8 @@ public class RentBookController implements Initializable {
         } else {
             cancalarDate();
         }
+
+        autoComplete();
 
     }
 

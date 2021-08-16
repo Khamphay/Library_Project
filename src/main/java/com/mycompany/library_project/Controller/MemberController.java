@@ -80,7 +80,7 @@ public class MemberController implements Initializable {
             province, depertment, studyYear;
 
     @FXML
-    private TableColumn<MemberModel, Date> birthdate, date_register, date_exist;
+    private TableColumn<MemberModel, Date> birthdate, date_register, date_exist, date_ExiteMeber;
 
     @FXML
     private TextField txtSearch;
@@ -228,6 +228,7 @@ public class MemberController implements Initializable {
         depertment.setCellValueFactory(new PropertyValueFactory<>("detp"));
         date_register.setCellValueFactory(new PropertyValueFactory<>("dateRegister"));
         date_exist.setCellValueFactory(new PropertyValueFactory<>("dateRegisterEnd"));
+        date_ExiteMeber.setCellValueFactory(new PropertyValueFactory<>("dateExit"));
         memberId.setVisible(false);
 
         // Todo: Add column number

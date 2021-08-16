@@ -18,6 +18,7 @@ import com.mycompany.library_project.Model.*;
 import com.mycompany.library_project.Report.CreateReport;
 
 import org.controlsfx.control.MaskerPane;
+import org.controlsfx.control.textfield.TextFields;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
@@ -46,6 +47,7 @@ public class BookLostController implements Initializable {
     private BookLostModel booklostModel = new BookLostModel();
     private RentBookModel rentBook = new RentBookModel();
     private AdjustmentModel adjustmentModel = null;
+    private MemberModel member = new MemberModel();
     private ObservableList<BookLostModel> data = null;
     private ValidationSupport validRules = new ValidationSupport();
     private AlertMessage alertMessage = new AlertMessage();
@@ -112,6 +114,22 @@ public class BookLostController implements Initializable {
             colTableLog, colOutDate, colPrice;
     @FXML
     private TableColumn<BookLostModel, Date> colDateRent, colDateSend;
+
+    private void autoComplete() {
+        try {
+
+            final ArrayList<String> memberId = new ArrayList<String>();
+            rs = member.findAll();
+            while (rs.next()) {
+                memberId.add(rs.getString("member_id"));
+            }
+            TextFields.bindAutoCompletion(txtMemberId, memberId).getAutoCompletionPopup()
+                    .setStyle("-fx-font-family: 'BoonBaan';  -fx-font-size: 12;");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void clearText() {
         validRules.setErrorDecorationEnabled(false);
@@ -282,7 +300,6 @@ public class BookLostController implements Initializable {
                             listSendBook.add(new RentBookModel(item.getRentId(), item.getBarcode(), "ສົ່ງແລ້ວ"));
                             index++;
                         }
-
                         if (booklostModel.saveLostDetail(listBookLost) > 0)
                             if (rentBook.sendBook(listSendBook) > 0) {
                                 if (bookDetail.updateStatus(listBarcode, null) > 0) {
@@ -293,15 +310,15 @@ public class BookLostController implements Initializable {
                                         clearText();
                                         sendBookController.refreshRentOutOfDate();
                                     } else {
-                                        dialog.showInErrorDialog(null,
+                                        dialog.showWarningDialog(null,
                                                 "ບັນທືກຂໍ້ມູນສຳເລັດ ແຕ່ມີບັນຫາໃນການບັນທຶກຂໍ້ມູນການປັບໃຫມ");
                                     }
                                 } else {
-                                    dialog.showInErrorDialog(null, "ມີບັນຫາໃນການອັບເດບສະຖານະຂອງປຶ້ມ");
+                                    dialog.showWarningDialog(null, "ມີບັນຫາໃນການອັບເດບສະຖານະຂອງປຶ້ມ");
                                 }
                             } else {
                                 booklostModel.deleteData(Integer.toString(id));
-                                dialog.showInErrorDialog(null, "ມີບັນຫາໃນການອັບເດບສະຖານະໃນການສົ່ງປຶ້ມ");
+                                dialog.showWarningDialog(null, "ມີບັນຫາໃນການອັບເດບສະຖານະໃນການສົ່ງປຶ້ມ");
                             }
 
                     }
@@ -370,6 +387,7 @@ public class BookLostController implements Initializable {
         initTable();
         initEvents();
         initRules();
+        autoComplete();
 
         outPrice = StaticCostPrice.OutOfDateCost;
         lostPrice = StaticCostPrice.LostCost;

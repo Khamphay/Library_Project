@@ -18,7 +18,7 @@ public class RentSendController implements Initializable {
 
     private Parent rootRent = null, rootSend = null, rootHistory = null;
     private DialogMessage dialog = new DialogMessage();
-    HomeController homeController = null;
+    private HomeController homeController = null;
 
     @FXML
     private TabPane tabPane;
@@ -40,6 +40,7 @@ public class RentSendController implements Initializable {
 
         });
     }
+
 
     private void RentBooks() {
         try {
@@ -64,6 +65,7 @@ public class RentSendController implements Initializable {
                     final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmSendBook.fxml"));
                     rootSend = loader.load();
                     final SendBookController sendBook = loader.getController();
+                    sendBook.autoComplete();
                     sendBook.initConstructor(homeController);
                     tabSend.setContent(rootSend);
                 }

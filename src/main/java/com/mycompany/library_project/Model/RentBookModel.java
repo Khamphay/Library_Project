@@ -389,17 +389,25 @@ public class RentBookModel implements DataAccessObject {
     public int sendBook(List<RentBookModel> list) throws SQLException {
         try {
             int result = 0;
+            sql = "update tbrent_book set status=? where rent_id=? and barcode=?;";
+            ps = HomeController.con.prepareStatement(sql);
             for (RentBookModel val : list) {
-                sql = "call sendBook(?, ?, ?);";
-                ps = HomeController.con.prepareStatement(sql);
-                ps.setString(1, val.getRentId());
-                ps.setString(2, val.getBarcode());
-                ps.setString(3, val.getStatus());
-                result = ps.executeUpdate();
-                System.out
-                        .println(val.getRentId() + " " + val.getBarcode() + " " + val.getStatus() + " RES: " + result);
-                if (result <= 0) {
-                    return result;
+                /*
+                 * sql = "call sendBook(?, ?, ?);"; ps =
+                 * HomeController.con.prepareStatement(sql); ps.setString(1, val.getRentId());
+                 * ps.setString(2, val.getBarcode()); ps.setString(3, val.getStatus()); result =
+                 * ps.executeUpdate(); if (result <= 0) { return result; }
+                 */
+
+                ps.setString(2, val.getRentId());
+                ps.setString(3, val.getBarcode());
+                ps.setString(1, val.getStatus());
+                ps.addBatch();
+                result++;
+                if (result % 100 == 0 || result == list.size()) {
+                    ps.executeBatch();
+                    HomeController.con.commit();
+                    result = 1;
                 }
             }
             return result;

@@ -388,8 +388,8 @@ public class BookLostModel implements DataAccessObject {
         try {
             int result = 0;
             sql = "INSERT INTO dblibrary.tbbooks_lost_detail (lost_id, barcode, book_price) VALUES(?, ?, ?)";
-            ps = HomeController.con.prepareStatement(sql);
             HomeController.con.setAutoCommit(false);
+            ps = HomeController.con.prepareStatement(sql);
             for (BookLostModel val : list) {
                 ps.setInt(1, val.getLost_id());
                 ps.setString(2, val.getBarcode());
@@ -399,7 +399,7 @@ public class BookLostModel implements DataAccessObject {
                 if (result % 100 == 0 || result == list.size()) {
                     ps.executeBatch();
                     HomeController.con.commit();
-                    result++;
+                    result = 1;
                 }
             }
             return result;
@@ -407,7 +407,7 @@ public class BookLostModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນລາຍລະອຽດປຶ້ມເສຍ", e);
             return 0;
         } finally {
-            // ps.close();
+            ps.close();
         }
     }
 

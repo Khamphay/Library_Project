@@ -182,11 +182,12 @@ public class BookDetailModel implements DataAccessObject {
     }
 
     @Override
-    public ResultSet findById(String id) throws SQLException {
+    public ResultSet findById(String values) throws SQLException {
         try {
-            sql = "select * from showbooks where book_id = ?;";
+            sql = "select * from showbooks where book_id = ? Or book_name=?;";
             ps = HomeController.con.prepareStatement(sql);
-            ps.setString(1, id);
+            ps.setString(1, values);
+            ps.setString(2, values);
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
@@ -343,6 +344,22 @@ public class BookDetailModel implements DataAccessObject {
         }
     }
 
+    public ResultSet BarcodeRent() throws SQLException {
+        // Todo: Don't use try...catch'
+        sql = "select barcode from tbrent_book tb where status='ກຳລັງຢືມ'";
+        ps = HomeController.con.prepareStatement(sql);
+        rs = ps.executeQuery();
+        return rs;
+    }
+
+    public ResultSet showAllBarcode() throws SQLException {
+        // Todo: Don't use try...catch'
+        sql = "Select barcode from tbbook Where status='ຫວ່າງ';";
+        ps = HomeController.con.prepareStatement(sql);
+        rs = ps.executeQuery();
+        return rs;
+    }
+
     public ResultSet showBarcode(String book_id) throws SQLException {
         // Todo: Don't use try...catch'
         sql = "call book_ShowByBookId(?);";
@@ -494,17 +511,25 @@ public class BookDetailModel implements DataAccessObject {
     public int updateStatus(List<BookDetailModel> list, String rentId) throws SQLException {
         try {
             int result = 0;
-            // sql = " call book_UpdateStatus(?, ?);";
-            // sql = "update tbbook set status=? where barcode=?";
-            // ps = HomeController.con.prepareStatement(sql);
+            sql = "update tbbook set status=? where barcode=?;";
+            HomeController.con.setAutoCommit(false);
+            ps = HomeController.con.prepareStatement(sql);
             for (BookDetailModel val : list) {
-                sql = " call book_UpdateStatus(?, ?);";
-                ps = HomeController.con.prepareStatement(sql);
-                ps.setString(1, val.getBarcode());
-                ps.setString(2, val.getStatus());
-                result = ps.executeUpdate();
-                if (result <= 0) {
-                    return result;
+
+                /*
+                 * sql = "call book_UpdateStatus(?, ?);"; ps =
+                 * HomeController.con.prepareStatement(sql); ps.setString(1, val.getBarcode());
+                 * ps.setString(2, val.getStatus()); result = ps.executeUpdate(); if (result <=
+                 * 0) { return result; }
+                 */
+                ps.setString(2, val.getBarcode());
+                ps.setString(1, val.getStatus());
+                ps.addBatch();
+                result++;
+                if (result % 100 == 0 || result == list.size()) {
+                    ps.executeBatch();
+                    HomeController.con.commit();
+                    result = 1;
                 }
             }
             return result;

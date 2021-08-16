@@ -48,6 +48,7 @@
                                     <TableColumn fx:id="depertment" prefWidth="200.0" text="ພາກວິຊາ" />
                                     <TableColumn id="colCenter" fx:id="date_register" prefWidth="109.0" text="ວ.ດ.ປ ລົງທະບຽນ" />
                                     <TableColumn id="colCenter" fx:id="date_exist" minWidth="4.0" prefWidth="102.0" text="ວ.ດ.ປ ໝົດອາຍຸ" />
+                                    <TableColumn id="colCenter" fx:id="date_ExiteMeber" minWidth="4.0" prefWidth="200.0" text="ວ.ດ.ປ ໝົດອາຍຸເປັນສະມາຊິກ" />
                                  </columns>
                                  <contextMenu>
                                     <ContextMenu>

@@ -153,6 +153,7 @@ public class AuthorController implements Initializable {
         colNumber.setMinWidth(50);
         colNumber.setMaxWidth(120);
         colNumber.setPrefWidth(60);
+        colNumber.setId("colCenter");
         colNumber.setCellValueFactory(
                 new Callback<CellDataFeatures<AuthorModel, AuthorModel>, ObservableValue<AuthorModel>>() {
 

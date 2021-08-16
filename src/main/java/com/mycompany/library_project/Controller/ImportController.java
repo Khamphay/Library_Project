@@ -41,6 +41,7 @@ import com.mycompany.library_project.Model.*;
 import com.mycompany.library_project.Report.CreateReport;
 
 import org.controlsfx.control.MaskerPane;
+import org.controlsfx.control.textfield.TextFields;
 import org.controlsfx.validation.Severity;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
@@ -120,6 +121,24 @@ public class ImportController implements Initializable {
 
     @FXML
     private TableColumn<ImportModel, Double> colBookPrice, colTotalPrice;
+
+    private void autoComplete() {
+        try {
+            final ArrayList<String> bookId = new ArrayList<String>();
+            final ArrayList<String> bookName = new ArrayList<String>();
+            rs = addBook.findAll();
+            while (rs.next()) {
+                bookId.add(rs.getString("book_id"));
+                bookName.add(rs.getString("book_name"));
+            }
+            TextFields.bindAutoCompletion(txtId, bookId).getAutoCompletionPopup()
+                    .setStyle("-fx-font-family: 'BoonBaan';  -fx-font-size: 14;");
+            TextFields.bindAutoCompletion(txtName, bookName).getAutoCompletionPopup()
+                    .setStyle("-fx-font-family: 'BoonBaan';  -fx-font-size: 14;");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void printBin(String importID) {
 
@@ -441,9 +460,27 @@ public class ImportController implements Initializable {
                 }
             }
         });
+
         txtName.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ENTER)
+            if (keyEvent.getCode() == KeyCode.ENTER) {
                 txtISBN.requestFocus();
+
+                if (txtId.getText().equals("") && !txtName.getText().equals("")) {
+                    try {
+                        final ResultSet rs = addBook.findById(txtName.getText());
+                        if (rs.next()) {
+                            txtId.setText(rs.getString("book_id"));
+                            txtISBN.setText(rs.getString("ISBN"));
+                            txtPage.setText(rs.getString("page"));
+                            txtYear.setText(rs.getString("write_year"));
+                            cmbCagtegory.getSelectionModel().select(rs.getString("catg_name"));
+                            cmbType.getSelectionModel().select(rs.getString("type_name"));
+                            cmbTable.getSelectionModel().select(rs.getString("table_id"));
+                        }
+                    } catch (Exception e) {
+                    }
+                }
+            }
         });
         txtISBN.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER)
@@ -940,6 +977,8 @@ public class ImportController implements Initializable {
         fillCategory();
         fillTable();
         fillAuthor();
+
+        autoComplete();
     }
 
     private void addButtonToTable() {

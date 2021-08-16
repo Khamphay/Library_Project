@@ -784,6 +784,10 @@ public class AddBookController implements Initializable {
                                         // Todo: Update if have
                                         if (addBook.updateWrite(bookid, val, oldarr_author[old_id]) > 0) {
                                             msg = "Edit data successfully.";
+                                            // Todo: 'getStatus()' use for set new 'Author ID'
+                                            if (listWrite.get(old_id).getStatus() == val
+                                                    || listWrite.get(old_id).getStatus().equals(val))
+                                                listWrite.remove(old_id);
                                         }
                                     } catch (SQLException e) {
                                         dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນແຕ່ງປຶ້ມ",
@@ -793,7 +797,8 @@ public class AddBookController implements Initializable {
                                     old_id++;
                                 }
                             }
-                        } else {
+                        }
+                        if (listWrite.size() > 0) {
                             // Todo: Save Write
                             if (addBook.saveWrite(listWrite) > 0) {
                                 msg = "Edit data successfully.";

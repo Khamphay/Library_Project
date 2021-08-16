@@ -152,7 +152,7 @@
 	</parameter>
 	<parameter name="logo" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[select * from showbooks where book_id=$P{bookid}]]>
+		<![CDATA[select * from showbooks where book_id=$P{bookid} OR book_name=$P{bookid} ]]>
 	</queryString>
 	<field name="book_id" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="book_id"/>

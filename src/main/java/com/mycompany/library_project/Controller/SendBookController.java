@@ -31,6 +31,7 @@ import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.*;
 
+import org.controlsfx.control.textfield.TextFields;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 
@@ -73,6 +74,20 @@ public class SendBookController implements Initializable {
 
     @FXML
     private TableColumn<RentBookModel, Date> colDateSend, colDateRent;
+
+    public void autoComplete() {
+        try {
+            ArrayList<String> barcode = new ArrayList<String>();
+            rs = book.BarcodeRent();
+            while (rs.next()) {
+                barcode.add(rs.getString("barcode"));
+            }
+            TextFields.bindAutoCompletion(txtBarcode, barcode).getAutoCompletionPopup()
+                    .setStyle("-fx-font-family: 'BoonBaan';  -fx-font-size: 14;");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void openBookLost() {
         try {
@@ -228,6 +243,12 @@ public class SendBookController implements Initializable {
             }
 
         });
+        txtBarcode.setOnKeyTyped(event -> {
+            if (txtBarcode.getText().equals("")) {
+                clearTextField();
+            }
+        });
+
         txtBarcode.setOnKeyPressed(key -> {
             if (key.getCode() == KeyCode.ENTER) {
                 try {
@@ -295,9 +316,9 @@ public class SendBookController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                if (allPrice > 0 && qtyOutOfDate > 0)
-                    showPay(rent_id, qtyOutOfDate, allPrice);
-                else {
+                // if (allPrice > 0 && qtyOutOfDate > 0)
+                //     showPay(rent_id, qtyOutOfDate, allPrice);
+                // else {
                     if (sendBook() > 0) {
                         alertMessage.showCompletedMessage("Saved", "Send Book successfully", 4, Pos.BOTTOM_RIGHT);
                         clearText();
@@ -305,7 +326,7 @@ public class SendBookController implements Initializable {
                         btSave.setDisable(true);
                     } else
                         alertMessage.showWarningMessage("Saved", "Can not send book", 4, Pos.BOTTOM_RIGHT);
-                }
+                // }
             }
 
         });
@@ -326,23 +347,19 @@ public class SendBookController implements Initializable {
         });
     }
 
-    private void showPay(String rentid, int outofdate, double pricePay) {
-        try {
-            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmPay.fxml"));
-            final Parent root = loader.load();
-            final Scene scene = new Scene(root);
-            scene.setFill(Color.TRANSPARENT);
-            final Stage stage = new Stage(StageStyle.TRANSPARENT);
-            stage.setScene(scene);
-            final PayController pay = loader.getController();
-            pay.initSendConstutor(this, stage, rentid, outofdate, pricePay);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມຈ່າຍຄ່າປັບໃຫມ", e);
-        }
-    }
+    /*
+     * private void showPay(String rentid, int outofdate, double pricePay) { try {
+     * final FXMLLoader loader = new
+     * FXMLLoader(App.class.getResource("frmPay.fxml")); final Parent root =
+     * loader.load(); final Scene scene = new Scene(root);
+     * scene.setFill(Color.TRANSPARENT); final Stage stage = new
+     * Stage(StageStyle.TRANSPARENT); stage.setScene(scene); final PayController pay
+     * = loader.getController(); pay.initSendConstutor(this, stage, rentid,
+     * outofdate, pricePay); stage.initModality(Modality.APPLICATION_MODAL);
+     * stage.show(); } catch (IOException e) { e.printStackTrace();
+     * dialog.showExcectionDialog("Error", null,
+     * "ເກີດບັນຫາໃນການເປີດຟອມຈ່າຍຄ່າປັບໃຫມ", e); } }
+     */
 
     public int sendBook() {
         try {
@@ -377,6 +394,8 @@ public class SendBookController implements Initializable {
         btSave.setDisable(true);
         price = StaticCostPrice.OutOfDateCost;
         txtPrice.setText(dcFormat.format(price));
+
+        // autoComplete();
     }
 
     /*

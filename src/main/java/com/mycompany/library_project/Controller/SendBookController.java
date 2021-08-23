@@ -16,7 +16,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.*;
 import javafx.util.Callback;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.text.DecimalFormat;

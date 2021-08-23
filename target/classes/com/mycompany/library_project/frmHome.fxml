@@ -146,7 +146,7 @@
                                     </JFXButton>
                                  </children>
                               </HBox>
-                              <AnchorPane layoutX="14.0" layoutY="207.0" prefHeight="486.0" prefWidth="1354.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 5px 5px 5px 5px;" AnchorPane.bottomAnchor="28.0" AnchorPane.topAnchor="207.0">
+                              <AnchorPane layoutX="14.0" layoutY="207.0" prefHeight="399.0" prefWidth="1360.0" style="-fx-background-color: #F3F3F3; -fx-background-radius: 5px 5px 5px 5px;" AnchorPane.bottomAnchor="28.0" AnchorPane.topAnchor="207.0">
                                  <effect>
                                     <DropShadow height="18.03" offsetX="1.0" offsetY="1.0" radius="8.515" width="18.03">
                                        <color>

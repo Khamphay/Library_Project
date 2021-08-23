@@ -285,7 +285,7 @@
                               </Tooltip>
                            </tooltip>
                         </JFXButton>
-                        <JFXButton id="btReport" fx:id="btReportAdjustment" alignment="CENTER" contentDisplay="CENTER" disable="true" focusTraversable="false" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE" visible="false">
+                        <JFXButton id="btReport" fx:id="btReportAdjustment" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="218.0" styleClass="BoonBaan-size-14-Regular" stylesheets="@Style/buttonStyle.css" textFill="WHITE">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>

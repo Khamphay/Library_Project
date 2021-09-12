@@ -144,18 +144,19 @@ public class HomeController implements Initializable {
         }
     }
 
-    private void show_RentSendBook() {
+    private void show_RentSendBook(int index) {
         try {
             final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmRentSendBooks.fxml"));
             final Parent subroot = loader.load();
             final RentSendController rentSendController = loader.getController();
-            rentSendController.initConstructor(this);
+            rentSendController.initConstructor(this, index);
             bpDisplay.setCenter(subroot);
 
         } catch (Exception e) {
             // TODO: handle exception
         }
     }
+
     private void showSubFrom(String subForm) {
         try {
             final FXMLLoader loader = new FXMLLoader(App.class.getResource(subForm));
@@ -227,14 +228,26 @@ public class HomeController implements Initializable {
                 }
             });
 
-            node.lookup("#btRentSend").setOnMouseClicked(new EventHandler<Event>() {
+            node.lookup("#btRent").setOnMouseClicked(new EventHandler<Event>() {
 
                 @Override
                 public void handle(Event event) {
                     try {
-                        show_RentSendBook();
+                        show_RentSendBook(0);
                     } catch (Exception e) {
-                        dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການເປີດຟອມຢືມ-ສົ່ງປຶ້ມ", e);
+                        dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການເປີດຟອມຢືມປຶ້ມ", e);
+                    }
+                }
+            });
+
+            node.lookup("#btSend").setOnMouseClicked(new EventHandler<Event>() {
+
+                @Override
+                public void handle(Event event) {
+                    try {
+                        show_RentSendBook(1);
+                    } catch (Exception e) {
+                        dialog.showExcectionDialog("Error", null, "ເກິດບັນຫາໃນການເປີດສົ່ງປຶ້ມ", e);
                     }
                 }
             });
@@ -256,6 +269,7 @@ public class HomeController implements Initializable {
                             stage.setTitle("FNS Library Management System - Login");
                             stage.setScene(sceneDesktop);
                             stage.initStyle(StageStyle.TRANSPARENT);
+                            stage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
                             stage.show();
                             loginController.initConstructor(stage);
                             homeStage.close();

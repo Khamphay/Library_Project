@@ -125,7 +125,7 @@
             </Tooltip>
          </tooltip>
       </JFXButton>
-      <JFXButton id="btRentSend" fx:id="btRentSend" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutX="10.0" layoutY="264.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="48.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="281.0">
+      <JFXButton id="btRent" fx:id="btRent" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutX="10.0" layoutY="264.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="48.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="281.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -147,7 +147,7 @@
             </Tooltip>
          </tooltip>
       </JFXButton>
-      <Accordion layoutX="-7.0" layoutY="280.0" prefHeight="324.0" prefWidth="81.0" AnchorPane.topAnchor="331.0">
+      <Accordion layoutX="-7.0" layoutY="379.0" prefHeight="324.0" prefWidth="81.0" AnchorPane.topAnchor="379.0">
          <panes>
             <TitledPane fx:id="titleReport" alignment="CENTER" cache="true" contentDisplay="CENTER" graphicTextGap="15.0" prefHeight="303.0" prefWidth="81.0" styleClass="BoonBaan-size-14-Regular" textFill="WHITE">
                <graphic>
@@ -336,6 +336,28 @@
          </graphic>
          <tooltip>
             <Tooltip anchorLocation="CONTENT_TOP_RIGHT" contentDisplay="TOP" text="ອອກຈາກລະບົບ" />
+         </tooltip>
+      </JFXButton>
+      <JFXButton id="btSend" fx:id="btSend" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" graphicTextGap="0.0" layoutY="330.0" lineSpacing="2.0" prefHeight="40.0" prefWidth="48.0" ripplerFill="WHITE" styleClass="button-size-16" stylesheets="@Style/buttonStyle.css" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="330.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0">
+               <image>
+                  <Image url="@Icon/send_job_list_50px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <padding>
+            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+         </padding>
+         <tooltip>
+            <Tooltip autoHide="true" text="ຢືມປື້ມ-ສົ່ງປຶ້ມ" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
+               <font>
+                  <Font name="Phetsarath OT" size="12.0" />
+               </font>
+            </Tooltip>
          </tooltip>
       </JFXButton>
    </children>

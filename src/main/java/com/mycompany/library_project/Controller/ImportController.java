@@ -61,18 +61,19 @@ public class ImportController implements Initializable {
     private ArrayList<AuthorModel> author_id = null;
     private ArrayList<TypeModel> arr_type;
     private ArrayList<CategoryModel> arr_category;
-    private ObservableList<String> status = FXCollections.observableArrayList("ຫວ່າງ", "ກຳລ້ງຢືມ", "ເສຍ");
     private ObservableList<String> items = null, author_items = null;
     private MaskerPane masker = new MaskerPane();
     private Task<Void> task = null;
     private CreateReport printbill = new CreateReport();
+    private SupplierModel supmodel = new SupplierModel();
+    private ArrayList<String> arr_supplier;
 
     private String[] arr_author = new String[6];
     private ArrayList<String[]> listAuthor = new ArrayList<>();
     private String _bookid = "";
     private Double _totalPrice = 0.0;
     private int _totalQty = 0;
-    private String categoryId = "", typeId = "";
+    private String categoryId = "", typeId = "", suppid = "";
 
     /*
      * Todo: Use from class BookController for both form can communicate or use for
@@ -104,7 +105,7 @@ public class ImportController implements Initializable {
     private TextField txtId, txtName, txtPage, txtQty, txtISBN, txtYear, txtPrice, txtTotalPrice;
 
     @FXML
-    private ComboBox<String> cmbType, cmbCagtegory, cmbTable, cmbtableLog, cmbStatus;
+    private ComboBox<String> cmbType, cmbCagtegory, cmbTable, cmbtableLog, cmbSupplier;
 
     @FXML
     private ComboBox<String> cmbAuthor1, cmbAuthor2, cmbAuthor3, cmbAuthor4, cmbAuthor5, cmbAuthor6;
@@ -285,7 +286,7 @@ public class ImportController implements Initializable {
         validRules.registerValidator(cmbCagtegory, false, Validator.createEmptyValidator("ກະລຸນາເລືອກໝວດປຶ້ມ"));
         validRules.registerValidator(cmbTable, false, Validator.createEmptyValidator("ກະລຸນາເລືອກເລກຕູ້"));
         validRules.registerValidator(cmbtableLog, false, Validator.createEmptyValidator("ກະລຸນາເລືອກເລກລ໋ອກຕູ້"));
-        validRules.registerValidator(cmbStatus, false, Validator.createEmptyValidator("ກະລຸນາກຳນົດສະຖານະຂອງປຶ້ມ"));
+        validRules.registerValidator(cmbSupplier, false, Validator.createEmptyValidator("ກະລຸນາກຳນົດຜູ້ສະໜອງ"));
 
         validRules.registerValidator(cmbAuthor1, false,
                 Validator.createEmptyValidator("ກະລຸນາລະບຸຊື່ຜູ້ແຕ່ງປຶ້ມ (ຖ້າມີ)", Severity.WARNING));
@@ -361,6 +362,26 @@ public class ImportController implements Initializable {
         }
     }
 
+    private void showAddSupplier() {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmSupplier.fxml"));
+            final Parent tableroot = loader.load();
+            final SupplierController supplierController = loader.getController();
+            final Scene scene = new Scene(tableroot);
+            scene.setFill(Color.TRANSPARENT);
+            final Stage stage = new Stage();
+            stage.initStyle(StageStyle.TRANSPARENT);
+            supplierController.initConstructor2(this, stage);
+            stage.setTitle("Add New Supplier");
+            stage.setScene(scene);
+            stage.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        } catch (Exception e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມຈັດການຂໍ້ມູນຜູ້ສະໜອງ", e);
+        }
+    }
+
     private void generatedBarcode() {
         try {
             // txtBarcode.clear();
@@ -388,7 +409,7 @@ public class ImportController implements Initializable {
         cmbType.getSelectionModel().clearSelection();
         cmbTable.getSelectionModel().clearSelection();
         cmbtableLog.getSelectionModel().clearSelection();
-        cmbStatus.getSelectionModel().select(0);
+        cmbSupplier.getSelectionModel().select(0);
 
         cmbAuthor1.getSelectionModel().clearSelection();
         cmbAuthor2.getSelectionModel().clearSelection();
@@ -640,6 +661,32 @@ public class ImportController implements Initializable {
         });
     }
 
+    public void fillSupplier() {
+        try {
+            items = FXCollections.observableArrayList();
+            arr_supplier = new ArrayList<>();
+            ResultSet rs = supmodel.findAll();
+            while (rs.next()) {
+                items.add(rs.getString("sup_name"));
+                arr_supplier.add(rs.getString("sup_id"));
+            }
+            cmbSupplier.setItems(items);
+        } catch (Exception e) {
+            alertMessage.showErrorMessage("Load Supplier", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+        }
+
+        cmbSupplier.setOnAction(e -> {
+            try {
+                // index_table = cmbTable.getSelectionModel().getSelectedIndex();
+                if (cmbSupplier.getSelectionModel().getSelectedItem() != null) {
+                    suppid = arr_supplier.get(cmbSupplier.getSelectionModel().getSelectedIndex());
+                }
+            } catch (Exception ex) {
+                alertMessage.showErrorMessage("Load Supplier", "Error: " + ex.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            }
+        });
+    }
+
     private void setAuthoID(int index, String authName) {
         for (AuthorModel val : author_id) {
             if (val.getFull_name().equals(authName)) {
@@ -827,7 +874,7 @@ public class ImportController implements Initializable {
     private void btSave(ActionEvent event) {
         try {
             String importid = getMaxImportId(), result = null;
-            importBook = new ImportModel(importid, _totalQty, _totalPrice, Date.valueOf(LocalDate.now()));
+            importBook = new ImportModel(importid, _totalQty, _totalPrice, Date.valueOf(LocalDate.now()), suppid);
 
             if (importBook.saveData() > 0) {
 
@@ -962,8 +1009,6 @@ public class ImportController implements Initializable {
         masker.setStyle("-fx-font-family: BoonBaan;");
         stackPane.getChildren().add(masker);
 
-        cmbStatus.setItems(status);
-        cmbStatus.getSelectionModel().select(0);
         initRules();
         initTable();
         cmbAuthor2.setVisible(false);
@@ -977,6 +1022,8 @@ public class ImportController implements Initializable {
         fillCategory();
         fillTable();
         fillAuthor();
+        fillSupplier();
+        // showAddSupplier();
 
         autoComplete();
     }

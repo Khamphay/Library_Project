@@ -379,7 +379,7 @@ public class RegisterController implements Initializable {
                         cmbDept.getSelectionModel().select(rs.getString("dep_name"));
                         birtDate.setValue(rs.getDate("birthdate").toLocalDate());
                         cmbYears.getSelectionModel().select(rs.getString("study_year"));
-                        dateRegister.setValue(rs.getDate("date_register").toLocalDate());
+                        // dateRegister.setValue(rs.getDate("date_register").toLocalDate());
 
                         // Todo: Show image
                         convertByteToImage(rs.getBytes("img"));

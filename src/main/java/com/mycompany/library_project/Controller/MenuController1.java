@@ -30,7 +30,7 @@ public class MenuController1 implements Initializable {
     private Map<String, Object> map = null;
 
     @FXML
-    private JFXButton btHome, btManage, btRegister, btImport, btSearch, btRentSend;
+    private JFXButton btHome, btManage, btRegister, btImport, btSearch, btRent, btSend;
 
     @FXML
     private TitledPane titleReport;

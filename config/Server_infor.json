@@ -1,1 +1,1 @@
-{"password":"1234","driver":"org.mariadb.jdbc.Driver","port":"3307","host":"localhost","type":"mariadb","userName":"root"}
+{"password":"","driver":"com.mysql.cj.jdbc.Driver","port":"3306","host":"localhost","type":"mysql","userName":"root"}

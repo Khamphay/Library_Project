@@ -159,15 +159,14 @@ public class ShowBookLostController implements Initializable {
                     filterBookLost.setPredicate(booklost -> {
                         if (newValue.isEmpty())
                             return true;
-                        if (booklost.getMemberId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                                || booklost.getBookId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
+                        if (booklost.getBookId().toLowerCase().indexOf(newValue.toLowerCase()) != -1
                                 || booklost.getBarcode().toLowerCase().indexOf(newValue.toLowerCase()) != -1
                                 || booklost.getBookName().toLowerCase().indexOf(newValue.toLowerCase()) != -1
                                 || booklost.getCatg().toLowerCase().indexOf(newValue.toLowerCase()) != -1
                                 || booklost.getType().toLowerCase().indexOf(newValue.toLowerCase()) != -1
                                 || booklost.getTable().toLowerCase().indexOf(newValue.toLowerCase()) != -1
                                 || booklost.getTableLog().toLowerCase().indexOf(newValue.toLowerCase()) != -1
-                                || booklost.getDate().toString().toLowerCase().indexOf(newValue.toLowerCase()) != -1)
+                        )
                             return true;
                         else
                             return false;

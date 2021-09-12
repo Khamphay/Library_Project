@@ -32,6 +32,7 @@ public class ImportModel implements DataAccessObject {
     private int qty, totalQty;
     private double price, totalPrice;
     private Date importDate;
+    private String suppid;
 
     public ImportModel() {
     }
@@ -43,11 +44,12 @@ public class ImportModel implements DataAccessObject {
         this.price = price;
     }
 
-    public ImportModel(String importid, int totalQty, double totalPrice, Date importDate) {
+    public ImportModel(String importid, int totalQty, double totalPrice, Date importDate, String suppid) {
         this.importid = importid;
         this.totalQty = totalQty;
         this.totalPrice = totalPrice;
         this.importDate = importDate;
+        this.suppid = suppid;
     }
 
     public ImportModel(String bookid, String bookname, String bookisbn, int bookpage, String bookcategory,
@@ -187,6 +189,14 @@ public class ImportModel implements DataAccessObject {
         this.importDate = importDate;
     }
 
+    public String getSuppid() {
+        return suppid;
+    }
+
+    public void setSuppid(String suppid) {
+        this.suppid = suppid;
+    }
+
     @Override
     public ResultSet findAll() throws SQLException {
         // TODO Auto-generated method stub
@@ -214,12 +224,13 @@ public class ImportModel implements DataAccessObject {
     @Override
     public int saveData() throws SQLException, ParseException {
         try {
-            sql = "call import_Insert(?, ?, ?, ?);";
+            sql = "call import_Insert(?, ?, ?, ?, ?);";
             ps = HomeController.con.prepareStatement(sql);
             ps.setString(1, getImportid());
             ps.setInt(2, getTotalQty());
             ps.setDouble(3, getTotalPrice());
             ps.setDate(4, getImportDate());
+            ps.setString(5, getSuppid());
             return ps.executeUpdate();
         } catch (SQLException e) {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທືກຂໍ້ມູນນຳປຶ້ມເຂົ້າ", e);

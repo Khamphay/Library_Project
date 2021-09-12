@@ -29,8 +29,18 @@ public class RentSendController implements Initializable {
     @FXML
     private JFXButton btClose;
 
-    public void initConstructor(HomeController homeController) {
+    public void initConstructor(HomeController homeController, int index) {
         this.homeController = homeController;
+        if (index == 0) {
+            // tabRent.setVisible(false);
+            tabRent.setDisable(false);
+            tabSend.setDisable(true);
+            tabPane.getSelectionModel().select(index);
+        } else {
+            tabRent.setDisable(true);
+            tabSend.setDisable(false);
+            tabPane.getSelectionModel().select(index);
+        }
         btClose.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override

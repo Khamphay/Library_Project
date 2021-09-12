@@ -116,41 +116,43 @@
 					<text><![CDATA[ຫໍສະໝຸດ ຄະນະວິທະຍາສາດ ທຳມະຊາດ]]></text>
 				</staticText>
 				<textField pattern="dd/MM/yyyy">
-					<reportElement x="124" y="121" width="43" height="18" uuid="072b91cc-4b62-44a8-a505-a4adb6f87741">
+					<reportElement x="131" y="121" width="40" height="18" uuid="072b91cc-4b62-44a8-a505-a4adb6f87741">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
+					<box padding="2"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Times New Roman" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{date_register}]]></textFieldExpression>
 				</textField>
 				<textField pattern="dd/MM/yyyy">
-					<reportElement x="222" y="121" width="45" height="18" uuid="8f5d4f8c-f0f8-4451-9cc0-a2d2d3e92621">
+					<reportElement x="227" y="121" width="42" height="18" uuid="8f5d4f8c-f0f8-4451-9cc0-a2d2d3e92621">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
+					<box padding="2"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font fontName="Times New Roman" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{date_exit}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="176" y="121" width="45" height="18" uuid="62f54931-81ec-4a7a-a50c-8323c6be7bb2">
+					<reportElement x="173" y="121" width="54" height="18" uuid="62f54931-81ec-4a7a-a50c-8323c6be7bb2">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="Phetsarath OT" size="9"/>
+						<font fontName="Phetsarath OT" size="8"/>
 					</textElement>
-					<text><![CDATA[ວ.ດ.ປ ໝ/ຍ:]]></text>
+					<text><![CDATA[ວ.ດ.ປ ໝົດອາຍຸ:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="75" y="121" width="49" height="18" uuid="a08d3f49-16a7-440b-9262-798e66785508">
+					<reportElement x="75" y="121" width="56" height="18" uuid="a08d3f49-16a7-440b-9262-798e66785508">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="Phetsarath OT" size="9"/>
+						<font fontName="Phetsarath OT" size="8"/>
 					</textElement>
-					<text><![CDATA[ວ.ດ.ປ ລ/ບ:]]></text>
+					<text><![CDATA[ວ.ດ.ປ ລົງທະບຽນ:]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="74" y="59" width="105" height="15" uuid="b0176d34-b6bc-4d09-834a-a3250a9bdfe9">

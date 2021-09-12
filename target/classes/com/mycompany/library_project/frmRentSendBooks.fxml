@@ -20,7 +20,7 @@
          <center>
             <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" styleClass="BoonBaan-size-14-Regular" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
               <tabs>
-                <Tab fx:id="tabRent" text="ຢືມປຶ້ມ" />
+                <Tab fx:id="tabRent" closable="false" text="ຢືມປຶ້ມ" />
                 <Tab fx:id="tabSend" text="ສົ່ງປຶ້ມ" />
                   <Tab fx:id="tabIinforHistory" text="ຂໍ້ມູນຢືມປຶ້ມ - ສົ່ງປຶ້ມ" />
               </tabs>

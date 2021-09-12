@@ -215,6 +215,23 @@
                            </children>
                         </AnchorPane>
                         <Separator layoutY="297.0" prefHeight="0.0" prefWidth="1255.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <AnchorPane layoutX="1102.0" layoutY="175.0" prefHeight="100.0" prefWidth="190.0">
+                           <children>
+                              <JFXButton alignment="TOP_LEFT" buttonType="RAISED" focusTraversable="false" graphicTextGap="10.0" layoutX="7.0" layoutY="11.0" onAction="#btSupplier_Click" prefHeight="100.0" prefWidth="190.0" ripplerFill="WHITE" style="-fx-background-color: #101D3D; -fx-background-radius: 0.3em;" styleClass="button-size-16" stylesheets="@Style/buttonFont.css" text="ຂໍ້ມູນຜຸ້ສະໜອງ" textFill="#ffeded" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
+                                 <graphic>
+                                    <ImageView fitHeight="33.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@Icon/supplier_127px.png" />
+                                       </image>
+                                       <viewport>
+                                          <Rectangle2D />
+                                       </viewport>
+                                    </ImageView>
+                                 </graphic>
+                              </JFXButton>
+                              <Text fx:id="txtDep1" fill="WHITE" layoutX="56.0" layoutY="62.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="5 ຜູ້ສະໜອງ" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="50.0" />
+                           </children>
+                        </AnchorPane>
                      </children>
                   </AnchorPane>
                </children>

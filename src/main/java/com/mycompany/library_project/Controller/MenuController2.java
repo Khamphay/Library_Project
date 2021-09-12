@@ -29,7 +29,7 @@ public class MenuController2 implements Initializable {
     private DialogMessage dialog = new DialogMessage();
 
     @FXML
-    private JFXButton btHome, btManage, btRegister, btImport, btSearch, btRentSend;
+    private JFXButton btHome, btManage, btRegister, btImport, btSearch, btRent, btSend;
 
     @FXML
     private TitledPane titleReport;

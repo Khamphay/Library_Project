@@ -232,6 +232,21 @@ public class ManageBookController implements Initializable {
         }
     }
 
+    @FXML
+    private void btSupplier_Click(ActionEvent event) {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmSupplier.fxml"));
+            final Parent subForm = loader.load();
+            final SupplierController supplierController = loader.getController();
+            supplierController.initConstructor(this);
+            bpManageBook.setCenter(subForm);
+        } catch (Exception e) {
+            dialog.showExcectionDialog("Error", null, "ມີບັນຫາໃນການເປີດຟອມຈັດການຂໍ້ມູນຜູ້ສະໜອງ", e);
+            e.printStackTrace();
+
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         txtType.setText(HomeController.summaryValue[0] + " ປະເພດ");

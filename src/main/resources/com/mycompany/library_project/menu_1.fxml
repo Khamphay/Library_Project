@@ -125,7 +125,7 @@
             <Insets left="-4.0" />
          </padding>
       </JFXButton>
-      <Accordion layoutX="-13.0" layoutY="331.0" prefHeight="311.0" prefWidth="234.0" styleClass="BoonBaan-size-16-Regular" AnchorPane.leftAnchor="-13.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="331.0">
+      <Accordion layoutX="-13.0" layoutY="379.0" prefHeight="311.0" prefWidth="234.0" styleClass="BoonBaan-size-16-Regular" AnchorPane.leftAnchor="-13.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="379.0">
         <panes>
           <TitledPane id="titleReport" fx:id="titleReport" cache="true" graphicTextGap="15.0" prefHeight="237.0" prefWidth="191.0" styleClass="BoonBaan-size-16-Regular" text="ລາຍງານ" textFill="WHITE">
                <graphic>
@@ -254,7 +254,26 @@
           </TitledPane>
         </panes>
       </Accordion>
-      <JFXButton id="btRentSend" fx:id="btRentSend" alignment="BASELINE_LEFT" focusTraversable="false" graphicTextGap="15.0" layoutX="8.0" layoutY="281.0" lineSpacing="2.0" prefHeight="40.0" styleClass="BoonBaan-size-16-Regular" text="ຢືມປື້ມ-ສົ່ງປຶ້ມ" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="281.0">
+      <JFXButton id="btRent" fx:id="btRent" alignment="BASELINE_LEFT" focusTraversable="false" graphicTextGap="15.0" layoutX="8.0" layoutY="281.0" lineSpacing="2.0" prefHeight="40.0" styleClass="BoonBaan-size-16-Regular" text="ຢືມປື້ມ" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="281.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0">
+               <image>
+                  <Image url="@Icon/send_job_list_50px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <padding>
+            <Insets bottom="1.0" left="18.0" right="1.0" top="1.0" />
+         </padding>
+         <stylesheets>
+            <URL value="@Style/appstyle.css" />
+            <URL value="@Style/buttonStyle.css" />
+         </stylesheets>
+      </JFXButton>
+      <JFXButton id="btSend" fx:id="btSend" alignment="BASELINE_LEFT" focusTraversable="false" graphicTextGap="15.0" layoutX="14.0" layoutY="331.0" lineSpacing="2.0" prefHeight="40.0" styleClass="BoonBaan-size-16-Regular" text="ສົ່ງປຶ້ມ" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="330.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

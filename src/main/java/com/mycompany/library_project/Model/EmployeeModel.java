@@ -181,7 +181,7 @@ public class EmployeeModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກຂໍ້ມູນພະນັກງານ", e);
             return 0;
         } finally {
-            ////ps.close();
+            //// ps.close();
         }
 
     }
@@ -202,7 +202,7 @@ public class EmployeeModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນພະນັກງານ", e);
             return 0;
         } finally {
-            ////ps.close();
+            //// ps.close();
         }
     }
 
@@ -217,7 +217,7 @@ public class EmployeeModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການລົບຂໍ້ມູນພະນັກງານ", e);
             return 0;
         } finally {
-            ////ps.close();
+            //// ps.close();
         }
     }
 
@@ -234,7 +234,7 @@ public class EmployeeModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກຂໍ້ມູນຜູ້ໃຊ້", e);
             return 0;
         } finally {
-            ////ps.close();
+            //// ps.close();
         }
     }
 
@@ -252,7 +252,7 @@ public class EmployeeModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຂໍ້ມູນຜູ້ໃຊ້", e);
             return 0;
         } finally {
-            ////ps.close();
+            //// ps.close();
         }
     }
 
@@ -268,7 +268,7 @@ public class EmployeeModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການແກ້ໄຂ້ຊື່ຜູ້ໃຊ້", e);
             return 0;
         } finally {
-            ////ps.close();
+            //// ps.close();
         }
     }
 
@@ -283,7 +283,7 @@ public class EmployeeModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເຂົ້າລະບົບ", e);
             return null;
         } finally {
-            ////ps.close();
+            //// ps.close();
         }
 
     }
@@ -300,7 +300,41 @@ public class EmployeeModel implements DataAccessObject {
             dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການໂຫຼດຂໍ້ມູນຜູ້້ໃຊ້", e);
             return null;
         } finally {
-            ////ps.close();
+            //// ps.close();
+        }
+    }
+
+    public String getEmpID(String userInfor) {
+        try {
+            sql = "SELECT tbuser.employee_id from tbemployee INNER join tbuser ON tbemployee.employee_id=tbuser.employee_id  WHERE  tbemployee.full_name=? OR tbemployee.tel=? OR tbemployee.email=? OR tbuser.user_name=?";
+            ps = HomeController.con.prepareStatement(sql);
+            ps.setString(1, userInfor);
+            ps.setString(2, userInfor);
+            ps.setString(3, userInfor);
+            ps.setString(4, userInfor);
+            rs = ps.executeQuery();
+            if (rs.next())
+                return rs.getString("employee_id");
+            else
+                return null;
+        } catch (SQLException e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການປ່ຽນລະຫັດຜ່ານ", e);
+            return null;
+        }
+    }
+
+    public int RecoveryPassword(String password, String salt, String username, String empId) throws SQLException {
+        try {
+            sql = "update tbuser set user_name=?, `password`=?, salt=? where employee_id=?";
+            ps = HomeController.con.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ps.setString(3, salt);
+            ps.setString(4, empId);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການປ່ຽນລະຫັດຜ່ານ", e);
+            return 0;
         }
     }
 }

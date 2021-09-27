@@ -32,6 +32,7 @@ public class SummaryData extends Thread {
                     HomeController.summaryValue[7] = rs.getString("@employee");
                     HomeController.summaryValue[8] = rs.getString("@author");
                     HomeController.summaryValue[9] = rs.getString("@department");
+                    HomeController.summaryValue[10] = rs.getString("@supplier");
                 }
         } catch (Exception e) {
             e.printStackTrace();

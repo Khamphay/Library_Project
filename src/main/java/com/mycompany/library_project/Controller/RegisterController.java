@@ -384,9 +384,15 @@ public class RegisterController implements Initializable {
                         // Todo: Show image
                         convertByteToImage(rs.getBytes("img"));
 
+                        if (LocalDate.now().compareTo(rs.getDate("date_exit").toLocalDate()) > 0) {
+                            dialog.showWarningDialog(null,
+                                    "ບໍ່ສາມາດລົງທະບຽນໄດ້ ເນື່ອງຈາກບັດນີ້ໝົດອາຍຸເປັນສະມາຊິກຫໍສະໝຸດແລ້ວ");
+                            clearValues();
+                            return;
+                        }
                     }
                 } catch (SQLException e) {
-                    e.getNextException();
+                    dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການສະແດງຂໍ້ມູນ", e);
                 }
             }
         });

@@ -229,7 +229,7 @@
                                     </ImageView>
                                  </graphic>
                               </JFXButton>
-                              <Text fx:id="txtDep1" fill="WHITE" layoutX="56.0" layoutY="62.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="5 ຜູ້ສະໜອງ" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="50.0" />
+                              <Text fx:id="txtSupp" fill="WHITE" layoutX="56.0" layoutY="62.0" mouseTransparent="true" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="BoonBaan-size-14" text="5 ຜູ້ສະໜອງ" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="50.0" />
                            </children>
                         </AnchorPane>
                      </children>

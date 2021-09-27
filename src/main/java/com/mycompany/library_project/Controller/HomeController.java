@@ -33,7 +33,7 @@ import java.util.ResourceBundle;
 public class HomeController implements Initializable {
 
     public static Connection con = null;
-    public static String[] summaryValue = new String[10];
+    public static String[] summaryValue = new String[11];
     private HamburgerSlideCloseTransition hamburgerTransition = null;
     private DialogMessage dialog = new DialogMessage();
     private ShowRentSendModel showRentSendModel = new ShowRentSendModel();

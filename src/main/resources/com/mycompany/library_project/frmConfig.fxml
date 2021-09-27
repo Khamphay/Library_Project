@@ -15,7 +15,7 @@
 
 <StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="864.0" style="-fx-background-color: transparent;" stylesheets="@Style/appstyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.library_project.Controller.ConfigServerController">
    <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 0.7em; -fx-border-radius: 0.7em; -fx-background-color: #fff;">
+      <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 0.7em; -fx-border-radius: 0.7em; -fx-background-color: #fff; -fx-border-color: #101D3D;">
          <top>
             <AnchorPane fx:id="acTopBar" prefHeight="99.0" prefWidth="864.0" style="-fx-background-color: #101D3D; -fx-background-radius: 7px 7px 0px 0px; -fx-border-radius: 7px 7px 0px 0px;" BorderPane.alignment="CENTER">
                <children>

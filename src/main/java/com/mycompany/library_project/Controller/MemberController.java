@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +16,7 @@ import com.mycompany.library_project.App;
 import com.mycompany.library_project.Style;
 import com.mycompany.library_project.ControllerDAOModel.*;
 import com.mycompany.library_project.Model.MemberModel;
+import com.mycompany.library_project.Model.RentBookModel;
 import com.mycompany.library_project.Report.CreateReport;
 import com.mycompany.library_project.config.CreateLogFile;
 
@@ -52,6 +54,7 @@ public class MemberController implements Initializable {
     public static Stage addMemberStage = null;
     public static boolean add = false;
     private CreateLogFile logfile = new CreateLogFile();
+    private RentBookModel rentBook = new RentBookModel();
 
     public void initConstructor(ManageBookController manageBookController) {
         this.manageBookController = manageBookController;
@@ -108,6 +111,12 @@ public class MemberController implements Initializable {
                 addMemberStage.close();
             }
 
+            if (LocalDate.now()
+                    .compareTo(tableMember.getSelectionModel().getSelectedItem().getDateExit().toLocalDate()) >= 0) {
+                dialog.showWarningDialog(null, "ບໍ່ສາມາດແກ້ໄດ້ ເນື່ອງຈາກໝົດອາຍຸເປັນສະມາຊິກຫໍສະໝຸດແລ້ວ");
+                return;
+            }
+
             final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmRegister.fxml"));
             final Parent root = loader.load();
             final Scene scene = new Scene(root);
@@ -123,7 +132,7 @@ public class MemberController implements Initializable {
             addMemberStage.show();
 
         } catch (Exception e) {
-            alertMessage.showErrorMessage( "Open New Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
+            alertMessage.showErrorMessage("Open New Form", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
             logfile.createLogFile("ເກີດບັນຫາໃນການເປືດຟອມແກ້ໂຂຂໍ້ມູນ", e);
         }
     }
@@ -186,8 +195,7 @@ public class MemberController implements Initializable {
                     tableMember.setItems(sorted);
 
                 } catch (Exception e) {
-                    alertMessage.showErrorMessage("Show Data Error", "Error: " + e.getMessage(), 4,
-                            Pos.BOTTOM_RIGHT);
+                    alertMessage.showErrorMessage("Show Data Error", "Error: " + e.getMessage(), 4, Pos.BOTTOM_RIGHT);
                 }
                 // }
                 // });
@@ -460,10 +468,26 @@ public class MemberController implements Initializable {
                                     "ຕ້ອງການລົບຂໍ້ມູນ ຫຼື ບໍ?");
                             if (result.get() == ButtonType.YES)
                                 try {
+
+                                    if (LocalDate.now().compareTo(
+                                            tableMember.getItems().get(getIndex()).getDateExit().toLocalDate()) < 0) {
+                                        dialog.showWarningDialog(null,
+                                                "ບໍ່ສາມາດລົບໄດ້ເນື່ອງບັດນິ້ຍັງບໍ່ໝົດອາຍຸເປັນສະມາຊິກຫໍສະໝຸດ");
+                                        return;
+                                    }
+
+                                    rs = rentBook.chackMemberRentBook(
+                                            tableMember.getItems().get(getIndex()).getMemberId(), "ກຳລັງຢືມ");
+                                    if (rs.next() && rs.getInt("qty") > 0
+                                            && !rs.getString("book_status").equals(null)) {
+                                        dialog.showWarningDialog(null,
+                                                "ບໍ່ສາມາດລົບໄດ້ເນື່ອງຈາກຍັງມີປຶ້ມທີ່ບໍ່ໄດ້ສົ່ງ ກະລູນາຕິດຕໍ່ຫາຜູ້ກ່ຽວໃຫ້ມາສົ່ງປຶ້ມຄືນຫໍສະໝຸດ");
+                                        return;
+                                    }
                                     if (memberModel
                                             .deleteData(tableMember.getItems().get(getIndex()).getMemberId()) > 0) {
                                         showData();
-                                        
+
                                         alertMessage.showCompletedMessage("Delete", "Delete data successfully.", 4,
                                                 Pos.BOTTOM_RIGHT);
                                     }

@@ -20,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -171,6 +172,23 @@ public class LoginController implements Initializable {
             loginSatge.close();
     }
 
+    @FXML
+    private void btForgotPassword(ActionEvent event) {
+        try {
+            final FXMLLoader loader = new FXMLLoader(App.class.getResource("frmRecoverPassword.fxml"));
+            final Parent root = loader.load();
+            final Scene scene = new Scene(root);
+            final Stage recovery = new Stage();
+            recovery.setScene(scene);
+            recovery.setTitle("Recovery Password");
+            recovery.initModality(Modality.APPLICATION_MODAL);
+            recovery.getIcons().add(new Image("/com/mycompany/library_project/Icon/icon.png"));
+            recovery.show();
+        } catch (Exception e) {
+            dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການເປີດຟອມກູ້ຄືນລະຫັດຜ່ານ", e);
+            e.printStackTrace();
+        }
+    }
     // private void MyProgress(){
     // spinner.setVisible(false);
     // }

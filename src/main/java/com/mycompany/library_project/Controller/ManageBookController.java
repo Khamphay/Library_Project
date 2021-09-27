@@ -28,7 +28,8 @@ public class ManageBookController implements Initializable {
     // private ListBookModel listbook = null;
 
     @FXML
-    private Text txtType, txtCategory, txtBook, txtBookLost, txtTableLog, txtMember, txtEmployee, txtAuthor, txtDep;
+    private Text txtType, txtCategory, txtBook, txtBookLost, txtTableLog, txtMember, txtEmployee, txtAuthor, txtDep,
+            txtSupp;
 
     @FXML
     private BorderPane bpManageBook;
@@ -258,10 +259,11 @@ public class ManageBookController implements Initializable {
         txtTableLog.setText("ຈຳນວນ " + HomeController.summaryValue[4] + " ຕູ້ ແລະ "
                 + ((HomeController.summaryValue[5] != null) ? HomeController.summaryValue[5] : "0") + " ລ໋ອກຕູ້");
 
-        txtMember.setText(HomeController.summaryValue[6] + " ຄົນ");
-        txtEmployee.setText(HomeController.summaryValue[7] + " ຄົນ");
-        txtAuthor.setText(HomeController.summaryValue[8] + " ຄົນ");
-        txtDep.setText(HomeController.summaryValue[9] + " ພາກວິຊາ");
+        txtMember.setText((HomeController.summaryValue[6] != null ? HomeController.summaryValue[6] : '0') + " ຄົນ");
+        txtEmployee.setText((HomeController.summaryValue[7] != null ? HomeController.summaryValue[7] : '0') + " ຄົນ");
+        txtAuthor.setText((HomeController.summaryValue[8] != null ? HomeController.summaryValue[8] : '0') + " ຄົນ");
+        txtDep.setText((HomeController.summaryValue[9] != null ? HomeController.summaryValue[9] : '0') + " ພາກວິຊາ");
+        txtSupp.setText((HomeController.summaryValue[10] != null ? HomeController.summaryValue[10] : '0') + " ຜູ້ສະໜອງ");
 
         // showBookLostList();
         showMemberEnd();

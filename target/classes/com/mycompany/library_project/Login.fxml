@@ -22,7 +22,7 @@
          <children>
             <AnchorPane layoutX="332.0" layoutY="-1.0" prefHeight="462.0" prefWidth="331.0" style="-fx-background-radius: 0px 8px 8px 0px; -fx-background-color: #fff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <JFXButton id="buttonForgotPassword" layoutX="57.0" layoutY="273.0" ripplerFill="WHITE" styleClass="BoonBaan-size-14-Regular" text="ລືມລະຫັດຜ່ານ" />
+                  <JFXButton id="buttonForgotPassword" layoutX="57.0" layoutY="273.0" onAction="#btForgotPassword" ripplerFill="WHITE" styleClass="BoonBaan-size-14-Regular" text="ລືມລະຫັດຜ່ານ" />
                   <ImageView fitHeight="94.0" fitWidth="127.0" layoutX="215.0" layoutY="411.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Icon/reading.png" />

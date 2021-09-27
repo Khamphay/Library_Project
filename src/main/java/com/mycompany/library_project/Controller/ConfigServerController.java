@@ -94,16 +94,25 @@ public class ConfigServerController implements Initializable {
                 masker.setVisible(true);
                 masker.setProgressVisible(true);
 
+                getDriver();
+
                 if (!txtHost.getText().equals("") && !txtPort.getText().equals("")) {
-                    if (config.createFileConfig(driver, dbtype, txtHost.getText(), txtPort.getText(),
-                            txtUserName.getText(), txtPassword.getText()) == true) {
-                        MyConnection.driver = driver;
-                        MyConnection.dbtype = dbtype;
-                        MyConnection.host = txtHost.getText() + ":" + txtPort.getText();
-                        MyConnection.userName = txtUserName.getText();
-                        MyConnection.password = txtPassword.getText();
-                        textResualt.setFill(Color.GREEN);
-                        textResualt.setText("ບັນທືກຂໍ້ມູນສຳເລ້ດແລ້ວ");
+
+                    MyConnection.driver = driver;
+                    MyConnection.dbtype = dbtype;
+                    MyConnection.host = txtHost.getText() + ":" + txtPort.getText();
+                    MyConnection.userName = txtUserName.getText();
+                    MyConnection.password = txtPassword.getText();
+
+                    if (HomeController.con == null)
+                        HomeController.con = MyConnection.getConnect();
+
+                    if (HomeController.con != null) {
+                        if (config.createFileConfig(driver, dbtype, txtHost.getText(), txtPort.getText(),
+                                txtUserName.getText(), txtPassword.getText()) == true) {
+                            textResualt.setFill(Color.GREEN);
+                            textResualt.setText("ບັນທືກຂໍ້ມູນສຳເລ້ດແລ້ວ");
+                        }
                     }
                 }
                 return null;
@@ -123,7 +132,7 @@ public class ConfigServerController implements Initializable {
                 masker.setProgressVisible(false);
                 textResualt.setFill(Color.RED);
                 textResualt.setText("ບັນທືກຂໍ້ມູນບໍ່ສຳເລ້ດ, ກະລຸນາກວດສອບຂໍ້ມຸນແລ້ວ ລອງໃຫມ່ອີກຄັ້ງ.");
-                dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທິກກາຮຕັ້ງຄ່າ", task.getException());
+                // dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທຶກການຕັ້ງຄ່າ", task.getException());
             }
 
         };
@@ -143,14 +152,15 @@ public class ConfigServerController implements Initializable {
                 masker.setVisible(true);
                 masker.setProgressVisible(true);
 
+                getDriver();
+
                 MyConnection.driver = driver;
                 MyConnection.dbtype = dbtype;
                 MyConnection.host = txtHost.getText() + ":" + txtPort.getText();
                 MyConnection.userName = txtUserName.getText();
                 MyConnection.password = txtPassword.getText();
-                if (HomeController.con != null) {
+                HomeController.con = MyConnection.getConnect();
 
-                }
                 return null;
             }
 
@@ -170,11 +180,22 @@ public class ConfigServerController implements Initializable {
                 masker.setProgressVisible(false);
                 textResualt.setFill(Color.RED);
                 textResualt.setText("ການເຊື່ອມຕໍ່ບໍ່ສຳເລັດແລ້ວ, ກະລຸນາກວດສອບຂໍ້ມຸນແລ້ວ ລອງໃຫມ່ອີກຄັ້ງ");
-                dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການບັນທິກກາຮຕັ້ງຄ່າ", task.getException());
+                // dialog.showExcectionDialog("Error", null, "ເກີດບັນຫາໃນການທົດສອບການເຊື່ອມຕໍ່ຖານຂໍ້ມູນ",
+                //         task.getException());
             }
 
         };
         new Thread(task).start();
+    }
+
+    public void getDriver() {
+        if (comboxDB.getSelectionModel().getSelectedItem().equals("MariaDB")) {
+            driver = "org.mariadb.jdbc.Driver";
+            dbtype = "mariadb";
+        } else {
+            driver = "com.mysql.cj.jdbc.Driver";
+            dbtype = "mysql";
+        }
     }
 
     private void initEvents() {
@@ -191,13 +212,7 @@ public class ConfigServerController implements Initializable {
         });
 
         comboxDB.setOnAction(e -> {
-            if (comboxDB.getSelectionModel().getSelectedItem().equals("MariaDB")) {
-                driver = "org.mariadb.jdbc.Driver";
-                dbtype = "mariadb";
-            } else {
-                driver = "com.mysql.cj.jdbc.Driver";
-                dbtype = "mysql";
-            }
+            getDriver();
         });
 
         btSave.setOnAction(new EventHandler<ActionEvent>() {

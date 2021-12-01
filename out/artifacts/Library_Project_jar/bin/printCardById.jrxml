@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="printCardById" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6c995ef6-dc77-4b24-aa4f-bf447d2762a4">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<parameter name="memberid" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select * from tbmember Where member_id=$P{memberid}]]>
+	</queryString>
+	<field name="member_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="member_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="member_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbmember"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="student_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="student_id"/>
+		<property name="com.jaspersoft.studio.field.name" value="student_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbmember"/>
+	</field>
+	<field name="full_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="full_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="full_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbmember"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sur_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sur_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="sur_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbmember"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="gender" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="gender"/>
+		<property name="com.jaspersoft.studio.field.label" value="gender"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbmember"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tel" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tel"/>
+		<property name="com.jaspersoft.studio.field.label" value="tel"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbmember"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="birthdate" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="birthdate"/>
+		<property name="com.jaspersoft.studio.field.label" value="birthdate"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbmember"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date_register" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="date_register"/>
+		<property name="com.jaspersoft.studio.field.label" value="date_register"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbmember"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date_end" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="date_end"/>
+		<property name="com.jaspersoft.studio.field.label" value="date_end"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbmember"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date_exit" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="date_exit"/>
+		<property name="com.jaspersoft.studio.field.label" value="date_exit"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbmember"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="img" class="byte[]">
+		<property name="com.jaspersoft.studio.field.name" value="img"/>
+		<property name="com.jaspersoft.studio.field.label" value="img"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tbmember"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="143" splitType="Stretch">
+			<frame borderSplitType="NoBorders">
+				<reportElement mode="Opaque" x="0" y="1" width="270" height="140" backcolor="rgba(70, 137, 224, 0.9764706)" uuid="0ca2d70b-b84d-44fa-8356-f4f020288781"/>
+				<image onErrorType="Icon">
+					<reportElement x="13" y="50" width="59" height="58" uuid="e833b115-056d-400f-bd22-883e3afbf680">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<graphicElement fill="Solid"/>
+					<imageExpression><![CDATA[$F{img}]]></imageExpression>
+				</image>
+				<componentElement>
+					<reportElement x="0" y="110" width="75" height="30" uuid="0e4ce6a4-dbbe-4710-b353-e05bec2487ba"/>
+					<jr:Code128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" quietZone="3.0">
+						<jr:codeExpression><![CDATA[$F{member_id}]]></jr:codeExpression>
+					</jr:Code128>
+				</componentElement>
+				<image>
+					<reportElement x="1" y="2" width="39" height="40" uuid="251f31ef-5508-440f-9232-d01a21839e62"/>
+					<imageExpression><![CDATA["D:/Information4cs2_1/Final_Project/Library_Project/src/main/resources/com/mycompany/library_project/Icon/Logo_FNS.png"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="40" y="8" width="130" height="15" uuid="a64b10bd-549c-4f9d-99d3-a6318413533b">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Phetsarath OT" size="9"/>
+					</textElement>
+					<text><![CDATA[ຄະນະວິທະຍາສາດ ທຳມະຊາດ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="40" y="23" width="150" height="15" uuid="83d043bf-ca34-4388-af01-785aefc4df20">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Phetsarath OT" size="9"/>
+					</textElement>
+					<text><![CDATA[ຫໍສະໝຸດ ຄະນະວິທະຍາສາດ ທຳມະຊາດ]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="131" y="121" width="42" height="18" uuid="9e0ce299-e3b1-48ae-b5e7-4e43c24bb75b">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="2"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{date_register}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="228" y="121" width="41" height="18" uuid="9ed205fd-9d47-4183-9b4f-26a91aac2c93">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<box padding="2"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="8" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{date_exit}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="176" y="121" width="50" height="18" uuid="4bddd58d-9c32-4a00-a2ab-70abeeec4311">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Phetsarath OT" size="8"/>
+					</textElement>
+					<text><![CDATA[ວ.ດ.ປ ໝົດອາຍຸ:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="76" y="121" width="54" height="18" uuid="d8a60957-ebc8-4f49-8306-49035f1be314">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Phetsarath OT" size="8"/>
+					</textElement>
+					<text><![CDATA[ວ.ດ.ປ ລົງທະບຽນ:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="74" y="59" width="105" height="15" uuid="b1a55402-289b-4438-974a-4b6d6e10859d">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Phetsarath OT" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["ລະຫັດນັກ ນ/ສ: "+$F{student_id}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="74" y="74" width="186" height="15" uuid="c308660f-93fa-4c88-81f6-53a9434198c9"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Phetsarath OT" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["ຊື່: "+$F{full_name}+" "+$F{sur_name}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="75" y="89" width="40" height="15" uuid="d7b323b0-537c-4460-aeef-25f284f77699">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Phetsarath OT" size="9"/>
+					</textElement>
+					<text><![CDATA[ວ.ດ.ປ ເກີດ:]]></text>
+				</staticText>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="117" y="89" width="80" height="15" uuid="8f7898eb-a588-4a24-a264-38e3d684da72">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{birthdate}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="80" y="40" width="150" height="19" uuid="38b48bd7-4fac-4b12-bc4a-132c88c812cc">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Phetsarath OT" size="11"/>
+					</textElement>
+					<text><![CDATA[ບັດສະມາຊິກຫໍສະໝຸດ ຄວທ]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>

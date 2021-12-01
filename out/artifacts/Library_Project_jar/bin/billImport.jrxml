@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="billImport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a798543d-6d11-4dd5-8365-e35c13b28d22">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="logo" class="java.lang.String"/>
+	<parameter name="importid" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select * from dblibrary.vwimport where import_id= $P{importid}]]>
+	</queryString>
+	<field name="import_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="import_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="import_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vwimport"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="book_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="book_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="book_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vwimport"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="book_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="book_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="book_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vwimport"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="page" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="page"/>
+		<property name="com.jaspersoft.studio.field.label" value="page"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vwimport"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="catg_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="catg_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="catg_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vwimport"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="type_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="type_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="type_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vwimport"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="book_qty" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="book_qty"/>
+		<property name="com.jaspersoft.studio.field.label" value="book_qty"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vwimport"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="book_price" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="book_price"/>
+		<property name="com.jaspersoft.studio.field.label" value="book_price"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vwimport"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="price_total" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="price_total"/>
+		<property name="com.jaspersoft.studio.field.label" value="price_total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vwimport"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="import_date" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="import_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="import_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="vwimport"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="sumPrice" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{price_total}]]></variableExpression>
+	</variable>
+	<variable name="sumQty" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{book_qty}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="153" splitType="Stretch">
+			<staticText>
+				<reportElement x="81" y="94" width="184" height="19" uuid="8a8a5fad-700c-4f6d-a54b-3038c1a53c5d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ຄະນະວິທະຍາສາດ ທຳມະຊາດ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="81" y="114" width="215" height="19" uuid="fa88e49c-10f0-4ec6-af1a-42a45b8580fe"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ຫໍສະໝຸດ ຄະນະວິທະຍາສາດ ທຳມະຊາດ]]></text>
+			</staticText>
+			<image>
+				<reportElement x="1" y="61" width="74" height="74" uuid="4b51876e-cfea-49cf-ae37-4e42a55d41fe"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="290" y="50" width="184" height="30" uuid="f94c4582-4846-4c93-ad64-0659e10ad931"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ໃບບິນນຳປຶ້ມເຂົ້າລະບົບ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="20" width="798" height="19" uuid="39cf692b-670a-4562-a9b5-642b0592ae08"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ສັນຕິພາບ ເອກະລາດ ປະຊາທິປະໄຕ ເອກະພາບ ວັດທະນາຖາວອນ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="0" width="798" height="19" uuid="703b0d92-13c9-4e3f-b980-0d8e482db106"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ສາທາລະນະລັດ ປະຊາທິປະໄຕ ປະຊາຊົນລາວ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="152" width="800" height="1" uuid="79f145eb-211b-4fac-a9f6-9b3f06b65b72"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="39" splitType="Stretch">
+			<textField>
+				<reportElement x="50" y="5" width="180" height="30" uuid="d0901d8b-6ccc-4471-9960-260522d380f8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{book_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="5" width="49" height="30" uuid="f24745d0-3739-47d5-a898-5389ffc05b6b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ເລກບິນ:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="35" width="800" height="1" uuid="a06e30c2-eeec-443a-af2c-a48e56e98521"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="50" y="0" width="65" height="30" uuid="40aedb01-ea1f-4a74-8aa4-c0427566d8df">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="84d05f69-5375-4fc9-ac3b-159214a2d625"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<text><![CDATA[ລະຫັດປຶ້ມ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="0" width="130" height="30" uuid="aba2acc1-75f0-41d8-81cb-0af829e530f3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8c86ad21-c219-4be8-9a9a-44748b6111cc"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<text><![CDATA[ຊື່ປຶ້ມ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="255" y="0" width="110" height="30" uuid="ed4a7a3b-7359-4986-9c97-f4311e1b2e71">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f3f85f16-7793-4590-9f73-0f5f07dd0601"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<text><![CDATA[ໝວດປຶ້ມ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="0" width="106" height="30" uuid="c6f3efc6-16a6-4bd2-ad94-0d1c519c620b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6a764f9e-6b12-4d1b-b928-2fcd2e3bd221"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<text><![CDATA[ປະເພດປຶ້ມ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="478" y="0" width="68" height="30" uuid="beebc73d-2148-4649-a1ab-6f39d970e0c7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="25860534-bf7f-4483-937d-05fcf7ba97f3"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<text><![CDATA[ຈຳນວນໜ້າ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="550" y="0" width="67" height="30" uuid="5e52e8df-53ed-4611-9d7d-ddd7d00f5cf6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="816a77ab-6760-4991-9f08-bf879b0c6958"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<text><![CDATA[ຈຳນວນປຶ້ມ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="622" y="0" width="88" height="30" uuid="0fcc964f-0674-4a7a-822d-a1b04eaf079a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b3ac533c-9a27-4a99-af07-60543deb970d"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<text><![CDATA[ລາຄາປຶ້ມ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="2" width="41" height="30" uuid="4cfeeaf3-24c0-4e97-84a0-99d1a89bebae">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="84d05f69-5375-4fc9-ac3b-159214a2d625"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<text><![CDATA[ລະດັບ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="30" width="800" height="2" uuid="09a52319-aab2-46b5-b6f6-a12b646cfefa"/>
+			</line>
+			<staticText>
+				<reportElement x="712" y="0" width="88" height="30" uuid="0d9804d6-5d0a-4230-9946-51b28aa62380">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b3ac533c-9a27-4a99-af07-60543deb970d"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<text><![CDATA[ລາຄາລວມ]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement x="50" y="3" width="65" height="30" uuid="aa457c9e-bc0e-4f48-ad17-9ea9d0b1e42e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="84d05f69-5375-4fc9-ac3b-159214a2d625"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{book_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="3" width="130" height="30" uuid="e17f749c-5f27-423f-940c-5342e2a9c731">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8c86ad21-c219-4be8-9a9a-44748b6111cc"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{book_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="255" y="3" width="110" height="30" uuid="65757989-3b64-4e96-b8b4-36b7c5f0741d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f3f85f16-7793-4590-9f73-0f5f07dd0601"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{catg_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="368" y="3" width="106" height="30" uuid="6372ea96-f9bc-4810-b6b3-b7f199c1533e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6a764f9e-6b12-4d1b-b928-2fcd2e3bd221"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{type_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#0 ຫົວ">
+				<reportElement x="478" y="3" width="68" height="30" uuid="fe06b6d6-1131-49f7-a437-eee20535c9bd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="25860534-bf7f-4483-937d-05fcf7ba97f3"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{page}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#0 ຫົວ">
+				<reportElement x="550" y="3" width="67" height="30" uuid="5c632cf8-ef0e-43c6-8463-e752ea38c022">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="816a77ab-6760-4991-9f08-bf879b0c6958"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{book_qty}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,###.## ກີບ">
+				<reportElement x="622" y="3" width="88" height="30" uuid="d4b744d9-2a56-4a92-a926-4a799949a221">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b3ac533c-9a27-4a99-af07-60543deb970d"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{book_price}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="3" width="41" height="30" uuid="aca8789d-cf8f-4e43-94cb-05726612f35d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,###.## ກີບ">
+				<reportElement x="712" y="3" width="89" height="30" uuid="01071555-26a7-44b6-9e19-5b17f1296c21"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{price_total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="123" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="609" y="20" width="80" height="30" uuid="8e9f43e4-6e2a-469d-bb7a-4077285a5d72"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="570" y="20" width="38" height="30" uuid="28984c8d-c9b1-45bd-86f2-fa51f9ac25a5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ວັນທີ:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="570" y="50" width="154" height="30" uuid="3a01fc69-6001-485f-9f83-fcb4906ca377"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ລາຍເຊັນພະນັກງານ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="570" y="80" width="154" height="30" uuid="e0f5d5a5-3dab-4421-aa37-2eacc5b726a5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[......................................]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="88" splitType="Stretch">
+			<line>
+				<reportElement x="1" y="0" width="799" height="1" uuid="705de0e9-b448-447f-8b0e-37e117096b58"/>
+			</line>
+			<staticText>
+				<reportElement x="489" y="10" width="127" height="30" uuid="12ffa4a9-b0d6-4ac5-bb22-f0d8b89a4490"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="11"/>
+				</textElement>
+				<text><![CDATA[ລວມຈຳນວນທັງໝົດ:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="489" y="40" width="127" height="30" uuid="7b5016a8-6ef2-46f8-8113-8626124f9c85"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="11"/>
+				</textElement>
+				<text><![CDATA[ລວມຄ່ານຳປຶ້ມທັງໝົດ:]]></text>
+			</staticText>
+			<textField pattern="#0 ຫົວ">
+				<reportElement x="620" y="10" width="160" height="30" uuid="d76c1ed1-2b25-4a97-be21-6ed05ef819ec"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumQty}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,###.## ກີບ">
+				<reportElement x="620" y="40" width="160" height="30" uuid="b6114e69-8325-4ccc-9772-247841b880d6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumPrice}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

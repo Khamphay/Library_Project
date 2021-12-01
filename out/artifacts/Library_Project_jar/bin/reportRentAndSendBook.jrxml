@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportRentAndSendBook" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dbc987dc-f277-483a-851b-e70b79f1b845">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<parameter name="status" class="java.lang.String"/>
+	<parameter name="logo" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select * from  dblibrary.showrent_sendbook where book_status= $P{status}]]>
+	</queryString>
+	<field name="rent_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="rent_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="rent_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="showrent_sendbook"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="barcode" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="barcode"/>
+		<property name="com.jaspersoft.studio.field.label" value="barcode"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="showrent_sendbook"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="book_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="book_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="book_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="showrent_sendbook"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="qty" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="qty"/>
+		<property name="com.jaspersoft.studio.field.label" value="qty"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="showrent_sendbook"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="catg_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="catg_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="catg_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="showrent_sendbook"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="type_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="type_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="type_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="showrent_sendbook"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="table_log_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="table_log_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="table_log_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="showrent_sendbook"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date_rent" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="date_rent"/>
+		<property name="com.jaspersoft.studio.field.label" value="date_rent"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="showrent_sendbook"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="date_send" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="date_send"/>
+		<property name="com.jaspersoft.studio.field.label" value="date_send"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="showrent_sendbook"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="book_status" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="book_status"/>
+		<property name="com.jaspersoft.studio.field.label" value="book_status"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="showrent_sendbook"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="member_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="member_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="member_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="showrent_sendbook"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="student_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="student_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="student_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="showrent_sendbook"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="full_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="full_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="full_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="showrent_sendbook"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sur_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="sur_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="sur_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="showrent_sendbook"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="179" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="10" width="799" height="19" uuid="eeee74a9-37a0-45d4-8cad-ccc9607e97d1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ສາທາລະນະລັດ ປະຊາທິປະໄຕ ປະຊາຊົນລາວ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="30" width="799" height="19" uuid="cd9387d5-7a6a-47d6-92ce-4899ba2f1db8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ສັນຕິພາບ ເອກະລາດ ປະຊາທິປະໄຕ ເອກະພາບ ວັດທະນາຖາວອນ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="60" width="800" height="30" uuid="b9327130-009c-48e5-b0a8-6a4685cf6618"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ລາຍງານຂໍ້ມູນຢືມປຶ້ມ-ສົ່ງປຶ້ມ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="121" width="184" height="19" uuid="d48c19c3-aa65-43f3-963f-61d393e1b72b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ຄະນະວິທະຍາສາດ ທຳມະຊາດ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="141" width="215" height="19" uuid="bb70e564-fd4b-4d41-abb4-b66f88f127dc"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ຫໍສະໝຸດ ຄະນະວິທະຍາສາດ ທຳມະຊາດ]]></text>
+			</staticText>
+			<image>
+				<reportElement x="21" y="91" width="74" height="74" uuid="64254cc4-2acd-45a0-9635-d03f176452c3"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="41" splitType="Stretch">
+			<line>
+				<reportElement x="3" y="0" width="797" height="1" uuid="08218689-7f2b-4894-8579-4c2610919bd2"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="4" width="215" height="37" uuid="4bf0054f-a2d4-4f5c-94f8-9731567e8868"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ລາຍລະອຽດກ່ຽວກັບຂໍ້ມູນຢືມ - ສົ່ງປຶ້ມ:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="33" width="798" height="1" uuid="b84b03fc-05cf-43f3-9001-e05564105a1c"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="63" y="0" width="86" height="30" uuid="003fcd88-45aa-434c-9e3d-0b54a3b3fe05">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e9744cc1-9696-4ae0-866c-bef328ebc186"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<text><![CDATA[ລະຫັດບາໂຄດ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="156" y="0" width="145" height="30" uuid="81cb4e4d-0312-4ad4-ba19-2c76029b94f1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a50f2b90-f56b-447b-a50e-8ba7e92bd3e9"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<text><![CDATA[ຊື່ປຶ້ມ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="308" y="0" width="120" height="30" uuid="3fd9c123-2f46-4678-8ace-74dd7c9f89ce">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3679d248-cfa4-40b9-88eb-5d56a73d463d"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<text><![CDATA[ໝວດປຶ້ມ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="448" y="0" width="120" height="30" uuid="d1288581-2502-45ab-b1be-91f87d4d9a66">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bcd269e4-7889-4d2a-aa5d-f0d9ed15a2a0"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<text><![CDATA[ປະເພດປຶ້ມ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="572" y="0" width="78" height="30" uuid="4b0f7f91-8495-4e04-b9bb-2a90a3e1dead">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b7d099ce-90b4-49c0-843b-5474852e1912"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<text><![CDATA[ວັນທີຢືມປຶ້ມ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="654" y="0" width="80" height="30" uuid="a814290e-ec9b-4705-804f-689c5735d8cc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="262b3ae4-e6cf-43ee-814d-bffecdaa7784"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<text><![CDATA[ວັນທີສົ່ງປຶ້ມ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="0" width="59" height="30" uuid="bd7c99af-c86e-4471-897d-9fb79379c4ed">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e9744cc1-9696-4ae0-866c-bef328ebc186"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<text><![CDATA[ລຳດັບ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="31" width="797" height="1" uuid="3f0ff5a0-7a09-44f2-ad01-46b9ee137cec"/>
+			</line>
+			<line>
+				<reportElement x="1" y="0" width="797" height="1" uuid="034b95a5-da92-4d35-ace9-539358313058"/>
+			</line>
+			<staticText>
+				<reportElement x="736" y="1" width="62" height="30" uuid="a6da5ba9-9c10-4b19-b437-6909c68907ba">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1e8864f2-35f2-48b0-a69d-b30720fb6449"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<text><![CDATA[ສະຖານະ]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement x="63" y="0" width="86" height="30" uuid="79b71b6b-99e5-4898-a961-f91989be93e7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e9744cc1-9696-4ae0-866c-bef328ebc186"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{barcode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="0" width="59" height="30" uuid="e4b56944-5b45-4640-a7d0-14091c8219e6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="156" y="0" width="145" height="30" uuid="09473dd0-9f28-4f1a-bcbb-23593ae7f3cc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a50f2b90-f56b-447b-a50e-8ba7e92bd3e9"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{book_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="308" y="0" width="120" height="30" uuid="455266d6-dffa-4290-849c-3df8c72641a1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3679d248-cfa4-40b9-88eb-5d56a73d463d"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{catg_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="448" y="0" width="120" height="30" uuid="c3ea2d65-1155-4027-8ad5-ab7d8cee2aa6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bcd269e4-7889-4d2a-aa5d-f0d9ed15a2a0"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{type_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="572" y="0" width="78" height="30" uuid="866471ba-529e-4ce9-9f8a-e2823f0a07c3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b7d099ce-90b4-49c0-843b-5474852e1912"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date_rent}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="654" y="0" width="80" height="30" uuid="47411b7d-4db8-4789-823c-eb2afc8a3ecd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="262b3ae4-e6cf-43ee-814d-bffecdaa7784"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date_send}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="30" width="797" height="1" uuid="ee85fd37-d890-41e6-8c80-6e19ae351c9e"/>
+			</line>
+			<line>
+				<reportElement x="1" y="-31" width="1" height="62" uuid="7379bf47-8665-4f5d-84df-f716f3ae176c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="60" y="-31" width="1" height="62" uuid="fd14a57b-1084-4c85-97e7-b24ce7041f94">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="152" y="-31" width="1" height="62" uuid="31d8cdf0-3abf-4bde-aae6-ae2f9fa58451">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="302" y="-31" width="1" height="62" uuid="590c2768-8c35-430d-8b72-c1f21e421bf4">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="443" y="-31" width="1" height="62" uuid="34786ecc-53a9-47e4-81df-1c661302dff2">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="570" y="-31" width="1" height="62" uuid="ff034a1b-31e7-4ebb-9d25-aa5371fc4b1d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="652" y="-31" width="1" height="62" uuid="fb8bca3c-f957-42f4-9320-ef30d27e654e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="735" y="-31" width="1" height="62" uuid="c453b3dc-5e5c-489f-b312-71e8cd0a89f5">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement x="736" y="0" width="62" height="30" uuid="f5e0e2ce-ae49-4382-9b6c-ec755b917dc9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1e8864f2-35f2-48b0-a69d-b30720fb6449"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{book_status}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="797" y="-31" width="1" height="62" uuid="a3938c2b-c2af-46df-aee9-a6639f876921">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="122">
+			<staticText>
+				<reportElement x="550" y="49" width="180" height="30" uuid="0a395357-5d90-489a-8d67-1887c280ab26">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ລາຍເຊັນພະນັກງານ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="550" y="82" width="180" height="30" uuid="bc6ac669-60c1-4841-8c06-ddf887ab12e5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[......................................]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="550" y="19" width="40" height="30" uuid="85613c85-c1b6-4a82-94f1-8a8b822416aa"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ວັນທີ:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="590" y="19" width="140" height="30" uuid="1283521b-e9e3-47ac-8634-282cfc33ca21"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="32" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="0" width="799" height="30" uuid="6e552d53-6577-48e8-a809-25ffa3f32671"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Phetsarath OT" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="40" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</summary>
+</jasperReport>

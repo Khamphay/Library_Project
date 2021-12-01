@@ -2,6 +2,7 @@ package com.mycompany.library_project.Controller;
 
 import com.jfoenix.controls.*;
 
+import javafx.application.Platform;
 import javafx.beans.value.*;
 import javafx.collections.*;
 import javafx.concurrent.Task;
@@ -230,7 +231,7 @@ public class RegisterController implements Initializable {
                         true, true));
 
                 // TODO: Resize image
-                resizeImg = Scalr.resize(ImageIO.read(new File(file.getAbsolutePath())), Scalr.Method.AUTOMATIC, /*
+                resizeImg = Scalr.resize(ImageIO.read(new File(file.getAbsolutePath())), Scalr.Method.ULTRA_QUALITY, /*
                                                                                                                   * Scalr.
                                                                                                                   * Mode.
                                                                                                                   * AUTOMATIC,
@@ -348,6 +349,15 @@ public class RegisterController implements Initializable {
             public void updateItem(LocalDate item, boolean empty) {
                 super.updateItem(item, empty);
                 setDisable(item.isAfter(maxDate) || item.isBefore(minDate));
+            }
+        });
+
+        birtDate.showingProperty().addListener((observableValue, wasFocused, isNowFocus) -> {
+            if (isNowFocus && birtDate.getValue() == null) {
+                birtDate.setValue(LocalDate.now().minusYears(18));
+                Platform.runLater(()->{
+                    birtDate.getEditor().clear();
+                });
             }
         });
 

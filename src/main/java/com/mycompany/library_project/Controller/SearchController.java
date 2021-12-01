@@ -115,7 +115,7 @@ public class SearchController implements Initializable {
                                         "+ ປະເພດ: " + rs.getString("type_name"));
                                 final var itemISBN = new TreeItem<>("+ ISBN: " + rs.getString("ISBN"));
                                 final var itemPage = new TreeItem<>(
-                                        " +ຈຳນວນໜ້າ: " + rs.getInt("page") + " ໜ້າ");
+                                        "+ ຈຳນວນໜ້າ: " + rs.getInt("page") + " ໜ້າ");
                                 final var itemQty = new TreeItem<>(
                                         "+ ຈຳນວນປຶ້ມ: " + rs.getInt("qty") + " ຫົວ");
                                 final var itemWriteYear = new TreeItem<>(
